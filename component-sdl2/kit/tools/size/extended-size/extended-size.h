@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDL.h"
-#include "../../point/extended-point/point.h"
+#include "../../point/extended-point/extended-point.h"
 
 
 namespace Lib

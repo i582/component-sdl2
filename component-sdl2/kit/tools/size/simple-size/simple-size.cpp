@@ -1,4 +1,4 @@
-#include "size.h"
+#include "simple-size.h"
 
 Lib::SimpleSize::SimpleSize() : SimpleSize(0, 0) {}
 

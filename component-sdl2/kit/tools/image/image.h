@@ -5,8 +5,8 @@
 #include "iostream"
 #include "string"
 
-#include "../rect/simple-rect/rect.h"
-#include "../point/simple-point/point.h"
+#include "../rect/simple-rect/simple-rect.h"
+#include "../point/simple-point/simple-point.h"
 
 namespace Lib
 {

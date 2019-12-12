@@ -1,18 +1,27 @@
 #pragma once
 
-#include "../window/window.h"
-#include "../tools/rect/extended-rect/rect.h"
-#include "../tools/size/simple-size/size.h"
+#include "SDL2_gfxPrimitives.h"
+
+#include "../tools/rect/extended-rect/extended-rect.h"
+#include "../tools/size/simple-size/simple-size.h"
 #include "../tools/image/image.h"
+#include "../tools/css/css.h"
 
 #include "component-header.h"
 
 
 namespace Lib
 {
+using CSS::Color;
+
+class Window;
 
 class Component
 {
+private:
+	/** For Event */
+	static Component* _hoverComponent;
+
 protected:
 	/** Sizes */
 	Rect _innerSize;
@@ -38,12 +47,12 @@ protected:
 	bool _isDisplay;
 
 
-	/** Events listener */
+	/** Events Listener */
 	map <string, eventCallback> _eventListeners;
 	static void _emptyCallback(Component* sender, Event* e) {};
 
 
-	/** User data */
+	/** User Data */
 	map <string, void*> _userData;
 
 
@@ -58,8 +67,8 @@ protected:
 	SDL_Texture* _outerTexture;
 
 
-	/** Styles */ // TO DO
-	//CSS::css_block _cssBlock;
+	/** Styles */ 
+	CSS::css_block _cssBlock;
 
 
 	/** Other for Events */
@@ -82,6 +91,7 @@ protected:
 
 public:
 	Component(string id, Rect size, string classes);
+	Component(string id, Rect size, string classes, vector<Component*> childrens);
 	virtual ~Component();
 
 
@@ -135,14 +145,43 @@ protected: /** Setup Functions */
 	void setupBackgroundImage();
 
 
+	/**
+	 * @brief Setting the parent window for elements when adding directly
+	 * through the 4 parameter of the Component constructor
+	 */
+	void setupParentWindow();
 
 
-public: /** Interface */
+	/**
+	 * @brief The function corrects the coordinates of the mouse
+	 * relative to the element in which it is now located
+	 *
+	 * @param p – Mouse point
+	 */
+	void adjustMousePoint(Point& p);
+
+
+public: /** Render Interface */
+
+	void render();
+
+
+
+public: /** Events Interface */
+
+	void mouseButtonDown(Event* e);
+	void mouseButtonUp(Event* e);
+	void mouseMotion(Event* e);
+	void mouseOut(Event* e);
+	void mouseScroll(Event* e, int scrollDirection);
+
+
+public: /** Setup Interface */
 
 	/**
 	 * @brief Function to configure the container and all its childs
 	 */
-	void setupContainer();
+	void setupComponents();
 
 
 
@@ -191,6 +230,9 @@ public: /** Ralation Interface */
 	bool isParentObject(Component* obj) const;
 
 
+	Component* append(Component* component);
+	Component* append(vector<Component*> components);
+
 public: /** Hover Interface */
 
 	/**
@@ -206,11 +248,11 @@ public: /** Hover Interface */
 	 * is returned. That is, the function goes as deep as possible until there
 	 * is an unambiguous component in which the point is now
 	 */
-	Component* const onContainerHover(Point point);
+	Component* const onComponentHover(Point point);
 
 
 public: /** Identifiers Interface */
-	string& id();
+	string id() const;
 
 
 

@@ -1,4 +1,4 @@
-#include "rect.h"
+#include "extended-rect.h"
 
 using namespace Lib;
 
@@ -17,10 +17,10 @@ Rect::Rect(const Point start, const Size size)
 
 Rect::Rect(int x, int y, int w, int h)
 {
-	this->size = { w, h };
-	this->start = { x, y };
+	this->size = Size(w, h);
+	this->start = Point(x, y);
 
-	this->isCalculated = false;
+	this->isCalculated = true;
 }
 
 Rect::Rect(string left, string top, string width, string height)
@@ -130,11 +130,11 @@ int Rect::x() const
 
 Rect Rect::calc(const Rect& parent)
 {
-	//if (!start.isCalculated)
-	start.calc(parent);
+	if (!start.isCalculated)
+		start.calc(parent);
 
-	//if (!size.isCalculated)
-	size.calc(parent);
+	if (!size.isCalculated)
+		size.calc(parent);
 
 	this->isCalculated = true;
 

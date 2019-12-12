@@ -13,5 +13,243 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\kit">
+      <UniqueIdentifier>{f08e9f09-1f29-44e7-8285-c8e28a84559f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\event">
+      <UniqueIdentifier>{44ead926-8272-46c9-9340-e6eb0dd205b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\window">
+      <UniqueIdentifier>{ca5da0fc-2206-42dc-bc09-5a257bd4908a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools">
+      <UniqueIdentifier>{b6a25a0c-e022-4fc7-b4ff-ddccd183a2a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\utils">
+      <UniqueIdentifier>{1db5e5b8-2676-418b-b06a-dcbaf1bcdafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\rect">
+      <UniqueIdentifier>{bbe647b0-818a-4429-ba75-d5279c34cc35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\rect\extended-rect">
+      <UniqueIdentifier>{d6dceda4-cac9-45e5-ae66-b790a6684ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\rect\simple-rect">
+      <UniqueIdentifier>{8b6281f5-bd04-44ba-a3dd-fad89f3c0036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\point">
+      <UniqueIdentifier>{7924e6cc-1c32-409e-8d9a-92b6f08e6c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\point\extended-point">
+      <UniqueIdentifier>{04722a3d-66a6-40ff-99d7-ea355d823af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\point\simple-point">
+      <UniqueIdentifier>{9c834aa9-17b8-4d00-9f39-7ddfa2b94678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\size">
+      <UniqueIdentifier>{69359ac2-ea17-4e28-943f-3b05f2b0a0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\size\extended-size">
+      <UniqueIdentifier>{73e61f08-adac-4933-a6b0-1db59184517b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\size\simple-size">
+      <UniqueIdentifier>{3ddc29e4-78b1-4576-a9fe-86344b26e927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\component">
+      <UniqueIdentifier>{c1adefa1-6c98-482c-b001-2c6180dcd40a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\image">
+      <UniqueIdentifier>{21dc3722-8823-4c46-9873-03b409b4ea36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\css">
+      <UniqueIdentifier>{88aea941-b0a1-489b-abe6-8dbea4706f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\css\color">
+      <UniqueIdentifier>{49f973fa-150b-49c1-8f58-c251dbb1ba61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\css\utils">
+      <UniqueIdentifier>{c9cde0fc-5af6-4cee-8dd1-3b2bbdc21e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\sdl_gfx">
+      <UniqueIdentifier>{d4cccbe9-a0b4-4e99-898e-cc38013e536c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\component\components">
+      <UniqueIdentifier>{ff7225c9-e38d-4f9a-a5a7-b36a959ce1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\component\navigator">
+      <UniqueIdentifier>{6b2d2ae2-0845-433a-a0ed-3bd9dd7a2166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\MyWindowClass">
+      <UniqueIdentifier>{7c95be12-7848-4012-a617-93c27a682c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\MyComponent">
+      <UniqueIdentifier>{224a41fd-fc65-4df0-ba27-be39b1f05470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Button">
+      <UniqueIdentifier>{e0f7b6a8-da2a-4717-b847-3249e19bba5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\DialogWindow">
+      <UniqueIdentifier>{a3c63da3-c8c8-4f6d-a83c-ab14f8a51f44}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\kit-main.cpp">
+      <Filter>Исходные файлы\kit</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\window\window.cpp">
+      <Filter>Исходные файлы\kit\window</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\utils\utils.cpp">
+      <Filter>Исходные файлы\kit\tools\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\component.cpp">
+      <Filter>Исходные файлы\kit\component</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css.cpp">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css_block.cpp">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css_block_state.cpp">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css_parse.cpp">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css-attributes.cpp">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\color\color.cpp">
+      <Filter>Исходные файлы\kit\tools\css\color</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\sdl_gfx\SDL2_gfxPrimitives.c">
+      <Filter>Исходные файлы\kit\tools\sdl_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\sdl_gfx\SDL2_rotozoom.c">
+      <Filter>Исходные файлы\kit\tools\sdl_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\navigator\navigator.cpp">
+      <Filter>Исходные файлы\kit\component\navigator</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\utils\css_utils.cpp">
+      <Filter>Исходные файлы\kit\tools\css\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\size\extended-size\extended-size.cpp">
+      <Filter>Исходные файлы\kit\tools\size\extended-size</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\size\simple-size\simple-size.cpp">
+      <Filter>Исходные файлы\kit\tools\size\simple-size</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\point\extended-point\extended-point.cpp">
+      <Filter>Исходные файлы\kit\tools\point\extended-point</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\rect\extended-rect\extended-rect.cpp">
+      <Filter>Исходные файлы\kit\tools\rect\extended-rect</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\components\components.cpp">
+      <Filter>Исходные файлы\kit\component\components</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\image\image.cpp">
+      <Filter>Исходные файлы\kit\tools\image</Filter>
+    </ClCompile>
+    <ClCompile Include="MyWindowClass\MyWindow.cpp">
+      <Filter>Исходные файлы\MyWindowClass</Filter>
+    </ClCompile>
+    <ClCompile Include="MyComponent\MyComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Button\button.cpp">
+      <Filter>Исходные файлы\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogWindow\DialogWindow.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="kit\event\event.h">
+      <Filter>Исходные файлы\kit\event</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\kit-main.h">
+      <Filter>Исходные файлы\kit</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\kit.h">
+      <Filter>Исходные файлы\kit</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\window\window.h">
+      <Filter>Исходные файлы\kit\window</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\utils\utils.h">
+      <Filter>Исходные файлы\kit\tools\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\component.h">
+      <Filter>Исходные файлы\kit\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\component-header.h">
+      <Filter>Исходные файлы\kit\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\image\image.h">
+      <Filter>Исходные файлы\kit\tools\image</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css.h">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css_block.h">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css_block_state.h">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css_parse.h">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css-attributes.h">
+      <Filter>Исходные файлы\kit\tools\css</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\color\color.h">
+      <Filter>Исходные файлы\kit\tools\css\color</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\utils\utils.h">
+      <Filter>Исходные файлы\kit\tools\css\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\components\components.h">
+      <Filter>Исходные файлы\kit\component\components</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\navigator\navigator.h">
+      <Filter>Исходные файлы\kit\component\navigator</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\size\extended-size\extended-size.h">
+      <Filter>Исходные файлы\kit\tools\size\extended-size</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\size\simple-size\simple-size.h">
+      <Filter>Исходные файлы\kit\tools\size\simple-size</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\point\extended-point\extended-point.h">
+      <Filter>Исходные файлы\kit\tools\point\extended-point</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\rect\extended-rect\extended-rect.h">
+      <Filter>Исходные файлы\kit\tools\rect\extended-rect</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\rect\simple-rect\simple-rect.h">
+      <Filter>Исходные файлы\kit\tools\rect\simple-rect</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\point\simple-point\simple-point.h">
+      <Filter>Исходные файлы\kit\tools\point\simple-point</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWindowClass\MyWindow.h">
+      <Filter>Исходные файлы\MyWindowClass</Filter>
+    </ClInclude>
+    <ClInclude Include="MyComponent\MyComponent.h">
+      <Filter>Исходные файлы\MyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Button\button.h">
+      <Filter>Исходные файлы\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogWindow\DialogWindow.h">
+      <Filter>Исходные файлы\DialogWindow</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

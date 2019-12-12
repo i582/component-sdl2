@@ -1,5 +1,5 @@
-#include "point.h"
-#include "../../rect/extended-rect/rect.h"
+#include "extended-point.h"
+#include "../../rect/extended-rect/extended-rect.h"
 
 using namespace Lib;
 
@@ -99,8 +99,8 @@ Point::Point(SDL_Point* p) : Point(p->x, p->y) {}
 
 Point::Point(string left, string top)
 {
-	this->top = top;
 	this->left = left;
+	this->top = top;
 	this->isCalculated = false;
 }
 
@@ -150,8 +150,8 @@ Point Point::calc(const Rect& parent)
 	/*if (isCalculated)
 		return *this;*/
 
-	this->_x = Point::parseExpressionToNumber(top, parent.size._w);
-	this->_y = Point::parseExpressionToNumber(left, parent.size._h);
+	this->_x = Point::parseExpressionToNumber(left, parent.size._w);
+	this->_y = Point::parseExpressionToNumber(top, parent.size._h);
 
 	this->isCalculated = true;
 

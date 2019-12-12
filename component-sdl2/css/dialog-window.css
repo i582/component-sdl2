@@ -1,0 +1,46 @@
+.navigator
+{
+    background-color: #3C3F41;
+
+    border-color: #616161;
+
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+}
+
+
+.header
+{
+    background-color: #4A4E52;
+}
+
+.button
+{
+    background-color: #4C5052;
+
+    border-color: #5E6060;
+    border-radius: 3px;
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+}
+
+.button:active
+{
+    border-color: #3D6185;
+    border-radius: 4px;
+    border-bottom: 3px solid #5E6060;
+    border-right: 3px solid #5E6060;
+    border-left: 3px solid #5E6060;
+    border-top: 3px solid #5E6060;
+}
+
+.button-blue
+{
+    background-color: #365880;
+
+    border-color: #4C708C;
+}

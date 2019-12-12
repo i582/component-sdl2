@@ -1,6 +1,5 @@
-#include "size.h"
-#include "../../rect/extended-rect/rect.h"
-#include "../../size/simple-size/size.h"
+#include "extended-size.h"
+#include "../../rect/extended-rect/extended-rect.h"
 
 using namespace Lib;
 

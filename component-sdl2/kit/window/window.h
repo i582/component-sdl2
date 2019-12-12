@@ -4,8 +4,12 @@
 #include "iostream"
 #include "string"
 
-#include "../tools/rect/simple-rect/rect.h"
+#include "../tools/rect/simple-rect/simple-rect.h"
 #include "../event/event.h"
+
+#include "../component/navigator/navigator.h"
+#include "../component/components/components.h"
+
 
 namespace Lib
 {
@@ -15,8 +19,34 @@ namespace Lib
 
 class Window
 {
-private:
-	SimpleRect size;
+
+protected:
+	map <string, Component*> allComponents;
+	map <string, CSS::css_block> allComponentsStyles;
+
+protected:
+	/**
+	 * @brief A function that processes all elements and adds styles
+	 * associated with classes for each component
+	 */
+	void handleStyles();
+
+public: /** Component Interface */
+
+	Component* addElement(Component* component);
+	Component* getElementById(string id) const;
+	Components getElementsByClassName(string className) const;
+
+
+
+public: /** Component Style Interface */
+
+	CSS::css_block* addStyle(string className, CSS::css_block style);
+	
+
+
+protected:
+	SimpleRect _size;
 	string title;
 
 
@@ -25,12 +55,22 @@ private:
 
 	bool is_display;
 
+	Navigator* navigator;
+	Navigator* $$;
+
+	CSS::css main_css;
+	bool wasSetupStyle;
+	bool wasSetupComponents;
+
 
 public: /** constructor & destructor*/
 	Window(string title, SimpleRect size);
 	~Window();
 
-private:
+public:
+	friend Component;
+
+protected:
 	void init();
 	void preSetup();
 
@@ -38,19 +78,18 @@ private:
 
 
 
-private: /** Events */
-	virtual void mouseButtonDown(SDL_Event* e) = 0;
-	virtual void mouseButtonUp(SDL_Event* e) = 0;
-	virtual void mouseMotion(SDL_Event* e) = 0;
-	virtual void mouseWheel(SDL_Event* e) = 0;
-	virtual void keyDown(SDL_Event* e) = 0;
-	virtual void keyUp(SDL_Event* e) = 0;
-
+protected: /** Events */
+	void mouseButtonDown(SDL_Event* e);
+	void mouseButtonUp(SDL_Event* e);
+	void mouseMotion(SDL_Event* e);
+	void mouseWheel(SDL_Event* e);
+	void keyDown(SDL_Event* e);
+	void keyUp(SDL_Event* e);
 
 
 public: /** Interface */
-	virtual void render() = 0;
-	virtual void onEvent(Event* e) = 0;
+	void render();
+	void onEvent(Event* e);
 
 
 	void show();
@@ -58,6 +97,34 @@ public: /** Interface */
 	bool isShow();
 
 	void close();
+
+
+
+
+public: /** Size Interface */
+
+	int width() const;
+	int height() const;
+	int top() const;
+	int left() const;
+	SimpleRect size() const;
+
+
+
+public: /** SDL Interface */
+
+	SDL_Renderer* getRenderer() const;
+	SDL_Window* getWindow() const;
+
+
+
+public: /** CSS Interface */
+
+	/**
+	 *  @brief Function for include css style file
+	 */
+	void include(string path);
+
 };
 
 }

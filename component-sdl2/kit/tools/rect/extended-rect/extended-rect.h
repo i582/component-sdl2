@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-#include "../../size/extended-size/size.h"
+#include "../../size/extended-size/extended-size.h"
 
 namespace Lib
 {

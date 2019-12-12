@@ -1,6 +1,11 @@
 #include "component.h"
+#include "../window/window.h"
 
-Lib::Component::Component(string id, Rect size, string classes)
+Lib::Component* Lib::Component::_hoverComponent = nullptr;
+
+Lib::Component::Component(string id, Rect size, string classes) : Component(id, size, classes, {}) {}
+
+Lib::Component::Component(string id, Rect size, string classes, vector<Component*> childrens)
 {
 	/** Sizes */
 	this->_innerSize = size;
@@ -18,7 +23,12 @@ Lib::Component::Component(string id, Rect size, string classes)
 
 
 	/** Childrens */
-	this->_childrens;
+	// this->_childrens = childrens;
+	for (auto& children : childrens)
+	{
+		append(children);
+	}
+
 	this->_childrensSize;
 
 
@@ -48,8 +58,8 @@ Lib::Component::Component(string id, Rect size, string classes)
 	this->_outerTexture = nullptr;
 
 
-	/** Styles */ // TO DO
-	// this->_cssBlock = CSS::css_block(id, true);
+	/** Styles */
+	this->_cssBlock = CSS::css_block(id, true);
 
 
 	/** Other for Events */
@@ -246,12 +256,269 @@ void Lib::Component::setupBackgroundImage()
 	}
 }
 
-void Lib::Component::setupContainer()
+void Lib::Component::setupParentWindow()
+{
+	if (this->_window == nullptr && _parent != nullptr && _parent->_window != nullptr)
+	{
+		this->_window = _parent->_window;
+		this->_window->addElement(this);
+	}
+
+	for (auto& children : _childrens)
+	{
+		children->setupParentWindow();
+	}
+}
+
+void Lib::Component::adjustMousePoint(Point& p)
+{
+	if (_parent == nullptr)
+		return;
+
+	p = p - _outerSize.start;
+
+	_parent->adjustMousePoint(p);
+}
+
+void Lib::Component::render()
+{
+	if (!_isDisplay)
+		return;
+
+	SDL_SetRenderTarget(_renderer, _outerTexture);
+	SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0xff, 0x00);
+	SDL_RenderClear(_renderer);
+
+	SDL_SetRenderTarget(_renderer, _innerTexture);
+	SDL_SetRenderDrawColor(_renderer, 0xff, 0xff, 0xff, 0x00);
+	SDL_RenderClear(_renderer);
+
+
+	CSS::css_block_state* blockState = &_cssBlock.normal();
+
+
+	if (_isHovered)
+	{
+		if (_isActive)
+		{
+			blockState = &_cssBlock.active();
+		}
+		else
+		{
+			blockState = &_cssBlock.hover();
+		}
+	}
+
+
+	SDL_SetRenderTarget(_renderer, _innerTexture);
+
+
+	Color _bk = blockState->get<Color>("background-color");
+	Color _br = blockState->get<Color>("border-color");
+
+	int borderRadius = blockState->get<int>("border-radius");
+
+	roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, _bk.color());
+
+
+
+	if (this->_image != nullptr)
+	{
+		string path = blockState->get<string>("background-image");
+		this->_image->setPath(path);
+
+		int x_shift = blockState->get<int>("background-position-x");
+		int y_shift = blockState->get<int>("background-position-y");
+
+		this->_image->setImageShift({ x_shift, y_shift });
+
+		string newSize = blockState->get<string>("background-size");
+
+		this->_image->setImageWidth(newSize);
+
+		this->_image->render();
+	}
+
+
+
+
+
+
+
+	/*_text->setColor(&blockState->get<Color>("color"));
+	_text->setFontSize(blockState->get<int>("font-size"));
+	_text->setLineHeight(blockState->get<double>("line-height"));
+	_text->setTextAlign(blockState->get<string>("text-align"));
+	_text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
+
+	_text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
+	_text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
+	_text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
+	_text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+
+	_text->render();*/
+
+
+
+	for (auto& children : _childrens)
+	{
+		children->render();
+	}
+
+
+	SDL_SetRenderTarget(_renderer, _outerTexture);
+
+	
+
+	int topSize = blockState->get<int>("border-top-size");
+	int bottomSize = blockState->get<int>("border-bottom-size");
+	int leftSize = blockState->get<int>("border-left-size");
+	int rightSize = blockState->get<int>("border-right-size");
+
+	/** Рисуем обводку */
+	roundedBoxColor(_renderer, _innerSize.x() - leftSize, _innerSize.y() - topSize,
+		_innerSize.x() + _innerSize.w() - 1 + rightSize, _innerSize.y() + _innerSize.h() - 1 + bottomSize, borderRadius, _br.color());
+
+
+
+
+
+	Rect copy = _innerSize;
+	copy.x(0); copy.y(0);
+
+	SDL_RenderCopy(_renderer, _innerTexture, &copy.toSdlRect(), &_innerSize.toSdlRect());
+
+
+	
+
+
+	SDL_Texture* parentTexture = nullptr;
+	if (_parent != nullptr)
+	{
+		parentTexture = _parent->innerTexture();
+	}
+
+	SDL_SetRenderTarget(_renderer, parentTexture);
+	SDL_RenderCopy(_renderer, _outerTexture, NULL, &_outerSize.toSdlRect());
+}
+
+void Lib::Component::mouseButtonDown(Event* e)
+{
+	if (!_isDisplay)
+		return;
+
+
+	Point mouseP(e->motion.x, e->motion.y);
+
+	adjustMousePoint(mouseP);
+
+
+	/*if (scroll->onHoverSlider(mouseP))
+	{
+		cout << "Scroll slider" << endl;
+
+		cout << "scroll active TRUE" << endl;
+		scrollActive = true;
+
+		return;
+	}*/
+
+
+	_eventListeners["click"](this, e);
+	_eventListeners["onmousedown"](this, e);
+
+	_isActive = true;
+}
+
+void Lib::Component::mouseButtonUp(Event* e)
+{
+	if (!_isDisplay)
+		return;
+
+	_eventListeners["onmouseup"](this, e);
+
+	//cout << "scroll active FALSE" << endl;
+	// scrollActive = false;
+	_isActive = false;
+}
+
+void Lib::Component::mouseMotion(Event* e)
+{
+	if (!_isDisplay)
+		return;
+
+	/*if (scrollActive)
+	{
+		scroll->shift(e->motion.yrel * (_sizeChilds.h() / _innerSize.h()));
+		return;
+	}*/
+
+	if (_isEnterInComponent == false)
+	{
+		_eventListeners["onmouseover"](this, e);
+		_isEnterInComponent = true;
+	}
+
+	if (_hoverComponent != this)
+	{
+		if (_hoverComponent != nullptr && !_hoverComponent->isChildrenObject(this))
+		{
+			_hoverComponent->mouseOut(e);
+		}
+
+		_hoverComponent = this;
+	}
+
+
+	_isHovered = true;
+	//SDL_SetCursor(style->hoverCursor());
+
+	_eventListeners["mousemotion"](this, e);
+	_eventListeners["hover"](this, e);
+}
+
+void Lib::Component::mouseOut(Event* e)
+{
+	if (!_isDisplay)
+		return;
+
+	_eventListeners["onmouseout"](this, e);
+
+	_isHovered = false;
+	_isEnterInComponent = false;
+}
+
+void Lib::Component::mouseScroll(Event* e, int scrollDirection)
+{
+	if (!_isDisplay)
+		return;
+
+	/*if (!scrollable)
+	{
+		Container* firstScrollableParent = getFirstScrollableParent();
+
+		if (firstScrollableParent != nullptr)
+		{
+			firstScrollableParent->mouseScroll(e, scrollDirection);
+		}
+
+		return;
+	}
+
+	if (scrollDirection < 0)
+		scroll->shift(20);
+	else
+		scroll->shift(-20);*/
+}
+
+void Lib::Component::setupComponents()
 {
 	setupChildrenRenderer();
 
 	computeSize();
 	computeChildrenSize();
+
+	
 
 	setupBackgroundImage();
 }
@@ -379,12 +646,35 @@ bool Lib::Component::isParentObject(Component* obj) const
 	return is_parent;
 }
 
+Lib::Component* Lib::Component::append(Component* component)
+{
+	if (component != nullptr)
+	{
+		this->_childrens.push_back(component);
+		component->_parent = this;
+	
+		setupParentWindow();
+	}
+
+	return component;
+}
+
+Lib::Component* Lib::Component::append(vector<Component*> components)
+{
+	for (auto& component : components)
+	{
+		append(component);
+	}
+
+	return this;
+}
+
 bool Lib::Component::onHover(Point point)
 {
 	return _isDisplay && point.in(_outerSize);
 }
 
-Lib::Component* const Lib::Component::onContainerHover(Point point)
+Lib::Component* const Lib::Component::onComponentHover(Point point)
 {
 	// point.dy(scroll->_nowValue);
 
@@ -397,14 +687,14 @@ Lib::Component* const Lib::Component::onContainerHover(Point point)
 			// adjust coord
 			point = point - children->outerSize().start;
 
-			return children->onContainerHover(point);
+			return children->onComponentHover(point);
 		}
 	}
 
 	return this;
 }
 
-Lib::string& Lib::Component::id()
+Lib::string Lib::Component::id() const
 {
 	return _id;
 }

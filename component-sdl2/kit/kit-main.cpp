@@ -35,6 +35,15 @@ void Lib::Kit::run()
 	close();
 }
 
+Lib::Window* Lib::Kit::addWindow(Window* window)
+{
+	windows.push_back(window);
+
+	render();
+
+	return windows.back();
+}
+
 void Lib::Kit::setup()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -62,8 +71,8 @@ void Lib::Kit::onEvent()
 	{
 		windowId = e.window.windowID - 1;
 
-		/*if (windowId < windows.size())
-			windows[windowId]->onEvent(&e);*/
+		if (windowId < windows.size())
+			windows[windowId]->onEvent(&e);
 	}
 }
 

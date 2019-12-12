@@ -1,9 +1,6 @@
 #pragma once
 
-#include "iostream"
-#include "SDL.h"
-#include "event/event.h"
-
+#include "window/window.h"
 
 namespace Lib
 {
@@ -24,8 +21,13 @@ public:
 
 private:
 	bool is_running;
-
 	Event e;
+
+	vector <Window*> windows;
+
+public:
+	Window* addWindow(Window* window);
+
 
 private:
 	void setup();

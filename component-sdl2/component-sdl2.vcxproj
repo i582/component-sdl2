@@ -69,16 +69,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\SDL2\SDL2_gfx;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\include;$(IncludePath)$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2\SDL2_ttf-2.0.15\lib\x86;C:\SDL2\SDL2_image-2.0.4\lib\x86;C:\SDL2\lib\x86;$(LibraryPath)$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +97,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,6 +131,60 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button\button.cpp" />
+    <ClCompile Include="DialogWindow\DialogWindow.cpp" />
+    <ClCompile Include="kit\component\component.cpp" />
+    <ClCompile Include="kit\component\components\components.cpp" />
+    <ClCompile Include="kit\component\navigator\navigator.cpp" />
+    <ClCompile Include="kit\kit-main.cpp" />
+    <ClCompile Include="kit\tools\css\color\color.cpp" />
+    <ClCompile Include="kit\tools\css\css-attributes.cpp" />
+    <ClCompile Include="kit\tools\css\css.cpp" />
+    <ClCompile Include="kit\tools\css\css_block.cpp" />
+    <ClCompile Include="kit\tools\css\css_block_state.cpp" />
+    <ClCompile Include="kit\tools\css\css_parse.cpp" />
+    <ClCompile Include="kit\tools\css\utils\css_utils.cpp" />
+    <ClCompile Include="kit\tools\image\image.cpp" />
+    <ClCompile Include="kit\tools\point\extended-point\extended-point.cpp" />
+    <ClCompile Include="kit\tools\rect\extended-rect\extended-rect.cpp" />
+    <ClCompile Include="kit\tools\sdl_gfx\SDL2_gfxPrimitives.c" />
+    <ClCompile Include="kit\tools\sdl_gfx\SDL2_rotozoom.c" />
+    <ClCompile Include="kit\tools\size\extended-size\extended-size.cpp" />
+    <ClCompile Include="kit\tools\size\simple-size\simple-size.cpp" />
+    <ClCompile Include="kit\tools\utils\utils.cpp" />
+    <ClCompile Include="kit\window\window.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyComponent\MyComponent.cpp" />
+    <ClCompile Include="MyWindowClass\MyWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Button\button.h" />
+    <ClInclude Include="DialogWindow\DialogWindow.h" />
+    <ClInclude Include="kit\component\component-header.h" />
+    <ClInclude Include="kit\component\component.h" />
+    <ClInclude Include="kit\component\components\components.h" />
+    <ClInclude Include="kit\component\navigator\navigator.h" />
+    <ClInclude Include="kit\event\event.h" />
+    <ClInclude Include="kit\kit-main.h" />
+    <ClInclude Include="kit\kit.h" />
+    <ClInclude Include="kit\tools\css\color\color.h" />
+    <ClInclude Include="kit\tools\css\css-attributes.h" />
+    <ClInclude Include="kit\tools\css\css.h" />
+    <ClInclude Include="kit\tools\css\css_block.h" />
+    <ClInclude Include="kit\tools\css\css_block_state.h" />
+    <ClInclude Include="kit\tools\css\css_parse.h" />
+    <ClInclude Include="kit\tools\css\utils\utils.h" />
+    <ClInclude Include="kit\tools\image\image.h" />
+    <ClInclude Include="kit\tools\point\extended-point\extended-point.h" />
+    <ClInclude Include="kit\tools\point\simple-point\simple-point.h" />
+    <ClInclude Include="kit\tools\rect\extended-rect\extended-rect.h" />
+    <ClInclude Include="kit\tools\rect\simple-rect\simple-rect.h" />
+    <ClInclude Include="kit\tools\size\extended-size\extended-size.h" />
+    <ClInclude Include="kit\tools\size\simple-size\simple-size.h" />
+    <ClInclude Include="kit\tools\utils\utils.h" />
+    <ClInclude Include="kit\window\window.h" />
+    <ClInclude Include="MyComponent\MyComponent.h" />
+    <ClInclude Include="MyWindowClass\MyWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

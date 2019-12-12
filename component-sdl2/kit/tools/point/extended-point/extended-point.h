@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "../../utils/utils.h"
 
+
 namespace Lib
 {
 
@@ -11,6 +12,8 @@ using std::cout;
 using std::endl;
 
 class Rect;
+
+class Size;
 
 class Point
 {
