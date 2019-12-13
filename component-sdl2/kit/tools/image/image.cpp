@@ -14,14 +14,36 @@ Image::Image(Component* parent)
 	this->renderer = parent->renderer();
 	this->parentTexture = parent->innerTexture();
 
-	this->containerSize = this->generalSize = { 0, 0 , parent->width(), parent->height() };
+	this->containerSize = { 0, 0 , parent->width(), parent->height() };
+
+
+
+
+
 
 	this->needReRender = true;
 }
 
 void Image::setPath(string path)
 {
+	if (path.empty())
+		return;
+
+
 	this->path = path;
+
+
+
+	this->texture = IMG_LoadTexture(renderer, this->path.c_str());
+
+	if (this->texture == nullptr)
+	{
+		cout << "Error: " << IMG_GetError() << endl;
+		return;
+	}
+
+	SDL_QueryTexture(this->texture, nullptr, nullptr, &this->generalSize.w, &this->generalSize.h);
+
 	this->needReRender = true;
 }
 

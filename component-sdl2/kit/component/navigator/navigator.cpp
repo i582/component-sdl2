@@ -2,7 +2,7 @@
 #include "../../window/window.h"
 
 Lib::Navigator::Navigator(Window* parent)
-	: Component("#navigator", { 0, 0, parent->width(), parent->height() }, ".navigator")
+	: Component("#navigator", { 1, 1, parent->width() - 2, parent->height() - 2 }, ".navigator")
 {
 	this->_window = parent;
 	this->_renderer = parent->getRenderer();

@@ -35,8 +35,22 @@ void Lib::Kit::run()
 	close();
 }
 
+Lib::Window* Lib::Kit::at(size_t index)
+{
+	if (index >= windows.size())
+		return nullptr;
+
+	return windows[index];
+}
+
+Lib::Window* Lib::Kit::operator[](size_t index)
+{
+	return at(index);
+}
+
 Lib::Window* Lib::Kit::addWindow(Window* window)
 {
+	window->parent = this;
 	windows.push_back(window);
 
 	render();
@@ -54,6 +68,7 @@ void Lib::Kit::setup()
 
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
+	SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 }
 
 void Lib::Kit::render()

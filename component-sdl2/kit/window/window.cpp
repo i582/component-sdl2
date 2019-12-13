@@ -1,5 +1,6 @@
 #include "window.h"
 
+
 void Lib::Window::handleStyles()
 {
 
@@ -101,7 +102,7 @@ void Lib::Window::init()
 	this->window = SDL_CreateWindow(title.c_str(),
 		_size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
 		_size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
-		_size.w, _size.h, 0); //SDL_WINDOW_RESIZABLE
+		_size.w, _size.h, SDL_WINDOW_BORDERLESS); //SDL_WINDOW_RESIZABLE
 
 	if (window == nullptr)
 	{
@@ -141,7 +142,7 @@ void Lib::Window::render()
 
 	SDL_SetRenderTarget(renderer, NULL);
 
-	SDL_SetRenderDrawColor(renderer,  0x33, 0x33, 0x33, 0xff );
+	SDL_SetRenderDrawColor(renderer,  0x00, 0x00, 0x00, 0xff );
 	SDL_RenderFillRect(renderer, NULL);
 
 	SDL_SetRenderDrawColor(renderer,  0xff, 0xff, 0xff, 0x00 );
@@ -196,12 +197,32 @@ void Lib::Window::onEvent(Event* e)
 		break;
 	}
 
+	case SDL_WINDOWEVENT:
+	{
+		switch (e->window.event) {
+		case SDL_WINDOWEVENT_MINIMIZED:
+		case SDL_WINDOWEVENT_MAXIMIZED:
+		case SDL_WINDOWEVENT_RESTORED:
+		case SDL_WINDOWEVENT_ENTER:
+		case SDL_WINDOWEVENT_LEAVE:
+		case SDL_WINDOWEVENT_SHOWN:
+		{
+			render();
+			break;
+		}
+		}
+
+		break;
+	}
+
 	break;
 	}
 }
 
 void Lib::Window::show()
 {
+	render();
+
 	is_display = true;
 
 	SDL_ShowWindow(window);
@@ -209,14 +230,20 @@ void Lib::Window::show()
 
 void Lib::Window::hide()
 {
+
 	is_display = false;
 
-	SDL_ShowWindow(window);
+	SDL_HideWindow(window);
 }
 
 bool Lib::Window::isShow()
 {
 	return is_display;
+}
+
+void Lib::Window::collapse()
+{
+	SDL_MinimizeWindow(window);
 }
 
 void Lib::Window::close()
@@ -263,6 +290,27 @@ SDL_Renderer* Lib::Window::getRenderer() const
 SDL_Window* Lib::Window::getWindow() const
 {
 	return window;
+}
+
+void Lib::Window::setDraggableArea(SimpleRect area_)
+{
+	SimpleRect* size = new SimpleRect;
+	*size = area_;
+
+	SDL_SetWindowHitTest(window, [](SDL_Window* win, const SDL_Point* area, void* callback_data) -> SDL_HitTestResult
+	{
+		SimpleRect rect = *(SimpleRect*)callback_data;
+
+		SDL_Rect rec = { 0, 0, rect.w, rect.h };
+
+
+		if (SDL_PointInRect(area, &rec))
+			return SDL_HITTEST_DRAGGABLE;
+
+		return SDL_HITTEST_NORMAL;
+	}
+	, size);
+
 }
 
 void Lib::Window::mouseButtonDown(SDL_Event* e)

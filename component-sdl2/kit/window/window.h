@@ -17,6 +17,8 @@ namespace Lib
 	using std::endl;
 	using std::string;
 
+	class Kit;
+
 class Window
 {
 
@@ -63,12 +65,15 @@ protected:
 	bool wasSetupComponents;
 
 
+	Kit* parent;
+
 public: /** constructor & destructor*/
 	Window(string title, SimpleRect size);
 	~Window();
 
 public:
 	friend Component;
+	friend Kit;
 
 protected:
 	void init();
@@ -96,6 +101,8 @@ public: /** Interface */
 	void hide();
 	bool isShow();
 
+	void collapse();
+
 	void close();
 
 
@@ -117,6 +124,9 @@ public: /** SDL Interface */
 	SDL_Window* getWindow() const;
 
 
+public: /** Other Interface */
+
+	void setDraggableArea(SimpleRect area);
 
 public: /** CSS Interface */
 

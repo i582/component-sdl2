@@ -91,6 +91,18 @@
     <Filter Include="Исходные файлы\DialogWindow">
       <UniqueIdentifier>{a3c63da3-c8c8-4f6d-a83c-ab14f8a51f44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\SystemButton">
+      <UniqueIdentifier>{7f3228eb-d383-481c-bc04-7f79a41ed1d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\text">
+      <UniqueIdentifier>{b461f8c8-f981-4f58-bff5-93a8205205e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\tools\font">
+      <UniqueIdentifier>{7b94ff5d-ec3b-4925-9e51-a8882d5c066b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\DialogAnswer">
+      <UniqueIdentifier>{1e444c9b-b05c-4b80-acb4-f86eb7e6239b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -159,14 +171,32 @@
     <ClCompile Include="MyWindowClass\MyWindow.cpp">
       <Filter>Исходные файлы\MyWindowClass</Filter>
     </ClCompile>
-    <ClCompile Include="MyComponent\MyComponent.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Button\button.cpp">
       <Filter>Исходные файлы\Button</Filter>
     </ClCompile>
+    <ClCompile Include="MyComponent\MyComponent.cpp">
+      <Filter>Исходные файлы\MyComponent</Filter>
+    </ClCompile>
     <ClCompile Include="DialogWindow\DialogWindow.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\DialogWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemButton\SystemButton.cpp">
+      <Filter>Исходные файлы\SystemButton</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\text\text.cpp">
+      <Filter>Исходные файлы\kit\tools\text</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\text\text_line.cpp">
+      <Filter>Исходные файлы\kit\tools\text</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\font\font.cpp">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\font\fonts.cpp">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogAnswer\DialogAnswer.cpp">
+      <Filter>Исходные файлы\DialogAnswer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +280,24 @@
     </ClInclude>
     <ClInclude Include="DialogWindow\DialogWindow.h">
       <Filter>Исходные файлы\DialogWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemButton\SystemButton.h">
+      <Filter>Исходные файлы\SystemButton</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\text\text.h">
+      <Filter>Исходные файлы\kit\tools\text</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\text\text_line.h">
+      <Filter>Исходные файлы\kit\tools\text</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\font\fonts.h">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\font\font.h">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogAnswer\DialogAnswer.h">
+      <Filter>Исходные файлы\DialogAnswer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

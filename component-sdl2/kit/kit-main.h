@@ -35,9 +35,11 @@ private:
 	void onEvent();
 	void close();
 
-public:
+public: /** Interface */
 	void run();
 
+	Window* at(size_t index);
+	Window* operator[](size_t index);
 };
 
 }	

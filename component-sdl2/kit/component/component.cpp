@@ -66,6 +66,13 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 	this->_isEnterInComponent = false;
 
 
+	/** Text */
+	Font::root("../component-sdl2/fonts/");
+	this->_font = new Font("segoeui");
+	this->_text = new Text(this, "", { 0,0,0,0 }, _font, 14, Color("#000000"));
+
+
+
 	/** Image */
 	this->_image = nullptr;
 }
@@ -76,7 +83,8 @@ Lib::Component::~Component()
 	SDL_DestroyTexture(_outerTexture);
 
 	//delete _scroll;
-	//delete _text;
+	delete _font;
+	delete _text;
 	delete _image;
 }
 
@@ -102,6 +110,8 @@ void Lib::Component::setupChildrenRenderer()
 	if (this->_renderer == nullptr && this->_parent != nullptr)
 	{
 		this->_renderer = _parent->renderer();
+
+		this->_text->setRenderer(this->_renderer);
 	}
 
 	for (auto& children : _childrens)
@@ -161,6 +171,8 @@ void Lib::Component::computeSize()
 	SDL_SetTextureBlendMode(_innerTexture, SDL_BLENDMODE_BLEND);
 
 
+	/** Устанавливаем размер текста */
+	this->_text->setSize({ 0, 0, _innerSize.w(), _innerSize.h() });
 
 
 	for (auto& children : _childrens)
@@ -345,7 +357,7 @@ void Lib::Component::render()
 
 
 
-	/*_text->setColor(&blockState->get<Color>("color"));
+	_text->setColor(&blockState->get<Color>("color"));
 	_text->setFontSize(blockState->get<int>("font-size"));
 	_text->setLineHeight(blockState->get<double>("line-height"));
 	_text->setTextAlign(blockState->get<string>("text-align"));
@@ -356,7 +368,7 @@ void Lib::Component::render()
 	_text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
 	_text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
 
-	_text->render();*/
+	_text->render();
 
 
 
@@ -785,6 +797,11 @@ Lib::Component* Lib::Component::toggleClass(string className)
 	}
 
 	return this;
+}
+
+void Lib::Component::setText(string text)
+{
+	_text->setText(text);
 }
 
 

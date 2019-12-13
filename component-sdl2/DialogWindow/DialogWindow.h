@@ -5,6 +5,8 @@
 #include "../MyComponent/MyComponent.h"
 #include "../Button/Button.h"
 
+#include "../DialogAnswer/DialogAnswer.h"
+
 using namespace Lib;
 
 class DialogWindow : public Window

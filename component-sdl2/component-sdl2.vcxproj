@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button\button.cpp" />
+    <ClCompile Include="DialogAnswer\DialogAnswer.cpp" />
     <ClCompile Include="DialogWindow\DialogWindow.cpp" />
     <ClCompile Include="kit\component\component.cpp" />
     <ClCompile Include="kit\component\components\components.cpp" />
@@ -144,6 +145,8 @@
     <ClCompile Include="kit\tools\css\css_block_state.cpp" />
     <ClCompile Include="kit\tools\css\css_parse.cpp" />
     <ClCompile Include="kit\tools\css\utils\css_utils.cpp" />
+    <ClCompile Include="kit\tools\font\font.cpp" />
+    <ClCompile Include="kit\tools\font\fonts.cpp" />
     <ClCompile Include="kit\tools\image\image.cpp" />
     <ClCompile Include="kit\tools\point\extended-point\extended-point.cpp" />
     <ClCompile Include="kit\tools\rect\extended-rect\extended-rect.cpp" />
@@ -151,14 +154,18 @@
     <ClCompile Include="kit\tools\sdl_gfx\SDL2_rotozoom.c" />
     <ClCompile Include="kit\tools\size\extended-size\extended-size.cpp" />
     <ClCompile Include="kit\tools\size\simple-size\simple-size.cpp" />
+    <ClCompile Include="kit\tools\text\text.cpp" />
+    <ClCompile Include="kit\tools\text\text_line.cpp" />
     <ClCompile Include="kit\tools\utils\utils.cpp" />
     <ClCompile Include="kit\window\window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyComponent\MyComponent.cpp" />
     <ClCompile Include="MyWindowClass\MyWindow.cpp" />
+    <ClCompile Include="SystemButton\SystemButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button\button.h" />
+    <ClInclude Include="DialogAnswer\DialogAnswer.h" />
     <ClInclude Include="DialogWindow\DialogWindow.h" />
     <ClInclude Include="kit\component\component-header.h" />
     <ClInclude Include="kit\component\component.h" />
@@ -174,6 +181,8 @@
     <ClInclude Include="kit\tools\css\css_block_state.h" />
     <ClInclude Include="kit\tools\css\css_parse.h" />
     <ClInclude Include="kit\tools\css\utils\utils.h" />
+    <ClInclude Include="kit\tools\font\font.h" />
+    <ClInclude Include="kit\tools\font\fonts.h" />
     <ClInclude Include="kit\tools\image\image.h" />
     <ClInclude Include="kit\tools\point\extended-point\extended-point.h" />
     <ClInclude Include="kit\tools\point\simple-point\simple-point.h" />
@@ -181,10 +190,13 @@
     <ClInclude Include="kit\tools\rect\simple-rect\simple-rect.h" />
     <ClInclude Include="kit\tools\size\extended-size\extended-size.h" />
     <ClInclude Include="kit\tools\size\simple-size\simple-size.h" />
+    <ClInclude Include="kit\tools\text\text.h" />
+    <ClInclude Include="kit\tools\text\text_line.h" />
     <ClInclude Include="kit\tools\utils\utils.h" />
     <ClInclude Include="kit\window\window.h" />
     <ClInclude Include="MyComponent\MyComponent.h" />
     <ClInclude Include="MyWindowClass\MyWindow.h" />
+    <ClInclude Include="SystemButton\SystemButton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

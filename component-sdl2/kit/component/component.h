@@ -5,6 +5,8 @@
 #include "../tools/rect/extended-rect/extended-rect.h"
 #include "../tools/size/simple-size/simple-size.h"
 #include "../tools/image/image.h"
+#include "../tools/font/font.h"
+#include "../tools/text/text.h"
 #include "../tools/css/css.h"
 
 #include "component-header.h"
@@ -81,8 +83,8 @@ protected:
 
 
 	/** Text part */ // TO DO
-	// Font* _font;
-	// Text* _text;
+	Font* _font;
+	Text* _text;
 
 
 	/** Image */
@@ -306,6 +308,10 @@ public: /** Class Interface */
 	Component* removeClass(string className);
 	Component* addClass(string className);
 	Component* toggleClass(string className);
+
+
+public: /** Text Interface */
+	void setText(string text);
 
 };
 
