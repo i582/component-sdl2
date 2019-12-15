@@ -17,6 +17,7 @@ Lib::Kit::Kit()
 
 	this->is_running = true;
 
+	this->count_deleted_windows = 0;
 
 	this->setup();
 }
@@ -46,6 +47,11 @@ Lib::Window* Lib::Kit::at(size_t index)
 Lib::Window* Lib::Kit::operator[](size_t index)
 {
 	return at(index);
+}
+
+Lib::vector<Lib::Window*>* Lib::Kit::getWindows()
+{
+	return &windows;
 }
 
 Lib::Window* Lib::Kit::addWindow(Window* window)
@@ -85,6 +91,9 @@ void Lib::Kit::onEvent()
 	while (is_running && SDL_WaitEvent(&e))
 	{
 		windowId = e.window.windowID - 1;
+
+		if (windowId != 0)
+			windowId -= count_deleted_windows;
 
 		if (windowId < windows.size())
 			windows[windowId]->onEvent(&e);

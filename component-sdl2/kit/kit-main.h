@@ -23,11 +23,14 @@ private:
 	bool is_running;
 	Event e;
 
+	int count_deleted_windows;
+
 	vector <Window*> windows;
 
 public:
 	Window* addWindow(Window* window);
 
+	friend Window;
 
 private:
 	void setup();
@@ -40,6 +43,8 @@ public: /** Interface */
 
 	Window* at(size_t index);
 	Window* operator[](size_t index);
+
+	vector <Window*>* getWindows();
 };
 
 }	

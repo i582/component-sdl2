@@ -35,7 +35,7 @@ Font& Font::create(string name)
 	return *(new Font(name));
 }
 
-TTF_Font* Font::at(unsigned int size)
+TTF_Font* Font::at(unsigned int size) const
 {
 	if (folderPath == "none")
 	{

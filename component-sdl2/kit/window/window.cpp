@@ -1,5 +1,5 @@
 #include "window.h"
-
+#include "../kit-main.h"
 
 void Lib::Window::handleStyles()
 {
@@ -86,6 +86,8 @@ Lib::Window::Window(string title, SimpleRect size)
 	this->wasSetupStyle = false;
 	this->wasSetupComponents = false;
 
+	this->need_close = false;
+
 	this->init();
 }
 
@@ -94,7 +96,12 @@ Lib::Window::~Window()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
-	delete $$;
+	for (auto& element : allComponents)
+	{
+		delete element.second;
+	}
+
+
 }
 
 void Lib::Window::init()
@@ -158,6 +165,18 @@ void Lib::Window::render()
 
 void Lib::Window::onEvent(Event* e)
 {
+	if (need_close)
+	{
+		Window* temp = parent->at(1);
+		parent->count_deleted_windows++;
+		parent->getWindows()->erase(parent->getWindows()->end() - 1);
+
+		delete temp;
+
+		Component::_hoverComponent = nullptr;
+		return;
+	}
+
 	switch (e->type)
 	{
 
@@ -170,12 +189,25 @@ void Lib::Window::onEvent(Event* e)
 	case SDL_MOUSEBUTTONDOWN:
 	{
 		mouseButtonDown(e);
+
 		break;
 	}
 
 	case SDL_MOUSEBUTTONUP:
 	{
 		mouseButtonUp(e);
+
+		if (need_close)
+		{
+			Window* temp = parent->at(1);
+			parent->count_deleted_windows++;
+			parent->getWindows()->erase(parent->getWindows()->end() - 1);
+
+			delete temp;
+
+			Component::_hoverComponent = nullptr;
+			return;
+		}
 		break;
 	}
 
@@ -197,7 +229,7 @@ void Lib::Window::onEvent(Event* e)
 		break;
 	}
 
-	case SDL_WINDOWEVENT:
+	/*case SDL_WINDOWEVENT:
 	{
 		switch (e->window.event) {
 		case SDL_WINDOWEVENT_MINIMIZED:
@@ -213,9 +245,16 @@ void Lib::Window::onEvent(Event* e)
 		}
 
 		break;
-	}
+	}*/
 
 	break;
+
+	default:
+	{
+		
+		break;
+	}
+		
 	}
 }
 
@@ -248,7 +287,7 @@ void Lib::Window::collapse()
 
 void Lib::Window::close()
 {
-	SDL_DestroyWindow(window);
+	this->need_close = true;
 }
 
 void Lib::Window::include(string path)

@@ -24,13 +24,19 @@ Image::Image(Component* parent)
 	this->needReRender = true;
 }
 
-void Image::setPath(string path)
+void Image::setPath(const string& path)
 {
 	if (path.empty())
 		return;
+	
+	this->path.clear();
+
+	for (auto& path_symbol : path)
+	{
+		this->path += path_symbol;
+	}
 
 
-	this->path = path;
 
 
 
@@ -52,18 +58,18 @@ void Image::setRenderer(SDL_Renderer* renderer)
 	this->renderer = renderer;
 }
 
-void Image::setImageSize(SimpleRect generalSize)
+void Image::setImageSize(const SimpleRect& generalSize)
 {
 	this->generalSize = generalSize;
 }
 
-void Image::setImageShift(SimplePoint p)
+void Image::setImageShift(const SimplePoint& p)
 {
 	this->generalSize.x = p.x;
 	this->generalSize.y = p.y;
 }
 
-void Image::setImageWidth(string size)
+void Image::setImageWidth(const string& size)
 {
 	if (size == "")
 		return;

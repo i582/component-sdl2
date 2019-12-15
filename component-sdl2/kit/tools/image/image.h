@@ -39,12 +39,12 @@ public:
 	Image(Component* parent);
 
 public:
-	void setPath(string path);
+	void setPath(const string& path);
 	void setRenderer(SDL_Renderer* renderer);
 
-	void setImageSize(SimpleRect generalSize);
-	void setImageShift(SimplePoint p);
-	void setImageWidth(string size);
+	void setImageSize(const SimpleRect& generalSize);
+	void setImageShift(const SimplePoint& p);
+	void setImageWidth(const string& size);
 
 private:
 	void createTexture();

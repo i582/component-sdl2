@@ -88,15 +88,15 @@ private:
 public:
 	void render();
 
-	void setText(string text);
-	void setSize(Rect size);
-	void setFont(Font* font);
-	void setFontSize(size_t fontSize);
-	void setColor(Color* color);
-	void setLineHeight(double lineHeight);
-	void setTextAlign(string align);
-	void setTextBlockVerticalAlign(string align);
-	void setTextBlockMargin(string side, int value);
+	void setText(const string& text);
+	void setSize(const Rect& size);
+	void setFont(const Font& font);
+	void setFontSize(const size_t& fontSize);
+	void setColor(const Color& color);
+	void setLineHeight(const double& lineHeight);
+	void setTextAlign(const string& align);
+	void setTextBlockVerticalAlign(const string& align);
+	void setTextBlockMargin(const string& side, int value);
 
 	void setRenderer(SDL_Renderer* renderer);
 

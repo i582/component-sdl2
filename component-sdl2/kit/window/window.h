@@ -65,6 +65,8 @@ protected:
 	bool wasSetupComponents;
 
 
+	bool need_close;
+
 	Kit* parent;
 
 public: /** constructor & destructor*/
@@ -116,7 +118,7 @@ public: /** Size Interface */
 	int left() const;
 	SimpleRect size() const;
 
-
+		
 
 public: /** SDL Interface */
 

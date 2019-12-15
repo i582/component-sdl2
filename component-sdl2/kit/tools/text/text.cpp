@@ -217,7 +217,7 @@ void Text::render()
 	SDL_RenderCopy(renderer, texture, NULL, &size.toSdlRect());
 }
 
-void Text::setText(string text)
+void Text::setText(const string& text)
 {
 	if (this->text == text)
 		return;
@@ -233,7 +233,7 @@ void Text::setText(string text)
 	this->needReRender = true;
 }
 
-void Text::setSize(Rect size)
+void Text::setSize(const Rect& size)
 {
 	if (this->size == size)
 		return;
@@ -248,21 +248,24 @@ void Text::setSize(Rect size)
 	this->needReRender = true;
 }
 
-void Text::setFont(Font* font)
+void Text::setFont(const Font& font)
 {
-	if (this->font == font)
+	if (this->font == &font)
 		return;
 
-	this->font = font;
+	Font* f = new Font;
+	*f = font;
+
+	this->font = f;
 
 	if (this->font != nullptr)
-		this->ttf_font = font->at(fontSize);
+		this->ttf_font = font.at(fontSize);
 
 	this->splitted = false;
 	this->needReRender = true;
 }
 
-void Text::setFontSize(size_t fontSize)
+void Text::setFontSize(const size_t& fontSize)
 {
 	if (this->fontSize == fontSize)
 		return;
@@ -277,17 +280,17 @@ void Text::setFontSize(size_t fontSize)
 	this->needReRender = true;
 }
 
-void Text::setColor(Color* color)
+void Text::setColor(const Color& color)
 {
-	if (this->color == *color)
+	if (this->color == color)
 		return;
 
-	this->color = *color;
+	this->color = color;
 
 	this->needReRender = true;
 }
 
-void Text::setLineHeight(double lineHeight)
+void Text::setLineHeight(const double& lineHeight)
 {
 	if (this->lineHeight == lineHeight)
 		return;
@@ -297,7 +300,7 @@ void Text::setLineHeight(double lineHeight)
 	this->needReRender = true;
 }
 
-void Text::setTextAlign(string align)
+void Text::setTextAlign(const string& align)
 {
 	TextAlign temp;
 	if (align == "left")
@@ -321,7 +324,7 @@ void Text::setTextAlign(string align)
 	this->needReRender = true;
 }
 
-void Text::setTextBlockVerticalAlign(string align)
+void Text::setTextBlockVerticalAlign(const string& align)
 {
 	TextBlockVerticalAlign temp;
 	if (align == "top")
@@ -349,7 +352,7 @@ void Text::setTextBlockVerticalAlign(string align)
 	this->needReRender = true;
 }
 
-void Text::setTextBlockMargin(string side, int value)
+void Text::setTextBlockMargin(const string& side, int value)
 {
 	if (side == "top")
 	{

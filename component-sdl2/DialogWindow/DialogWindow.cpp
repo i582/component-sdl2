@@ -7,11 +7,11 @@ DialogWindow::DialogWindow(string title, SimpleRect size)
 	setup();
 }
 
+
 /** 560 / 95 */
 void DialogWindow::setup()
 {
 	
-
 	include("./css/dialog-window.css");
 
 	SDL_SetWindowBordered(window, SDL_FALSE);

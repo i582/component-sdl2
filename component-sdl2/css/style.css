@@ -85,6 +85,18 @@
 
 
 
+.window-header
+{
+    color: #dadacb;
+
+    font-size: 12px;
+    line-height: 1.15;
+   
+    margin-left: 20px;
+
+    vertical-align: center;
+}
+
 
 .system-exit
 {
@@ -124,4 +136,83 @@
 .system-collapse:hover
 {
     background-color: #2B2E2F;
+}
+
+
+
+.checkbox
+{
+    background-image: url(images/unselect_1.png);
+    background-size: 16px;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.3;
+    
+    margin-left: 25px;
+    vertical-align: center;
+}
+
+.checkbox-checked
+{
+    background-image: url(images/select_1.png);
+    background-size: 16px;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.3;
+    
+    margin-left: 25px;
+    vertical-align: center;
+}
+
+
+.radio-button
+{
+    background-image: url(images/unselect.png);
+    background-size: 13px;
+
+    background-position-y: 2px;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.3;
+    
+    margin-left: 25px;
+    vertical-align: center;
+}
+
+.radio-button-checked
+{
+    background-image: url(images/select.png);
+    background-size: 13px;
+
+    background-position-y: 2px;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.3;
+    
+    margin-left: 25px;
+    vertical-align: center;
+}
+
+
+.outer-block
+{
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+}
+
+.inner-block
+{
+    background-color: #3E434C;
 }

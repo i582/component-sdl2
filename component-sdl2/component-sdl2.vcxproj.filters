@@ -103,6 +103,15 @@
     <Filter Include="Исходные файлы\DialogAnswer">
       <UniqueIdentifier>{1e444c9b-b05c-4b80-acb4-f86eb7e6239b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Checkbox">
+      <UniqueIdentifier>{34bb2c30-7f33-476e-ae2e-873144b11ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\RadioButton">
+      <UniqueIdentifier>{48e67996-5b38-44f3-8bce-2e18bf1c64d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\component\scroll">
+      <UniqueIdentifier>{0a0660ef-53f3-49a5-96ed-aaeed698ee77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -197,6 +206,15 @@
     </ClCompile>
     <ClCompile Include="DialogAnswer\DialogAnswer.cpp">
       <Filter>Исходные файлы\DialogAnswer</Filter>
+    </ClCompile>
+    <ClCompile Include="Checkbox\Checkbox.cpp">
+      <Filter>Исходные файлы\Checkbox</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\scroll\scroll.cpp">
+      <Filter>Исходные файлы\kit\component\scroll</Filter>
+    </ClCompile>
+    <ClCompile Include="RadioButton\RadioButton.cpp">
+      <Filter>Исходные файлы\RadioButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +316,15 @@
     </ClInclude>
     <ClInclude Include="DialogAnswer\DialogAnswer.h">
       <Filter>Исходные файлы\DialogAnswer</Filter>
+    </ClInclude>
+    <ClInclude Include="Checkbox\Checkbox.h">
+      <Filter>Исходные файлы\Checkbox</Filter>
+    </ClInclude>
+    <ClInclude Include="RadioButton\RadioButton.h">
+      <Filter>Исходные файлы\RadioButton</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\scroll\scroll.h">
+      <Filter>Исходные файлы\kit\component\scroll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

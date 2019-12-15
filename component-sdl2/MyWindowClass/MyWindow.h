@@ -5,7 +5,8 @@
 #include "../MyComponent/MyComponent.h"
 #include "../Button/Button.h"
 #include "../SystemButton/SystemButton.h"
-
+#include "../Checkbox/Checkbox.h"
+#include "../RadioButton/RadioButton.h"
 
 using namespace Lib;
 

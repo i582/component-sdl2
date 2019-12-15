@@ -72,6 +72,10 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 	this->_text = new Text(this, "", { 0,0,0,0 }, _font, 14, Color("#000000"));
 
 
+	/** Scroll */
+	this->_scroll = new Scroll(_renderer, { 0, 0, 15, 0 }, 0, 1);
+	this->_scrollable = false;
+	this->_isScrollActive = false;
 
 	/** Image */
 	this->_image = nullptr;
@@ -82,7 +86,7 @@ Lib::Component::~Component()
 	SDL_DestroyTexture(_innerTexture);
 	SDL_DestroyTexture(_outerTexture);
 
-	//delete _scroll;
+	delete _scroll;
 	delete _font;
 	delete _text;
 	delete _image;
@@ -102,6 +106,18 @@ void Lib::Component::setupEventListeners()
 
 Lib::Component* Lib::Component::getFirstScrollableParent()
 {
+	if (this->_parent != nullptr)
+	{
+		if (this->_parent->isScrollable())
+		{
+			return this->_parent;
+		}
+		else
+		{
+			return this->_parent->getFirstScrollableParent();
+		}
+	}
+
 	return nullptr;
 }
 
@@ -221,25 +237,25 @@ void Lib::Component::computeChildrenSize()
 		/*
 		 * Setup scroll TO DO
 		 */
-		/*this->scroll->_bodySize.x(_innerSize.x() + _innerSize.w());
-		this->scroll->_bodySize.y(_innerSize.y());
+		this->_scroll->_bodySize.x(_innerSize.x() + _innerSize.w());
+		this->_scroll->_bodySize.y(_innerSize.y());
 
-		this->scroll->_bodySize.h(_innerSize.h());
+		this->_scroll->_bodySize.h(_innerSize.h());
 
-		this->scroll->_maxValue = newTextureSize.h() - _innerSize.h();
+		this->_scroll->_maxValue = newTextureSize.h() - _innerSize.h();
 
-		this->scroll->_relSizes = _innerSize.h() / (double)newTextureSize.h();
-		this->scroll->_renderer = _renderer;
-		this->scroll->init();
+		this->_scroll->_relSizes = _innerSize.h() / (double)newTextureSize.h();
+		this->_scroll->_renderer = _renderer;
+		this->_scroll->init();
 
-		_outerSize.dw(this->scroll->_bodySize.w());
+		_outerSize.dw(this->_scroll->_bodySize.w());
 
 		SDL_DestroyTexture(this->_outerTexture);
 		this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _outerSize.w(), _outerSize.h());
 		SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
 
-		this->scroll->_parentTexture = this->_outerTexture;
-		this->scrollable = true;*/
+		this->_scroll->_parentTexture = this->_outerTexture;
+		this->_scrollable = true;
 	}
 
 
@@ -336,15 +352,15 @@ void Lib::Component::render()
 
 	if (this->_image != nullptr)
 	{
-		string path = blockState->get<string>("background-image");
-		this->_image->setPath(path);
+		
+		this->_image->setPath(blockState->get<string>("background-image"));
 
-		int x_shift = blockState->get<int>("background-position-x");
-		int y_shift = blockState->get<int>("background-position-y");
+		const int& x_shift = blockState->get<int>("background-position-x");
+		const int& y_shift = blockState->get<int>("background-position-y");
 
 		this->_image->setImageShift({ x_shift, y_shift });
 
-		string newSize = blockState->get<string>("background-size");
+		const string& newSize = blockState->get<string>("background-size");
 
 		this->_image->setImageWidth(newSize);
 
@@ -353,11 +369,11 @@ void Lib::Component::render()
 
 
 
+	
 
 
 
-
-	_text->setColor(&blockState->get<Color>("color"));
+	_text->setColor(blockState->get<Color>("color"));
 	_text->setFontSize(blockState->get<int>("font-size"));
 	_text->setLineHeight(blockState->get<double>("line-height"));
 	_text->setTextAlign(blockState->get<string>("text-align"));
@@ -396,12 +412,12 @@ void Lib::Component::render()
 
 
 	Rect copy = _innerSize;
-	copy.x(0); copy.y(0);
+	copy.x(0); copy.y(this->_scroll->_nowValue);
 
 	SDL_RenderCopy(_renderer, _innerTexture, &copy.toSdlRect(), &_innerSize.toSdlRect());
 
 
-	
+	_scroll->render();
 
 
 	SDL_Texture* parentTexture = nullptr;
@@ -425,15 +441,15 @@ void Lib::Component::mouseButtonDown(Event* e)
 	adjustMousePoint(mouseP);
 
 
-	/*if (scroll->onHoverSlider(mouseP))
+	if (_scroll->onHoverSlider(mouseP))
 	{
 		cout << "Scroll slider" << endl;
 
 		cout << "scroll active TRUE" << endl;
-		scrollActive = true;
+		_isScrollActive = true;
 
 		return;
-	}*/
+	}
 
 
 	_eventListeners["click"](this, e);
@@ -450,7 +466,7 @@ void Lib::Component::mouseButtonUp(Event* e)
 	_eventListeners["onmouseup"](this, e);
 
 	//cout << "scroll active FALSE" << endl;
-	// scrollActive = false;
+	_isScrollActive = false;
 	_isActive = false;
 }
 
@@ -459,11 +475,11 @@ void Lib::Component::mouseMotion(Event* e)
 	if (!_isDisplay)
 		return;
 
-	/*if (scrollActive)
+	if (_isScrollActive)
 	{
-		scroll->shift(e->motion.yrel * (_sizeChilds.h() / _innerSize.h()));
+		_scroll->shift(e->motion.yrel * (_childrensSize.h() / _innerSize.h()));
 		return;
-	}*/
+	}
 
 	if (_isEnterInComponent == false)
 	{
@@ -505,9 +521,9 @@ void Lib::Component::mouseScroll(Event* e, int scrollDirection)
 	if (!_isDisplay)
 		return;
 
-	/*if (!scrollable)
+	if (!_scrollable)
 	{
-		Container* firstScrollableParent = getFirstScrollableParent();
+		Component* firstScrollableParent = getFirstScrollableParent();
 
 		if (firstScrollableParent != nullptr)
 		{
@@ -518,9 +534,9 @@ void Lib::Component::mouseScroll(Event* e, int scrollDirection)
 	}
 
 	if (scrollDirection < 0)
-		scroll->shift(20);
+		_scroll->shift(20);
 	else
-		scroll->shift(-20);*/
+		_scroll->shift(-20);
 }
 
 void Lib::Component::setupComponents()
@@ -688,7 +704,7 @@ bool Lib::Component::onHover(Point point)
 
 Lib::Component* const Lib::Component::onComponentHover(Point point)
 {
-	// point.dy(scroll->_nowValue);
+	point.dy(_scroll->_nowValue);
 
 	for (int i = _childrens.size() - 1; i >= 0; i--)
 	{
@@ -773,7 +789,7 @@ Lib::Component* Lib::Component::removeClass(string className)
 	_classes.erase(_classes.begin() + indexStart, _classes.begin() + indexStart + className.length());
 
 
-	//_window->handleStyles();
+	_window->handleStyles();
 	return this;
 }
 
@@ -781,7 +797,7 @@ Lib::Component* Lib::Component::addClass(string className)
 {
 	_classes += " " + className;
 
-	//_window->handleStyles();
+	_window->handleStyles();
 	return this;
 }
 
@@ -802,6 +818,11 @@ Lib::Component* Lib::Component::toggleClass(string className)
 void Lib::Component::setText(string text)
 {
 	_text->setText(text);
+}
+
+bool Lib::Component::isScrollable() const
+{
+	return _scrollable;
 }
 
 

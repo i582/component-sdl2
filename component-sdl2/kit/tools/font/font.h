@@ -54,7 +54,7 @@ public:
 	 * @param size[in] Font size
 	 * @return Pointer to ttf font
 	 */
-	TTF_Font* at(unsigned int size);
+	TTF_Font* at(unsigned int size) const;
 	TTF_Font* operator[](unsigned int size);
 	TTF_Font* operator()(unsigned int size);
 };

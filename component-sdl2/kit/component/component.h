@@ -8,6 +8,7 @@
 #include "../tools/font/font.h"
 #include "../tools/text/text.h"
 #include "../tools/css/css.h"
+#include "scroll/scroll.h"
 
 #include "component-header.h"
 
@@ -77,12 +78,13 @@ protected:
 	bool _isEnterInComponent;
 
 
-	/** Scroll part */ // TO DO
-	// Scroll* _scroll;
-	// bool _scrollable;
+	/** Scroll part */
+	Scroll* _scroll;
+	bool _scrollable;
+	bool _isScrollActive;
 
 
-	/** Text part */ // TO DO
+	/** Text part */
 	Font* _font;
 	Text* _text;
 
@@ -312,6 +314,11 @@ public: /** Class Interface */
 
 public: /** Text Interface */
 	void setText(string text);
+
+
+public: /** Scroll Interface */
+	bool isScrollable() const;
+
 
 };
 
