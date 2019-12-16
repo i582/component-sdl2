@@ -3,6 +3,18 @@
 
 void Lib::Window::handleStyles()
 {
+	for (auto& component : allComponents)
+	{
+		CSS::css* component_css = component.second->getComponentStyles();
+		if (component_css == nullptr)
+			continue;
+
+		for (auto& css_block : component_css->getStyles())
+		{
+			allComponentsStyles[css_block.first] = css_block.second;
+		}
+	}
+
 
 	for (auto& style : allComponentsStyles)
 	{

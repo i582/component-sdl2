@@ -9,7 +9,7 @@ Button::Button(string id, Rect size, string classes, string text)
 
 void Button::setup()
 {
-	include("./Button/css/button.css");
+	include("../css/button.css");
 
 	setText(text);
 }

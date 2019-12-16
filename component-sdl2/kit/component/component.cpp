@@ -79,6 +79,9 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 
 	/** Image */
 	this->_image = nullptr;
+
+	/** CSS component */
+	CSS::css* _css_component = nullptr;
 }
 
 Lib::Component::~Component()
@@ -90,6 +93,7 @@ Lib::Component::~Component()
 	delete _font;
 	delete _text;
 	delete _image;
+	delete _css_component;
 }
 
 void Lib::Component::setupEventListeners()
@@ -119,6 +123,11 @@ Lib::Component* Lib::Component::getFirstScrollableParent()
 	}
 
 	return nullptr;
+}
+
+CSS::css* Lib::Component::getComponentStyles()
+{
+	return this->_css_component;
 }
 
 void Lib::Component::setupChildrenRenderer()
@@ -546,8 +555,6 @@ void Lib::Component::setupComponents()
 	computeSize();
 	computeChildrenSize();
 
-	
-
 	setupBackgroundImage();
 }
 
@@ -823,6 +830,15 @@ void Lib::Component::setText(string text)
 bool Lib::Component::isScrollable() const
 {
 	return _scrollable;
+}
+
+void Lib::Component::include(string path)
+{
+	if (_css_component == nullptr)
+		_css_component = new CSS::css(path);
+
+	_css_component->open(path);
+
 }
 
 

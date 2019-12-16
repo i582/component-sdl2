@@ -1,0 +1,43 @@
+.button
+{
+    background-color: #4C5052;
+
+    border-color: #5E6060;
+    border-radius: 3px;
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.15;
+    text-align: center;
+    vertical-align: center;
+}
+
+.button:active
+{
+    border-color: #3D6185;
+    border-radius: 4px;
+    border-bottom: 3px solid #5E6060;
+    border-right: 3px solid #5E6060;
+    border-left: 3px solid #5E6060;
+    border-top: 3px solid #5E6060;
+}
+
+.button-blue
+{
+    background-color: #365880;
+
+    border-color: #4C708C;
+
+
+    color: #dadacb;
+
+    font-size: 13px;
+    line-height: 1.15;
+    text-align: center;
+    vertical-align: center;
+}

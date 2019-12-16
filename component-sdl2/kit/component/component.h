@@ -93,6 +93,10 @@ protected:
 	Image* _image;
 
 
+	/** CSS component */
+	CSS::css* _css_component;
+
+
 public:
 	Component(string id, Rect size, string classes);
 	Component(string id, Rect size, string classes, vector<Component*> childrens);
@@ -117,6 +121,7 @@ protected:
 	Component* getFirstScrollableParent();
 
 
+	CSS::css* getComponentStyles();
 
 protected: /** Setup Functions */
 
@@ -319,6 +324,8 @@ public: /** Text Interface */
 public: /** Scroll Interface */
 	bool isScrollable() const;
 
+public: /** Block Style Interface */
+	void include(string path);
 
 };
 

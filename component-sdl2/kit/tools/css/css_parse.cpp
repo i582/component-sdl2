@@ -45,6 +45,12 @@ void CSS::css_parser::openFile()
 {
 	file = fopen(file_path.c_str(), "r");
 
+	if (file == nullptr)
+	{
+		cout << "Error: css file not found!" << endl;
+		return;
+	}
+
 	while (true)
 	{
 		if (getc(file) == EOF) break;
