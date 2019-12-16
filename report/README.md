@@ -163,7 +163,7 @@ using namespace Lib;
 
 Для запуска библиотеки необходимо вызвать у `$` функцию-член `run`.
 
-> Важно, функция `main` должна принимать две переменных: `int argc, char** argv`
+Важно! Функция `main` должна принимать две переменных: `int argc, char** argv`
 
 ```cpp
 #include "kit/kit.h"
@@ -259,6 +259,8 @@ int main(int argc, char** argv)
 ```
 
 Теперь перейдем к настройке интерфейса.
+
+## Простейшее применение
 
 Изначально, пользователь может создавать только объекты базового класса `Component`. Рассмотрим класс повнимательнее.
 
@@ -477,3 +479,75 @@ void setup()
 Для вывода не забудьте подключить библиотеку `iostream`.
 
 Теперь при клике на вашу кнопку, в консоли будут появляться сообщения о том, что кнопка нажата.
+
+## Создание компонентов на базе класса `Component`
+
+Рассмотрим создание собственных компонентов на базе класса `Component`. Создание собственных компонентов очень похоже на создание окон. Для начала нужно подключить в заголовке заголовочный файл базового компонента. Далее нужно унаследовать класс от класса `Component` и перегрузить конструктор. Для настройки, как и в окнах, нужно добавить функцию `setup` и вызвать ее в конструкторе.
+
+Создадим папку `Button` рядом с папкой `MyWindow` и добавим `Button.h` и пропишем следующие:
+
+```cpp
+#pragma once
+#include "../kit/component/component.h"
+
+using namespace Lib;
+
+class Button : public Component
+{
+private:
+	string text;
+
+public:
+	Button(string id, Rect size, string classes, string text)
+    	: Component(id, size, classes)
+    {
+        this->text = text;
+        setup();
+    }
+	
+public:
+	void setup()
+    {
+
+    }
+};
+```
+
+сразу же добавим поле `text` и в конструкторе так же добавим его последним параметром. Теперь в методе `setup` мы можем вызывать любые функции-члены класса `Component`. Вызовем функцию `setText` чтобы не вызывать ее при создании.
+
+```cpp
+void setup()
+{
+    setText(this->text);
+}
+```
+
+Простейший компонент готов. Для его подключения добавьте заголовочный файл в заголовочный файл созданного класса окна и с помощью `append` добавьте экземпляр нового компонента-кнопки.
+
+```cpp
+#pragma once
+
+#include "../kit/window/window.h"
+#include "../Button/Button.h"
+using namespace Lib;
+
+class MyWindow : public Window
+{
+public:
+    MyWindow(string title, SimpleRect size)
+        : Window(title, size) 
+    {
+        setup();
+    };
+
+public:
+    void setup()
+    {
+        include("css/style.css");
+
+        $$->append(new Button("#button", { 50, 50, 75, 25 }, ".button", "text");
+    }
+};
+```
+
+Таким образом строятся любые сложные компоненты интерфейса.
