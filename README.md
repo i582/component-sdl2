@@ -1,7 +1,14 @@
-# [Содержание]{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
 
-%TOC%
+# Component-sdl2
 
+[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
+[![Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
+[![Dependencies](https://img.shields.io/badge/dependencies-SDL2-brightgreen.svg)](https://www.libsdl.org/)
+[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_ttf-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_ttf/)
+[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_image-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_image/)
+[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_gfx-brightgreen.svg)](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
 
 # Введение
 
