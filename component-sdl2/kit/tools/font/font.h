@@ -3,6 +3,7 @@
 #include "SDL_ttf.h"
 #include "iostream"
 #include "string"
+#include "vector"
 #include "map"
 
 namespace Lib
@@ -11,6 +12,7 @@ namespace Lib
 using std::map;
 using std::string;
 using std::to_string;
+using std::vector;
 using std::cout;
 using std::endl;
 
@@ -21,11 +23,14 @@ class Font
 {
 private:
 	static string folderPath;
+	static bool standartFolder;
+	static bool isWindows;
 
 private:
 	string name;
 	
 	static map <string, TTF_Font*> __openedFonts;
+	
 
 public:
 	Font();
@@ -37,7 +42,9 @@ public:
 public:
 
 	/*
-	 * @brief Sets the path for the root folder with fonts
+	 * @brief Sets the path for the root folder with fonts, by default, 
+	 * fonts are searched in standard system folders
+	 * 
 	 * @note The path must be relative to the exe file, for example,
 	 * if the exe file is in the "debug" folder and the project is
 	 * in the "nia-framework" folder, then you 

@@ -2,13 +2,30 @@
 
 using namespace Lib;
 
-string Font::folderPath = "none";
 map <string, TTF_Font*> Font::__openedFonts = {};
 
-Font::Font()
-{
-	this->name = "";
-}
+
+#ifdef __unix__
+
+	string Font::folderPath = "usr/share/fonts/truetype/";
+	bool Font::standartFolder = true;
+	bool Font::isWindows = false;
+
+#elif defined(_WIN32) || defined(WIN32) 
+
+	string Font::folderPath = ":/Windows/Fonts/";
+	bool Font::standartFolder = true;
+	bool Font::isWindows = true;
+
+#elif defined(_MAC)
+
+	string Font::folderPath = "~/Library/Fonts/";
+	bool Font::standartFolder = true;
+	bool Font::isWindows = false;
+
+#endif
+
+Font::Font() : Font("") {}
 
 Font::Font(string name)
 {
@@ -21,13 +38,14 @@ Font::Font(string name)
 		}
 	}
 
-
+	
 	this->name = name;
 }
 
 void Font::root(string path)
 {
 	folderPath = path;
+	standartFolder = false;
 }
 
 Font& Font::create(string name)
@@ -37,32 +55,84 @@ Font& Font::create(string name)
 
 TTF_Font* Font::at(unsigned int size) const
 {
-	if (folderPath == "none")
-	{
-		cout << "Root path not setted! See Font::root for set-up!" << endl;
-		return nullptr;
-	}
+	vector<string> extensions = { ".ttf", ".otf" };
 
-	string path = folderPath + name + ".ttf";
 	TTF_Font* font = nullptr;
 
-	if (__openedFonts.find(path + "@" + to_string(size)) != __openedFonts.end())
+	bool notFound = true;
+
+	if (Font::standartFolder)
 	{
-		font = __openedFonts[path + "@" + to_string(size)];
+		if (isWindows)
+		{
+			for (char i = 'a'; i <= 'z' && notFound; i++)
+			{
+				for (auto& extension : extensions)
+				{
+					string path = i + folderPath + name + extension;
+
+					font = TTF_OpenFont(path.c_str(), size);
+
+
+					if (font == nullptr && i == 'z' && extension == ".otf")
+					{
+						cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
+						cout << TTF_GetError() << endl;
+						return nullptr;
+					}
+					else if (font != nullptr)
+					{
+						__openedFonts[path + "@" + to_string(size)] = font;
+						notFound = false;
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			for (auto& extension : extensions)
+			{
+				string path = folderPath + name + extension;
+
+				font = TTF_OpenFont(path.c_str(), size);
+
+
+				if (font == nullptr && extension == ".otf")
+				{
+					cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
+					cout << TTF_GetError() << endl;
+					return nullptr;
+				}
+				else if (font != nullptr)
+				{
+					__openedFonts[path + "@" + to_string(size)] = font;
+					break;
+				}
+			}
+		}
 	}
-	else
+
+	for (auto& extension : extensions)
 	{
+		string path = folderPath + name + extension;
+
 		font = TTF_OpenFont(path.c_str(), size);
+
+
+		if (font == nullptr && extension == ".otf")
+		{
+			cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
+			cout << TTF_GetError() << endl;
+			return nullptr;
+		}
+		else if (font != nullptr)
+		{
+			__openedFonts[path + "@" + to_string(size)] = font;
+			break;
+		}
 	}
 
-	if (font == nullptr)
-	{
-		cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
-		cout << TTF_GetError() << endl;
-		return nullptr;
-	}
-
-	__openedFonts[path + "@" + to_string(size)] = font;
 
 	return font;
 }

@@ -67,7 +67,6 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 
 
 	/** Text */
-	Font::root("../component-sdl2/fonts/");
 	this->_font = new Font("segoeui");
 	this->_text = new Text(this, "", { 0,0,0,0 }, _font, 14, Color("#000000"));
 

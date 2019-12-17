@@ -139,6 +139,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button\button.cpp" />
+    <ClCompile Include="C:\SDL2\SDL2_gfx\SDL2_gfxPrimitives.c" />
+    <ClCompile Include="C:\SDL2\SDL2_gfx\SDL2_rotozoom.c" />
     <ClCompile Include="Checkbox\Checkbox.cpp" />
     <ClCompile Include="DialogAnswer\DialogAnswer.cpp" />
     <ClCompile Include="DialogWindow\DialogWindow.cpp" />
@@ -159,8 +161,6 @@
     <ClCompile Include="kit\tools\image\image.cpp" />
     <ClCompile Include="kit\tools\point\extended-point\extended-point.cpp" />
     <ClCompile Include="kit\tools\rect\extended-rect\extended-rect.cpp" />
-    <ClCompile Include="kit\tools\sdl_gfx\SDL2_gfxPrimitives.c" />
-    <ClCompile Include="kit\tools\sdl_gfx\SDL2_rotozoom.c" />
     <ClCompile Include="kit\tools\size\extended-size\extended-size.cpp" />
     <ClCompile Include="kit\tools\size\simple-size\simple-size.cpp" />
     <ClCompile Include="kit\tools\text\text.cpp" />

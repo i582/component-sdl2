@@ -24,8 +24,12 @@ Lib::Kit::Kit()
 
 Lib::Kit::~Kit()
 {
-	if (instance != nullptr)
-		delete instance;
+	for (auto& window : windows)
+	{
+		delete window;
+	}
+
+	delete instance;
 }
 
 void Lib::Kit::run()
@@ -103,4 +107,6 @@ void Lib::Kit::onEvent()
 void Lib::Kit::close()
 {
 	is_running = false;
+
+	this->~Kit();
 }

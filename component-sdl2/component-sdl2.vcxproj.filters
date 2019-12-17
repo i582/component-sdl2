@@ -70,9 +70,6 @@
     <Filter Include="Исходные файлы\kit\tools\css\utils">
       <UniqueIdentifier>{c9cde0fc-5af6-4cee-8dd1-3b2bbdc21e15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\kit\tools\sdl_gfx">
-      <UniqueIdentifier>{d4cccbe9-a0b4-4e99-898e-cc38013e536c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\kit\component\components">
       <UniqueIdentifier>{ff7225c9-e38d-4f9a-a5a7-b36a959ce1a8}</UniqueIdentifier>
     </Filter>
@@ -112,6 +109,9 @@
     <Filter Include="Исходные файлы\kit\component\scroll">
       <UniqueIdentifier>{0a0660ef-53f3-49a5-96ed-aaeed698ee77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\kit\tools\sdl-gfx">
+      <UniqueIdentifier>{208f1e56-1011-4500-b60e-8a1c09791e07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,12 +146,6 @@
     </ClCompile>
     <ClCompile Include="kit\tools\css\color\color.cpp">
       <Filter>Исходные файлы\kit\tools\css\color</Filter>
-    </ClCompile>
-    <ClCompile Include="kit\tools\sdl_gfx\SDL2_gfxPrimitives.c">
-      <Filter>Исходные файлы\kit\tools\sdl_gfx</Filter>
-    </ClCompile>
-    <ClCompile Include="kit\tools\sdl_gfx\SDL2_rotozoom.c">
-      <Filter>Исходные файлы\kit\tools\sdl_gfx</Filter>
     </ClCompile>
     <ClCompile Include="kit\component\navigator\navigator.cpp">
       <Filter>Исходные файлы\kit\component\navigator</Filter>
@@ -215,6 +209,12 @@
     </ClCompile>
     <ClCompile Include="RadioButton\RadioButton.cpp">
       <Filter>Исходные файлы\RadioButton</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\SDL2\SDL2_gfx\SDL2_gfxPrimitives.c">
+      <Filter>Исходные файлы\kit\tools\sdl-gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\SDL2\SDL2_gfx\SDL2_rotozoom.c">
+      <Filter>Исходные файлы\kit\tools\sdl-gfx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
