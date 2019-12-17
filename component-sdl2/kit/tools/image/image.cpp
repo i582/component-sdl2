@@ -1,7 +1,7 @@
 #include "image.h"
 #include "../../component/component.h"
 
-using namespace Lib;
+using namespace Kit;
 
 Image::Image(Component* parent)
 {

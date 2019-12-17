@@ -1,7 +1,7 @@
 #include "extended-point.h"
 #include "../../rect/extended-rect/extended-rect.h"
 
-using namespace Lib;
+using namespace Kit;
 
 int Point::parseStringToNumber(const string& str, int relativeValue)
 {

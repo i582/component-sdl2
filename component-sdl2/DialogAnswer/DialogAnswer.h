@@ -5,7 +5,7 @@
 #include "../MyComponent/MyComponent.h"
 #include "../Button/Button.h"
 
-using namespace Lib;
+using namespace Kit;
 
 #include "functional"
 

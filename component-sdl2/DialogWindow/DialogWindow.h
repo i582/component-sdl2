@@ -8,7 +8,7 @@
 #include "../DialogAnswer/DialogAnswer.h"
 
 
-using namespace Lib;
+using namespace Kit;
 
 
 

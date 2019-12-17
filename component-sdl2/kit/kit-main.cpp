@@ -1,16 +1,16 @@
 #include "kit-main.h"
 
-Lib::Kit* Lib::Kit::instance = nullptr;
+Kit::KitApplication* Kit::KitApplication::instance = nullptr;
 
-Lib::Kit* Lib::Kit::init()
+Kit::KitApplication* Kit::KitApplication::init()
 {
 	if (instance == nullptr)
-		instance = new Kit;
+		instance = new KitApplication;
 
 	return instance;
 }
 
-Lib::Kit::Kit()
+Kit::KitApplication::KitApplication()
 {
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 	setlocale(LC_NUMERIC, "eng");
@@ -18,11 +18,9 @@ Lib::Kit::Kit()
 	this->is_running = true;
 
 	this->count_deleted_windows = 0;
-
-	this->setup();
 }
 
-Lib::Kit::~Kit()
+Kit::KitApplication::~KitApplication()
 {
 	for (auto& window : windows)
 	{
@@ -34,15 +32,20 @@ Lib::Kit::~Kit()
 	delete instance;
 }
 
-void Lib::Kit::run()
+int Kit::KitApplication::run()
 {
+	if (setup() == -1)
+	{
+		return -1;
+	}
+
 	render();
 	onEvent();
 
 	close();
 }
 
-Lib::Window* Lib::Kit::at(size_t index)
+Kit::Window* Kit::KitApplication::at(size_t index)
 {
 	if (index >= windows.size())
 		return nullptr;
@@ -50,17 +53,17 @@ Lib::Window* Lib::Kit::at(size_t index)
 	return windows[index];
 }
 
-Lib::Window* Lib::Kit::operator[](size_t index)
+Kit::Window* Kit::KitApplication::operator[](size_t index)
 {
 	return at(index);
 }
 
-Lib::vector<Lib::Window*>* Lib::Kit::getWindows()
+Kit::vector<Kit::Window*>* Kit::KitApplication::getWindows()
 {
 	return &windows;
 }
 
-Lib::Window* Lib::Kit::addWindow(Window* window)
+Kit::Window* Kit::KitApplication::addWindow(Window* window)
 {
 	window->parent = this;
 	windows.push_back(window);
@@ -70,12 +73,12 @@ Lib::Window* Lib::Kit::addWindow(Window* window)
 	return windows.back();
 }
 
-void Lib::Kit::setup()
+int Kit::KitApplication::setup()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		cout << "ERROR: SDL could not initialize! SDL Error: %s\n" << SDL_GetError();
-		return;
+		return -1;
 	}
 
 
@@ -83,7 +86,7 @@ void Lib::Kit::setup()
 	SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 }
 
-void Lib::Kit::render()
+void Kit::KitApplication::render()
 {
 	for (auto& window : windows)
 	{
@@ -91,7 +94,7 @@ void Lib::Kit::render()
 	}
 }
 
-void Lib::Kit::onEvent()
+void Kit::KitApplication::onEvent()
 {
 	int windowId = -1;
 	while (is_running && SDL_WaitEvent(&e))
@@ -106,9 +109,9 @@ void Lib::Kit::onEvent()
 	}
 }
 
-void Lib::Kit::close()
+void Kit::KitApplication::close()
 {
 	is_running = false;
 
-	this->~Kit();
+	this->~KitApplication();
 }

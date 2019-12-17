@@ -1,7 +1,7 @@
 #include "text_line.h"
 #include "text.h"
 
-using namespace Lib;
+using namespace Kit;
 
 TextLine::TextLine(Text* parent, string text, int x, int y)
 {

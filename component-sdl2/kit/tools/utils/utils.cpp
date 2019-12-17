@@ -1,6 +1,6 @@
 #include "utils.h"
 
-using namespace Lib;
+using namespace Kit;
 
 int Utils::to_integer(const string& str)
 {

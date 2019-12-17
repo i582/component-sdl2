@@ -1,6 +1,6 @@
 #include "scroll.h"
 
-using namespace Lib;
+using namespace Kit;
 
 Scroll::Scroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes)
 {

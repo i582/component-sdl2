@@ -13,7 +13,7 @@
 #include "component-header.h"
 
 
-namespace Lib
+namespace Kit
 {
 using CSS::Color;
 

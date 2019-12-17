@@ -1,7 +1,7 @@
 #include "extended-size.h"
 #include "../../rect/extended-rect/extended-rect.h"
 
-using namespace Lib;
+using namespace Kit;
 
 Size::Size() : Size(0, 0) {}
 

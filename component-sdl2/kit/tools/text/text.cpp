@@ -2,7 +2,7 @@
 #include "../../component/component.h"
 
 
-using namespace Lib;
+using namespace Kit;
 
 Text::Text(Component* parent, string text, Rect size, Font* font, size_t fontSize, Color color)
 {

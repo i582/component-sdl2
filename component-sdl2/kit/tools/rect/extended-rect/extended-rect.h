@@ -4,7 +4,7 @@
 
 #include "../../size/extended-size/extended-size.h"
 
-namespace Lib
+namespace Kit
 {
 
 class Rect

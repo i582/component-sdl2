@@ -1,6 +1,6 @@
 #include "extended-rect.h"
 
-using namespace Lib;
+using namespace Kit;
 
 Rect::Rect()
 {

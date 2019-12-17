@@ -4,7 +4,7 @@
 #include "../../utils/utils.h"
 
 
-namespace Lib
+namespace Kit
 {
 
 using std::string;

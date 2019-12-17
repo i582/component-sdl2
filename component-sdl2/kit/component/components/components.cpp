@@ -1,17 +1,17 @@
 #include "components.h"
 #include "../component.h"
 
-Lib::Components::Components(vector<Component*>* components)
+Kit::Components::Components(vector<Component*>* components)
 {
 	this->components = components;
 }
 
-Lib::Components::~Components()
+Kit::Components::~Components()
 {
 	delete components;
 }
 
-void Lib::Components::addEventListener(string action, eventCallback event_callback)
+void Kit::Components::addEventListener(string action, eventCallback event_callback)
 {
 	if (event_callback == nullptr || action.empty())
 		return;
@@ -22,7 +22,7 @@ void Lib::Components::addEventListener(string action, eventCallback event_callba
 	}
 }
 
-void Lib::Components::each(eachCallback each_callback)
+void Kit::Components::each(eachCallback each_callback)
 {
 	if (each_callback == nullptr)
 		return;
@@ -33,7 +33,7 @@ void Lib::Components::each(eachCallback each_callback)
 	}
 }
 
-Lib::Component* Lib::Components::at(size_t index)
+Kit::Component* Kit::Components::at(size_t index)
 {
 	if (index >= components->size())
 		return nullptr;
@@ -41,7 +41,7 @@ Lib::Component* Lib::Components::at(size_t index)
 	return components->at(index);
 }
 
-Lib::Component* Lib::Components::operator[](size_t index)
+Kit::Component* Kit::Components::operator[](size_t index)
 {
 	return at(index);
 }

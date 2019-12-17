@@ -2,7 +2,7 @@
 
 #include "../kit/component/component.h"
 
-using namespace Lib;
+using namespace Kit;
 
 enum class RadioButtonState
 {

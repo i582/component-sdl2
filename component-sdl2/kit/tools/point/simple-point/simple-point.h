@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-namespace Lib
+namespace Kit
 {
 	using SimplePoint = SDL_Point;
 }

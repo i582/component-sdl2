@@ -8,7 +8,7 @@
 #include "../rect/simple-rect/simple-rect.h"
 #include "../point/simple-point/simple-point.h"
 
-namespace Lib
+namespace Kit
 {
 
 using std::string;

@@ -11,13 +11,13 @@
 #include "../component/components/components.h"
 
 
-namespace Lib
+namespace Kit
 {
 	using std::cout;
 	using std::endl;
 	using std::string;
 
-	class Kit;
+	class KitApplication;
 
 class Window
 {
@@ -67,7 +67,7 @@ protected:
 
 	bool need_close;
 
-	Kit* parent;
+	KitApplication* parent;
 
 public: /** constructor & destructor*/
 	Window(string title, SimpleRect size);
@@ -75,7 +75,7 @@ public: /** constructor & destructor*/
 
 public:
 	friend Component;
-	friend Kit;
+	friend KitApplication;
 
 protected:
 	void init();

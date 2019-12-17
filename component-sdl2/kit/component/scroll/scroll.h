@@ -4,7 +4,7 @@
 #include "../../tools/rect/extended-rect/extended-rect.h"
 #include "../../tools/point/extended-point/extended-point.h"
 
-namespace Lib
+namespace Kit
 {
 
 class Component;

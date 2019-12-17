@@ -7,7 +7,7 @@
 #include "string"
 #include "vector"
 
-namespace Lib 
+namespace Kit 
 {
 
 using std::string;

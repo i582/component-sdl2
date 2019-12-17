@@ -2,7 +2,7 @@
 
 #include "kit-main.h"
 
-namespace Lib
+namespace Kit
 {
-	Kit $ = *Kit::init();
+	KitApplication& $ = *KitApplication::init();
 }

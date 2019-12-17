@@ -1,6 +1,6 @@
 #include "font.h"
 
-using namespace Lib;
+using namespace Kit;
 
 map <string, TTF_Font*> Font::__openedFonts = {};
 
@@ -48,7 +48,7 @@ void Font::root(string path)
 	standartFolder = false;
 }
 
-void Lib::Font::close()
+void Kit::Font::close()
 {
 	for (auto& __openedFont : __openedFonts)
 	{

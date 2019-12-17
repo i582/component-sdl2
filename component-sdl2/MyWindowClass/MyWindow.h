@@ -8,7 +8,7 @@
 #include "../Checkbox/Checkbox.h"
 #include "../RadioButton/RadioButton.h"
 
-using namespace Lib;
+using namespace Kit;
 
 class MyWindow : public Window
 {

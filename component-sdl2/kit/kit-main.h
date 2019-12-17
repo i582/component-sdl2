@@ -2,21 +2,21 @@
 
 #include "window/window.h"
 
-namespace Lib
+namespace Kit
 {
 	using std::cout; 
 	using std::endl;
 
 
-class Kit
+class KitApplication
 {
 private:
-	static Kit* instance;
-	Kit();
+	static KitApplication* instance;
+	KitApplication();
 
 public:
-	static Kit* init();
-	~Kit();
+	static KitApplication* init();
+	~KitApplication();
 
 
 private:
@@ -33,14 +33,16 @@ public:
 	friend Window;
 
 private:
-	void setup();
+	int setup();
 	void render();
 	void onEvent();
 	void close();
 
 public: /** Interface */
-	void run();
+	int run();
 
+
+public: /** Windows Interface */
 	Window* at(size_t index);
 	Window* operator[](size_t index);
 

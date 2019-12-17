@@ -8,7 +8,7 @@
 
 #include "../event/event.h"
 
-namespace Lib
+namespace Kit
 {
 	using std::string;
 	using std::vector;

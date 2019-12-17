@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-namespace Lib
+namespace Kit
 {
 	struct SimpleSize
 	{

@@ -4,7 +4,7 @@
 #include "../../point/extended-point/extended-point.h"
 
 
-namespace Lib
+namespace Kit
 {
 
 class Rect;

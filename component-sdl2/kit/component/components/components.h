@@ -3,7 +3,7 @@
 #include "../component.h"
 
 
-namespace Lib
+namespace Kit
 {
 
 

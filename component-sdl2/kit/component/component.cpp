@@ -1,11 +1,11 @@
 #include "component.h"
 #include "../window/window.h"
 
-Lib::Component* Lib::Component::_hoverComponent = nullptr;
+Kit::Component* Kit::Component::_hoverComponent = nullptr;
 
-Lib::Component::Component(string id, Rect size, string classes) : Component(id, size, classes, {}) {}
+Kit::Component::Component(string id, Rect size, string classes) : Component(id, size, classes, {}) {}
 
-Lib::Component::Component(string id, Rect size, string classes, vector<Component*> childrens)
+Kit::Component::Component(string id, Rect size, string classes, vector<Component*> childrens)
 {
 	/** Sizes */
 	this->_innerSize = size;
@@ -67,7 +67,7 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 
 
 	/** Text */
-	this->_font = new Font("segoeui");
+	this->_font = new Font("SegoeUI");
 	this->_text = new Text(this, "", { 0,0,0,0 }, _font, 14, Color("#000000"));
 
 
@@ -83,7 +83,7 @@ Lib::Component::Component(string id, Rect size, string classes, vector<Component
 	CSS::css* _css_component = nullptr;
 }
 
-Lib::Component::~Component()
+Kit::Component::~Component()
 {
 	SDL_DestroyTexture(_innerTexture);
 	SDL_DestroyTexture(_outerTexture);
@@ -95,7 +95,7 @@ Lib::Component::~Component()
 	delete _css_component;
 }
 
-void Lib::Component::setupEventListeners()
+void Kit::Component::setupEventListeners()
 {
 	_eventListeners["click"] = Component::_emptyCallback;
 	_eventListeners["hover"] = Component::_emptyCallback;
@@ -107,7 +107,7 @@ void Lib::Component::setupEventListeners()
 }
 
 
-Lib::Component* Lib::Component::getFirstScrollableParent()
+Kit::Component* Kit::Component::getFirstScrollableParent()
 {
 	if (this->_parent != nullptr)
 	{
@@ -124,12 +124,12 @@ Lib::Component* Lib::Component::getFirstScrollableParent()
 	return nullptr;
 }
 
-CSS::css* Lib::Component::getComponentStyles()
+CSS::css* Kit::Component::getComponentStyles()
 {
 	return this->_css_component;
 }
 
-void Lib::Component::setupChildrenRenderer()
+void Kit::Component::setupChildrenRenderer()
 {
 	if (this->_renderer == nullptr && this->_parent != nullptr)
 	{
@@ -144,7 +144,7 @@ void Lib::Component::setupChildrenRenderer()
 	}
 }
 
-void Lib::Component::computeSize()
+void Kit::Component::computeSize()
 {
 	if (_parent != nullptr)
 	{
@@ -205,7 +205,7 @@ void Lib::Component::computeSize()
 	}
 }
 
-void Lib::Component::computeChildrenSize()
+void Kit::Component::computeChildrenSize()
 {
 	SimpleSize childrenSize;
 
@@ -281,7 +281,7 @@ void Lib::Component::computeChildrenSize()
 	}
 }
 
-void Lib::Component::setupBackgroundImage()
+void Kit::Component::setupBackgroundImage()
 {
 	this->_image = new Image(this);
 
@@ -291,7 +291,7 @@ void Lib::Component::setupBackgroundImage()
 	}
 }
 
-void Lib::Component::setupParentWindow()
+void Kit::Component::setupParentWindow()
 {
 	if (this->_window == nullptr && _parent != nullptr && _parent->_window != nullptr)
 	{
@@ -305,7 +305,7 @@ void Lib::Component::setupParentWindow()
 	}
 }
 
-void Lib::Component::adjustMousePoint(Point& p)
+void Kit::Component::adjustMousePoint(Point& p)
 {
 	if (_parent == nullptr)
 		return;
@@ -315,7 +315,7 @@ void Lib::Component::adjustMousePoint(Point& p)
 	_parent->adjustMousePoint(p);
 }
 
-void Lib::Component::render()
+void Kit::Component::render()
 {
 	if (!_isDisplay)
 		return;
@@ -453,7 +453,7 @@ void Lib::Component::render()
 	SDL_RenderCopy(_renderer, _outerTexture, NULL, &_outerSize.toSdlRect());
 }
 
-void Lib::Component::mouseButtonDown(Event* e)
+void Kit::Component::mouseButtonDown(Event* e)
 {
 	if (!_isDisplay)
 		return;
@@ -481,7 +481,7 @@ void Lib::Component::mouseButtonDown(Event* e)
 	_isActive = true;
 }
 
-void Lib::Component::mouseButtonUp(Event* e)
+void Kit::Component::mouseButtonUp(Event* e)
 {
 	if (!_isDisplay)
 		return;
@@ -493,7 +493,7 @@ void Lib::Component::mouseButtonUp(Event* e)
 	_isActive = false;
 }
 
-void Lib::Component::mouseMotion(Event* e)
+void Kit::Component::mouseMotion(Event* e)
 {
 	if (!_isDisplay)
 		return;
@@ -528,7 +528,7 @@ void Lib::Component::mouseMotion(Event* e)
 	_eventListeners["hover"](this, e);
 }
 
-void Lib::Component::mouseOut(Event* e)
+void Kit::Component::mouseOut(Event* e)
 {
 	if (!_isDisplay)
 		return;
@@ -539,7 +539,7 @@ void Lib::Component::mouseOut(Event* e)
 	_isEnterInComponent = false;
 }
 
-void Lib::Component::mouseScroll(Event* e, int scrollDirection)
+void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 {
 	if (!_isDisplay)
 		return;
@@ -562,7 +562,7 @@ void Lib::Component::mouseScroll(Event* e, int scrollDirection)
 		_scroll->shift(-20);
 }
 
-void Lib::Component::setupComponents()
+void Kit::Component::setupComponents()
 {
 	setupChildrenRenderer();
 
@@ -573,95 +573,95 @@ void Lib::Component::setupComponents()
 }
 
 
-int Lib::Component::width() const
+int Kit::Component::width() const
 {
 	return _innerSize.w();
 }
 
-int Lib::Component::height() const
+int Kit::Component::height() const
 {
 	return _innerSize.h();
 }
 
-int Lib::Component::top() const
+int Kit::Component::top() const
 {
 	return _outerSize.y();
 }
 
-int Lib::Component::left() const
+int Kit::Component::left() const
 {
 	return _outerSize.x();
 }
 
-const Lib::Rect& Lib::Component::size() const
+const Kit::Rect& Kit::Component::size() const
 {
 	return _innerSize;
 }
 
-const Lib::Rect& Lib::Component::outerSize() const
+const Kit::Rect& Kit::Component::outerSize() const
 {
 	return _outerSize;
 }
 
-const Lib::Rect& Lib::Component::innerSize() const
+const Kit::Rect& Kit::Component::innerSize() const
 {
 	return _innerSize;
 }
 
-Lib::Component* Lib::Component::show()
+Kit::Component* Kit::Component::show()
 {
 	_isDisplay = true;
 	return this;
 }
 
-Lib::Component* Lib::Component::hide()
+Kit::Component* Kit::Component::hide()
 {
 	_isDisplay = false;
 	return this;
 }
 
-Lib::Component* Lib::Component::toggleDisplay()
+Kit::Component* Kit::Component::toggleDisplay()
 {
 	_isDisplay = !_isDisplay;
 	return this;
 }
 
-bool Lib::Component::display() const
+bool Kit::Component::display() const
 {
 	return _isDisplay;
 }
 
-SDL_Renderer* Lib::Component::renderer() const
+SDL_Renderer* Kit::Component::renderer() const
 {
 	return _renderer;
 }
 
-SDL_Texture* Lib::Component::innerTexture() const
+SDL_Texture* Kit::Component::innerTexture() const
 {
 	return _innerTexture;
 }
 
-SDL_Texture* Lib::Component::outerTexture() const
+SDL_Texture* Kit::Component::outerTexture() const
 {
 	return _outerTexture;
 }
 
-Lib::Component* Lib::Component::parent() const
+Kit::Component* Kit::Component::parent() const
 {
 	return _parent;
 }
 
-const Lib::vector<Lib::Component*>& Lib::Component::childs() const
+const Kit::vector<Kit::Component*>& Kit::Component::childs() const
 {
 	return _childrens;
 }
 
-Lib::Window* Lib::Component::window() const
+Kit::Window* Kit::Component::window() const
 {
 	return _window;
 }
 
-bool Lib::Component::isChildrenObject(Component* obj) const
+bool Kit::Component::isChildrenObject(Component* obj) const
 {
 	bool is_child = false;
 
@@ -679,7 +679,7 @@ bool Lib::Component::isChildrenObject(Component* obj) const
 	return is_child;
 }
 
-bool Lib::Component::isParentObject(Component* obj) const
+bool Kit::Component::isParentObject(Component* obj) const
 {
 	bool is_parent = false;
 
@@ -695,7 +695,7 @@ bool Lib::Component::isParentObject(Component* obj) const
 	return is_parent;
 }
 
-Lib::Component* Lib::Component::append(Component* component)
+Kit::Component* Kit::Component::append(Component* component)
 {
 	if (component != nullptr)
 	{
@@ -708,7 +708,7 @@ Lib::Component* Lib::Component::append(Component* component)
 	return component;
 }
 
-Lib::Component* Lib::Component::append(vector<Component*> components)
+Kit::Component* Kit::Component::append(vector<Component*> components)
 {
 	for (auto& component : components)
 	{
@@ -718,12 +718,12 @@ Lib::Component* Lib::Component::append(vector<Component*> components)
 	return this;
 }
 
-bool Lib::Component::onHover(Point point)
+bool Kit::Component::onHover(Point point)
 {
 	return _isDisplay && point.in(_outerSize);
 }
 
-Lib::Component* const Lib::Component::onComponentHover(Point point)
+Kit::Component* const Kit::Component::onComponentHover(Point point)
 {
 	point.dy(_scroll->_nowValue);
 
@@ -743,22 +743,22 @@ Lib::Component* const Lib::Component::onComponentHover(Point point)
 	return this;
 }
 
-Lib::string Lib::Component::id() const
+Kit::string Kit::Component::id() const
 {
 	return _id;
 }
 
-void Lib::Component::addEventListener(string action, eventCallback callback_function)
+void Kit::Component::addEventListener(string action, eventCallback callback_function)
 {
 	_eventListeners[action] = callback_function;
 }
 
-void Lib::Component::removeEventListener(string action)
+void Kit::Component::removeEventListener(string action)
 {
 	_eventListeners[action] = Component::_emptyCallback;
 }
 
-void Lib::Component::callEventListener(string action, Event* e)
+void Kit::Component::callEventListener(string action, Event* e)
 {
 	if (_eventListeners.find(action) != _eventListeners.end())
 	{
@@ -770,37 +770,37 @@ void Lib::Component::callEventListener(string action, Event* e)
 	}
 }
 
-Lib::map<Lib::string, void*>& Lib::Component::userData()
+Kit::map<Kit::string, void*>& Kit::Component::userData()
 {
 	return _userData;
 }
 
-void Lib::Component::addUserData(string key, void* data)
+void Kit::Component::addUserData(string key, void* data)
 {
 	_userData.insert(make_pair(key, data));
 }
 
-void* Lib::Component::userData(string key)
+void* Kit::Component::userData(string key)
 {
 	return _userData[key];
 }
 
-bool Lib::Component::isHovered()
+bool Kit::Component::isHovered()
 {
 	return _isHovered;
 }
 
-bool Lib::Component::isActive()
+bool Kit::Component::isActive()
 {
 	return _isActive;
 }
 
-bool Lib::Component::hasClass(string className) const
+bool Kit::Component::hasClass(string className) const
 {
 	return _classes.find(className) != -1;
 }
 
-Lib::Component* Lib::Component::removeClass(string className)
+Kit::Component* Kit::Component::removeClass(string className)
 {
 	int indexStart = _classes.find(className);
 
@@ -814,7 +814,7 @@ Lib::Component* Lib::Component::removeClass(string className)
 	return this;
 }
 
-Lib::Component* Lib::Component::addClass(string className)
+Kit::Component* Kit::Component::addClass(string className)
 {
 	_classes += " " + className;
 
@@ -822,7 +822,7 @@ Lib::Component* Lib::Component::addClass(string className)
 	return this;
 }
 
-Lib::Component* Lib::Component::toggleClass(string className)
+Kit::Component* Kit::Component::toggleClass(string className)
 {
 	if (hasClass(className))
 	{
@@ -836,17 +836,17 @@ Lib::Component* Lib::Component::toggleClass(string className)
 	return this;
 }
 
-void Lib::Component::setText(string text)
+void Kit::Component::setText(string text)
 {
 	_text->setText(text);
 }
 
-bool Lib::Component::isScrollable() const
+bool Kit::Component::isScrollable() const
 {
 	return _scrollable;
 }
 
-void Lib::Component::include(string path)
+void Kit::Component::include(string path)
 {
 	if (_css_component == nullptr)
 		_css_component = new CSS::css(path);

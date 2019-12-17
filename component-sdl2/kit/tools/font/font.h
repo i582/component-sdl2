@@ -6,7 +6,7 @@
 #include "vector"
 #include "map"
 
-namespace Lib
+namespace Kit
 {
 
 using std::map;

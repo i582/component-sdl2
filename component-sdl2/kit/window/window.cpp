@@ -1,7 +1,7 @@
 #include "window.h"
 #include "../kit-main.h"
 
-void Lib::Window::handleStyles()
+void Kit::Window::handleStyles()
 {
 	for (auto& component : allComponents)
 	{
@@ -31,7 +31,7 @@ void Lib::Window::handleStyles()
 	}
 }
 
-Lib::Component* Lib::Window::addElement(Component* component)
+Kit::Component* Kit::Window::addElement(Component* component)
 {
 	if (component == nullptr)
 		return nullptr;
@@ -51,7 +51,7 @@ Lib::Component* Lib::Window::addElement(Component* component)
 	return allComponents[objectID];
 }
 
-Lib::Component* Lib::Window::getElementById(string id) const
+Kit::Component* Kit::Window::getElementById(string id) const
 {
 	Component* component = allComponents.at(id);
 	if (component == nullptr)
@@ -65,7 +65,7 @@ Lib::Component* Lib::Window::getElementById(string id) const
 	}
 }
 
-Lib::Components Lib::Window::getElementsByClassName(string className) const
+Kit::Components Kit::Window::getElementsByClassName(string className) const
 {
 	vector<Component*>* ñomponentVector = new vector<Component*>;
 	for (auto& ñomponent : allComponents)
@@ -79,13 +79,13 @@ Lib::Components Lib::Window::getElementsByClassName(string className) const
 	return Components(ñomponentVector);
 }
 
-CSS::css_block* Lib::Window::addStyle(string className, CSS::css_block style)
+CSS::css_block* Kit::Window::addStyle(string className, CSS::css_block style)
 {
 	allComponentsStyles.insert(make_pair(className, style));
 	return &allComponentsStyles[className];
 }
 
-Lib::Window::Window(string title, SimpleRect size)
+Kit::Window::Window(string title, SimpleRect size)
 {
 	this->title = title;
 	this->_size = size;
@@ -103,7 +103,7 @@ Lib::Window::Window(string title, SimpleRect size)
 	this->init();
 }
 
-Lib::Window::~Window()
+Kit::Window::~Window()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
@@ -116,7 +116,7 @@ Lib::Window::~Window()
 
 }
 
-void Lib::Window::init()
+void Kit::Window::init()
 {
 	this->window = SDL_CreateWindow(title.c_str(),
 		_size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
@@ -139,13 +139,13 @@ void Lib::Window::init()
 	preSetup();
 }
 
-void Lib::Window::preSetup()
+void Kit::Window::preSetup()
 {
 	navigator = $$ = new Navigator(this);
 	Window::addElement(navigator);
 }
 
-void Lib::Window::render()
+void Kit::Window::render()
 {
 	if (!wasSetupStyle)
 	{
@@ -175,7 +175,7 @@ void Lib::Window::render()
 	SDL_RenderPresent(renderer);
 }
 
-void Lib::Window::onEvent(Event* e)
+void Kit::Window::onEvent(Event* e)
 {
 	if (need_close)
 	{
@@ -270,7 +270,7 @@ void Lib::Window::onEvent(Event* e)
 	}
 }
 
-void Lib::Window::show()
+void Kit::Window::show()
 {
 	render();
 
@@ -279,7 +279,7 @@ void Lib::Window::show()
 	SDL_ShowWindow(window);
 }
 
-void Lib::Window::hide()
+void Kit::Window::hide()
 {
 
 	is_display = false;
@@ -287,63 +287,63 @@ void Lib::Window::hide()
 	SDL_HideWindow(window);
 }
 
-bool Lib::Window::isShow()
+bool Kit::Window::isShow()
 {
 	return is_display;
 }
 
-void Lib::Window::collapse()
+void Kit::Window::collapse()
 {
 	SDL_MinimizeWindow(window);
 }
 
-void Lib::Window::close()
+void Kit::Window::close()
 {
 	this->need_close = true;
 }
 
-void Lib::Window::include(string path)
+void Kit::Window::include(string path)
 {
 	main_css.open(path);
 	Window::allComponentsStyles = main_css.getStyles();
 }
 
-int Lib::Window::width() const
+int Kit::Window::width() const
 {
 	return _size.w;
 }
 
-int Lib::Window::height() const
+int Kit::Window::height() const
 {
 	return _size.h;
 }
 
-int Lib::Window::top() const
+int Kit::Window::top() const
 {
 	return _size.y;
 }
 
-int Lib::Window::left() const
+int Kit::Window::left() const
 {
 	return _size.x;
 }
 
-Lib::SimpleRect Lib::Window::size() const
+Kit::SimpleRect Kit::Window::size() const
 {
 	return _size;
 }
 
-SDL_Renderer* Lib::Window::getRenderer() const
+SDL_Renderer* Kit::Window::getRenderer() const
 {
 	return renderer;
 }
 
-SDL_Window* Lib::Window::getWindow() const
+SDL_Window* Kit::Window::getWindow() const
 {
 	return window;
 }
 
-void Lib::Window::setDraggableArea(SimpleRect area_)
+void Kit::Window::setDraggableArea(SimpleRect area_)
 {
 	SimpleRect* size = new SimpleRect;
 	*size = area_;
@@ -364,7 +364,7 @@ void Lib::Window::setDraggableArea(SimpleRect area_)
 
 }
 
-void Lib::Window::mouseButtonDown(SDL_Event* e)
+void Kit::Window::mouseButtonDown(SDL_Event* e)
 {
 	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
@@ -376,7 +376,7 @@ void Lib::Window::mouseButtonDown(SDL_Event* e)
 	render();
 }
 
-void Lib::Window::mouseButtonUp(SDL_Event* e)
+void Kit::Window::mouseButtonUp(SDL_Event* e)
 {
 	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
@@ -388,7 +388,7 @@ void Lib::Window::mouseButtonUp(SDL_Event* e)
 	render();
 }
 
-void Lib::Window::mouseMotion(SDL_Event* e)
+void Kit::Window::mouseMotion(SDL_Event* e)
 {
 	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
@@ -400,7 +400,7 @@ void Lib::Window::mouseMotion(SDL_Event* e)
 	render();
 }
 
-void Lib::Window::mouseWheel(SDL_Event* e)
+void Kit::Window::mouseWheel(SDL_Event* e)
 {
 	const int scrollDirection = e->wheel.y;
 
@@ -419,10 +419,10 @@ void Lib::Window::mouseWheel(SDL_Event* e)
 	render();
 }
 
-void Lib::Window::keyDown(SDL_Event* e)
+void Kit::Window::keyDown(SDL_Event* e)
 {
 }
 
-void Lib::Window::keyUp(SDL_Event* e)
+void Kit::Window::keyUp(SDL_Event* e)
 {
 }
