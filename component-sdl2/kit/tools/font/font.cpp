@@ -48,9 +48,12 @@ void Font::root(string path)
 	standartFolder = false;
 }
 
-Font& Font::create(string name)
+void Lib::Font::close()
 {
-	return *(new Font(name));
+	for (auto& __openedFont : __openedFonts)
+	{
+		delete __openedFont.second;
+	}
 }
 
 TTF_Font* Font::at(unsigned int size) const
@@ -69,10 +72,26 @@ TTF_Font* Font::at(unsigned int size) const
 			{
 				for (auto& extension : extensions)
 				{
-					string path = i + folderPath + name + extension;
+					string path = (char)i + folderPath + name + extension;
+
+					if (__openedFonts[path + "@" + to_string(size)] != nullptr)
+					{
+						font = __openedFonts[path + "@" + to_string(size)];
+
+						notFound = false;
+						return font;
+					}
+				}
+			}
+
+
+			for (char i = 'a'; i <= 'z' && notFound; i++)
+			{
+				for (auto& extension : extensions)
+				{
+					string path = (char)i + folderPath + name + extension;
 
 					font = TTF_OpenFont(path.c_str(), size);
-
 
 					if (font == nullptr && i == 'z' && extension == ".otf")
 					{
@@ -112,27 +131,44 @@ TTF_Font* Font::at(unsigned int size) const
 			}
 		}
 	}
-
-	for (auto& extension : extensions)
+	else
 	{
-		string path = folderPath + name + extension;
-
-		font = TTF_OpenFont(path.c_str(), size);
-
-
-		if (font == nullptr && extension == ".otf")
+	
+		for (auto& extension : extensions)
 		{
-			cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
-			cout << TTF_GetError() << endl;
-			return nullptr;
+			string path = folderPath + name + extension;
+
+			if (__openedFonts[path + "@" + to_string(size)] != nullptr)
+			{
+				font = __openedFonts[path + "@" + to_string(size)];
+
+				notFound = false;
+				return font;
+			}
 		}
-		else if (font != nullptr)
+	
+
+
+		for (auto& extension : extensions)
 		{
-			__openedFonts[path + "@" + to_string(size)] = font;
-			break;
+			string path = folderPath + name + extension;
+
+			font = TTF_OpenFont(path.c_str(), size);
+
+
+			if (font == nullptr && extension == ".otf")
+			{
+				cout << "Error open font with name equal " << name << " from " << path << "!" << endl;
+				cout << TTF_GetError() << endl;
+				return nullptr;
+			}
+			else if (font != nullptr)
+			{
+				__openedFonts[path + "@" + to_string(size)] = font;
+				break;
+			}
 		}
 	}
-
 
 	return font;
 }

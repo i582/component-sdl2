@@ -53,7 +53,7 @@ public:
 	static void root(string path);
 
 
-	static Font& create(string name);
+	static void close();
 
 
 	/*

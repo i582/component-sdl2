@@ -3,7 +3,7 @@
 #include "../rect/simple-rect/simple-rect.h"
 #include "../rect/extended-rect/extended-rect.h"
 #include "../css/color/color.h"
-#include "../font/fonts.h"
+#include "../font/font.h"
 #include "iostream"
 #include "string"
 #include "map"

@@ -209,7 +209,6 @@ void Lib::Component::computeChildrenSize()
 {
 	SimpleSize childrenSize;
 
-
 	/** Находим размер прямоугольника в который можно уместить всех детей */
 	for (auto& children : _childrens)
 	{
@@ -417,15 +416,31 @@ void Lib::Component::render()
 
 
 
-
-
 	Rect copy = _innerSize;
-	copy.x(0); copy.y(this->_scroll->_nowValue);
+	copy.x(0);
+
+	string overflow = blockState->get<string>("overflow");
+
+	bool needRenderScroll = true;
+
+	if (overflow == "hidden")
+	{
+		copy.y(0);
+		needRenderScroll = false;
+		_scrollable = false;
+	}
+	else
+	{
+		copy.y(this->_scroll->_nowValue);
+		_scrollable = true;
+	}
+
 
 	SDL_RenderCopy(_renderer, _innerTexture, &copy.toSdlRect(), &_innerSize.toSdlRect());
 
 
-	_scroll->render();
+	if (needRenderScroll)
+		_scroll->render();
 
 
 	SDL_Texture* parentTexture = nullptr;

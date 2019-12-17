@@ -56,7 +56,7 @@ void MyWindow::setup()
 	$$->append(new Button("#button1", { 330, 250, 70, 25 }, ".button", "Текст"));
 
 	$$->append(new MyComponent("#test", { 0, 30, 200, 200 }, ""));
-	$$->append(new MyComponent("#test1", { 200, 30, 200, 200 }, ""));
+	$$->append(new MyComponent("#test1", { 230, 30, 200, 200 }, ""));
 
 
 	$$->append(new Checkbox("#checkbox", { 400, 400, 100, 16 }, ".checkbox", "Текст", 

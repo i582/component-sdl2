@@ -195,9 +195,6 @@
     <ClCompile Include="kit\tools\font\font.cpp">
       <Filter>Исходные файлы\kit\tools\font</Filter>
     </ClCompile>
-    <ClCompile Include="kit\tools\font\fonts.cpp">
-      <Filter>Исходные файлы\kit\tools\font</Filter>
-    </ClCompile>
     <ClCompile Include="DialogAnswer\DialogAnswer.cpp">
       <Filter>Исходные файлы\DialogAnswer</Filter>
     </ClCompile>
@@ -307,9 +304,6 @@
     </ClInclude>
     <ClInclude Include="kit\tools\text\text_line.h">
       <Filter>Исходные файлы\kit\tools\text</Filter>
-    </ClInclude>
-    <ClInclude Include="kit\tools\font\fonts.h">
-      <Filter>Исходные файлы\kit\tools\font</Filter>
     </ClInclude>
     <ClInclude Include="kit\tools\font\font.h">
       <Filter>Исходные файлы\kit\tools\font</Filter>

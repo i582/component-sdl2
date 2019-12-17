@@ -11,7 +11,7 @@ void MyComponent::setup()
 	append({ 
 
 		new Component(_id + "__left-side", { "0px", "0px", "50%", "100%" }, ".left-col"),
-		new Component(_id + "__right-side", { "50%", "0px", "50%", "100%" }, ".right-col")
+		new Component(_id + "__right-side", { "50%", "0px", "50%", "200%" }, ".right-col")
 
 	});
 	

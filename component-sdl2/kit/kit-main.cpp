@@ -29,6 +29,8 @@ Lib::Kit::~Kit()
 		delete window;
 	}
 
+	Font::close();
+
 	delete instance;
 }
 

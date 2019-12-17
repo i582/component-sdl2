@@ -164,6 +164,13 @@
     border-right: 1px solid #5E6060;
     border-left: 1px solid #5E6060;
     border-top: 1px solid #5E6060;
+
+    
+}
+
+.outer-block:active
+{
+    
 }
 
 .inner-block

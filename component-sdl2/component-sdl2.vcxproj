@@ -157,7 +157,6 @@
     <ClCompile Include="kit\tools\css\css_parse.cpp" />
     <ClCompile Include="kit\tools\css\utils\css_utils.cpp" />
     <ClCompile Include="kit\tools\font\font.cpp" />
-    <ClCompile Include="kit\tools\font\fonts.cpp" />
     <ClCompile Include="kit\tools\image\image.cpp" />
     <ClCompile Include="kit\tools\point\extended-point\extended-point.cpp" />
     <ClCompile Include="kit\tools\rect\extended-rect\extended-rect.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="kit\tools\css\css_parse.h" />
     <ClInclude Include="kit\tools\css\utils\utils.h" />
     <ClInclude Include="kit\tools\font\font.h" />
-    <ClInclude Include="kit\tools\font\fonts.h" />
     <ClInclude Include="kit\tools\image\image.h" />
     <ClInclude Include="kit\tools\point\extended-point\extended-point.h" />
     <ClInclude Include="kit\tools\point\simple-point\simple-point.h" />

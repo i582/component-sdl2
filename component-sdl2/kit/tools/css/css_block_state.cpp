@@ -49,6 +49,9 @@ CSS::css_block_state::css_block_state()
 	styles["border-right-size"] = 0;
 	styles["border-right-color"] = 0;
 	styles["border-right-type"] = 0;
+
+
+	styles["overflow"] = 0;
 }
 
 CSS::css_block_state::css_block_state(bool general)
@@ -100,6 +103,8 @@ CSS::css_block_state::css_block_state(bool general)
 	styles["border-right-size"] = 0;
 	styles["border-right-color"] = 0;
 	styles["border-right-type"] = "solid";
+
+	styles["overflow"] = "unset";
 }
 
 void CSS::css_block_state::mergeWith(css_block_state& block)
