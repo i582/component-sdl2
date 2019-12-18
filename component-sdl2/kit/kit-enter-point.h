@@ -4,5 +4,5 @@
 
 namespace Kit
 {
-	KitApplication& $ = *KitApplication::init();
+	KitApplication& $ = *KitApplication::create();
 }

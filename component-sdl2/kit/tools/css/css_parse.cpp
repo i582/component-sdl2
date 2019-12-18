@@ -121,19 +121,14 @@ void CSS::css_parser::deleteSpaceInCode()
 
 bool CSS::css_parser::isSplitSymbol(char symbol)
 {
-	return symbol == ':' || symbol == '.' || symbol == '#' || symbol == ';' || symbol == '{' || symbol == '}'
-		|| symbol == '(' || symbol == ')';
+	return symbol == ':' || symbol == ';' || symbol == '{' || symbol == '}';
 }
 
 CSS::TokenType CSS::css_parser::whatIsToken(string token)
 {
-	if (token == ".")
+	if (token[0] == '.' && token.size() > 1)
 	{
-		return TokenType::CLASSNAME_SIGN;
-	}
-	else if (token == "#")
-	{
-		return TokenType::ID_SIGN;
+		return TokenType::CLASSNAME;
 	}
 	else if (token == ":")
 	{
@@ -159,9 +154,37 @@ CSS::TokenType CSS::css_parser::whatIsToken(string token)
 	{
 		return TokenType::RPAR;
 	}
+	else if (token == "hover" || token == "active")
+	{
+		return TokenType::PSEUDO;
+	}
 	else
 	{
 		return TokenType::FIELD;
+	}
+}
+
+void CSS::css_parser::skipComment(size_t& i)
+{
+	
+	bool comment = false;
+
+	if (code[i] == '/' && code[i + 1] == '*')
+	{
+		comment = true;
+	}
+
+	if (comment)
+	{
+		while (comment)
+		{
+			if (code[i] == '*' && code[i + 1] == '/')
+			{
+				comment = false;
+				i++;
+			}
+			i++;
+		}
 	}
 }
 
@@ -169,19 +192,35 @@ void CSS::css_parser::splitByBlock()
 {
 	vector<string> tempBlock;
 
+	bool startBlock = false;
+
 	for (auto& token : tokens)
 	{
-		if (token != "}")
+		/** start of block*/
+		if (whatIsToken(token) == TokenType::CLASSNAME)
 		{
 			tempBlock.push_back(token);
+
+			startBlock = true;
+			continue;
 		}
-		else
+
+		if (startBlock)
 		{
-			tempBlock.push_back(token);
-			blocks.push_back(tempBlock);
-			tempBlock.clear();
+			if (token == "}") /** end of block */
+			{
+				tempBlock.push_back(token);
+				blocks.push_back(tempBlock);
+				tempBlock.clear();
+
+				startBlock = false;
+			}
+			else
+			{
+				tempBlock.push_back(token);
+			}
 		}
-		
+
 	}
 
 }
@@ -190,24 +229,17 @@ void CSS::css_parser::splitByToken()
 {
 	string tempToken;
 
+	bool comment = false;
 
-	int i = 0;
-	for (auto& symbol : code)
+	for (size_t i = 0; i < code.size(); i++)
 	{
+		this->skipComment(i);
+		
+
+		auto& symbol = code[i];
 
 		if (isSplitSymbol(symbol))
 		{
-			if (symbol == '.' && i != 0)
-			{
-				char symb = code[i - 1];
-				if (symb >= '0' && symb <= '9')
-				{
-					tempToken += symbol;
-					i++;
-
-					continue;
-				}
-			}
 
 			if (!tempToken.empty())
 			{
@@ -220,28 +252,22 @@ void CSS::css_parser::splitByToken()
 
 			tokens.push_back(symbolToken);
 
-			i++;
 			continue;
 		}
 
 		tempToken += symbol;
-		i++;
 	}
 
-
+	if (!tempToken.empty())
+	{
+		tokens.push_back(tempToken);
+		tempToken.clear();
+	}
 
 }
 
 void CSS::css_parser::syntaxParseOneBlock(vector<string>& block)
 {
-	State nowState = State::START_PARSE;
-
-	int countAttributesWithoutValue = 0;
-
-	
-
-	string idOrClassName;
-
 	string attribute;
 	string value;
 	string pseudo;
@@ -250,142 +276,134 @@ void CSS::css_parser::syntaxParseOneBlock(vector<string>& block)
 	css_block block_css;
 	css_block_state block_css_state;
 
+	string identificator;
+	state state;
+	state_next next_state;
+
+	next_state = state_next::NEXT_TOKEN_IS_IDENTIFICATOR;
+	identificator = block[0];
+
+	if (next_state == state_next::NEXT_TOKEN_IS_IDENTIFICATOR &&
+	    whatIsToken(identificator) != TokenType::CLASSNAME)
+	{
+		cout << "ERROR: The first parameter in the block must be either a class identifier!" << endl;
+		return;
+	}
 
 	
+	state = state::THIS_TOKEN_IS_IDENTIFICATOR;
+	next_state = state_next::NEXT_TOKEN_IS_LBRA_OR_COLON;
 
-	for (auto& token : block)
+
+	for (size_t i = 1; i < block.size(); i++)
 	{
-		TokenType nowTokenType = whatIsToken(token);
+		auto& token = block[i];
 
-		if (nowState == State::NEXT_TOKEN_IS_COMPLEX_VALUE)
+		TokenType type = whatIsToken(token);
+
+		switch (next_state)
 		{
-		
-			if (nowTokenType == TokenType::RPAR)
-			{
-				nowState = State::NEXT_TOKEN_IS_SEMICOLON;
-
-#ifdef _DEBUG_VERSION_
-				cout << "End LPAR block" << endl;
-				cout << "Value = " << value << endl;
-#endif // _DEBUG_VERSION_
-			}
-			else
-			{
-				value += token;
-			}
-
-			continue;
-		}
-
-		switch (nowTokenType)
+		case CSS::state_next::NEXT_TOKEN_IS_LBRA_OR_COLON:
 		{
-		case TokenType::ID_SIGN:
-		{
-			if (nowState == State::NEXT_TOKEN_IS_VALUE)
+			if (type != TokenType::LBRA && type != TokenType::COLON)
 			{
-				nowState = State::NEXT_TOKEN_IS_VALUE;
-			}
-			else
-			{
-				nowState = State::NEXT_TOKEN_IS_ID;
-
-				idOrClassName += "#";
-			}
-
-
-
-			break;
-		}
-
-		case TokenType::CLASSNAME_SIGN:
-		{
-			if (nowState == State::NEXT_TOKEN_IS_VALUE)
-			{
-				nowState = State::NEXT_TOKEN_IS_VALUE;
-			}
-			else
-			{
-				nowState = State::NEXT_TOKEN_IS_CLASSNAME;
-
-				idOrClassName += ".";
-
+				cout << "ERROR: next token is invalid! Line " << __LINE__ << endl;
 			}
 			break;
 		}
 
+		case CSS::state_next::NEXT_TOKEN_IS_SEMICOLON:
+		{
+			if (type != TokenType::SEMICOLON)
+			{
+				cout << "ERROR: next token is invalid! Line " << __LINE__ << endl;
+			}
+			break;
+		}
+
+		case CSS::state_next::NEXT_TOKEN_IS_COLON:
+		{
+			if (type != TokenType::COLON)
+			{
+				cout << "ERROR: next token is invalid! Line " << __LINE__ << endl;
+			}
+			break;
+		}
+
+		case CSS::state_next::NEXT_TOKEN_IS_PSEUDO:
+		{
+			if (type != TokenType::PSEUDO)
+			{
+				cout << "ERROR: next token is invalid! Line " << __LINE__ << endl;
+			}
+			break;
+		}
+
+		case CSS::state_next::NEXT_TOKEN_IS_FIELD:
+		{
+			if (type != TokenType::FIELD && type != TokenType::RBRA)
+			{
+				cout << "ERROR: next token is invalid! Line " << __LINE__ << endl;
+			}
+			break;
+		}
+
+		default:break;
+		}
+
+
+
+		switch (type)
+		{
 		case TokenType::COLON:
 		{
-			if (nowState == State::NEXT_TOKEN_IS_ID || nowState == State::NEXT_TOKEN_IS_CLASSNAME)
+			if (state == state::THIS_TOKEN_IS_IDENTIFICATOR)
 			{
-				nowState = State::NEXT_TOKEN_IS_PSEUDO;
+				state = state::THIS_TOKEN_IS_PSEUDO;
+				next_state = state_next::NEXT_TOKEN_IS_PSEUDO;
 			}
-			else
+			else if (state == state::THIS_TOKEN_IS_ATTRIBUTE)
 			{
-				nowState = State::NEXT_TOKEN_IS_VALUE;
-				value.clear();
+				state = state::THIS_TOKEN_IS_VALUE;
+				next_state = state_next::NEXT_TOKEN_IS_FIELD;
 			}
-
-			
 
 			break;
 		}
 
 		case TokenType::SEMICOLON:
 		{
-			if (countAttributesWithoutValue != 0)
-			{
-				cout << "ERROR: Attribute without value!" << endl;
-				return;
-			}
-
-			if (attribute.find("color") != -1)
-			{
-				value = '#' + value;
-			}
-
-
 			syntaxParseIfComplexValue(attribute, value, &block_css_state);
+
 
 			block_css_state.set(attribute, CSS::css_attribute::get(attribute, value));
 
-		
-			nowState = State::NEXT_TOKEN_IS_ATTRIBUTE;
+			state = state::THIS_TOKEN_IS_ATTRIBUTE;
+			next_state = state_next::NEXT_TOKEN_IS_FIELD;
+
 			break;
 		}
 
-		case TokenType::LPAR:
+		case TokenType::PSEUDO:
 		{
-			nowState = State::NEXT_TOKEN_IS_COMPLEX_VALUE;
+			pseudo = token;
 
-			value.clear();
-			//value += token;
-#ifdef _DEBUG_VERSION_
-			cout << "Start LPAR block" << endl;
-#endif // _DEBUG_VERSION_
+			state = state::THIS_TOKEN_IS_ANY;
+			next_state = state_next::NEXT_TOKEN_IS_ANY;
 			break;
 		}
 
 		case TokenType::LBRA:
 		{
-			nowState = State::NEXT_TOKEN_IS_ATTRIBUTE;
+			block_css.name(identificator);
 
-			block_css.name(idOrClassName);
-#ifdef _DEBUG_VERSION_
-			cout << "Start block" << endl;
-#endif // _DEBUG_VERSION_
+			state = state::THIS_TOKEN_IS_ATTRIBUTE;
+			next_state = state_next::NEXT_TOKEN_IS_FIELD;
 			break;
 		}
 
 		case TokenType::RBRA:
 		{
-			nowState = State::END_BLOCK;
-
-#ifdef _DEBUG_VERSION_
-			cout << "End block" << endl;
-#endif // _DEBUG_VERSION_
-
-		
-
 			if (pseudo == "hover")
 			{
 				block_css.hover(block_css_state);
@@ -399,121 +417,44 @@ void CSS::css_parser::syntaxParseOneBlock(vector<string>& block)
 				block_css.normal(block_css_state);
 			}
 
-			if (css_blocks.find(idOrClassName) != css_blocks.end())
+			if (css_blocks.find(identificator) != css_blocks.end())
 			{
-				css_blocks[idOrClassName].mergeWith(block_css);
-
+				css_blocks[identificator].mergeWith(block_css);
 			}
 			else
 			{
-				css_blocks.insert(std::make_pair(idOrClassName, block_css));
+				css_blocks.insert(std::make_pair(identificator, block_css));
 			}
 
+			state = state::THIS_TOKEN_IS_ANY;
+			next_state = state_next::NEXT_TOKEN_IS_ANY;
 			break;
 		}
 
 		case TokenType::FIELD:
 		{
-			switch (nowState)
+			if (state == state::THIS_TOKEN_IS_VALUE)
 			{
-			case NEXT_TOKEN_IS_ID:
-			{
-				idOrClassName += token;
+				value.clear();
+				value = token;
 
-#ifdef _DEBUG_VERSION_
-				cout << "This token is ID: " << token << endl;
-				cout << "Block: " << idOrClassName << endl;
-#endif // _DEBUG_VERSION_
-
-				break;
+				next_state = state_next::NEXT_TOKEN_IS_SEMICOLON;
 			}
-
-			case NEXT_TOKEN_IS_CLASSNAME:
+			else if (state == state::THIS_TOKEN_IS_ATTRIBUTE)
 			{
-				idOrClassName += token;
-
-#ifdef _DEBUG_VERSION_
-				cout << "This token is CLASSNAME: " << token << endl;
-				cout << "Block: " << idOrClassName << endl;
-#endif // _DEBUG_VERSION_
-
-				break;
-			}
-
-			case NEXT_TOKEN_IS_ATTRIBUTE:
-			{
-				countAttributesWithoutValue++;
-
-#ifdef _DEBUG_VERSION_
-				cout << "This token is ATTRIBUTE: " << token << endl;
-#endif // _DEBUG_VERSION_
-
 				attribute.clear();
 				attribute = token;
 
-				break;
+				next_state = state_next::NEXT_TOKEN_IS_COLON;
 			}
-
-			case NEXT_TOKEN_IS_VALUE:
-			{
-#ifdef _DEBUG_VERSION_
-				cout << "This token is VALUE: " << token << endl;
-#endif // _DEBUG_VERSION_
-
-				if (!value.empty())
-				{
-					value += ' ' + token;
-				}
-				else
-				{
-					countAttributesWithoutValue--;
-					value = token;
-				}
-
-				
-
-				break;
-			}
-
-			case NEXT_TOKEN_IS_PSEUDO:
-			{
-#ifdef _DEBUG_VERSION_
-				cout << "This token is PSEUDO: " << token << endl;
-#endif // _DEBUG_VERSION_
-
-				if (token != "hover" && token != "active" && token != "focus")
-				{
-					cout << "ERROR: Undefined pseudo class " << token << "!" << endl;
-
-					return;
-				}
-
-				pseudo = token;
-
-				break;
-			}
-
-
-			default:
-			{
-
-				cout << "ERROR: Undefined token: " << token << endl;
-
-
-				break;
-			}
-			}
-
 
 			break;
 		}
 
-		default:break;
+		default: break;
 		}
 
-
 	}
-
 	
 }
 
@@ -555,6 +496,7 @@ void CSS::css_parser::syntaxParseIfComplexValue(string attribute, string value, 
 	{
 
 		value.replace(value.find("px"), 2, " ");
+		value.replace(value.find("#"), 1, " ");
 
 		vector <string>* tokens = Utils::split(value, ' ');
 		if (tokens->size() != 3)

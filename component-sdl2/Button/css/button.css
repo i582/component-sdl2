@@ -32,7 +32,12 @@
     background-color: #365880;
 
     border-color: #4C708C;
-
+    border-radius: 3px;
+    
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
 
     color: #dadacb;
 

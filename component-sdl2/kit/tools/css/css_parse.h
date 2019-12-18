@@ -15,8 +15,8 @@ using std::endl;
 
 enum class TokenType
 {
-	ID_SIGN, // #
-	CLASSNAME_SIGN, // .
+	ID, // #*
+	CLASSNAME, // .*
 	COLON, // :
 	SEMICOLON, // ;
 	LBRA, // {
@@ -24,6 +24,8 @@ enum class TokenType
 
 	LPAR, // (
 	RPAR, // )
+
+	PSEUDO, // hover or active
 
 	FIELD
 };
@@ -48,6 +50,37 @@ enum State
 	END_BLOCK,
 
 	START_PARSE
+};
+
+enum class state
+{
+	THIS_TOKEN_IS_IDENTIFICATOR,
+
+	THIS_TOKEN_IS_COLON,
+	THIS_TOKEN_IS_SEMICOLON,
+
+	THIS_TOKEN_IS_PSEUDO,
+
+	THIS_TOKEN_IS_ATTRIBUTE,
+	THIS_TOKEN_IS_VALUE,
+
+	THIS_TOKEN_IS_ANY,
+};
+
+enum class state_next
+{
+	NEXT_TOKEN_IS_IDENTIFICATOR,
+
+	NEXT_TOKEN_IS_LBRA_OR_COLON,
+
+	NEXT_TOKEN_IS_SEMICOLON,
+	NEXT_TOKEN_IS_COLON,
+
+	NEXT_TOKEN_IS_PSEUDO,
+
+	NEXT_TOKEN_IS_FIELD,
+
+	NEXT_TOKEN_IS_ANY
 };
 
 class css;
@@ -87,6 +120,10 @@ private:
 private:
 	bool isSplitSymbol(char symbol);
 	TokenType whatIsToken(string token);
+	
+
+private:
+	void skipComment(size_t& i);
 
 private:
 	void splitByBlock();

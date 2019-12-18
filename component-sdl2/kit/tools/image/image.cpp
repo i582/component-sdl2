@@ -44,7 +44,7 @@ void Image::setPath(const string& path)
 
 	if (this->texture == nullptr)
 	{
-		cout << "Error: " << IMG_GetError() << endl;
+		//cout << "Error: " << IMG_GetError() << endl;
 		return;
 	}
 
@@ -98,7 +98,7 @@ void Image::createTexture()
 
 	if (this->texture == nullptr)
 	{
-		cout << "Error: " << IMG_GetError() << endl;
+		//cout << "Error: " << IMG_GetError() << endl;
 		return;
 	}
 

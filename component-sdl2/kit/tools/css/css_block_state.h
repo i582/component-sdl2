@@ -11,7 +11,7 @@ using std::map;
 class css_block_state
 {
 private:
-	map <string, std::variant<int, double, string, Color> > styles;
+	map <string, css_variant> styles;
 
 
 public:
@@ -19,6 +19,7 @@ public:
 	css_block_state(bool general);
 
 public:
+
 	void mergeWith(css_block_state& block);
 	void mergeWithBaseIs(css_block_state& block);
 
@@ -52,7 +53,7 @@ T css_block_state::get(string key)
 
 	try
 	{
-		result = std::get<T>(styles[key]);
+		result = styles[key].get<T>();
 	}
 	catch (const std::exception& e)
 	{

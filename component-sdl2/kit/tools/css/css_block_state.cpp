@@ -111,22 +111,31 @@ void CSS::css_block_state::mergeWith(css_block_state& block)
 {
 	int value = -1;
 
-	map <string, std::variant<int, double, string, Color> > mergedStyles;
+	map <string, css_variant> mergedStyles;
 
 	for (auto& style : styles)
 	{
-		
-		try
-		{
-			value = std::get<int>(block.styles.at(style.first));
+		auto elementStyle = block.styles.at(style.first);
 
-			mergedStyles[style.first] = value == 0 ? style.second : block.styles.at(style.first);
-		}
-		catch (const std::exception& e)
-		{
-			mergedStyles[style.first] = block.styles.at(style.first);
-		}
+		css_variant_type type = elementStyle.type();
 
+		if (type == css_variant_type::INT)
+		{
+			value = elementStyle.to_int();
+
+			if (value == 0)
+			{
+				mergedStyles[style.first] = style.second;
+			}
+			else
+			{
+				mergedStyles[style.first] = elementStyle;
+			}
+		}
+		else
+		{
+			mergedStyles[style.first] = elementStyle;
+		}
 
 	}
 
@@ -137,22 +146,32 @@ void CSS::css_block_state::mergeWithBaseIs(css_block_state& block)
 {
 	int value = -1;
 
-	map <string, std::variant<int, double, string, Color> > mergedStyles;
+	map <string, css_variant> mergedStyles;
+
 
 	for (auto& style : styles)
 	{
+		auto elementStyle = style.second;
 
-		try
+		css_variant_type type = elementStyle.type();
+
+		if (type == css_variant_type::INT)
 		{
-			value = std::get<int>(style.second);
+			value = elementStyle.to_int();
 
-			mergedStyles[style.first] = value == 0 ? block.styles.at(style.first) : style.second;
+			if (value == 0)
+			{
+				mergedStyles[style.first] = block.styles.at(style.first);
+			}
+			else
+			{
+				mergedStyles[style.first] = elementStyle;
+			}
 		}
-		catch (const std::exception& e)
+		else
 		{
-			mergedStyles[style.first] = style.second;
+			mergedStyles[style.first] = elementStyle;
 		}
-
 
 	}
 

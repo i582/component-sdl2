@@ -112,6 +112,9 @@
     <Filter Include="Исходные файлы\kit\tools\sdl-gfx">
       <UniqueIdentifier>{208f1e56-1011-4500-b60e-8a1c09791e07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\kit\tools\css\css_variant">
+      <UniqueIdentifier>{5c31c3b3-9b55-4b5a-a9c5-773bfe06eee4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="C:\SDL2\SDL2_gfx\SDL2_rotozoom.c">
       <Filter>Исходные файлы\kit\tools\sdl-gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\css\css_variant\css_variant.cpp">
+      <Filter>Исходные файлы\kit\tools\css\css_variant</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="kit\component\scroll\scroll.h">
       <Filter>Исходные файлы\kit\component\scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\css\css_variant\css_variant.h">
+      <Filter>Исходные файлы\kit\tools\css\css_variant</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -155,6 +155,7 @@
     <ClCompile Include="kit\tools\css\css_block.cpp" />
     <ClCompile Include="kit\tools\css\css_block_state.cpp" />
     <ClCompile Include="kit\tools\css\css_parse.cpp" />
+    <ClCompile Include="kit\tools\css\css_variant\css_variant.cpp" />
     <ClCompile Include="kit\tools\css\utils\css_utils.cpp" />
     <ClCompile Include="kit\tools\font\font.cpp" />
     <ClCompile Include="kit\tools\image\image.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="kit\tools\css\css_block.h" />
     <ClInclude Include="kit\tools\css\css_block_state.h" />
     <ClInclude Include="kit\tools\css\css_parse.h" />
+    <ClInclude Include="kit\tools\css\css_variant\css_variant.h" />
     <ClInclude Include="kit\tools\css\utils\utils.h" />
     <ClInclude Include="kit\tools\font\font.h" />
     <ClInclude Include="kit\tools\image\image.h" />

@@ -15,7 +15,7 @@ private:
 	KitApplication();
 
 public:
-	static KitApplication* init();
+	static KitApplication* create();
 	~KitApplication();
 
 
@@ -33,6 +33,7 @@ public:
 	friend Window;
 
 private:
+	void init();
 	int setup();
 	void render();
 	void onEvent();

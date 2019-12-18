@@ -2,9 +2,9 @@
 
 using namespace CSS;
 
-std::variant<int, double, string, Color> CSS::css_attribute::get(string attribute, string value)
+css_variant CSS::css_attribute::get(string attribute, string value)
 {
-	std::variant<int, double, string, Color> result;
+	css_variant result;
 
 
 	if (attribute == "font-size" || attribute == "margin-top" || attribute == "margin-bottom"

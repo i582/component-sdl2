@@ -10,7 +10,7 @@
 #include "string"
 #include "map"
 
-#include "variant"
+#include "css_variant/css_variant.h"
 
 
 namespace CSS
@@ -22,7 +22,7 @@ using std::map;
 class css_attribute
 {
 public:
-	static std::variant<int, double, string, Color> get(string attribute, string value);
+	static css_variant get(string attribute, string value);
 
 };
 

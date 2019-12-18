@@ -2,7 +2,7 @@
 
 Kit::KitApplication* Kit::KitApplication::instance = nullptr;
 
-Kit::KitApplication* Kit::KitApplication::init()
+Kit::KitApplication* Kit::KitApplication::create()
 {
 	if (instance == nullptr)
 		instance = new KitApplication;
@@ -18,6 +18,8 @@ Kit::KitApplication::KitApplication()
 	this->is_running = true;
 
 	this->count_deleted_windows = 0;
+
+	init();
 }
 
 Kit::KitApplication::~KitApplication()
@@ -73,17 +75,21 @@ Kit::Window* Kit::KitApplication::addWindow(Window* window)
 	return windows.back();
 }
 
-int Kit::KitApplication::setup()
+void Kit::KitApplication::init()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		cout << "ERROR: SDL could not initialize! SDL Error: %s\n" << SDL_GetError();
-		return -1;
+		return;
 	}
+}
 
-
+int Kit::KitApplication::setup()
+{
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 	SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
+
+	return 0;
 }
 
 void Kit::KitApplication::render()
