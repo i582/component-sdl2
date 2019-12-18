@@ -35,7 +35,7 @@ public:
 	 * @param [in] name: Block name
 	 * @param [in] isCode: Flag to setting default styles
 	 */
-	css_block(string name, bool general);
+	css_block(string name, bool default_style);
 
 public:
 

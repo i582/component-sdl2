@@ -14,6 +14,8 @@ Scroll::Scroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes)
 	this->_display = true;
 	this->_nowValue = 0;
 	this->_position = 0.;
+
+	
 }
 
 Scroll::~Scroll()
@@ -65,7 +67,7 @@ void Scroll::render()
 	SDL_SetRenderTarget(_renderer, _texture);
 
 	SDL_SetRenderDrawColor(_renderer, 0x26, 0x32, 0x38, 0x00);
-	SDL_RenderFillRect(_renderer, NULL);
+	SDL_RenderClear(_renderer);
 
 	SDL_SetRenderDrawColor(_renderer, 0x59, 0x5b, 0x5d, 0xff);
 	SDL_RenderFillRect(_renderer, &_sliderSize.toSdlRect());

@@ -79,19 +79,16 @@ protected:
 	bool _isEnterInComponent;
 
 
-	/** Vertical Scroll part */
+	/** Scroll part */
 	VerticalScroll* _verticalScroll;
 	bool _verticalScrollable;
 	bool _isVerticalScrollActive;
 
-
-	/** Horizontal Scroll part */
 	HorizontalScroll* _horizontalScroll;
 	bool _horizontalScrollable;
 	bool _isHorizontalScrollActive;
 	
 	bool _needRenderScroll;
-
 
 	/** Text part */
 	Font* _font;

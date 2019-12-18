@@ -147,7 +147,9 @@
     <ClCompile Include="kit\component\component.cpp" />
     <ClCompile Include="kit\component\components\components.cpp" />
     <ClCompile Include="kit\component\navigator\navigator.cpp" />
+    <ClCompile Include="kit\component\scroll\horizontal-scroll\horizontal-scroll.cpp" />
     <ClCompile Include="kit\component\scroll\scroll.cpp" />
+    <ClCompile Include="kit\component\scroll\vertical-scroll\vertical-scroll.cpp" />
     <ClCompile Include="kit\kit-main.cpp" />
     <ClCompile Include="kit\tools\css\color\color.cpp" />
     <ClCompile Include="kit\tools\css\css-attributes.cpp" />
@@ -182,7 +184,9 @@
     <ClInclude Include="kit\component\component.h" />
     <ClInclude Include="kit\component\components\components.h" />
     <ClInclude Include="kit\component\navigator\navigator.h" />
+    <ClInclude Include="kit\component\scroll\horizontal-scroll\horizontal-scroll.h" />
     <ClInclude Include="kit\component\scroll\scroll.h" />
+    <ClInclude Include="kit\component\scroll\vertical-scroll\vertical-scroll.h" />
     <ClInclude Include="kit\event\event.h" />
     <ClInclude Include="kit\kit-main.h" />
     <ClInclude Include="kit\kit.h" />

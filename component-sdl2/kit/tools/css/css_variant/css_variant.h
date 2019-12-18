@@ -29,7 +29,7 @@ namespace CSS
 	class css_variant
 	{
 	private:
-		variant<int, double, string, Color> variant;
+		raw_css_variant variant;
 
 	public:
 		template<typename T>

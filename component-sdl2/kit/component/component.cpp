@@ -72,12 +72,21 @@ Kit::Component::Component(string id, Rect size, string classes, vector<Component
 
 
 	/** Scroll */
-	this->_scroll = new Scroll(_renderer, { 0, 0, 15, 0 }, 0, 1);
-	this->_scrollable = false;
-	this->_isScrollActive = false;
+	this->_verticalScroll = new VerticalScroll(_renderer, { 0, 0, 15, 0 }, 0, 1);
+	this->_horizontalScroll = new HorizontalScroll(_renderer, { 0, 0, 0, 15 }, 0, 1);
+
+	this->_verticalScrollable = false;
+	this->_horizontalScrollable = false;
+
+	this->_isVerticalScrollActive = false;
+	this->_isHorizontalScrollActive = false;
+
+	this->_needRenderScroll = true;
+
 
 	/** Image */
 	this->_image = nullptr;
+
 
 	/** CSS component */
 	CSS::css* _css_component = nullptr;
@@ -88,7 +97,7 @@ Kit::Component::~Component()
 	SDL_DestroyTexture(_innerTexture);
 	SDL_DestroyTexture(_outerTexture);
 
-	delete _scroll;
+	delete _verticalScroll;
 	delete _font;
 	delete _text;
 	delete _image;
@@ -111,7 +120,7 @@ Kit::Component* Kit::Component::getFirstScrollableParent()
 {
 	if (this->_parent != nullptr)
 	{
-		if (this->_parent->isScrollable())
+		if (this->_parent->isVerticalScrollable() || this->_parent->isHorizontalScrollable())
 		{
 			return this->_parent;
 		}
@@ -233,6 +242,31 @@ void Kit::Component::computeChildrenSize()
 	if (childrenSize.w > _innerSize.w())
 	{
 		newTextureSize.w(childrenSize.w);
+
+
+
+		/*
+		 * Setup scroll TO DO
+		 */
+		this->_horizontalScroll->_bodySize.x(_innerSize.x());
+		this->_horizontalScroll->_bodySize.y(_innerSize.y() + _innerSize.h());
+
+		this->_horizontalScroll->_bodySize.w(_innerSize.w());
+
+		this->_horizontalScroll->_maxValue = newTextureSize.w() - _innerSize.w();
+
+		this->_horizontalScroll->_relSizes = _innerSize.w() / (double)newTextureSize.w();
+		this->_horizontalScroll->_renderer = _renderer;
+		this->_horizontalScroll->init();
+
+		_outerSize.dh(this->_horizontalScroll->_bodySize.h());
+
+		SDL_DestroyTexture(this->_outerTexture);
+		this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _outerSize.w(), _outerSize.h());
+		SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+
+		this->_horizontalScroll->_parentTexture = this->_outerTexture;
+		this->_horizontalScrollable = true;
 	}
 
 	if (childrenSize.h > _innerSize.h())
@@ -244,25 +278,25 @@ void Kit::Component::computeChildrenSize()
 		/*
 		 * Setup scroll TO DO
 		 */
-		this->_scroll->_bodySize.x(_innerSize.x() + _innerSize.w());
-		this->_scroll->_bodySize.y(_innerSize.y());
+		this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w());
+		this->_verticalScroll->_bodySize.y(_innerSize.y());
 
-		this->_scroll->_bodySize.h(_innerSize.h());
+		this->_verticalScroll->_bodySize.h(_innerSize.h());
 
-		this->_scroll->_maxValue = newTextureSize.h() - _innerSize.h();
+		this->_verticalScroll->_maxValue = newTextureSize.h() - _innerSize.h();
 
-		this->_scroll->_relSizes = _innerSize.h() / (double)newTextureSize.h();
-		this->_scroll->_renderer = _renderer;
-		this->_scroll->init();
+		this->_verticalScroll->_relSizes = _innerSize.h() / (double)newTextureSize.h();
+		this->_verticalScroll->_renderer = _renderer;
+		this->_verticalScroll->init();
 
-		_outerSize.dw(this->_scroll->_bodySize.w());
+		_outerSize.dw(this->_verticalScroll->_bodySize.w());
 
 		SDL_DestroyTexture(this->_outerTexture);
 		this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _outerSize.w(), _outerSize.h());
 		SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
 
-		this->_scroll->_parentTexture = this->_outerTexture;
-		this->_scrollable = true;
+		this->_verticalScroll->_parentTexture = this->_outerTexture;
+		this->_verticalScrollable = true;
 	}
 
 
@@ -417,30 +451,35 @@ void Kit::Component::render()
 
 
 	Rect copy = _innerSize;
-	copy.x(0);
+	
 
 	string overflow = blockState->get<string>("overflow");
 
-	bool needRenderScroll = true;
 
 	if (overflow == "hidden")
 	{
-		copy.y(0);
-		needRenderScroll = false;
-		_scrollable = false;
+		copy.y(0); copy.x(0);
+		_needRenderScroll = false;
+		_verticalScrollable = false;
 	}
 	else
 	{
-		copy.y(this->_scroll->_nowValue);
-		_scrollable = true;
+		copy.x(this->_horizontalScroll->_nowValue);
+		copy.y(this->_verticalScroll->_nowValue);
+
+		_verticalScrollable = true;
+		_horizontalScrollable = true;
 	}
 
 
 	SDL_RenderCopy(_renderer, _innerTexture, &copy.toSdlRect(), &_innerSize.toSdlRect());
 
 
-	if (needRenderScroll)
-		_scroll->render();
+	if (_needRenderScroll)
+		_verticalScroll->render();
+
+	_horizontalScroll->render();
+
 
 
 	SDL_Texture* parentTexture = nullptr;
@@ -464,12 +503,22 @@ void Kit::Component::mouseButtonDown(Event* e)
 	adjustMousePoint(mouseP);
 
 
-	if (_scroll->onHoverSlider(mouseP))
+	if (_verticalScroll->onHoverSlider(mouseP))
 	{
-		cout << "Scroll slider" << endl;
+		cout << "_verticalScroll slider" << endl;
 
-		cout << "scroll active TRUE" << endl;
-		_isScrollActive = true;
+		cout << "_verticalScroll active TRUE" << endl;
+		_isVerticalScrollActive = true;
+
+		return;
+	}
+
+	if (_horizontalScroll->onHoverSlider(mouseP))
+	{
+		cout << "_horizontalScroll slider" << endl;
+
+		cout << "_horizontalScroll active TRUE" << endl;
+		_isHorizontalScrollActive = true;
 
 		return;
 	}
@@ -489,7 +538,7 @@ void Kit::Component::mouseButtonUp(Event* e)
 	_eventListeners["onmouseup"](this, e);
 
 	//cout << "scroll active FALSE" << endl;
-	_isScrollActive = false;
+	_isVerticalScrollActive = false;
 	_isActive = false;
 }
 
@@ -498,9 +547,15 @@ void Kit::Component::mouseMotion(Event* e)
 	if (!_isDisplay)
 		return;
 
-	if (_isScrollActive)
+	if (_isVerticalScrollActive)
 	{
-		_scroll->shift(e->motion.yrel * (_childrensSize.h() / _innerSize.h()));
+		_verticalScroll->shift(e->motion.yrel * (_childrensSize.h() / _innerSize.h()));
+		return;
+	}
+
+	if (_isHorizontalScrollActive)
+	{
+		_horizontalScroll->shift(e->motion.xrel * (_childrensSize.w() / _innerSize.w()));
 		return;
 	}
 
@@ -544,7 +599,7 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 	if (!_isDisplay)
 		return;
 
-	if (!_scrollable)
+	if (!_verticalScrollable)
 	{
 		Component* firstScrollableParent = getFirstScrollableParent();
 
@@ -557,9 +612,9 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 	}
 
 	if (scrollDirection < 0)
-		_scroll->shift(20);
+		this->_verticalScroll->shift(20);
 	else
-		_scroll->shift(-20);
+		this->_verticalScroll->shift(-20);
 }
 
 void Kit::Component::setupComponents()
@@ -725,7 +780,8 @@ bool Kit::Component::onHover(Point point)
 
 Kit::Component* const Kit::Component::onComponentHover(Point point)
 {
-	point.dy(_scroll->_nowValue);
+	point.dy(_verticalScroll->_nowValue);
+	point.dx(_horizontalScroll->_nowValue);
 
 	for (int i = _childrens.size() - 1; i >= 0; i--)
 	{
@@ -841,9 +897,14 @@ void Kit::Component::setText(string text)
 	_text->setText(text);
 }
 
-bool Kit::Component::isScrollable() const
+bool Kit::Component::isVerticalScrollable() const
 {
-	return _scrollable;
+	return _verticalScrollable;
+}
+
+bool Kit::Component::isHorizontalScrollable() const
+{
+	return _horizontalScrollable;
 }
 
 void Kit::Component::include(string path)

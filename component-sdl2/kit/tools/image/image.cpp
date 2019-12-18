@@ -29,22 +29,18 @@ void Image::setPath(const string& path)
 	if (path.empty())
 		return;
 	
-	this->path.clear();
-
-	for (auto& path_symbol : path)
-	{
-		this->path += path_symbol;
-	}
+	if (this->path == path)
+		return;
 
 
+	this->path = path;
 
-
-
+	SDL_DestroyTexture(this->texture);
 	this->texture = IMG_LoadTexture(renderer, this->path.c_str());
 
 	if (this->texture == nullptr)
 	{
-		//cout << "Error: " << IMG_GetError() << endl;
+		cout << "Error: " << IMG_GetError() << endl;
 		return;
 	}
 
@@ -98,7 +94,7 @@ void Image::createTexture()
 
 	if (this->texture == nullptr)
 	{
-		//cout << "Error: " << IMG_GetError() << endl;
+		cout << "Error: " << IMG_GetError() << endl;
 		return;
 	}
 

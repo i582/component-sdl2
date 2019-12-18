@@ -19,27 +19,36 @@ Color::Color(string color)
 	this->_color = 0;
 	this->s_color = color;
 
-	calc(color);
+	parse(color);
 }
 
-void Color::calc(string color)
+void Color::parse(string color)
 {
-	const int size = color.size();
-
-	if (color[0] != '#' ||
-		(size != 7 && size != 9))
+	if (color.find("rgba") != -1)
 	{
-		std::cout << "Error parse '" << color << "' as hex color" << std::endl;
-		return;
+		this->_color = parseRGBA(color);
 	}
-		
-	this->_color = parseColorHexString(color);
+	else if (color.find("rgb") != -1)
+	{
+		this->_color = parseRGB(color);
+	}
+	else if (color.find("#") != -1)
+	{
+		this->_color = parseHEX(color);
+	}
 }
 
-Uint32 Color::parseColorHexString(string color)
+Uint32 Color::parseHEX(string color)
 {
 	Uint32 result = 0;
 	
+	if (color[0] != '#' ||
+		(color.size() != 7 && color.size() != 9))
+	{
+		std::cout << "Error parse '" << color << "' as hex color" << std::endl;
+		return 0;
+	}
+
 	for (size_t i = 1; i < color.size(); i++)
 	{
 		char symbol = tolower(color[i]);
@@ -61,6 +70,51 @@ Uint32 Color::parseColorHexString(string color)
 	{
 		result |= 0x000000ff;
 	}
+
+	return result;
+}
+
+Uint32 CSS::Color::parseRGB(string color)
+{
+	Uint32 result = 0;
+
+	string raw_color_number = color.substr(4, color.size() - 5);
+
+	auto colors = Utils::split(raw_color_number, ',');
+
+	if (colors->size() != 3)
+	{
+		std::cout << "Error parse '" << color << "' as rgb color" << std::endl;
+		return 0;
+	}
+
+	result += Utils::to_integer(colors->at(0)) << 24;
+	result += Utils::to_integer(colors->at(1)) << 16;
+	result += Utils::to_integer(colors->at(2)) << 8;
+	result += 0x000000ff;
+
+
+	return result;
+}
+
+Uint32 CSS::Color::parseRGBA(string color)
+{
+	Uint32 result = 0;
+
+	string raw_color_number = color.substr(5, color.size() - 5);
+
+	auto colors = Utils::split(raw_color_number, ',');
+
+	if (colors->size() != 4)
+	{
+		std::cout << "Error parse '" << color << "' as rgba color" << std::endl;
+		return 0;
+	}
+
+	result += Utils::to_integer(colors->at(0)) << 24;
+	result += Utils::to_integer(colors->at(1)) << 16;
+	result += Utils::to_integer(colors->at(2)) << 8;
+	result += (Uint32)(Utils::to_double(colors->at(3)) * 0xff);
 
 	return result;
 }

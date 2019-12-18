@@ -32,7 +32,7 @@ void MyWindow::setup()
 	$$->append(
 		new Component("#test-scroll", { 450, 30, 200, 300 }, ".outer-block", 
 		{
-			new Component("#test-scroll-inner", { 0, 0, 200, 400 }, ".inner-block",
+			new Component("#test-scroll-inner", { 0, 0, 400, 400 }, ".inner-block",
 			{
 				new Button("#button-inner", { 20, 20, 70, 25 }, ".button", "Ок")
 			}),

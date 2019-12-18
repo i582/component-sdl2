@@ -115,6 +115,12 @@
     <Filter Include="Исходные файлы\kit\tools\css\css_variant">
       <UniqueIdentifier>{5c31c3b3-9b55-4b5a-a9c5-773bfe06eee4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\kit\component\scroll\vertical-scroll">
+      <UniqueIdentifier>{3ae8ef9b-091b-4a82-8f52-50635422909d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\kit\component\scroll\horizontal-scroll">
+      <UniqueIdentifier>{7ed2efca-57ee-422f-a048-333d97ef8420}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="kit\tools\css\css_variant\css_variant.cpp">
       <Filter>Исходные файлы\kit\tools\css\css_variant</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\scroll\horizontal-scroll\horizontal-scroll.cpp">
+      <Filter>Исходные файлы\kit\component\scroll\horizontal-scroll</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\scroll\vertical-scroll\vertical-scroll.cpp">
+      <Filter>Исходные файлы\kit\component\scroll\vertical-scroll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="kit\tools\css\css_variant\css_variant.h">
       <Filter>Исходные файлы\kit\tools\css\css_variant</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\scroll\vertical-scroll\vertical-scroll.h">
+      <Filter>Исходные файлы\kit\component\scroll\vertical-scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\scroll\horizontal-scroll\horizontal-scroll.h">
+      <Filter>Исходные файлы\kit\component\scroll\horizontal-scroll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,13 +12,13 @@ CSS::css_block::css_block(string name)
 	this->_active = css_block_state();
 }
 
-CSS::css_block::css_block(string name, bool general)
+CSS::css_block::css_block(string name, bool default_style)
 {
 	this->_name = name;
 
-	this->_normal = css_block_state(true);
-	this->_hover = css_block_state(true);
-	this->_active = css_block_state(true);
+	this->_normal = css_block_state(default_style);
+	this->_hover = css_block_state(default_style);
+	this->_active = css_block_state(default_style);
 }
 
 void CSS::css_block::mergeWith(css_block& block)

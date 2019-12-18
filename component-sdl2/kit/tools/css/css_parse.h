@@ -99,7 +99,7 @@ private:
 
 	vector<string> tokens;
 
-	vector< vector<string> > blocks;
+	vector<vector<string> > blocks;
 
 	map <string, CSS::css_block> css_blocks;
 

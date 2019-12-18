@@ -58,7 +58,7 @@ CSS::css_block_state::css_block_state(bool general)
 {
 	styles["background-color"] = Color(0xffffff00);
 	styles["border-color"] = Color(0xffffff00);
-	styles["color"] = Color(0x00000000);
+	styles["color"] = Color(0x000000ff);
 
 	styles["background-image"] = "";
 	styles["background-position-x"] = 0;

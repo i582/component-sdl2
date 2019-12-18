@@ -11,7 +11,7 @@ class Component;
 
 class Scroll
 {
-private:
+protected:
 	Rect _bodySize;
 	Rect _sliderSize;
 
@@ -33,17 +33,17 @@ private:
 
 public:
 	Scroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes);
-	~Scroll();
+	virtual ~Scroll();
 
 public:
 	friend Component;
 
-private:
-	void init();
+protected:
+	virtual void init();
 
 
 public:
-	void shift(int d);
+	virtual void shift(int d);
 
 	bool onHover(Point p);
 	bool onHoverSlider(Point& p);

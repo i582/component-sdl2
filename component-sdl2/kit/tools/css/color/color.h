@@ -5,6 +5,8 @@
 #include "string"
 #include "iostream"
 
+#include "../utils/utils.h"
+
 namespace CSS
 {
 
@@ -24,8 +26,11 @@ public:
 	Color(string color);
 
 private:
-	void calc(string color);
-	Uint32 parseColorHexString(string color);
+	void parse(string color);
+
+	Uint32 parseHEX(string color);
+	Uint32 parseRGB(string color);
+	Uint32 parseRGBA(string color);
 
 public:
 	bool operator==(const Color& obj);
