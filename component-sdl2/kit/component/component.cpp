@@ -66,9 +66,15 @@ Kit::Component::Component(string id, Rect size, string classes, vector<Component
 	this->_isEnterInComponent = false;
 
 
+	/** Font */
+	this->_fontNormal = font();
+	this->_fontHover = font();
+	this->_fontActive = font();
+
+
 	/** Text */
-	this->_font = new Font("SegoeUI");
-	this->_text = new Text(this, "", { 0,0,0,0 }, _font, 14, Color("#000000"));
+	this->_text = nullptr;
+	this->_text_temp = "";
 
 
 	/** Scroll */
@@ -98,7 +104,8 @@ Kit::Component::~Component()
 	SDL_DestroyTexture(_outerTexture);
 
 	delete _verticalScroll;
-	delete _font;
+	delete _horizontalScroll;
+
 	delete _text;
 	delete _image;
 	delete _css_component;
@@ -143,8 +150,6 @@ void Kit::Component::setupChildrenRenderer()
 	if (this->_renderer == nullptr && this->_parent != nullptr)
 	{
 		this->_renderer = _parent->renderer();
-
-		this->_text->setRenderer(this->_renderer);
 	}
 
 	for (auto& children : _childrens)
@@ -203,9 +208,6 @@ void Kit::Component::computeSize()
 	this->_innerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _innerSize.w(), _innerSize.h());
 	SDL_SetTextureBlendMode(_innerTexture, SDL_BLENDMODE_BLEND);
 
-
-	/** Устанавливаем размер текста */
-	this->_text->setSize({ 0, 0, _innerSize.w(), _innerSize.h() });
 
 
 	for (auto& children : _childrens)
@@ -325,6 +327,48 @@ void Kit::Component::setupBackgroundImage()
 	}
 }
 
+void Kit::Component::setupFont()
+{
+	string font_family = _cssBlock.normal().get<string>("font-family");
+	string font_style = _cssBlock.normal().get<string>("font-style");
+	int font_weight = _cssBlock.normal().get<int>("font-weight");
+	
+	this->_fontNormal = font(font_family, font_style, font_weight);
+
+
+	font_family = _cssBlock.hover().get<string>("font-family");
+	font_style = _cssBlock.hover().get<string>("font-style");
+	font_weight = _cssBlock.hover().get<int>("font-weight");
+
+	this->_fontHover = font(font_family, font_style, font_weight);
+	
+
+	font_family = _cssBlock.active().get<string>("font-family");
+	font_style = _cssBlock.active().get<string>("font-style");
+	font_weight = _cssBlock.active().get<int>("font-weight");
+
+	this->_fontActive = font(font_family, font_style, font_weight);
+
+
+	for (auto& children : _childrens)
+	{
+		children->setupFont();
+	}
+}
+
+void Kit::Component::setupText()
+{
+	int font_size = _cssBlock.normal().get<int>("font-size");
+
+	this->_text = new Text(this, _text_temp, { 0, 0, _innerSize.w(), _innerSize.h() }, _fontNormal, font_size, Color("#000000"));
+	this->_text->setRenderer(this->_renderer);
+
+	for (auto& children : _childrens)
+	{
+		children->setupText();
+	}
+}
+
 void Kit::Component::setupParentWindow()
 {
 	if (this->_window == nullptr && _parent != nullptr && _parent->_window != nullptr)
@@ -364,17 +408,20 @@ void Kit::Component::render()
 
 
 	CSS::css_block_state* blockState = &_cssBlock.normal();
-
+	
+	font blockFont = _fontNormal;
 
 	if (_isHovered)
 	{
 		if (_isActive)
 		{
 			blockState = &_cssBlock.active();
+			blockFont = _fontActive;
 		}
 		else
 		{
 			blockState = &_cssBlock.hover();
+			blockFont = _fontHover;
 		}
 	}
 
@@ -412,6 +459,8 @@ void Kit::Component::render()
 
 	
 
+
+	_text->setFont(blockFont);
 
 
 	_text->setColor(blockState->get<Color>("color"));
@@ -625,6 +674,8 @@ void Kit::Component::setupComponents()
 	computeChildrenSize();
 
 	setupBackgroundImage();
+	setupFont();
+	setupText();
 }
 
 
@@ -894,7 +945,7 @@ Kit::Component* Kit::Component::toggleClass(string className)
 
 void Kit::Component::setText(string text)
 {
-	_text->setText(text);
+	this->_text_temp = text;
 }
 
 bool Kit::Component::isVerticalScrollable() const

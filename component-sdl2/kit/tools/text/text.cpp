@@ -4,7 +4,7 @@
 
 using namespace Kit;
 
-Text::Text(Component* parent, string text, Rect size, Font* font, size_t fontSize, Color color)
+Text::Text(Component* parent, string text, Rect size, font font, size_t fontSize, Color color)
 {
 	this->parent = parent;
 
@@ -14,11 +14,10 @@ Text::Text(Component* parent, string text, Rect size, Font* font, size_t fontSiz
 	this->texture = nullptr;
 	this->text = text;
 	this->size = size;
-	this->font = font;
+	this->_font = font;
 	this->fontSize = fontSize;
 
-	if (font != nullptr)
-		this->ttf_font = font->at(fontSize);
+	this->ttf_font = font[fontSize];
 
 	this->color = color;
 
@@ -248,18 +247,14 @@ void Text::setSize(const Rect& size)
 	this->needReRender = true;
 }
 
-void Text::setFont(const Font& font)
+void Text::setFont(const font& font)
 {
-	if (this->font == &font)
+	if (this->_font == font)
 		return;
 
-	Font* f = new Font;
-	*f = font;
+	this->_font = font;
 
-	this->font = f;
-
-	if (this->font != nullptr)
-		this->ttf_font = font.at(fontSize);
+	this->ttf_font = font.at(fontSize);
 
 	this->splitted = false;
 	this->needReRender = true;
@@ -272,8 +267,7 @@ void Text::setFontSize(const size_t& fontSize)
 
 	this->fontSize = fontSize;
 
-	if (this->font != nullptr)
-		this->ttf_font = font->at(fontSize);
+	this->ttf_font = _font[fontSize];
 
 
 	this->splitted = false;
@@ -418,9 +412,9 @@ int Text::getFontSize()
 	return fontSize;
 }
 
-Font* Text::getFont()
+font& Text::getFont()
 {
-	return font;
+	return _font;
 }
 
 Color Text::getColor()

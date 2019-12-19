@@ -33,7 +33,7 @@ private:
 
 	SDL_Texture* texture;
 
-	Font* font;
+	font _font;
 	size_t fontSize;
 	TTF_Font* fontTTF;
 	CSS::Color color;

@@ -1,69 +1,44 @@
 #pragma once
 
 #include "SDL_ttf.h"
-#include "iostream"
-#include "string"
-#include "vector"
-#include "map"
+
+#include "font-find/font-find.h"
 
 namespace Kit
 {
-
-using std::map;
-using std::string;
-using std::to_string;
-using std::vector;
-using std::cout;
-using std::endl;
+	using std::map;
+	using std::string;
+	using std::to_string;
+	using std::vector;
 
 
-class Fonts;
-
-class Font
-{
-private:
-	static string folderPath;
-	static bool standartFolder;
-	static bool isWindows;
-
-private:
-	string name;
-	
-	static map <string, TTF_Font*> __openedFonts;
-	
-
-public:
-	Font();
-	Font(string name);
-
-public:
-	friend Fonts;
-
-public:
-
-	/*
-	 * @brief Sets the path for the root folder with fonts, by default, 
-	 * fonts are searched in standard system folders
-	 * 
-	 * @note The path must be relative to the exe file, for example,
-	 * if the exe file is in the "debug" folder and the project is
-	 * in the "nia-framework" folder, then you 
-	 * set the path to ../nia-framework/fonts/
-	 */
-	static void root(string path);
+	class font
+	{
+	private:
+		string path;
 
 
-	static void close();
+	private:
+		static map<string, TTF_Font*> _cache;
 
+	public:
+		font();
+		font(string name, font_style style, font_weight weight);
+		font(string name, string style, int weight);
+		~font();
 
-	/*
-	 * @brief Return ttf font with @size
-	 * @param size[in] Font size
-	 * @return Pointer to ttf font
-	 */
-	TTF_Font* at(unsigned int size) const;
-	TTF_Font* operator[](unsigned int size);
-	TTF_Font* operator()(unsigned int size);
-};
+	private:
+		void init();
+
+	public:
+		TTF_Font* at(unsigned int size) const;
+		TTF_Font* operator[](unsigned int size) const;
+
+		bool operator==(const font& font);
+		font& operator=(const font& font);
+
+		static void clear_cache();
+
+	};
 
 }

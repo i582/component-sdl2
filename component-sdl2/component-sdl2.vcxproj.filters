@@ -121,6 +121,9 @@
     <Filter Include="Исходные файлы\kit\component\scroll\horizontal-scroll">
       <UniqueIdentifier>{7ed2efca-57ee-422f-a048-333d97ef8420}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\kit\tools\font\font-find">
+      <UniqueIdentifier>{9a106afb-aefe-427c-a249-479e9e51e282}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,9 +204,6 @@
     <ClCompile Include="kit\tools\text\text_line.cpp">
       <Filter>Исходные файлы\kit\tools\text</Filter>
     </ClCompile>
-    <ClCompile Include="kit\tools\font\font.cpp">
-      <Filter>Исходные файлы\kit\tools\font</Filter>
-    </ClCompile>
     <ClCompile Include="DialogAnswer\DialogAnswer.cpp">
       <Filter>Исходные файлы\DialogAnswer</Filter>
     </ClCompile>
@@ -230,6 +230,12 @@
     </ClCompile>
     <ClCompile Include="kit\component\scroll\vertical-scroll\vertical-scroll.cpp">
       <Filter>Исходные файлы\kit\component\scroll\vertical-scroll</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\font\font-find\font-find.cpp">
+      <Filter>Исходные файлы\kit\tools\font\font-find</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\tools\font\font.cpp">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +329,6 @@
     <ClInclude Include="kit\tools\text\text_line.h">
       <Filter>Исходные файлы\kit\tools\text</Filter>
     </ClInclude>
-    <ClInclude Include="kit\tools\font\font.h">
-      <Filter>Исходные файлы\kit\tools\font</Filter>
-    </ClInclude>
     <ClInclude Include="DialogAnswer\DialogAnswer.h">
       <Filter>Исходные файлы\DialogAnswer</Filter>
     </ClInclude>
@@ -346,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="kit\component\scroll\horizontal-scroll\horizontal-scroll.h">
       <Filter>Исходные файлы\kit\component\scroll\horizontal-scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\font\font-find\font-find.h">
+      <Filter>Исходные файлы\kit\tools\font\font-find</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\tools\font\font.h">
+      <Filter>Исходные файлы\kit\tools\font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

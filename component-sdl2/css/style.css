@@ -115,6 +115,10 @@
 
     color: #dadacb;
 
+
+    font-weight: 500;
+    font-style: italic;
+
     font-size: 13px;
     line-height: 1.3;
     
@@ -147,6 +151,9 @@
     background-position-y: 2px;
 
     color: #dadacb;
+
+    font-weight: 500;
+    font-style: italic;
 
     font-size: 13px;
     line-height: 1.3;

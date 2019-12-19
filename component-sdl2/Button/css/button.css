@@ -12,6 +12,10 @@
     color: #dadacb;
 
     font-size: 13px;
+
+    font-weight: 500;
+    font-style: italic;
+
     line-height: 1.15;
     text-align: center;
     vertical-align: center;
@@ -19,6 +23,11 @@
 
 .button:active
 {
+    font-family: Cambria;
+
+    font-style: normal;
+    font-weight: 400;
+
     border-color: #3D6185;
     border-radius: 4px;
     border-bottom: 3px solid #5E6060;

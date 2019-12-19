@@ -13,6 +13,8 @@ CSS::css_block_state::css_block_state()
 	styles["background-size"] = 0;
 
 	styles["font-family"] = 0;
+	styles["font-weight"] = 0;
+	styles["font-style"] = 0;
 	styles["font-size"] = 0;
 
 	styles["line-height"] = 0;
@@ -66,7 +68,9 @@ CSS::css_block_state::css_block_state(bool general)
 
 	styles["background-size"] = "";
 
-	styles["font-family"] = "";
+	styles["font-family"] = "Segoe UI";
+	styles["font-weight"] = 400;
+	styles["font-style"] = "normal";
 	styles["font-size"] = 13;
 
 	styles["line-height"] = 1.1;

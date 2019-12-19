@@ -29,7 +29,8 @@ Kit::KitApplication::~KitApplication()
 		delete window;
 	}
 
-	Font::close();
+	font::clear_cache();
+	font_find::delete_cache();
 
 	delete instance;
 }

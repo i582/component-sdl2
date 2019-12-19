@@ -94,9 +94,13 @@ protected:
 
 
 	/** Text part */
-	Font* _font;
-	Text* _text;
+	font _fontNormal;
+	font _fontHover;
+	font _fontActive;
 
+
+	Text* _text;
+	string _text_temp;
 
 	/** Image */
 	Image* _image;
@@ -162,6 +166,8 @@ protected: /** Setup Functions */
 	 */
 	void setupBackgroundImage();
 
+	void setupFont();
+	void setupText();
 
 	/**
 	 * @brief Setting the parent window for elements when adding directly

@@ -47,7 +47,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Texture* texture;
 
-	Font* font;
+	font _font;
 	size_t fontSize;
 	TTF_Font* ttf_font;
 	Color color;
@@ -71,7 +71,7 @@ private:
 	int y;
 
 public:
-	Text(Component* parent, string text, Rect size, Font* font, size_t fontSize, Color color);
+	Text(Component* parent, string text, Rect size, font font, size_t fontSize, Color color);
 	~Text();
 
 private:
@@ -90,7 +90,7 @@ public:
 
 	void setText(const string& text);
 	void setSize(const Rect& size);
-	void setFont(const Font& font);
+	void setFont(const font& font);
 	void setFontSize(const size_t& fontSize);
 	void setColor(const Color& color);
 	void setLineHeight(const double& lineHeight);
@@ -110,7 +110,7 @@ public:
 	SDL_Texture* getTexture();
 
 	int getFontSize();
-	Font* getFont();
+	font& getFont();
 	Color getColor();
 };
 
