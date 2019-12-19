@@ -381,11 +381,14 @@ void setup()
 Для стилизации текста можно использовать следующие свойства:
 
 ```css
-color: цвет текста (HEX полная запись из шести 16-ных чисел и решетка в начале);
+color: цвет текста (hex|rgb|rgba);
 font-size: размер текста (number + px);
+font-family: семейство шрифта (string);
+font-style: стиль шрифта (normal|light);
+font-weight: толщина шрифта (100-900)
 line-height: междустрочный интервал (double);
-text-align: выравнивание текста по горизонтале (left center right);
-vertical-align: выравнивание текста по вертикале (top center bottom);
+text-align: выравнивание текста по горизонтале (left|center|right);
+vertical-align: выравнивание текста по вертикале (top|center|bottom);
 margin-top: сдвиг текста сверху (number + px);
 margin-bottom: сдвиг текста снизу (number + px);
 margin-left: сдвиг текста слева (number + px);
@@ -697,29 +700,34 @@ Components getElementsByClassName(string className);
 
 Для стилизации компонентов доступны следующие свойства:
 
-1.  `background-color` --- цвет фона `[hex color (#XXXXXX)]`;
-2.	`border-color` --- цвет обводки `[hex color (#XXXXXX)]`;
-3.	`color` --- цвет текста `[hex color (#XXXXXX)]`;
+1.  `background-color` --- цвет фона `[hex|rgb|rgba]`;
+2.	`border-color` --- цвет обводки `[hex|rgb|rgba]`;
+3.	`color` --- цвет текста `[hex|rgb|rgba]`;
 
 4.	`background-image` --- фоновое изображение `[url(путь_к_изображению_без_кавычек)]`;
 5.	`background-position-x` --- сдвиг изображения по X `[number + px]`;
 6.	`background-position-y` --- сдвиг изображения по Y `[number + px]`;
-
 7.	`background-size` --- размер изображения по ширине `[number + px]`;
 
-8.	`font-size` --- размер шрифта `[number + px]`;
-9.	`line-height` --- междустрочный интервал `[double]`;
-10.	`text-align`  --- выравнивание текста по горизонтали [left|center|right];
-11.	`vertical-align`  --- выравнивание текста по вертикали [top|center|bottom];
 
-12.	`margin-[top|bottom|left|right]` --- сдвиг текста сверху `[number + px]`;
+8.	`font-size` --- размер шрифта `[number + px]`;
+9.  `font-family` --- семейство шрифта `[string]`;
+10. `font-style` --- стиль шрифта `[normal|light]`;
+11. `font-weight` --- толщина шрифта `[100-900]`;
+
+
+12.	`line-height` --- междустрочный интервал `[double]`;
+13.	`text-align`  --- выравнивание текста по горизонтали `[left|center|right]`;
+14.	`vertical-align`  --- выравнивание текста по вертикали `[top|center|bottom]`;
+
+15.	`margin-[top|bottom|left|right]` --- сдвиг текста `[number + px]`;
 
 16.	`border-radius` --- радиус закругления обводки  `[number + px]`;
 
 17.	`border-[top|bottom|left|right]` --- обводка `[number + px|hex color (#XXXXXX)|solid]`;
 18.	`border-[top|bottom|left|right]-size` --- ширина обводки `[number + px]`;
-19.	`border-[top|bottom|left|right]-color` --- цвет обводки `hex color (#XXXXXX)`;
-20.	`border-[top|bottom|left|right]-type` --- тип обводки `solid`;
+19.	`border-[top|bottom|left|right]-color` --- цвет обводки `[hex color (#XXXXXX)]`;
+20.	`border-[top|bottom|left|right]-type` --- тип обводки `[solid]`;
 
 21. `overflow` --- показ скролла или сокрытие `[hidden|unset]`.
 
