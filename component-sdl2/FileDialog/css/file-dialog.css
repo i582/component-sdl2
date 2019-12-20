@@ -1,0 +1,12 @@
+
+.main-container
+{
+    background-color: #3C3F41;
+
+    border-color: #323232;
+    
+    border-top: 1px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}

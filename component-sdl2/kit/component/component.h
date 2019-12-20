@@ -129,9 +129,15 @@ protected:
 
 	/**
 	 * Helper relationship function
-	 * @return The first parent for the current one that needs scrolling
+	 * @return The first parent for the current one that needs vertical scrolling
 	 */
-	Component* getFirstScrollableParent();
+	Component* getFirstVerticalScrollableParent();
+
+	/**
+	 * Helper relationship function
+	 * @return The first parent for the current one that needs horizontal scrolling
+	 */
+	Component* getFirstHorizontalScrollableParent();
 
 
 	CSS::css* getComponentStyles();
@@ -333,7 +339,7 @@ public: /** Class Interface */
 
 
 public: /** Text Interface */
-	void setText(string text);
+	virtual void setText(string text);
 
 
 public: /** Scroll Interface */

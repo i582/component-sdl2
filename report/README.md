@@ -1,14 +1,7 @@
+# [Содержание]{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
 
-# Component-sdl2
+%TOC%
 
-[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
-[![Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2-brightgreen.svg)](https://www.libsdl.org/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_ttf-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_ttf/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_image-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_image/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_gfx-brightgreen.svg)](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
 
 # Введение
 
@@ -176,7 +169,7 @@ using namespace Kit;
 
 **Важно!** Функция `main` должна принимать две переменных: `int argc, char** argv`.
 
-После подключения библиотеки, доступ к объекту библиотеки сразу возможен через короткое имя `$`.
+После подключения библиотеки, доступ к объекту библиотеки осуществляется через короткое имя `$`.
 
 Для запуска библиотеки необходимо вызвать у `$` метод `run`, передав в оператор `return`.
 
@@ -382,20 +375,15 @@ void setup()
 
 Для стилизации текста можно использовать следующие свойства:
 
-```css
-color: цвет текста (hex|rgb|rgba);
-font-size: размер текста (number + px);
-font-family: семейство шрифта (string);
-font-style: стиль шрифта (normal|light);
-font-weight: толщина шрифта (100-900)
-line-height: междустрочный интервал (double);
-text-align: выравнивание текста по горизонтале (left|center|right);
-vertical-align: выравнивание текста по вертикале (top|center|bottom);
-margin-top: сдвиг текста сверху (number + px);
-margin-bottom: сдвиг текста снизу (number + px);
-margin-left: сдвиг текста слева (number + px);
-margin-right: сдвиг текста справа (number + px);
-```
+1. `color` --- цвет текста `[hex|rgb|rgba]`;
+2. `font-size` --- размер шрифта `[number + px]`;
+3. `font-family` --- семейство шрифта `[string]`;
+4. `font-style` --- стиль шрифта `[normal|italic]`;
+5. `font-weight` --- толщина шрифта `[100-900]`;
+6. `line-height` --- междустрочный интервал `[double]`;
+7. `text-align`  --- выравнивание текста по горизонтали `[left|center|right]`;
+8. `vertical-align`  --- выравнивание текста по вертикали `[top|center|bottom]`;
+9. `margin-[top|bottom|left|right]` --- сдвиг текста `[number + px]`;
 
 Например, добавим нашему компоненту следующие стили, чтобы текст не сливался с фоном и был центрирован:
 

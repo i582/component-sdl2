@@ -77,16 +77,17 @@ Kit::Component::Component(string id, Rect size, string classes, vector<Component
 	this->_text_temp = "";
 
 
-	/** Scroll */
+	/** Vertical Scroll */
 	this->_verticalScroll = new VerticalScroll(_renderer, { 0, 0, 15, 0 }, 0, 1);
-	this->_horizontalScroll = new HorizontalScroll(_renderer, { 0, 0, 0, 15 }, 0, 1);
-
 	this->_verticalScrollable = false;
-	this->_horizontalScrollable = false;
-
 	this->_isVerticalScrollActive = false;
-	this->_isHorizontalScrollActive = false;
 
+
+	/** Horizontal Scroll */
+	this->_horizontalScroll = new HorizontalScroll(_renderer, { 0, 0, 0, 15 }, 0, 1);
+	this->_horizontalScrollable = false;
+	this->_isHorizontalScrollActive = false;
+	
 	this->_needRenderScroll = true;
 
 
@@ -123,17 +124,34 @@ void Kit::Component::setupEventListeners()
 }
 
 
-Kit::Component* Kit::Component::getFirstScrollableParent()
+Kit::Component* Kit::Component::getFirstVerticalScrollableParent()
 {
 	if (this->_parent != nullptr)
 	{
-		if (this->_parent->isVerticalScrollable() || this->_parent->isHorizontalScrollable())
+		if (this->_parent->isVerticalScrollable())
 		{
 			return this->_parent;
 		}
 		else
 		{
-			return this->_parent->getFirstScrollableParent();
+			return this->_parent->getFirstVerticalScrollableParent();
+		}
+	}
+
+	return nullptr;
+}
+
+Kit::Component* Kit::Component::getFirstHorizontalScrollableParent()
+{
+	if (this->_parent != nullptr)
+	{
+		if (this->_parent->isHorizontalScrollable())
+		{
+			return this->_parent;
+		}
+		else
+		{
+			return this->_parent->getFirstHorizontalScrollableParent();
 		}
 	}
 
@@ -218,7 +236,7 @@ void Kit::Component::computeSize()
 
 void Kit::Component::computeChildrenSize()
 {
-	SimpleSize childrenSize;
+	SimpleSize childrenSize = {0, 0};
 
 	/** Находим размер прямоугольника в который можно уместить всех детей */
 	for (auto& children : _childrens)
@@ -516,8 +534,7 @@ void Kit::Component::render()
 		copy.x(this->_horizontalScroll->_nowValue);
 		copy.y(this->_verticalScroll->_nowValue);
 
-		_verticalScrollable = true;
-		_horizontalScrollable = true;
+		
 	}
 
 
@@ -588,6 +605,7 @@ void Kit::Component::mouseButtonUp(Event* e)
 
 	//cout << "scroll active FALSE" << endl;
 	_isVerticalScrollActive = false;
+	_isHorizontalScrollActive = false;
 	_isActive = false;
 }
 
@@ -648,22 +666,49 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 	if (!_isDisplay)
 		return;
 
-	if (!_verticalScrollable)
+	if (SDL_GetModState() & KMOD_SHIFT)
 	{
-		Component* firstScrollableParent = getFirstScrollableParent();
-
-		if (firstScrollableParent != nullptr)
+		if (!_horizontalScrollable)
 		{
-			firstScrollableParent->mouseScroll(e, scrollDirection);
+			Component* firstScrollableParent = getFirstHorizontalScrollableParent();
+
+			if (firstScrollableParent != nullptr)
+			{
+				firstScrollableParent->mouseScroll(e, scrollDirection);
+			}
+
+			return;
 		}
-
-		return;
+		else
+		{
+			if (scrollDirection < 0)
+				this->_horizontalScroll->shift(20);
+			else
+				this->_horizontalScroll->shift(-20);
+		}
 	}
-
-	if (scrollDirection < 0)
-		this->_verticalScroll->shift(20);
 	else
-		this->_verticalScroll->shift(-20);
+	{
+		if (!_verticalScrollable)
+		{
+			Component* firstScrollableParent = getFirstVerticalScrollableParent();
+
+			if (firstScrollableParent != nullptr)
+			{
+				firstScrollableParent->mouseScroll(e, scrollDirection);
+			}
+
+
+		}
+		else
+		{
+			if (scrollDirection < 0)
+				this->_verticalScroll->shift(20);
+			else
+				this->_verticalScroll->shift(-20);
+		}
+	}
+	
 }
 
 void Kit::Component::setupComponents()
@@ -831,20 +876,27 @@ bool Kit::Component::onHover(Point point)
 
 Kit::Component* const Kit::Component::onComponentHover(Point point)
 {
-	point.dy(_verticalScroll->_nowValue);
-	point.dx(_horizontalScroll->_nowValue);
-
-	for (int i = _childrens.size() - 1; i >= 0; i--)
+	if (point.in(_innerSize))
 	{
-		auto& children = _childrens[i];
+		point.dy(_verticalScroll->_nowValue);
+		point.dx(_horizontalScroll->_nowValue);
 
-		if (children->onHover(point))
+		for (int i = _childrens.size() - 1; i >= 0; i--)
 		{
-			// adjust coord
-			point = point - children->outerSize().start;
+			auto& children = _childrens[i];
 
-			return children->onComponentHover(point);
+			if (children->onHover(point))
+			{
+				// adjust coord
+				point = point - children->outerSize().start;
+
+				return children->onComponentHover(point);
+			}
 		}
+	}
+	else if (point.in(_outerSize))
+	{
+		
 	}
 
 	return this;
@@ -918,6 +970,7 @@ Kit::Component* Kit::Component::removeClass(string className)
 
 
 	_window->handleStyles();
+	_window->render();
 	return this;
 }
 
@@ -926,6 +979,7 @@ Kit::Component* Kit::Component::addClass(string className)
 	_classes += " " + className;
 
 	_window->handleStyles();
+	_window->render();
 	return this;
 }
 
@@ -945,6 +999,12 @@ Kit::Component* Kit::Component::toggleClass(string className)
 
 void Kit::Component::setText(string text)
 {
+	if (_text != nullptr)
+	{
+		_text->setText(text);
+		return;
+	}
+
 	this->_text_temp = text;
 }
 

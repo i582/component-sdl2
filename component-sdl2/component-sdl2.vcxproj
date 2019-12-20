@@ -144,6 +144,9 @@
     <ClCompile Include="Checkbox\Checkbox.cpp" />
     <ClCompile Include="DialogAnswer\DialogAnswer.cpp" />
     <ClCompile Include="DialogWindow\DialogWindow.cpp" />
+    <ClCompile Include="FileDialog\FileDialog.cpp" />
+    <ClCompile Include="FileDialog\FileDialogItems\FileDialogItems.cpp" />
+    <ClCompile Include="FileDialog\FileDialogItem\FileDialogItem.cpp" />
     <ClCompile Include="kit\component\component.cpp" />
     <ClCompile Include="kit\component\components\components.cpp" />
     <ClCompile Include="kit\component\navigator\navigator.cpp" />
@@ -170,6 +173,7 @@
     <ClCompile Include="kit\tools\text\text_line.cpp" />
     <ClCompile Include="kit\tools\utils\utils.cpp" />
     <ClCompile Include="kit\window\window.cpp" />
+    <ClCompile Include="Label\Label.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyComponent\MyComponent.cpp" />
     <ClCompile Include="MyWindowClass\MyWindow.cpp" />
@@ -181,6 +185,9 @@
     <ClInclude Include="Checkbox\Checkbox.h" />
     <ClInclude Include="DialogAnswer\DialogAnswer.h" />
     <ClInclude Include="DialogWindow\DialogWindow.h" />
+    <ClInclude Include="FileDialog\FileDialog.h" />
+    <ClInclude Include="FileDialog\FileDialogItems\FileDialogItems.h" />
+    <ClInclude Include="FileDialog\FileDialogItem\FileDialogItem.h" />
     <ClInclude Include="kit\component\component-header.h" />
     <ClInclude Include="kit\component\component.h" />
     <ClInclude Include="kit\component\components\components.h" />
@@ -212,6 +219,7 @@
     <ClInclude Include="kit\tools\text\text_line.h" />
     <ClInclude Include="kit\tools\utils\utils.h" />
     <ClInclude Include="kit\window\window.h" />
+    <ClInclude Include="Label\Label.h" />
     <ClInclude Include="MyComponent\MyComponent.h" />
     <ClInclude Include="MyWindowClass\MyWindow.h" />
     <ClInclude Include="RadioButton\RadioButton.h" />

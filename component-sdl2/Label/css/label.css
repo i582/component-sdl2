@@ -1,0 +1,158 @@
+.label
+{
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 1.1;
+    
+    
+    vertical-align: center;
+}
+
+.label-align-centered
+{
+    background-color: #3E434C;
+
+    border-radius: 2px;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 0.9;
+    
+    
+    text-align: center;
+    vertical-align: center;
+
+    
+    font-family: Consolas;
+
+}
+
+.label-align-left
+{
+    background-color: #3E434C;
+
+    border-radius: 2px;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 0.9;
+    
+    
+    text-align: left;
+    vertical-align: center;
+
+    
+    font-family: Consolas;
+    margin-left: 10px;
+}
+
+.label-align-right
+{
+    background-color: #3E434C;
+
+    border-radius: 2px;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 0.9;
+    
+    
+    text-align: right;
+    vertical-align: center;
+
+    
+    font-family: Consolas;
+    margin-right: 10px;
+}
+
+.label-align-top
+{
+    background-color: #3E434C;
+
+    border-radius: 2px;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 0.9;
+    
+    
+    text-align: center;
+    vertical-align: top;
+
+    
+    font-family: Consolas;
+    margin-right: 10px;
+}
+
+.label-align-bottom
+{
+    background-color: #3E434C;
+
+    border-radius: 2px;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 0.9;
+    
+    
+    text-align: center;
+    vertical-align: bottom;
+
+    
+    font-family: Consolas;
+    margin-right: 10px;
+}

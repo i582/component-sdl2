@@ -1,0 +1,38 @@
+.main-container-item
+{
+    background-color: #3C3F41;
+
+    color: #dadacb;
+
+    font-size: 12px;
+    line-height: 1.15;
+   
+    margin-left: 45px;
+    vertical-align: center;
+}
+
+.main-container-item:hover
+{
+    background-color: #4B6EAF;
+}
+
+.image-arrow-down
+{
+    background-image: url(images/fileDialog/arrow-down.png);
+
+    background-size: 10px;
+}
+
+.image-arrow-left
+{
+    background-image: url(images/fileDialog/arrow-left.png);
+
+    background-size: 10px;
+}
+
+.image-folder
+{
+    background-image: url(images/fileDialog/folder.png);
+
+    background-size: 15px;
+}

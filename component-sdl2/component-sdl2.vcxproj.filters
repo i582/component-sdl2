@@ -124,6 +124,18 @@
     <Filter Include="Исходные файлы\kit\tools\font\font-find">
       <UniqueIdentifier>{9a106afb-aefe-427c-a249-479e9e51e282}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\FileDialog">
+      <UniqueIdentifier>{0b9333a6-eec8-4168-ae76-49c8bb75a12e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\FileDialog\FileDialogItem">
+      <UniqueIdentifier>{ef7c03ea-14e7-41ba-9b38-21571409ef31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\FileDialog\FileDialogItems">
+      <UniqueIdentifier>{735d66b3-fc4b-4e0f-a38e-93e0bd3e22ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Label">
+      <UniqueIdentifier>{bd1418fb-0d50-4973-82d1-dd5fd18fc148}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +248,18 @@
     </ClCompile>
     <ClCompile Include="kit\tools\font\font.cpp">
       <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClCompile>
+    <ClCompile Include="FileDialog\FileDialogItem\FileDialogItem.cpp">
+      <Filter>Исходные файлы\FileDialog\FileDialogItem</Filter>
+    </ClCompile>
+    <ClCompile Include="FileDialog\FileDialog.cpp">
+      <Filter>Исходные файлы\FileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="FileDialog\FileDialogItems\FileDialogItems.cpp">
+      <Filter>Исходные файлы\FileDialog\FileDialogItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Label\Label.cpp">
+      <Filter>Исходные файлы\Label</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +379,18 @@
     </ClInclude>
     <ClInclude Include="kit\tools\font\font.h">
       <Filter>Исходные файлы\kit\tools\font</Filter>
+    </ClInclude>
+    <ClInclude Include="FileDialog\FileDialog.h">
+      <Filter>Исходные файлы\FileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="FileDialog\FileDialogItem\FileDialogItem.h">
+      <Filter>Исходные файлы\FileDialog\FileDialogItem</Filter>
+    </ClInclude>
+    <ClInclude Include="FileDialog\FileDialogItems\FileDialogItems.h">
+      <Filter>Исходные файлы\FileDialog\FileDialogItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Label\Label.h">
+      <Filter>Исходные файлы\Label</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

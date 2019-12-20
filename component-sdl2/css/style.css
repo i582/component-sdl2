@@ -175,12 +175,155 @@
     
 }
 
-.outer-block:active
-{
-    
-}
-
 .inner-block
 {
     background-color: #3E434C;
+}
+
+.click-and-hover
+{
+    background-color: #3C3F41;
+
+    border-color: #323232;
+    
+    border-top: 1px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}
+
+.click-and-hover:hover
+{
+    background-color: rgb(47, 113, 156);
+}
+
+.click-and-hover:active
+{
+    border-radius: 10px;
+
+   
+
+    border-top: 10px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}
+
+
+.events
+{
+    background-color: #3E434C;
+
+    border-top: 1px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}
+
+
+
+.outer
+{
+    border-color: #323232;
+
+    border-top: 1px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}
+
+.inner
+{
+    background-color: #3E434C;
+}
+
+
+.inner-2
+{
+    background-color: #3E434C;
+}
+
+.inner-in
+{
+    background-color: #3E434C;
+
+    border-color: #3D6185;
+
+    border-top: 1px solid #323232;
+    border-bottom: 1px solid #323232;
+    border-left: 1px solid #323232;
+    border-right: 1px solid #323232;
+}
+
+.image
+{
+    background-image: url(images/back1.png);
+    background-size: 200px;
+}
+
+
+.text-block
+{
+    color: #dadacb;
+
+    
+    font-style: italic;
+
+    font-size: 11px;
+    line-height: 1.3;
+   
+}
+
+.test-block
+{
+    background-color: #3E434C;
+    border-color: #3D6185;
+   
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+}
+
+.test-block-item
+{
+    background-color: #3E434C;
+    
+    border-color: rgb(36, 38, 41);
+
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    
+    font-style: italic;
+
+    font-size: 12px;
+    line-height: 1.3;
+    margin-left: 10px;
+
+
+}
+
+.test-block-item:hover
+{
+    background-color: #3D6185;
+    
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
+    color: #dadacb;
+
+    
+    font-style: italic;
+
+    font-size: 12px;
+    line-height: 1.3;
+
+    margin-left: 20px;
 }

@@ -6,15 +6,7 @@ using namespace Kit;
 
 int main(int argc, char** argv)
 {
-	$.addWindow(new MyWindow("new window", { 100, 100, 1000, 500 }));
+	$.addWindow(new MyWindow("new window", { 100, 100, 1100, 650 }));
 	
 	return $.run();
-
-	/*CSS::css styles("css/style.css");
-
-	return 0;*/
-
-
-
-	return 0;
 }

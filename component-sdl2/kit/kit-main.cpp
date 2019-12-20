@@ -87,7 +87,7 @@ void Kit::KitApplication::init()
 
 int Kit::KitApplication::setup()
 {
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 
 	return 0;
