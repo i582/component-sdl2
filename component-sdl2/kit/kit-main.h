@@ -2,6 +2,8 @@
 
 #include "window/window.h"
 
+#include "component/animation/animation.h"
+
 namespace Kit
 {
 	using std::cout; 
@@ -25,10 +27,14 @@ private:
 
 	int count_deleted_windows;
 
-	vector <Window*> windows;
+	map <size_t, Window*> windows;
+
+
+	animation<int>* anim;
 
 public:
 	Window* addWindow(Window* window);
+	void deleteWindow(size_t index);
 
 	friend Window;
 
@@ -47,7 +53,7 @@ public: /** Windows Interface */
 	Window* at(size_t index);
 	Window* operator[](size_t index);
 
-	vector <Window*>* getWindows();
+	
 };
 
 }	

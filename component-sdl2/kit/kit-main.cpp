@@ -24,7 +24,7 @@ Kit::KitApplication::KitApplication()
 
 Kit::KitApplication::~KitApplication()
 {
-	for (auto& window : windows)
+	for (auto& [id, window] : windows)
 	{
 		delete window;
 	}
@@ -50,7 +50,7 @@ int Kit::KitApplication::run()
 
 Kit::Window* Kit::KitApplication::at(size_t index)
 {
-	if (index >= windows.size())
+	if (windows.find(index) == windows.end())
 		return nullptr;
 
 	return windows[index];
@@ -61,19 +61,23 @@ Kit::Window* Kit::KitApplication::operator[](size_t index)
 	return at(index);
 }
 
-Kit::vector<Kit::Window*>* Kit::KitApplication::getWindows()
-{
-	return &windows;
-}
-
 Kit::Window* Kit::KitApplication::addWindow(Window* window)
 {
 	window->parent = this;
-	windows.push_back(window);
+
+	windows.insert(std::make_pair(window->id(), window));
 
 	render();
 
-	return windows.back();
+	return windows[window->id()];
+}
+
+void Kit::KitApplication::deleteWindow(size_t index)
+{
+	if (windows.find(index) == windows.end())
+		return;
+
+	windows.erase(index);
 }
 
 void Kit::KitApplication::init()
@@ -83,6 +87,8 @@ void Kit::KitApplication::init()
 		cout << "ERROR: SDL could not initialize! SDL Error: %s\n" << SDL_GetError();
 		return;
 	}
+
+	anim = new animation<int>(0, 100, 100, nullptr, []() {});
 }
 
 int Kit::KitApplication::setup()
@@ -95,7 +101,7 @@ int Kit::KitApplication::setup()
 
 void Kit::KitApplication::render()
 {
-	for (auto& window : windows)
+	for (auto& [id, window] : windows)
 	{
 		window->render();
 	}
@@ -103,22 +109,43 @@ void Kit::KitApplication::render()
 
 void Kit::KitApplication::onEvent()
 {
-	int windowId = -1;
-	while (is_running && SDL_WaitEvent(&e))
+	Uint32 oldTime = 0;
+	anim->start();
+	while (is_running && windows.size())
 	{
-		windowId = e.window.windowID - 1;
 
-		if (windowId != 0)
-			windowId -= count_deleted_windows;
+		while (SDL_PollEvent(&e))
+		{
+			int windowId = e.window.windowID;
 
-		if (windowId < windows.size())
-			windows[windowId]->onEvent(&e);
+			if (windows.find(windowId) != windows.end())
+				windows[windowId]->onEvent(&e);
+		}
+
+
+		anim->check();
+
+		for (auto& [id, window] : windows)
+		{
+			window->onAnimate();
+		}
+
+
+
+		Uint32 time = SDL_GetTicks();
+
+		if (oldTime == 0)
+			oldTime = time;
+
+		if (time > oldTime + 17)
+		{
+			render();
+			oldTime = time;
+		}
 	}
 }
 
 void Kit::KitApplication::close()
 {
 	is_running = false;
-
-	this->~KitApplication();
 }

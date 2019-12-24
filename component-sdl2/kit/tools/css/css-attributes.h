@@ -23,6 +23,7 @@ class css_attribute
 {
 private:
 	static string parseImagePath(string path);
+	static string parseSizes(string path);
 
 public:
 	static css_variant get(string attribute, string value);

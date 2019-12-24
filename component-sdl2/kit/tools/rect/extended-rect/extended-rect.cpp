@@ -36,6 +36,14 @@ bool Rect::operator==(const Rect& obj)
 	return size == obj.size && start == obj.start;
 }
 
+Rect& Kit::Rect::operator=(const Rect& obj)
+{
+	this->start = obj.start;
+	this->size = obj.size;
+
+	return *this;
+}
+
 int Rect::w() const
 {
 	if (!isCalculated)

@@ -61,6 +61,7 @@ public:
 	bool operator==(const Point& obj) const;
 	bool operator!=(const Point& obj) const;
 
+	Point& operator=(const Point& obj);
 
 	/**
 	 * @brief Part for where definition from a string, like 100px or 24%

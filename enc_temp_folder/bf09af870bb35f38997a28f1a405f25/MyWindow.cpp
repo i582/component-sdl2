@@ -29,7 +29,10 @@ void MyWindow::setup()
 	{
 		create("#test-block-inner", ".test-class-inner-1", 
 		{
-			create("#test-block-inner-inner", ".test-class-inner-inner")
+			create("#test-block-inner-inner", ".test-class-inner-inner", 
+			{
+				Button::create("#button-1", "Кнопка", ".button")
+			})
 		}),
 		create("#test-block-inner-2", ".test-class-inner-2")
 	});

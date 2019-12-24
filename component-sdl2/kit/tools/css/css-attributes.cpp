@@ -16,6 +16,18 @@ string CSS::css_attribute::parseImagePath(string path)
 	return result;
 }
 
+string CSS::css_attribute::parseSizes(string path)
+{
+	string result = path;
+
+	if (result.find("calc") != -1)
+	{
+		result = result.substr(5, result.size() - 6);
+	}
+
+	return result;
+}
+
 css_variant CSS::css_attribute::get(string attribute, string value)
 {
 	css_variant result;
@@ -41,6 +53,11 @@ css_variant CSS::css_attribute::get(string attribute, string value)
 	if (attribute == "background-image")
 	{
 		return parseImagePath(value);
+	}
+
+	if (attribute == "width" || attribute == "height" || attribute == "top" || attribute == "left")
+	{
+		return parseSizes(value);
 	}
 
 	result = value;

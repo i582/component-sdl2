@@ -120,6 +120,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,6 +136,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -147,6 +149,7 @@
     <ClCompile Include="FileDialog\FileDialog.cpp" />
     <ClCompile Include="FileDialog\FileDialogItems\FileDialogItems.cpp" />
     <ClCompile Include="FileDialog\FileDialogItem\FileDialogItem.cpp" />
+    <ClCompile Include="kit\component\animation\animation_variant.cpp" />
     <ClCompile Include="kit\component\component.cpp" />
     <ClCompile Include="kit\component\components\components.cpp" />
     <ClCompile Include="kit\component\navigator\navigator.cpp" />
@@ -188,6 +191,8 @@
     <ClInclude Include="FileDialog\FileDialog.h" />
     <ClInclude Include="FileDialog\FileDialogItems\FileDialogItems.h" />
     <ClInclude Include="FileDialog\FileDialogItem\FileDialogItem.h" />
+    <ClInclude Include="kit\component\animation\animation.h" />
+    <ClInclude Include="kit\component\animation\animation_variant.h" />
     <ClInclude Include="kit\component\component-header.h" />
     <ClInclude Include="kit\component\component.h" />
     <ClInclude Include="kit\component\components\components.h" />

@@ -46,7 +46,7 @@ int CSS::css_variant::to_int(bool no_exception) const
 
 double CSS::css_variant::to_double(bool no_exception) const
 {
-	if (type() == css_variant_type::INT)
+	if (type() == css_variant_type::DOUBLE)
 		return std::get<double>(variant);
 	else if (no_exception == false)
 		throw std::logic_error("Error, variant currently contains no double");
@@ -54,7 +54,7 @@ double CSS::css_variant::to_double(bool no_exception) const
 
 string CSS::css_variant::to_string(bool no_exception) const
 {
-	if (type() == css_variant_type::INT)
+	if (type() == css_variant_type::STRING)
 		return std::get<string>(variant);
 	else if (no_exception == false)
 		throw std::logic_error("Error, variant currently contains no string");
@@ -62,7 +62,7 @@ string CSS::css_variant::to_string(bool no_exception) const
 
 Color CSS::css_variant::to_color(bool no_exception) const
 {
-	if (type() == css_variant_type::INT)
+	if (type() == css_variant_type::COLOR)
 		return std::get<Color>(variant);
 	else if (no_exception == false)
 		throw std::logic_error("Error, variant currently contains no color");

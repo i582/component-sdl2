@@ -47,6 +47,19 @@ bool Size::operator!=(const Size& obj) const
 	return this->_w != obj._w || this->_h != obj._h;
 }
 
+Size& Kit::Size::operator=(const Size& obj)
+{
+	this->_w = obj._w;
+	this->_h = obj._h;
+
+	this->width = obj.width;
+	this->height = obj.height;
+
+	this->isCalculated = obj.isCalculated;
+
+	return* this;
+}
+
 Size Size::operator*(int scale)
 {
 	Size size;

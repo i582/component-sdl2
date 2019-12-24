@@ -23,7 +23,7 @@ public:
 	Rect(string left, string top, string width, string height);
 
 	bool operator==(const Rect& obj);
-
+	Rect& operator=(const Rect& obj);
 	/**
 	 * @brief Part for where definition from a string, like 100px or 24%
 	 */

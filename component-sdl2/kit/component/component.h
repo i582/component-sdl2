@@ -11,6 +11,8 @@
 #include "scroll/vertical-scroll/vertical-scroll.h"
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
+#include "animation/animation.h"
+
 #include "component-header.h"
 
 
@@ -30,7 +32,10 @@ protected:
 	/** Sizes */
 	Rect _innerSize;
 	Rect _outerSize;
+	bool _isConstructSize;
 
+	bool _autoWidth;
+	bool _autoHeight;
 
 	/** Identifiers */
 	string _id;
@@ -110,9 +115,17 @@ protected:
 	CSS::css* _css_component;
 
 
+	/** Animation */
+	animation<int>* _animation;
+
+	
+
 public:
 	Component(string id, Rect size, string classes);
 	Component(string id, Rect size, string classes, vector<Component*> childrens);
+
+	Component(string id, string classes = "", vector<Component*> childrens = {});
+
 	virtual ~Component();
 
 
@@ -143,6 +156,9 @@ protected:
 	CSS::css* getComponentStyles();
 
 protected: /** Setup Functions */
+
+
+	void setupSize();
 
 	/**
 	 * @brief Sets all descendants to a common renderer starting from the
@@ -282,8 +298,8 @@ public: /** Hover Interface */
 
 
 public: /** Identifiers Interface */
-	string id() const;
 
+	string id() const;
 
 
 public: /** Event listeners Interface */
@@ -346,9 +362,15 @@ public: /** Scroll Interface */
 	bool isVerticalScrollable() const;
 	bool isHorizontalScrollable() const;
 
+
 public: /** Block Style Interface */
 	void include(string path);
 
+
+public: /** Animation Interface */
+	void animate();
+	void startAnimation();
+	void endAnimation();
 };
 
 

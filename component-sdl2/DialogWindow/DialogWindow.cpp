@@ -18,7 +18,7 @@ void DialogWindow::setup()
 
 	$$->append(new Component("#header", { "0px", "0px", "100%", "25px" }, ".header"));
 
-	$$->append(new Button("#button-submit", { 475, 50, 70, 25 }, ".button", "Ок"));
+	//$$->append(new Button("#button-submit", { 475, 50, 70, 25 }, ".button", "Ок"));
 
 
 

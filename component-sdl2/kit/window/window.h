@@ -39,7 +39,11 @@ public: /** Component Interface */
 	Component* getElementById(string id) const;
 	Components getElementsByClassName(string className) const;
 
+	Component& add(string id, string classes = "", vector<Component*> childrens = {});
+	Component& add(Component* component);
 
+	Component* create(string id, string classes = "", vector<Component*> childrens = {});
+	Component* create(Component* component);
 
 public: /** Component Style Interface */
 
@@ -50,7 +54,7 @@ public: /** Component Style Interface */
 protected:
 	SimpleRect _size;
 	string title;
-
+	size_t _id;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -98,6 +102,7 @@ public: /** Interface */
 	void render();
 	void onEvent(Event* e);
 
+	void onAnimate();
 
 	void show();
 	void hide();
@@ -107,7 +112,7 @@ public: /** Interface */
 
 	void close();
 
-
+	size_t id();
 
 
 public: /** Size Interface */

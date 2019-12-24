@@ -18,8 +18,8 @@ void DialogAnswer::setup()
 	$$->append(new Component("#header", { "0px", "0px", "100%", "25px" }, ".header"))
 		->setText(title);
 
-	$$->append(new Button("#button-submit", { "75% - 35px", "100% - 35px", "75px", "25px" }, ".button .button-blue", "Ок"));
-	$$->append(new Button("#button-close", { "25% - 35px", "100% - 35px", "75px", "25px" }, ".button", "Отмена"));
+	//$$->append(new Button("#button-submit", { "75% - 35px", "100% - 35px", "75px", "25px" }, ".button .button-blue", "Ок"));
+	//$$->append(new Button("#button-close", { "25% - 35px", "100% - 35px", "75px", "25px" }, ".button", "Отмена"));
 
 	
 	$$->append(new Component("#warning-image", { "10px", "50% - 35px", "45px", "45px" }, ".warning-image"));

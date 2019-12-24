@@ -136,6 +136,9 @@
     <Filter Include="Исходные файлы\Label">
       <UniqueIdentifier>{bd1418fb-0d50-4973-82d1-dd5fd18fc148}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\kit\component\animation">
+      <UniqueIdentifier>{5b374687-79e6-49d2-be52-a5096c7de270}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="Label\Label.cpp">
       <Filter>Исходные файлы\Label</Filter>
+    </ClCompile>
+    <ClCompile Include="kit\component\animation\animation_variant.cpp">
+      <Filter>Исходные файлы\kit\component\animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +397,12 @@
     </ClInclude>
     <ClInclude Include="Label\Label.h">
       <Filter>Исходные файлы\Label</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\animation\animation.h">
+      <Filter>Исходные файлы\kit\component\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="kit\component\animation\animation_variant.h">
+      <Filter>Исходные файлы\kit\component\animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

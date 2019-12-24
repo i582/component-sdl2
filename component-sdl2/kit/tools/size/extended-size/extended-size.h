@@ -32,7 +32,8 @@ public:
 
 	bool operator==(const Size& obj) const;
 	bool operator!=(const Size& obj) const;
-
+	
+	Size& operator=(const Size& obj);
 
 	/**
 	 * @brief Part for where definition from a string, like 100px or 24%

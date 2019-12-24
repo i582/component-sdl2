@@ -2,6 +2,11 @@
 
 CSS::css_block_state::css_block_state()
 {
+	styles["width"] = 0;
+	styles["height"] = 0;
+	styles["left"] = 0;
+	styles["top"] = 0;
+
 	styles["background-color"] = 0;
 	styles["border-color"] = 0;
 	styles["color"] = 0;
@@ -58,6 +63,11 @@ CSS::css_block_state::css_block_state()
 
 CSS::css_block_state::css_block_state(bool general)
 {
+	styles["width"] = "";
+	styles["height"] = "";
+	styles["left"] = "";
+	styles["top"] = "";
+
 	styles["background-color"] = Color(0xffffff00);
 	styles["border-color"] = Color(0xffffff00);
 	styles["color"] = Color(0x000000ff);
@@ -113,34 +123,23 @@ CSS::css_block_state::css_block_state(bool general)
 
 void CSS::css_block_state::mergeWith(css_block_state& block)
 {
-	int value = -1;
-
 	map <string, css_variant> mergedStyles;
 
-	for (auto& style : styles)
+	for (auto& [attr, thisStyle] : styles)
 	{
-		auto elementStyle = block.styles.at(style.first);
-
-		css_variant_type type = elementStyle.type();
-
-		if (type == css_variant_type::INT)
+		auto otherStyle = block.styles.at(attr);
+	
+		if (otherStyle.type() == css_variant_type::INT)
 		{
-			value = elementStyle.to_int();
-
-			if (value == 0)
-			{
-				mergedStyles[style.first] = style.second;
-			}
+			if (otherStyle.to_int() == 0)
+				mergedStyles[attr] = thisStyle;
 			else
-			{
-				mergedStyles[style.first] = elementStyle;
-			}
+				mergedStyles[attr] = otherStyle;
 		}
 		else
 		{
-			mergedStyles[style.first] = elementStyle;
+			mergedStyles[attr] = otherStyle;
 		}
-
 	}
 
 	this->styles = mergedStyles;
@@ -148,35 +147,23 @@ void CSS::css_block_state::mergeWith(css_block_state& block)
 
 void CSS::css_block_state::mergeWithBaseIs(css_block_state& block)
 {
-	int value = -1;
-
 	map <string, css_variant> mergedStyles;
 
-
-	for (auto& style : styles)
+	for (auto& [attr, thisStyle] : styles)
 	{
-		auto elementStyle = style.second;
-
-		css_variant_type type = elementStyle.type();
-
-		if (type == css_variant_type::INT)
+		auto otherStyle = block.styles.at(attr);
+		
+		if (thisStyle.type() == css_variant_type::INT)
 		{
-			value = elementStyle.to_int();
-
-			if (value == 0)
-			{
-				mergedStyles[style.first] = block.styles.at(style.first);
-			}
+			if (thisStyle.to_int() == 0)
+				mergedStyles[attr] = otherStyle;
 			else
-			{
-				mergedStyles[style.first] = elementStyle;
-			}
+				mergedStyles[attr] = thisStyle;
 		}
 		else
 		{
-			mergedStyles[style.first] = elementStyle;
+			mergedStyles[attr] = thisStyle;
 		}
-
 	}
 
 	this->styles = mergedStyles;

@@ -21,6 +21,10 @@ int Point::parseStringToNumber(const string& str, int relativeValue)
 
 		return (int)((stoi(str.substr(0, index)) / 100.) * relativeValue);
 	}
+	else if ((index = str.find("auto")) != -1)
+	{
+		return 0xfffffff;
+	}
 	else
 	{
 		cout << "ERROR: string does not contain 'px' or '%'!" << endl;
@@ -122,6 +126,19 @@ bool Point::operator==(const Point& obj) const
 bool Point::operator!=(const Point& obj) const
 {
 	return this->_x != obj._x || this->_y != obj._y;
+}
+
+Point& Kit::Point::operator=(const Point& obj)
+{
+	this->_x = obj._x;
+	this->_y = obj._y;
+
+	this->top = obj.top;
+	this->left = obj.left;
+
+	this->isCalculated = obj.isCalculated;
+
+	return *this;
 }
 
 Point Point::operator*(int scale)

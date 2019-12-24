@@ -3,31 +3,33 @@
 
 void Kit::Window::handleStyles()
 {
-	for (auto& component : allComponents)
+	for (auto& [id, component] : allComponents)
 	{
-		CSS::css* component_css = component.second->getComponentStyles();
+		CSS::css* component_css = component->getComponentStyles();
 		if (component_css == nullptr)
 			continue;
 
-		for (auto& css_block : component_css->getStyles())
+		for (auto& [block_id, css_block] : component_css->getStyles())
 		{
-			allComponentsStyles[css_block.first] = css_block.second;
+			allComponentsStyles[block_id] = css_block;
 		}
 	}
 
-
-	for (auto& style : allComponentsStyles)
+	for (auto& [id, component] : allComponents)
 	{
-		string className = style.first;
+		auto classnames = Utils::split(component->_classes, ' ');
 
-		for (auto& component : allComponents)
+		for (auto& classname : *classnames)
 		{
-			if (component.second->hasClass(className))
+			if (allComponentsStyles.find(classname) != allComponentsStyles.end())
 			{
-				component.second->_cssBlock.mergeWith(style.second);
+				auto style = allComponentsStyles[classname];
+
+				component->_cssBlock.mergeWith(style);
 			}
 		}
 
+		delete classnames;
 	}
 }
 
@@ -68,15 +70,39 @@ Kit::Component* Kit::Window::getElementById(string id) const
 Kit::Components Kit::Window::getElementsByClassName(string className) const
 {
 	vector<Component*>* ñomponentVector = new vector<Component*>;
-	for (auto& ñomponent : allComponents)
+	for (auto& [id, ñomponent] : allComponents)
 	{
-		if (ñomponent.second->hasClass(className))
+		if (ñomponent->hasClass(className))
 		{
-			ñomponentVector->push_back(ñomponent.second);
+			ñomponentVector->push_back(ñomponent);
 		}
 	}
 
 	return Components(ñomponentVector);
+}
+
+Kit::Component& Kit::Window::add(string id, string classes, vector<Component*> childrens)
+{
+	Component* _addComponent = new Component(id, classes, childrens);
+
+	return add(_addComponent);
+}
+
+Kit::Component& Kit::Window::add(Component* component)
+{
+	navigator->append(component);
+
+	return *component;
+}
+
+Kit::Component* Kit::Window::create(string id, string classes, vector<Component*> childrens)
+{
+	return new Component(id, classes, childrens);
+}
+
+Kit::Component* Kit::Window::create(Component* component)
+{
+	return component;
 }
 
 CSS::css_block* Kit::Window::addStyle(string className, CSS::css_block style)
@@ -89,6 +115,7 @@ Kit::Window::Window(string title, SimpleRect size)
 {
 	this->title = title;
 	this->_size = size;
+	this->_id = -1;
 
 	this->window = nullptr;
 	this->renderer = nullptr;
@@ -108,12 +135,10 @@ Kit::Window::~Window()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
-	for (auto& element : allComponents)
+	for (auto& [id, component] : allComponents)
 	{
-		delete element.second;
+		delete component;
 	}
-
-
 }
 
 void Kit::Window::init()
@@ -135,6 +160,8 @@ void Kit::Window::init()
 		cout << "Renderer could not be created! SDL Error: %s\n" << SDL_GetError();
 		return;
 	}
+
+	this->_id = SDL_GetWindowID(window);
 
 	preSetup();
 }
@@ -177,18 +204,6 @@ void Kit::Window::render()
 
 void Kit::Window::onEvent(Event* e)
 {
-	if (need_close)
-	{
-		Window* temp = parent->at(1);
-		parent->count_deleted_windows++;
-		parent->getWindows()->erase(parent->getWindows()->end() - 1);
-
-		delete temp;
-
-		Component::_hoverComponent = nullptr;
-		return;
-	}
-
 	switch (e->type)
 	{
 
@@ -209,17 +224,6 @@ void Kit::Window::onEvent(Event* e)
 	{
 		mouseButtonUp(e);
 
-		if (need_close)
-		{
-			Window* temp = parent->at(1);
-			parent->count_deleted_windows++;
-			parent->getWindows()->erase(parent->getWindows()->end() - 1);
-
-			delete temp;
-
-			Component::_hoverComponent = nullptr;
-			return;
-		}
 		break;
 	}
 
@@ -270,6 +274,11 @@ void Kit::Window::onEvent(Event* e)
 	}
 }
 
+void Kit::Window::onAnimate()
+{
+	navigator->animate();
+}
+
 void Kit::Window::show()
 {
 	render();
@@ -299,7 +308,12 @@ void Kit::Window::collapse()
 
 void Kit::Window::close()
 {
-	this->need_close = true;
+	parent->deleteWindow(this->_id);
+}
+
+size_t Kit::Window::id()
+{
+	return _id;
 }
 
 void Kit::Window::include(string path)
@@ -373,7 +387,7 @@ void Kit::Window::mouseButtonDown(SDL_Event* e)
 		hover->mouseButtonDown(e);
 	}
 
-	render();
+
 }
 
 void Kit::Window::mouseButtonUp(SDL_Event* e)
@@ -385,7 +399,7 @@ void Kit::Window::mouseButtonUp(SDL_Event* e)
 		hover->mouseButtonUp(e);
 	}
 
-	render();
+	
 }
 
 void Kit::Window::mouseMotion(SDL_Event* e)
@@ -397,7 +411,7 @@ void Kit::Window::mouseMotion(SDL_Event* e)
 		hover->mouseMotion(e);
 	}
 
-	render();
+	
 }
 
 void Kit::Window::mouseWheel(SDL_Event* e)
@@ -416,7 +430,7 @@ void Kit::Window::mouseWheel(SDL_Event* e)
 		hover->mouseScroll(e, scrollDirection);
 	}
 
-	render();
+
 }
 
 void Kit::Window::keyDown(SDL_Event* e)

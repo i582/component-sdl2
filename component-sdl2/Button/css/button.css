@@ -1,5 +1,8 @@
 .button
 {
+    width: 70px;
+    height: 25px;
+    
     background-color: rgb(76, 80, 82);
 
     border-color: #5E6060;

@@ -216,7 +216,7 @@ string Kit::font_find::find()
 					break;
 				}
 			}
-
+	
 			if (find_this)
 			{
 				_font_weight_found[i] = true;

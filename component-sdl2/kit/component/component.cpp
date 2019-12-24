@@ -10,7 +10,10 @@ Kit::Component::Component(string id, Rect size, string classes, vector<Component
 	/** Sizes */
 	this->_innerSize = size;
 	this->_outerSize = size;
+	this->_isConstructSize = true; 
 
+	this->_autoWidth = false;
+	this->_autoHeight = false;
 
 	/** Identifiers */
 	this->_id = id;
@@ -96,7 +99,114 @@ Kit::Component::Component(string id, Rect size, string classes, vector<Component
 
 
 	/** CSS component */
-	CSS::css* _css_component = nullptr;
+	this->_css_component = nullptr;
+
+
+	/** Animation */
+	this->_animation = new animation<int>(100, 900, 2000, this->_outerSize.start.px(), [](){});
+	
+}
+
+Kit::Component::Component(string id, string classes, vector<Component*> childrens)
+{
+	/** Sizes */
+	this->_innerSize;
+	this->_outerSize;
+	this->_isConstructSize = false;
+
+	this->_autoWidth = false;
+	this->_autoHeight = false;
+
+
+	/** Identifiers */
+	this->_id = id;
+	this->_classes = classes;
+
+
+	/** Parents */
+	this->_parent = nullptr;
+	this->_window = nullptr;
+
+
+	/** Childrens */
+	// this->_childrens = childrens;
+	for (auto& children : childrens)
+	{
+		append(children);
+	}
+
+	this->_childrensSize;
+
+
+	/** Display */
+	this->_isDisplay = true;
+
+
+
+	/** Events listener */
+	this->_eventListeners = {};
+	this->setupEventListeners(); // TO DO 
+
+
+	/** User data */
+	this->_userData;
+
+
+	/** State */
+	this->_isHovered = false;
+	this->_isActive = false;
+
+
+
+	/** SDL */
+	this->_renderer = nullptr;
+	this->_innerTexture = nullptr;
+	this->_outerTexture = nullptr;
+
+
+	/** Styles */
+	this->_cssBlock = CSS::css_block(id, true);
+
+
+	/** Other for Events */
+	this->_isEnterInComponent = false;
+
+
+	/** Font */
+	this->_fontNormal = font();
+	this->_fontHover = font();
+	this->_fontActive = font();
+
+
+	/** Text */
+	this->_text = nullptr;
+	this->_text_temp = "";
+
+
+	/** Vertical Scroll */
+	this->_verticalScroll = new VerticalScroll(_renderer, { 0, 0, 15, 0 }, 0, 1);
+	this->_verticalScrollable = false;
+	this->_isVerticalScrollActive = false;
+
+
+	/** Horizontal Scroll */
+	this->_horizontalScroll = new HorizontalScroll(_renderer, { 0, 0, 0, 15 }, 0, 1);
+	this->_horizontalScrollable = false;
+	this->_isHorizontalScrollActive = false;
+
+	this->_needRenderScroll = true;
+
+
+	/** Image */
+	this->_image = nullptr;
+
+
+	/** CSS component */
+	this->_css_component = nullptr;
+
+
+	/** Animation */
+	this->_animation = new animation<int>(100, 900, 2000, this->_outerSize.start.px(), []() {});
 }
 
 Kit::Component::~Component()
@@ -161,6 +271,32 @@ Kit::Component* Kit::Component::getFirstHorizontalScrollableParent()
 CSS::css* Kit::Component::getComponentStyles()
 {
 	return this->_css_component;
+}
+
+void Kit::Component::setupSize()
+{
+	if (this->_isConstructSize == false)
+	{
+		const string width = _cssBlock.normal().get<string>("width");
+		const string height = _cssBlock.normal().get<string>("height");
+		const string left = _cssBlock.normal().get<string>("left");
+		const string top = _cssBlock.normal().get<string>("top");
+
+
+		_autoWidth = width == "auto";
+		_autoHeight = height == "auto";
+
+
+		Rect size = Rect(left, top, width, height);
+
+		this->_innerSize = size;
+		this->_outerSize = size;
+	}
+
+	for (auto& children : _childrens)
+	{
+		children->setupSize();
+	}
 }
 
 void Kit::Component::setupChildrenRenderer()
@@ -259,7 +395,8 @@ void Kit::Component::computeChildrenSize()
 
 	Size newTextureSize = _innerSize.size;
 
-	if (childrenSize.w > _innerSize.w())
+
+	if (_autoWidth == false && childrenSize.w > _innerSize.w())
 	{
 		newTextureSize.w(childrenSize.w);
 
@@ -288,8 +425,21 @@ void Kit::Component::computeChildrenSize()
 		this->_horizontalScroll->_parentTexture = this->_outerTexture;
 		this->_horizontalScrollable = true;
 	}
+	else if (_autoWidth == true)
+	{
+		newTextureSize.w(childrenSize.w);
 
-	if (childrenSize.h > _innerSize.h())
+		this->_innerSize.w(childrenSize.w);
+		this->_outerSize.w(childrenSize.w);
+
+		SDL_DestroyTexture(this->_outerTexture);
+		this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _outerSize.w(), _outerSize.h());
+		SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+	}
+
+
+
+	if (_autoHeight == false && childrenSize.h > _innerSize.h())
 	{
 		newTextureSize.h(childrenSize.h);
 
@@ -318,14 +468,26 @@ void Kit::Component::computeChildrenSize()
 		this->_verticalScroll->_parentTexture = this->_outerTexture;
 		this->_verticalScrollable = true;
 	}
-
-
-	if (newTextureSize != _innerSize.size)
+	else if (_autoHeight == true)
 	{
-		SDL_DestroyTexture(this->_innerTexture);
-		this->_innerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, newTextureSize.w(), newTextureSize.h());
+		newTextureSize.h(childrenSize.h);
+
+		this->_innerSize.h(childrenSize.h);
+		this->_outerSize.h(childrenSize.h);
+
+		SDL_DestroyTexture(this->_outerTexture);
+		this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _outerSize.w(), _outerSize.h());
 		SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
 	}
+
+
+
+
+	
+	SDL_DestroyTexture(this->_innerTexture);
+	this->_innerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, newTextureSize.w(), newTextureSize.h());
+	SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+	
 
 
 
@@ -413,7 +575,7 @@ void Kit::Component::adjustMousePoint(Point& p)
 
 void Kit::Component::render()
 {
-	if (!_isDisplay)
+	if (!_isDisplay || _outerTexture == nullptr && _innerTexture == nullptr)
 		return;
 
 	SDL_SetRenderTarget(_renderer, _outerTexture);
@@ -715,7 +877,9 @@ void Kit::Component::setupComponents()
 {
 	setupChildrenRenderer();
 
+	setupSize();
 	computeSize();
+
 	computeChildrenSize();
 
 	setupBackgroundImage();
@@ -1025,6 +1189,27 @@ void Kit::Component::include(string path)
 
 	_css_component->open(path);
 
+}
+
+void Kit::Component::animate()
+{
+	_animation->check();
+
+
+	for (auto& children : _childrens)
+	{
+		children->animate();
+	}
+}
+
+void Kit::Component::startAnimation()
+{
+	_animation->start();
+}
+
+void Kit::Component::endAnimation()
+{
+	_animation->end();
 }
 
 
