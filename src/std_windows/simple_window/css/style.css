@@ -1,0 +1,87 @@
+
+.navigator
+{
+    background-color: #3c3f41;
+}
+
+.window-header
+{
+    width: 100%;
+    height: 30px;
+    left: 0;
+    top: 0;
+
+    
+    color: #dadacb;
+
+    font-size: 12px;
+    line-height: 1.15;
+   
+    margin-left: 20px;
+
+    vertical-align: center;
+
+}
+
+.system-button
+{
+    background-position-x: 18px;
+    background-position-y: 10px;
+    background-size: 10px;
+
+ 
+}
+
+.system-exit
+{
+    left: calc(100% - 45px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/exit.png);
+}
+
+.system-exit:hover
+{
+    background-color: #ce4848;
+}
+
+
+.system-expand
+{
+    left: calc(100% - 90px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/expand.png);
+}
+
+.system-expand:hover
+{
+    background-color: #2B2E2F;
+}
+
+.system-collapse
+{
+    left: calc(100% - 135px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/collapse.png);
+}
+
+.system-collapse:hover
+{
+    background-color: #2B2E2F;
+}
+
+
+/* Buttons */
+.button-1
+{
+    top: 100px;
+    left: 100px;
+}
