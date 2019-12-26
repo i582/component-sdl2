@@ -22,8 +22,15 @@ void SimpleWindow::setup()
 	$$->append(new Component("#system-collapse", { "100% - 135px", "0px", "45px", "30px" }, ".system-button .system-collapse"));
 
 
+    $$->append(new Component("#label", { "100px", "100px", "100px", "30px" }, ".label"))
+    ->setText("Hello World!");
 
-    add(Button::create("#button-1", "Ok", ".button-ok"));
+
+    add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
+    add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
+
+
+    add(Checkbox::create("#bcheckbox", "First item", ".first-checkbox"));
 
 //
 //	add("#test-block", ".test-class",

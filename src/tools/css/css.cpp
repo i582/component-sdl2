@@ -5,13 +5,13 @@ CSS::css::css()
 	this->parser = nullptr;
 }
 
-CSS::css::css(string path)
+CSS::css::css(const string& path)
 {
 	this->parser = new css_parser(path, this);
 	parse();
 }
 
-CSS::css::css(string code, bool isCode)
+CSS::css::css(const string& code, bool isCode)
 {
 	this->parser = new css_parser(code, true, this);
 	parse();
@@ -22,7 +22,7 @@ CSS::css::~css()
 	delete parser;
 }
 
-void CSS::css::open(string path)
+void CSS::css::open(const string& path)
 {
 	delete parser;
 	this->parser = new css_parser(path, this);
@@ -41,17 +41,17 @@ void CSS::css::parse()
 	}
 }
 
-void CSS::css::add(css_block block)
+void CSS::css::add(const css_block& block)
 {
 	blocks[block.name()] = block;
 }
 
-CSS::css_block& CSS::css::operator[](const string key)
+CSS::css_block& CSS::css::operator[](const string& key)
 {
 	return at(key);
 }
 
-CSS::css_block& CSS::css::at(const string key)
+CSS::css_block& CSS::css::at(const string& key)
 {
 	if (blocks.find(key) == blocks.end())
 	{
@@ -61,7 +61,7 @@ CSS::css_block& CSS::css::at(const string key)
 	return blocks[key];
 }
 
-void CSS::css::set_code(string code)
+void CSS::css::set_code(const string& code)
 {
 	delete parser;
 	this->parser = new css_parser(code, true, this);

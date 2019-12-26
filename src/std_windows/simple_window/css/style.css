@@ -80,8 +80,26 @@
 
 
 /* Buttons */
-.button-1
+.button-ok
 {
     top: 100px;
-    left: 100px;
+    left: 300px;
+
+}
+
+.button-cancel
+{
+    top: 100px;
+    left: 400px;
+}
+
+.label
+{
+    color: #ffffff;
+}
+
+.first-checkbox
+{
+    top: 200px;
+    left: 400px;
 }

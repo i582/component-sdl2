@@ -2,8 +2,8 @@
 
 #include "window.h"
 
-
 #include "button.h"
+#include "checkbox.h"
 
 using namespace Kit;
 

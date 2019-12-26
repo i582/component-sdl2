@@ -22,11 +22,11 @@ using std::map;
 class css_attribute
 {
 private:
-	static string parseImagePath(string path);
-	static string parseSizes(string path);
+	static string parseImagePath(const string& path);
+	static string parseSizes(const string& path);
 
 public:
-	static css_variant get(string attribute, string value);
+	static css_variant get(const string& attribute, const string& value);
 
 };
 

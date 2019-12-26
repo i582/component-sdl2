@@ -106,11 +106,8 @@ private:
 	CSS::css* css_parent;
 
 public:
-	css_parser(string file_path, CSS::css* css_parent);
-	css_parser(string code, bool isCode, CSS::css* css_parent);
-
-public:
-	void parse();
+	css_parser(const string& file_path, CSS::css* css_parent);
+	css_parser(const string& code, bool is_code, CSS::css* css_parent);
 
 private:
 	void openFile();
@@ -119,7 +116,7 @@ private:
 
 private:
 	bool isSplitSymbol(char symbol);
-	TokenType whatIsToken(string token);
+	TokenType whatIsToken(const string& token);
 	
 
 private:
@@ -135,6 +132,10 @@ private:
 
 
 	void syntaxParseIfComplexValue(string attribute, string value, CSS::css_block_state* block_state);
+
+public:
+    void parse();
+
 };
 
 }

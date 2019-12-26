@@ -2,7 +2,7 @@
 #include "css.h"
 
 
-CSS::css_parser::css_parser(string file_path, CSS::css* css_parent)
+CSS::css_parser::css_parser(const string& file_path, CSS::css* css_parent)
 {
 	if (css_parent == nullptr)
 	{
@@ -17,7 +17,7 @@ CSS::css_parser::css_parser(string file_path, CSS::css* css_parent)
 	openFile();
 }
 
-CSS::css_parser::css_parser(string code, bool isCode, CSS::css* css_parent)
+CSS::css_parser::css_parser(const string& code, bool is_code, CSS::css* css_parent)
 {
 	if (css_parent == nullptr)
 	{
@@ -73,7 +73,7 @@ void CSS::css_parser::deleteExcess()
 {
 	char symbol = -1;
 
-	while (1)
+	while (true)
 	{
 		symbol = getc(file);
 
@@ -124,7 +124,7 @@ bool CSS::css_parser::isSplitSymbol(char symbol)
 	return symbol == ':' || symbol == ';' || symbol == '{' || symbol == '}';
 }
 
-CSS::TokenType CSS::css_parser::whatIsToken(string token)
+CSS::TokenType CSS::css_parser::whatIsToken(const string& token)
 {
 	if (token[0] == '.' && token.size() > 1)
 	{
@@ -229,9 +229,7 @@ void CSS::css_parser::splitByToken()
 {
 	string tempToken;
 
-	bool comment = false;
-
-	for (size_t i = 0; i < code.size(); i++)
+    for (size_t i = 0; i < code.size(); i++)
 	{
 		this->skipComment(i);
 		
@@ -468,22 +466,22 @@ void CSS::css_parser::syntaxParse()
 
 void CSS::css_parser::mergeStyleComponent()
 {
-	for (auto& block : css_blocks)
+	for (auto& [id, block] : css_blocks)
 	{
-		block.second.hover().mergeWithBaseIs(block.second.normal());
-		block.second.active().mergeWithBaseIs(block.second.hover());
+		block.hover().mergeWithBaseIs(block.normal());
+		block.active().mergeWithBaseIs(block.hover());
 	}
 }
 void CSS::css_parser::updateCSS()
 {
-	for (auto& block : css_blocks)
-	{
-		CSS::css_block block_raw(block.second.name(), true);
+    for (auto& [id, block] : css_blocks)
+    {
+        //CSS::css_block block_raw(block.second.name(), true);
 
-		block_raw.mergeWith(block.second);
+        //block_raw.mergeWith(block.second);
 
-		css_parent->add(block_raw);
-	}
+        css_parent->add(block);
+    }
 }
 
 void CSS::css_parser::syntaxParseIfComplexValue(string attribute, string value, CSS::css_block_state* block)
@@ -491,12 +489,14 @@ void CSS::css_parser::syntaxParseIfComplexValue(string attribute, string value, 
 	if (block == nullptr)
 		return;
 
+
+
 	if (attribute == "border-top" || attribute == "border-bottom" ||
 		attribute == "border-left" || attribute == "border-right")
 	{
 
 		value.replace(value.find("px"), 2, " ");
-		value.replace(value.find("#"), 1, " ");
+		value.replace(value.find('#'), 1, " ");
 
 		vector <string>* tokens = Utils::split(value, ' ');
 		if (tokens->size() != 3)

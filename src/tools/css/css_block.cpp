@@ -1,9 +1,8 @@
 #include "css_block.h"
 
-CSS::css_block::css_block() : css_block("")
-{}
+CSS::css_block::css_block() : css_block("") {}
 
-CSS::css_block::css_block(string name)
+CSS::css_block::css_block(const string& name)
 {
 	this->_name = name;
 
@@ -12,7 +11,7 @@ CSS::css_block::css_block(string name)
 	this->_active = css_block_state();
 }
 
-CSS::css_block::css_block(string name, bool default_style)
+CSS::css_block::css_block(const string& name, bool default_style)
 {
 	this->_name = name;
 
@@ -43,27 +42,27 @@ CSS::css_block_state& CSS::css_block::active()
 	return _active;
 }
 
-void CSS::css_block::normal(css_block_state new_block)
+void CSS::css_block::normal(const css_block_state& new_block)
 {
 	this->_normal = new_block;
 }
 
-void CSS::css_block::hover(css_block_state new_block)
+void CSS::css_block::hover(const css_block_state& new_block)
 {
 	this->_hover = new_block;
 }
 
-void CSS::css_block::active(css_block_state new_block)
+void CSS::css_block::active(const css_block_state& new_block)
 {
 	this->_active = new_block;
 }
 
-CSS::string CSS::css_block::name()
+CSS::string CSS::css_block::name() const
 {
 	return _name;
 }
 
-void CSS::css_block::name(string name)
+void CSS::css_block::name(const string& name)
 {
 	this->_name = name;
 }

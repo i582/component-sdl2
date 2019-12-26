@@ -17,19 +17,31 @@ void Kit::Window::handleStyles()
 		}
 	}
 
+
+
 	for (auto& [id, component] : allComponents)
 	{
 		auto classnames = Utils::split(component->_classes, ' ');
+
+		auto is_have_styles = false;
+		CSS::css_block ready_block(id, true);
 
 		for (auto& classname : *classnames)
 		{
 			if (allComponentsStyles.find(classname) != allComponentsStyles.end())
 			{
 				auto style = allComponentsStyles[classname];
+                ready_block.mergeWith(style);
+				component->_cssBlock.mergeWith(ready_block);
 
-				component->_cssBlock.mergeWith(style);
+                is_have_styles = true;
 			}
 		}
+
+		if (!is_have_styles)
+        {
+            component->_cssBlock.mergeWith(ready_block);
+        }
 
 		delete classnames;
 	}

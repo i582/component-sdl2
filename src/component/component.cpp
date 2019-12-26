@@ -165,7 +165,7 @@ Kit::Component::Component(const string& id, const string& classes, const vector<
 
 
 	/** Styles */
-	this->_cssBlock = CSS::css_block(id, true);
+	this->_cssBlock = CSS::css_block(id);
 
 
 	/** Other for Events */
@@ -283,8 +283,8 @@ void Kit::Component::setupSize()
 		const auto top = _cssBlock.normal().get<string>("top");
 
 
-		_autoWidth = width == "auto";
-		_autoHeight = height == "auto";
+		_autoWidth = (width == "auto");
+		_autoHeight = (height == "auto");
 
 
 		Rect size = Rect(left, top, width, height);
@@ -609,14 +609,12 @@ void Kit::Component::render()
 	SDL_SetRenderTarget(_renderer, _innerTexture);
 
 
-	const auto& background_color = blockState->get<Color>("background-color");
-    const auto& border_color = blockState->get<Color>("border-color");
+	const auto& backgroundColor = blockState->get<Color>("background-color");
+    const auto& borderColor = blockState->get<Color>("border-color");
 	const auto& borderRadius = blockState->get<int>("border-radius");
 
 
-	const auto revBack = background_color.colorReverse();
-
-	roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, background_color.colorReverse());
+	roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, backgroundColor.colorReverse());
 
 
 
@@ -676,7 +674,7 @@ void Kit::Component::render()
 
 
 	roundedBoxColor(_renderer, _innerSize.x() - leftSize, _innerSize.y() - topSize,
-		_innerSize.x() + _innerSize.w() - 1 + rightSize, _innerSize.y() + _innerSize.h() - 1 + bottomSize, borderRadius, border_color.colorReverse());
+		_innerSize.x() + _innerSize.w() - 1 + rightSize, _innerSize.y() + _innerSize.h() - 1 + bottomSize, borderRadius, borderColor.colorReverse());
 
 
 

@@ -2,7 +2,7 @@
 
 using namespace CSS;
 
-string CSS::css_attribute::parseImagePath(string path)
+string CSS::css_attribute::parseImagePath(const string& path)
 {
 	string result;
 
@@ -16,7 +16,7 @@ string CSS::css_attribute::parseImagePath(string path)
 	return result;
 }
 
-string CSS::css_attribute::parseSizes(string path)
+string CSS::css_attribute::parseSizes(const string& path)
 {
 	string result = path;
 
@@ -28,7 +28,7 @@ string CSS::css_attribute::parseSizes(string path)
 	return result;
 }
 
-css_variant CSS::css_attribute::get(string attribute, string value)
+css_variant CSS::css_attribute::get(const string& attribute, const string& value)
 {
 	css_variant result;
 
@@ -62,5 +62,5 @@ css_variant CSS::css_attribute::get(string attribute, string value)
 
 	result = value;
 
-	return result;
+	return value;
 }

@@ -35,11 +35,11 @@ public:
 
 	/*
 	 * @brief Constructor with style file path, parser starts automatically
-	 * if file not found, an exeception will be thrown
+	 * if file not found, an exception will be thrown
 	 * 
 	 * @param [in] Path to file
 	 */
-	css(string path);
+	explicit css(const string& path);
 
 
 	/*
@@ -48,7 +48,7 @@ public:
 	 * @param [in] code: String with css-code
 	 * @param [in] isCode: Flag to separate code from file 
 	 */
-	css(string code, bool isCode);
+	css(const string& code, bool isCode);
 
 
 	/*
@@ -66,7 +66,7 @@ public:
 	 *
 	 * @param [in] Path to file
 	 */
-	void open(string path);
+	void open(const string& path);
 
 
 	/*
@@ -80,7 +80,7 @@ public:
 	 * @brief Function for add a new css block
 	 * @param [in] block: New block to add
 	 */
-	void add(css_block block);
+	void add(const css_block& block);
 
 
 	/*
@@ -89,11 +89,11 @@ public:
 	 *
 	 * @return [css_block&] Reference to css_block
 	 */
-	css_block& at(const string key);
+	css_block& at(const string& key);
 	/*
 	 * @brief Same as the "at" function
 	 */
-	css_block& operator[](const string key);
+	css_block& operator[](const string& key);
 	
 
 	/*
@@ -101,12 +101,12 @@ public:
 	 * a simple constructor
 	 * @param [in] code: Code string
 	 */
-	void set_code(string code);
+	void set_code(const string& code);
 
 
 	/*
 	 * @brief Function to get reference to style
-	 * @return [map<string, css_block>&&] Reference to map with styles
+	 * @return [map<string, css_block>&] Reference to map with styles
 	 */
 	map<string, css_block>& getStyles();
 };

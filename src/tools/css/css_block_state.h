@@ -16,7 +16,7 @@ private:
 
 public:
 	css_block_state();
-	css_block_state(bool general);
+	explicit css_block_state(bool general);
 
 public:
 
@@ -24,15 +24,15 @@ public:
 	void mergeWithBaseIs(css_block_state& block);
 
 	template<typename T>
-	void set(string key, T value);
+	void set(const string& key, T value);
 
 	template<typename T>
-	T get(string key);
+	T get(const string& key);
 };
 
 
 template<typename T>
-void css_block_state::set(string key, T value)
+void css_block_state::set(const string& key, T value)
 {
 	if (key.empty())
 		return;
@@ -41,7 +41,7 @@ void css_block_state::set(string key, T value)
 }
 
 template<typename T>
-T css_block_state::get(string key)
+T css_block_state::get(const string& key)
 {
 	T result;
 

@@ -26,7 +26,7 @@ public:
 	 * @brief Constructor with block name
 	 * @param [in] name: Block name
 	 */
-	css_block(string name);
+	css_block(const string& name);
 
 
 	/*
@@ -35,7 +35,7 @@ public:
 	 * @param [in] name: Block name
 	 * @param [in] isCode: Flag to setting default styles
 	 */
-	css_block(string name, bool default_style);
+	css_block(const string& name, bool default_style);
 
 public:
 
@@ -64,34 +64,34 @@ public:
 
 
 	/*
-	 * @brief Functions for settup normal state block
+	 * @brief Functions for setup normal state block
 	 * @param [in] name: State block
 	 */
-	void normal(css_block_state new_block);
+	void normal(const css_block_state& new_block);
 	/*
-	 * @brief Functions for settup hover state block
+	 * @brief Functions for setup hover state block
 	 * @param [in] name: State block
 	 */
-	void hover(css_block_state new_block);
+	void hover(const css_block_state& new_block);
 	/*
-	 * @brief Functions for settup active state block
+	 * @brief Functions for setup active state block
 	 * @param [in] name: State block
 	 */
-	void active(css_block_state new_block);
+	void active(const css_block_state& new_block);
 
 
 	/*
 	 * @brief Function for get the block name
 	 * @return [string] Block name
 	 */
-	string name();
+	string name() const;
 
 
 	/*
-	 * @brief Function for settup the block name
+	 * @brief Function for setup the block name
 	 * @param [in] name: Block name
 	 */
-	void name(string name);
+	void name(const string& name);
 };
 
 

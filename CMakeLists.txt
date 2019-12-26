@@ -44,6 +44,7 @@ include_directories(src/tools/text)
 include_directories(src/tools/utils)
 include_directories(src/window)
 include_directories(src/std_components/button)
+include_directories(src/std_components/checkbox)
 include_directories(src/std_windows/simple_window)
 
 add_executable(component_sdl2_cmake
@@ -110,6 +111,8 @@ add_executable(component_sdl2_cmake
         src/kit.h
         src/std_components/button/button.h
         src/std_components/button/button.cpp
+        src/std_components/checkbox/checkbox.h
+        src/std_components/checkbox/checkbox.cpp
         src/std_windows/simple_window/simple-window.cpp
         src/std_windows/simple_window/simple-window.h
         main.cpp)
