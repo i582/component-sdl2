@@ -128,13 +128,13 @@ void Text::renderLines()
     }
     else if (this->blockVerticalAlign == TextBlockVerticalAlign::CENTER)
     {
-        lineShift = (parent->height() - textBlockHeight) / 2;
+        lineShift = (parent->innerSize().h() - textBlockHeight) / 2;
 
         lineShift += blockMarginTop;
     }
     else if (this->blockVerticalAlign == TextBlockVerticalAlign::BOTTOM)
     {
-        lineShift = parent->height() - textBlockHeight;
+        lineShift = parent->innerSize().h() - textBlockHeight;
 
         lineShift -= blockMarginBottom;
     }

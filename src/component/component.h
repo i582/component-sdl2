@@ -118,7 +118,7 @@ protected:
 	/** Animation */
 	animation<int>* _animation;
 
-	
+
 
 public:
 	Component(const string& id, const Rect& size, const string& classes);
@@ -188,7 +188,14 @@ protected: /** Setup Functions */
 	 */
 	void setupBackgroundImage();
 
+    /**
+     * @brief Configures font inside a component
+     */
 	void setupFont();
+
+    /**
+     * @brief Configures text inside a component
+     */
 	void setupText();
 
 	/**
@@ -198,11 +205,18 @@ protected: /** Setup Functions */
 	void setupParentWindow();
 
 
+    /**
+     * @brief Depending on the current value of "display", sets the positions
+     * of children
+     */
+	void setupChildrenPosition();
+
+
 	/**
 	 * @brief The function corrects the coordinates of the mouse
 	 * relative to the element in which it is now located
 	 *
-	 * @param p � Mouse point
+	 * @param p Mouse point
 	 */
 	void adjustMousePoint(Point& p);
 
@@ -241,6 +255,10 @@ public: /** Size Interface */
 	const Rect& outerSize() const;
 	const Rect& innerSize() const;
 
+    void outerWidth(int value);
+    void outerHeight(int value);
+    void outerTop(int value);
+    void outerLeft(int value);
 
 public: /** Display Interface */
 
@@ -276,7 +294,7 @@ public: /** Ralation Interface */
 	bool isParentObject(Component* obj) const;
 
 
-	Component* append(Component* component);
+    virtual Component* append(Component* component);
 	Component* append(const vector<Component*>& components);
 
 
@@ -356,7 +374,8 @@ public: /** Class Interface */
 	Component* removeClass(const string& className);
 	Component* addClass(const string& className);
 	Component* toggleClass(const string& className);
-
+    const string& classes();
+    void classes(const string& newClasses);
 
 public: /** Text Interface */
 	virtual void setText(const string& text);

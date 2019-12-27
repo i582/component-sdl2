@@ -33,7 +33,45 @@ void SimpleWindow::setup()
     add(Checkbox::create("#checkbox", "First item", ".first-checkbox"));
 
 
-    add(Select::create("#select-1", "Choose item", ".select-1"));
+    auto select = Select::create("#select-1", "Choose item", ".select-1");
+
+
+    for (int i = 0; i < 3; ++i)
+    {
+        select->append(SelectItem::create("#item-" + to_string(i), "text " + to_string(i)));
+    }
+
+
+
+    add(select);
+
+
+
+
+    add("#test-outer-auto", ".test-outer-auto",
+    {
+        create("#test-inner-block", ".test-inner-block",
+        {
+            create("#test-inner-inner", ".test-inner-inner-block")
+        })
+    });
+
+
+    auto block = Window::getElementById("#test-inner-inner");
+
+    for (int i = 0; i < 10; ++i)
+    {
+        block->append(create("#inner-item-" + to_string(i), ".inner-item"))->setText("block-" +  to_string(i));
+    }
+
+
+
+
+    add("#test-scrolls", ".test-scrolls",
+    {
+        create("#big-block", ".big-block")
+    });
+
 
 
 

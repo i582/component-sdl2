@@ -103,3 +103,4 @@ bool Utils::is_number(string str)
 
 	return true;
 }
+

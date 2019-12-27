@@ -3,9 +3,7 @@
 
 Kit::Component* Kit::Component::_hoverComponent = nullptr;
 
-Kit::Component::Component(const string &id, const Rect &size, const string &classes) : Component(id, size, classes, {})
-{
-}
+Kit::Component::Component(const string &id, const Rect &size, const string &classes) : Component(id, size, classes, {}) {}
 
 Kit::Component::Component(const string &id, const Rect &size, const string &classes,
                           const vector<Component*> &childrens)
@@ -284,10 +282,10 @@ void Kit::Component::setupSize()
 {
     if (!this->_isConstructSize)
     {
-        const auto width = _cssBlock.normal().get<string>("width");
-        const auto height = _cssBlock.normal().get<string>("height");
-        const auto left = _cssBlock.normal().get<string>("left");
-        const auto top = _cssBlock.normal().get<string>("top");
+        const auto& width = _cssBlock.normal().get<string>("width");
+        const auto& height = _cssBlock.normal().get<string>("height");
+        const auto& left = _cssBlock.normal().get<string>("left");
+        const auto& top = _cssBlock.normal().get<string>("top");
 
 
         _autoWidth = (width == "auto");
@@ -321,26 +319,41 @@ void Kit::Component::setupChildrenRenderer()
 
 void Kit::Component::computeSize()
 {
+
     if (_parent != nullptr)
     {
-        Rect parentSize = _parent->size();
+        const Rect& parentSize = _parent->size();
         _innerSize.calc(parentSize);
         _outerSize.calc(parentSize);
     }
 
 
-
-
     /** find the maximum border size */
-    int topSize = std::_Max_value(std::_Max_value(_cssBlock.normal().get<int>("border-top-size"),
-    _cssBlock.hover().get<int>("border-top-size")),_cssBlock.active().get<int>("border-top-size"));
-    int bottomSize = std::_Max_value(std::_Max_value(_cssBlock.normal().get<int>("border-bottom-size"),
-     _cssBlock.hover().get<int>("border-bottom-size")),_cssBlock.active().get<int>("border-bottom-size"));
-    int leftSize = std::_Max_value(std::_Max_value(_cssBlock.normal().get<int>("border-left-size"),
-   _cssBlock.hover().get<int>("border-left-size")),_cssBlock.active().get<int>("border-left-size"));
-    int rightSize = std::_Max_value(std::_Max_value(_cssBlock.normal().get<int>("border-right-size"),
-    _cssBlock.hover().get<int>("border-right-size")),_cssBlock.active().get<int>("border-right-size"));
 
+
+    auto& normalBlock = _cssBlock.normal();
+    auto& hoverBlock = _cssBlock.hover();
+    auto& activeBlock = _cssBlock.active();
+    const auto topSize = Utils::max_of(
+            normalBlock.get<int>("border-top-size"),
+            hoverBlock.get<int>("border-top-size"),
+            activeBlock.get<int>("border-top-size")
+    );
+    const auto bottomSize = Utils::max_of(
+            normalBlock.get<int>("border-top-size"),
+            hoverBlock.get<int>("border-top-size"),
+            activeBlock.get<int>("border-top-size")
+    );
+    const auto leftSize = Utils::max_of(
+            normalBlock.get<int>("border-top-size"),
+            hoverBlock.get<int>("border-top-size"),
+            activeBlock.get<int>("border-top-size")
+    );
+    const auto rightSize = Utils::max_of(
+            normalBlock.get<int>("border-top-size"),
+            hoverBlock.get<int>("border-top-size"),
+            activeBlock.get<int>("border-top-size")
+    );
 
 
     _outerSize.size.dw(leftSize + rightSize);
@@ -356,17 +369,12 @@ void Kit::Component::computeSize()
 
 
 
-    SDL_DestroyTexture(this->_outerTexture);
-    this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                            _outerSize.w(), _outerSize.h());
-    SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+    Texture::destroy(this->_outerTexture);
+    this->_outerTexture = Texture::create(_renderer, _outerSize);
 
 
-
-    SDL_DestroyTexture(this->_innerTexture);
-    this->_innerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                            _innerSize.w(), _innerSize.h());
-    SDL_SetTextureBlendMode(_innerTexture, SDL_BLENDMODE_BLEND);
+    Texture::destroy(this->_innerTexture);
+    this->_innerTexture = Texture::create(_renderer, _innerSize);
 
 
     for (auto &children : _childrens)
@@ -377,6 +385,12 @@ void Kit::Component::computeSize()
 
 void Kit::Component::computeChildrenSize()
 {
+    for (auto &children : _childrens)
+    {
+        children->computeChildrenSize();
+    }
+
+
     SimpleSize childrenSize = {0, 0};
 
     for (auto &children : _childrens)
@@ -409,7 +423,7 @@ void Kit::Component::computeChildrenSize()
          *  TODO: Setup scroll
          */
         this->_horizontalScroll->_bodySize.x(_innerSize.x());
-        this->_horizontalScroll->_bodySize.y(_innerSize.y() + _innerSize.h());
+        this->_horizontalScroll->_bodySize.y(_innerSize.y() + _innerSize.h() - this->_horizontalScroll->_bodySize.h());
 
         this->_horizontalScroll->_bodySize.w(_innerSize.w());
 
@@ -419,12 +433,16 @@ void Kit::Component::computeChildrenSize()
         this->_horizontalScroll->_renderer = _renderer;
         this->_horizontalScroll->init();
 
-        _outerSize.dh(this->_horizontalScroll->_bodySize.h());
 
-        SDL_DestroyTexture(this->_outerTexture);
-        this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                                _outerSize.w(), _outerSize.h());
-        SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+
+        //_outerSize.dh(this->_horizontalScroll->_bodySize.h());
+
+        _innerSize.dh(-this->_horizontalScroll->_bodySize.h());
+
+        Texture::destroy(this->_innerTexture);
+        this->_innerTexture = Texture::create(_renderer, _innerSize);
+
+
 
         this->_horizontalScroll->_parentTexture = this->_outerTexture;
         this->_horizontalScrollable = true;
@@ -437,10 +455,8 @@ void Kit::Component::computeChildrenSize()
         this->_innerSize.w(childrenSize.w);
         this->_outerSize.w(childrenSize.w);
 
-        SDL_DestroyTexture(this->_outerTexture);
-        this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                                _outerSize.w(), _outerSize.h());
-        SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+        Texture::destroy(this->_outerTexture);
+        this->_outerTexture = Texture::create(_renderer, _outerSize);
     }
 
 
@@ -453,7 +469,7 @@ void Kit::Component::computeChildrenSize()
         /*
          *  TODO: Setup scroll
          */
-        this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w());
+        this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w() -  this->_verticalScroll->_bodySize.w());
         this->_verticalScroll->_bodySize.y(_innerSize.y());
 
         this->_verticalScroll->_bodySize.h(_innerSize.h());
@@ -464,12 +480,14 @@ void Kit::Component::computeChildrenSize()
         this->_verticalScroll->_renderer = _renderer;
         this->_verticalScroll->init();
 
-        _outerSize.dw(this->_verticalScroll->_bodySize.w());
+        //_outerSize.dw(this->_verticalScroll->_bodySize.w());
 
-        SDL_DestroyTexture(this->_outerTexture);
-        this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                                _outerSize.w(), _outerSize.h());
-        SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+
+        _innerSize.dw(-this->_verticalScroll->_bodySize.w());
+
+        Texture::destroy(this->_innerTexture);
+        this->_innerTexture = Texture::create(_renderer, _innerSize);
+
 
         this->_verticalScroll->_parentTexture = this->_outerTexture;
         this->_verticalScrollable = true;
@@ -482,23 +500,13 @@ void Kit::Component::computeChildrenSize()
         this->_innerSize.h(childrenSize.h);
         this->_outerSize.h(childrenSize.h);
 
-        SDL_DestroyTexture(this->_outerTexture);
-        this->_outerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                                _outerSize.w(), _outerSize.h());
-        SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
+        Texture::destroy(this->_outerTexture);
+        this->_outerTexture = Texture::create(_renderer, _outerSize);
     }
 
 
-    SDL_DestroyTexture(this->_innerTexture);
-    this->_innerTexture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                            newTextureSize.w(), newTextureSize.h());
-    SDL_SetTextureBlendMode(_outerTexture, SDL_BLENDMODE_BLEND);
-
-
-    for (auto &children : _childrens)
-    {
-        children->computeChildrenSize();
-    }
+    Texture::destroy(this->_innerTexture);
+    this->_innerTexture = Texture::create(_renderer, newTextureSize);
 }
 
 void Kit::Component::setupBackgroundImage()
@@ -569,6 +577,42 @@ void Kit::Component::setupParentWindow()
     }
 }
 
+void Kit::Component::setupChildrenPosition()
+{
+    const auto& display_type = _cssBlock.normal().get<string>("display");
+
+    if (!_childrens.empty())
+    {
+
+        if (display_type == "block")
+        {
+            auto& first_children = _childrens[0];
+
+            first_children->outerLeft(0);
+            first_children->outerTop(0);
+
+
+            for (size_t i = 1; i < _childrens.size(); ++i)
+            {
+                auto& children = _childrens[i];
+                auto& children_prev = _childrens[i - 1];
+
+                const int new_y_position = children_prev->outerSize().h() + children_prev->outerSize().y();
+
+                children->outerLeft(0);
+                children->outerTop(new_y_position);
+            }
+        }
+
+    }
+
+
+    for (auto &children : _childrens)
+    {
+        children->setupChildrenPosition();
+    }
+}
+
 void Kit::Component::adjustMousePoint(Point &p)
 {
     if (_parent == nullptr)
@@ -595,7 +639,7 @@ void Kit::Component::render()
 
     CSS::css_block_state* blockState = &_cssBlock.normal();
 
-    font &blockFont = _fontNormal;
+    font& blockFont = _fontNormal;
 
     if (_isHovered)
     {
@@ -615,9 +659,9 @@ void Kit::Component::render()
     SDL_SetRenderTarget(_renderer, _innerTexture);
 
 
-    const auto &backgroundColor = blockState->get<Color>("background-color");
-    const auto &borderColor = blockState->get<Color>("border-color");
-    const auto &borderRadius = blockState->get<int>("border-radius");
+    const auto& backgroundColor = blockState->get<Color>("background-color");
+    const auto& borderColor = blockState->get<Color>("border-color");
+    const auto& borderRadius = blockState->get<int>("border-radius");
 
 
     roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, backgroundColor.colorReverse());
@@ -643,8 +687,6 @@ void Kit::Component::render()
 
 
     _text->setFont(blockFont);
-
-
     _text->setColor(blockState->get<Color>("color"));
     _text->setFontSize(blockState->get<int>("font-size"));
     _text->setLineHeight(blockState->get<double>("line-height"));
@@ -682,7 +724,7 @@ void Kit::Component::render()
     Rect copy = _innerSize;
 
 
-    const string &overflow = blockState->get<string>("overflow");
+    const string& overflow = blockState->get<string>("overflow");
 
 
     if (overflow == "hidden")
@@ -763,7 +805,7 @@ void Kit::Component::mouseButtonUp(Event* e)
 
     _eventListeners["onmouseup"](this, e);
 
-    //cout << "scroll active FALSE" << endl;
+
     _isVerticalScrollActive = false;
     _isHorizontalScrollActive = false;
     _isActive = false;
@@ -804,7 +846,6 @@ void Kit::Component::mouseMotion(Event* e)
 
 
     _isHovered = true;
-    //SDL_SetCursor(style->hoverCursor());
 
     _eventListeners["mousemotion"](this, e);
     _eventListeners["hover"](this, e);
@@ -874,7 +915,9 @@ void Kit::Component::setupComponents()
     setupSize();
     computeSize();
 
+    setupChildrenPosition();
     computeChildrenSize();
+
 
     setupBackgroundImage();
     setupFont();
@@ -884,12 +927,12 @@ void Kit::Component::setupComponents()
 
 int Kit::Component::width() const
 {
-    return _innerSize.w();
+    return _outerSize.w();
 }
 
 int Kit::Component::height() const
 {
-    return _innerSize.h();
+    return _outerSize.h();
 }
 
 int Kit::Component::top() const
@@ -1150,6 +1193,16 @@ Kit::Component* Kit::Component::toggleClass(const string &className)
     return this;
 }
 
+const std::string &Kit::Component::classes()
+{
+    return _classes;
+}
+
+void Kit::Component::classes(const std::string& newClasses)
+{
+    this->_classes = newClasses;
+}
+
 void Kit::Component::setText(const string &text)
 {
     if (_text != nullptr)
@@ -1200,4 +1253,23 @@ void Kit::Component::endAnimation()
     _animation->end();
 }
 
+void Kit::Component::outerWidth(int value)
+{
+    _outerSize.w(value);
+}
+
+void Kit::Component::outerHeight(int value)
+{
+    _outerSize.h(value);
+}
+
+void Kit::Component::outerLeft(int value)
+{
+    _outerSize.x(value);
+}
+
+void Kit::Component::outerTop(int value)
+{
+    _outerSize.y(value);
+}
 

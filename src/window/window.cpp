@@ -176,16 +176,6 @@ void Kit::Window::init()
 
 	this->_id = SDL_GetWindowID(window);
 
-
-    SDL_SysWMinfo info;
-    SDL_VERSION(&info.version);
-    SDL_GetWindowWMInfo(window, &info);
-
-    MARGINS margins = {-1};
-    HWND hwnd = info.info.win.window;
-
-    DwmExtendFrameIntoClientArea(hwnd,&margins);
-
 	preSetup();
 }
 
@@ -229,15 +219,6 @@ void Kit::Window::onEvent(Event* e)
 {
 	switch (e->type)
 	{
-
-    case SDL_SYSWMEVENT:
-    {
-        if (e->syswm.msg->msg.win.msg == WM_NCCALCSIZE)
-        {
-            cout << "sys" << endl;
-        }
-        break;
-    }
 
 	case SDL_MOUSEMOTION:
 	{
@@ -285,31 +266,6 @@ void Kit::Window::onEvent(Event* e)
 			render();
 			break;
 		}
-
-        case SDL_WINDOWEVENT_RESIZED:
-        {
-            SDL_Log("Window %d resized to %dx%d",
-                    e->window.windowID, e->window.data1,
-                    e->window.data2);
-
-            int newW = e->window.data1;
-            int newH = e->window.data2;
-
-            const Rect& r = { 0, 0, newW, newH };
-
-            navigator->setupSize(r);
-
-            break;
-
-        }
-        case SDL_WINDOWEVENT_SIZE_CHANGED:
-        {
-            SDL_Log("Window %d size changed to %dx%d",
-                    e->window.windowID, e->window.data1,
-                    e->window.data2);
-            break;
-        }
-
 		}
 
 		break;
