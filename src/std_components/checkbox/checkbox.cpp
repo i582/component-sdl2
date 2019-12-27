@@ -16,28 +16,28 @@ void Checkbox::setup()
 {
     include("../src/std_components/checkbox/css/style.css");
 
-	this->addEventListener("change", [&](Component* sender, Event* e)
-	{
-		callback(sender, e);
-	});
+    this->addEventListener("change", [&](Component* sender, Event* e)
+    {
+        callback(sender, e);
+    });
 
-	this->addEventListener("onmouseup", [&](Component* sender, Event* e)
-	{
-		if (state == CheckboxState::CHECKED)
-		{
-			sender->removeClass(".checkbox-checked");
-			state = CheckboxState::UNCHECKED;
-		}
-		else
-		{
-			sender->addClass(".checkbox-checked");
-			state = CheckboxState::CHECKED;
-		}
+    this->addEventListener("onmouseup", [&](Component* sender, Event* e)
+    {
+        if (state == CheckboxState::CHECKED)
+        {
+            sender->removeClass(".checkbox-checked");
+            state = CheckboxState::UNCHECKED;
+        }
+        else
+        {
+            sender->addClass(".checkbox-checked");
+            state = CheckboxState::CHECKED;
+        }
 
-		callEventListener("change", e);
-	});
+        callEventListener("change", e);
+    });
 
-	setText(text);
+    setText(text);
 }
 
 bool Checkbox::isChecked() const
@@ -48,5 +48,5 @@ bool Checkbox::isChecked() const
 Checkbox* Checkbox::create(const string &id, const string &text, const string &classes,
                            function<void(Component*, Event*)> callback)
 {
-    return new Checkbox(id, text, ".checkbox " + classes, std::move(callback));
+    return new Checkbox(id, text, classes, std::move(callback));
 }

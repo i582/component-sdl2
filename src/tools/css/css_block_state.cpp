@@ -63,10 +63,10 @@ CSS::css_block_state::css_block_state()
 
 CSS::css_block_state::css_block_state(bool general)
 {
-	styles["width"] = "";
-	styles["height"] = "";
-	styles["left"] = "";
-	styles["top"] = "";
+	styles["width"] = "0px";
+	styles["height"] = "0px";
+	styles["left"] = "0px";
+	styles["top"] = "0px";
 
 	styles["background-color"] = Color(0xffffff00);
 	styles["border-color"] = Color(0xffffff00);

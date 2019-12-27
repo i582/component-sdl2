@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "SDL_syswm.h"
 #include "iostream"
 #include "string"
 #include "exception"
@@ -11,6 +12,7 @@
 #include "../component/navigator/navigator.h"
 #include "../component/components/components.h"
 
+#include "Windows.h"
 
 namespace Kit
 {

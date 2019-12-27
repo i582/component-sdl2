@@ -88,7 +88,7 @@ private:
 public:
 	void render();
 
-	void setText(const string& text);
+	void setText(const string& new_text);
 	void setSize(const Rect& size);
 	void setFont(const font& font);
 	void setFontSize(const size_t& fontSize);

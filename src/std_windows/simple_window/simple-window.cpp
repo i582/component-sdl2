@@ -30,7 +30,17 @@ void SimpleWindow::setup()
     add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
 
 
-    add(Checkbox::create("#bcheckbox", "First item", ".first-checkbox"));
+    add(Checkbox::create("#checkbox", "First item", ".first-checkbox"));
+
+
+    add(Select::create("#select-1", "Choose item", ".select-1"));
+
+
+
+    Window::getElementById("#checkbox")->addEventListener("change", [](Component* sender, Event* e)
+    {
+        cout << "Состояние изменено!" << endl;
+    });
 
 //
 //	add("#test-block", ".test-class",

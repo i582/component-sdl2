@@ -1,6 +1,7 @@
 #include "window.h"
 
 #include <utility>
+#include <SDL_syswm.h>
 #include "../kit-main.h"
 
 void Kit::Window::handleStyles()
@@ -175,6 +176,16 @@ void Kit::Window::init()
 
 	this->_id = SDL_GetWindowID(window);
 
+
+    SDL_SysWMinfo info;
+    SDL_VERSION(&info.version);
+    SDL_GetWindowWMInfo(window, &info);
+
+    MARGINS margins = {-1};
+    HWND hwnd = info.info.win.window;
+
+    DwmExtendFrameIntoClientArea(hwnd,&margins);
+
 	preSetup();
 }
 
@@ -200,7 +211,7 @@ void Kit::Window::render()
 
 	SDL_SetRenderTarget(renderer, nullptr);
 
-	SDL_SetRenderDrawColor(renderer,  0x00, 0x00, 0x00, 0xff );
+	SDL_SetRenderDrawColor(renderer,  0x00, 0x00, 0x00, 0x00 );
 	SDL_RenderFillRect(renderer, nullptr);
 
 	SDL_SetRenderDrawColor(renderer,  0xff, 0xff, 0xff, 0x00 );
@@ -218,6 +229,15 @@ void Kit::Window::onEvent(Event* e)
 {
 	switch (e->type)
 	{
+
+    case SDL_SYSWMEVENT:
+    {
+        if (e->syswm.msg->msg.win.msg == WM_NCCALCSIZE)
+        {
+            cout << "sys" << endl;
+        }
+        break;
+    }
 
 	case SDL_MOUSEMOTION:
 	{
@@ -255,31 +275,50 @@ void Kit::Window::onEvent(Event* e)
 		break;
 	}
 
-	/*case SDL_WINDOWEVENT:
+	case SDL_WINDOWEVENT:
 	{
-		switch (e->window.event) {
-		case SDL_WINDOWEVENT_MINIMIZED:
+		switch (e->window.event)
+		{
 		case SDL_WINDOWEVENT_MAXIMIZED:
 		case SDL_WINDOWEVENT_RESTORED:
-		case SDL_WINDOWEVENT_ENTER:
-		case SDL_WINDOWEVENT_LEAVE:
-		case SDL_WINDOWEVENT_SHOWN:
 		{
 			render();
 			break;
 		}
+
+        case SDL_WINDOWEVENT_RESIZED:
+        {
+            SDL_Log("Window %d resized to %dx%d",
+                    e->window.windowID, e->window.data1,
+                    e->window.data2);
+
+            int newW = e->window.data1;
+            int newH = e->window.data2;
+
+            const Rect& r = { 0, 0, newW, newH };
+
+            navigator->setupSize(r);
+
+            break;
+
+        }
+        case SDL_WINDOWEVENT_SIZE_CHANGED:
+        {
+            SDL_Log("Window %d size changed to %dx%d",
+                    e->window.windowID, e->window.data1,
+                    e->window.data2);
+            break;
+        }
+
 		}
 
 		break;
-	}*/
-
-	break;
-
-	default:
-	{
-		
-		break;
 	}
+
+
+
+	default:break;
+
 		
 	}
 }
@@ -366,24 +405,40 @@ SDL_Window* Kit::Window::getWindow() const
 	return window;
 }
 
-void Kit::Window::setDraggableArea(SimpleRect area_)
+void Kit::Window::setDraggableArea(SimpleRect _area)
 {
 	auto size = new SimpleRect;
-	*size = area_;
+	*size = _area;
 
-	SDL_SetWindowHitTest(window, [](SDL_Window* win, const SDL_Point* area, void* callback_data) -> SDL_HitTestResult
+	auto rects = new vector<SimpleRect>;
+
+    rects->push_back(_size);
+    rects->push_back(_area);
+
+    SDL_SetWindowHitTest(window, [](SDL_Window* win, const SDL_Point* area, void* callback_data) -> SDL_HitTestResult
 	{
-		SimpleRect rect = *(SimpleRect*)callback_data;
+        auto rects = (vector<SimpleRect>*)callback_data;
 
-		SDL_Rect rec = { 0, 0, rect.w, rect.h };
+        SimpleRect rect = rects->at(1);
+        SimpleRect size = rects->at(0);
+
+//		SimpleRect rect = *(SimpleRect*)callback_data;
+//
+//		SDL_Rect rec = { 0, 0, rect.w, rect.h };
 
 
-		if (SDL_PointInRect(area, &rec))
+        SimpleRect resizeBottom = { 10, size.h - 10, size.w, 10 };
+
+
+		if (SDL_PointInRect(area, &rect))
 			return SDL_HITTEST_DRAGGABLE;
+
+		if (SDL_PointInRect(area, &resizeBottom))
+		    return SDL_HITTEST_RESIZE_BOTTOM;
 
 		return SDL_HITTEST_NORMAL;
 	}
-	, size);
+	, rects);
 
 }
 

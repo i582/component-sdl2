@@ -45,6 +45,7 @@ include_directories(src/tools/utils)
 include_directories(src/window)
 include_directories(src/std_components/button)
 include_directories(src/std_components/checkbox)
+include_directories(src/std_components/select)
 include_directories(src/std_windows/simple_window)
 
 add_executable(component_sdl2_cmake
@@ -115,6 +116,8 @@ add_executable(component_sdl2_cmake
         src/std_components/checkbox/checkbox.cpp
         src/std_windows/simple_window/simple-window.cpp
         src/std_windows/simple_window/simple-window.h
+        src/std_components/select/select.h
+        src/std_components/select/select.cpp
         main.cpp)
 
 
@@ -135,4 +138,4 @@ find_package(SDL2_gfx REQUIRED)
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF SDL2::GFX)
 
 
-
+target_link_libraries(${PROJECT_NAME} "dwmapi.dll")
