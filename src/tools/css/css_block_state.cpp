@@ -59,6 +59,8 @@ CSS::css_block_state::css_block_state()
 
 
 	styles["overflow"] = 0;
+
+    styles["display"] = 0;
 }
 
 CSS::css_block_state::css_block_state(bool general)
@@ -119,6 +121,9 @@ CSS::css_block_state::css_block_state(bool general)
 	styles["border-right-type"] = "solid";
 
 	styles["overflow"] = "unset";
+
+
+    styles["display"] = "unset";
 }
 
 void CSS::css_block_state::mergeWith(css_block_state& block)

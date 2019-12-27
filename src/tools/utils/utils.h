@@ -62,6 +62,29 @@ namespace Utils
 	 * @return true|false
 	 */
 	bool is_number(string str);
+
+
+
+
+    template<typename T>
+    auto max_of(T a)
+    {
+        return a;
+    }
+
+    template<typename T>
+    auto max_of(T a, T b)
+    {
+        return a > b ? a : b;
+    }
+
+    template<typename T, typename... Args>
+    auto max_of(T a, T b, Args... args)
+    {
+        return max_of(a, max_of(args...));
+    }
+
+
 }
 
 

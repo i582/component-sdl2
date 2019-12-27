@@ -118,7 +118,7 @@ add_executable(component_sdl2_cmake
         src/std_windows/simple_window/simple-window.h
         src/std_components/select/select.h
         src/std_components/select/select.cpp
-        main.cpp)
+        main.cpp src/tools/texture/texture.h src/tools/texture/texture.cpp src/std_components/select/select_item.cpp src/std_components/select/select_item.h)
 
 
 

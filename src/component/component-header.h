@@ -7,6 +7,7 @@
 #include "functional"
 
 #include "../event/event.h"
+#include "../tools/texture/texture.h"
 
 namespace Kit
 {
