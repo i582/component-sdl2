@@ -1,6 +1,6 @@
 .checkbox
 {
-    width: 250px;
+    width: 100px;
     height: 16px;
 
     background-image: url(../src/std_components/checkbox/images/unchecked.png);

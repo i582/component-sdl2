@@ -2,6 +2,7 @@
 .navigator
 {
     background-color: #3c3f41;
+
 }
 
 .window-header
@@ -82,24 +83,42 @@
 /* Buttons */
 .button-ok
 {
-    top: 100px;
-    left: 300px;
+    top: 380px;
+    left: 20px;
 
 }
 
 .button-cancel
 {
-    top: 100px;
-    left: 400px;
+    top: 380px;
+    left: 110px;
 }
 
-.label
-{
-    color: #ffffff;
-}
+
 
 .first-checkbox
 {
-    top: 200px;
-    left: 400px;
+    top: 350px;
+    left: 20px;
+}
+
+
+
+.table-test
+{
+    width: 350px;
+    height: 300px;
+
+    top: 40px;
+    left: 20px;
+}
+
+.header-item-1
+{
+    width: 30px;
+}
+
+.row-item-0
+{
+    width: 30px;
 }

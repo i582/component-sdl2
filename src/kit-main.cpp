@@ -107,39 +107,14 @@ void Kit::KitApplication::render()
 
 void Kit::KitApplication::onEvent()
 {
-	Uint32 oldTime = 0;
-	anim->start();
-	while (is_running && windows.size())
+	while (is_running && SDL_WaitEvent(&e) && !windows.empty())
 	{
-
-		while (SDL_PollEvent(&e))
-		{
-			int windowId = e.window.windowID;
-
-			if (windows.find(windowId) != windows.end())
-				windows[windowId]->onEvent(&e);
-		}
-
-
-		anim->check();
-
-		for (auto& [id, window] : windows)
-		{
-			window->onAnimate();
-		}
-
-
-
-		Uint32 time = SDL_GetTicks();
-
-		if (oldTime == 0)
-			oldTime = time;
-
-		if (time > oldTime + 17)
-		{
-			render();
-			oldTime = time;
-		}
+        const int windowId = e.window.windowID;
+        if (windows.find(windowId) != windows.end())
+        {
+            windows[windowId]->onEvent(&e);
+            windows[windowId]->render();
+        }
 	}
 }
 

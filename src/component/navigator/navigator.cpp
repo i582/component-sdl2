@@ -15,3 +15,14 @@ void Kit::Navigator::update()
 		_window->render();
 	}
 }
+
+void Kit::Navigator::setupSize(const Kit::Rect& new_size)
+{
+    this->_innerSize = _outerSize = new_size;
+
+
+
+    this->computeSize();
+    this->computeChildrenSize();
+    update();
+}

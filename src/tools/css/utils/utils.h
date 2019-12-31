@@ -62,6 +62,8 @@ namespace Utils
 	 * @return true|false
 	 */
 	bool is_number(string str);
+
+
 }
 
 

@@ -12,9 +12,10 @@
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
 #include "animation/animation.h"
-
+//#include "../tools/text2/text.h"
 #include "component-header.h"
 
+#include "../tools/draw/draw.h"
 
 namespace Kit
 {
@@ -68,7 +69,7 @@ protected:
 	/** State */
 	bool _isHovered;
 	bool _isActive;
-
+    bool _isFocused;
 
 	/** SDL */
 	SDL_Renderer* _renderer;
@@ -102,10 +103,11 @@ protected:
 	font _fontNormal;
 	font _fontHover;
 	font _fontActive;
-
+    font _fontFocus;
 
 	Text* _text;
 	string _text_temp;
+
 
 	/** Image */
 	Image* _image;
@@ -115,16 +117,13 @@ protected:
 	CSS::css* _css_component;
 
 
-	/** Animation */
-	animation<int>* _animation;
-
-	
+	/** Extended text */
+    //Text2* _extended_text;
 
 public:
-	Component(const string& id, const Rect& size, const string& classes);
-	Component(const string& id, const Rect& size, const string& classes, const vector<Component*>& childrens);
+    explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
 
-	explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
+    explicit Component(const string& id = "", const Rect& size = { 0, 0, 0, 0 }, const string& classes = "", const vector<Component*>& childrens = {});
 
 	virtual ~Component();
 
@@ -154,6 +153,11 @@ protected:
 
 
 	CSS::css* getComponentStyles();
+
+
+	static string generateRandomString();
+
+
 
 protected: /** Setup Functions */
 
@@ -188,8 +192,20 @@ protected: /** Setup Functions */
 	 */
 	void setupBackgroundImage();
 
+    /**
+     * @brief Configures font inside a component
+     */
 	void setupFont();
-	void setupText();
+
+    /**
+     * @brief Configures text inside a component
+     */
+    void setupText();
+
+    /**
+     * @brief Configures scrolls inside a component
+     */
+    void setupScrolls();
 
 	/**
 	 * @brief Setting the parent window for elements when adding directly
@@ -198,11 +214,25 @@ protected: /** Setup Functions */
 	void setupParentWindow();
 
 
+    /**
+     * @brief Depending on the current value of "display", sets the positions
+     * of children
+     */
+	void setupChildrenPosition();
+
+
+
+    void setupExtendedText();
+
+
+
+    void checkID();
+
 	/**
 	 * @brief The function corrects the coordinates of the mouse
 	 * relative to the element in which it is now located
 	 *
-	 * @param p � Mouse point
+	 * @param p Mouse point
 	 */
 	void adjustMousePoint(Point& p);
 
@@ -241,6 +271,10 @@ public: /** Size Interface */
 	const Rect& outerSize() const;
 	const Rect& innerSize() const;
 
+    void outerWidth(int value);
+    void outerHeight(int value);
+    void outerTop(int value);
+    void outerLeft(int value);
 
 public: /** Display Interface */
 
@@ -276,7 +310,7 @@ public: /** Ralation Interface */
 	bool isParentObject(Component* obj) const;
 
 
-	Component* append(Component* component);
+    virtual Component* append(Component* component);
 	Component* append(const vector<Component*>& components);
 
 
@@ -356,7 +390,8 @@ public: /** Class Interface */
 	Component* removeClass(const string& className);
 	Component* addClass(const string& className);
 	Component* toggleClass(const string& className);
-
+    const string& classes();
+    void classes(const string& newClasses);
 
 public: /** Text Interface */
 	virtual void setText(const string& text);
@@ -367,14 +402,14 @@ public: /** Scroll Interface */
 	bool isHorizontalScrollable() const;
 
 
-public: /**const  Block& Style Interface */
+public: /** Style Interface */
 	void include(const string& path);
 
 
-public: /** Animation Interface */
- 	void animate();
-	void startAnimation();
-	void endAnimation();
+public: /** Focus Interface */
+    void getFocus(SDL_Event* e);
+    void loseFocus(SDL_Event* e);
+
 };
 
 

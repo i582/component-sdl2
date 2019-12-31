@@ -62,6 +62,45 @@ namespace Utils
 	 * @return true|false
 	 */
 	bool is_number(string str);
+
+
+
+
+
+
+    template<typename T, typename... Args>
+    T max_of(T a, Args... args)
+    {
+        if constexpr (sizeof...(args) == 0)
+        {
+            return a;
+        }
+        else if constexpr (sizeof...(args) == 1)
+        {
+            return (a > max_of(args...)) ? (a) : (max_of(args...));
+        }
+        else
+        {
+            return max_of(a, max_of(args...));
+        }
+    }
+
+    template<typename T, typename... Args>
+    T min_of(T a, Args... args)
+    {
+        if constexpr (sizeof...(args) == 0)
+        {
+            return a;
+        }
+        else if constexpr (sizeof...(args) == 1)
+        {
+            return (a < min_of(args...)) ? (a) : (min_of(args...));
+        }
+        else
+        {
+            return min_of(a, min_of(args...));
+        }
+    }
 }
 
 

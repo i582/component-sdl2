@@ -57,19 +57,22 @@ CSS::css_block_state::css_block_state()
 	styles["border-right-color"] = 0;
 	styles["border-right-type"] = 0;
 
+    styles["outline"] = 0;
 
 	styles["overflow"] = 0;
+
+    styles["display"] = 0;
 }
 
 CSS::css_block_state::css_block_state(bool general)
 {
-	styles["width"] = "";
-	styles["height"] = "";
-	styles["left"] = "";
-	styles["top"] = "";
+	styles["width"] = "0px";
+	styles["height"] = "0px";
+	styles["left"] = "0px";
+	styles["top"] = "0px";
 
 	styles["background-color"] = Color(0xffffff00);
-	styles["border-color"] = Color(0xffffff00);
+	styles["border-color"] = Color(0x00000000);
 	styles["color"] = Color(0x000000ff);
 
 	styles["background-image"] = "";
@@ -118,7 +121,12 @@ CSS::css_block_state::css_block_state(bool general)
 	styles["border-right-color"] = 0;
 	styles["border-right-type"] = "solid";
 
+    styles["outline"] = Color(0x00000000);
+
 	styles["overflow"] = "unset";
+
+
+    styles["display"] = "unset";
 }
 
 void CSS::css_block_state::mergeWith(css_block_state& block)

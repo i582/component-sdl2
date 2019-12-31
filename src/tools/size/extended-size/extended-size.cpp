@@ -60,7 +60,7 @@ Size& Kit::Size::operator=(const Size& obj)
 	return* this;
 }
 
-Size Size::operator*(int scale)
+Size Size::operator*(const int& scale)
 {
 	Size size;
 	size._w = this->_w * scale;
@@ -68,7 +68,7 @@ Size Size::operator*(int scale)
 	return size;
 }
 
-Size Size::operator*(double scale)
+Size Size::operator*(const double& scale)
 {
 	Size size;
 	size._w = (int)(this->_w * scale);
@@ -76,7 +76,7 @@ Size Size::operator*(double scale)
 	return size;
 }
 
-Size Size::operator/(int scale)
+Size Size::operator/(const int& scale)
 {
 	Size size;
 	size._w = this->_w / scale;
@@ -84,7 +84,7 @@ Size Size::operator/(int scale)
 	return size;
 }
 
-Size Size::operator/(double scale)
+Size Size::operator/(const double& scale)
 {
 	Size size;
 	size._w = (int)(this->_w / scale);
@@ -94,7 +94,7 @@ Size Size::operator/(double scale)
 
 
 
-Size::Size(string width, string height)
+Size::Size(const string& width, const string& height)
 {
 	this->width = width;
 	this->height = height;

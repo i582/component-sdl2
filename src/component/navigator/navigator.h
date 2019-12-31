@@ -14,6 +14,8 @@ public:
 public:
 	void update();
 
+	void setupSize(const Rect& new_size);
+
 };
 
 }

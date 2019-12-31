@@ -45,7 +45,11 @@ include_directories(src/tools/utils)
 include_directories(src/window)
 include_directories(src/std_components/button)
 include_directories(src/std_components/checkbox)
+include_directories(src/std_components/select)
 include_directories(src/std_windows/simple_window)
+include_directories(src/tools/text2)
+include_directories(src/tools/draw)
+include_directories(src/std_components/table)
 
 add_executable(component_sdl2_cmake
         src/component/animation/animation.h
@@ -115,7 +119,23 @@ add_executable(component_sdl2_cmake
         src/std_components/checkbox/checkbox.cpp
         src/std_windows/simple_window/simple-window.cpp
         src/std_windows/simple_window/simple-window.h
-        main.cpp)
+        src/std_components/select/select.h
+        src/std_components/select/select.cpp
+        src/std_components/select/select_item.cpp
+        src/std_components/select/select_item.h
+        src/tools/texture/texture.h
+        src/tools/texture/texture.cpp
+        src/tools/text2/text.h
+        src/tools/text2/text2.cpp
+        src/tools/text2/text_line.h
+        src/tools/text2/text_line.cpp
+        src/tools/text2/word.h
+        main.cpp
+        src/tools/text2/word.cpp
+        src/tools/draw/draw.h
+        src/tools/draw/draw.cpp
+        src/std_components/table/table.cpp
+        src/std_components/table/table.h src/std_components/table/table_header.cpp src/std_components/table/table_header.h src/std_components/table/table_row.cpp src/std_components/table/table_row.h src/std_components/table/table_item.cpp src/std_components/table/table_item.h src/std_components/table/table_header_item.cpp src/std_components/table/table_header_item.h)
 
 
 
@@ -135,4 +155,4 @@ find_package(SDL2_gfx REQUIRED)
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF SDL2::GFX)
 
 
-
+target_link_libraries(${PROJECT_NAME} "dwmapi.dll")

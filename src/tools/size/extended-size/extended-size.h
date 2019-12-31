@@ -25,10 +25,10 @@ public:
 
 	Size operator+(const Size& obj);
 	Size operator-(const Size& obj);
-	Size operator*(int scale);
-	Size operator*(double scale);
-	Size operator/(int scale);
-	Size operator/(double scale);
+	Size operator*(const int& scale);
+	Size operator*(const double& scale);
+	Size operator/(const int& scale);
+	Size operator/(const double& scale);
 
 	bool operator==(const Size& obj) const;
 	bool operator!=(const Size& obj) const;
@@ -47,7 +47,7 @@ public:
 	bool isCalculated;
 
 public:
-	Size(string width, string height);
+	Size(const string& width, const string& height);
 
 	/**
 	 * @brief Function calculating sizes from strings

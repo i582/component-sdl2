@@ -121,7 +121,12 @@ Uint32 CSS::Color::parseRGBA(const string& color)
 
 bool Color::operator==(const Color& obj) const
 {
-	return _color == obj._color && s_color == obj.s_color;
+	return _color == obj._color;
+}
+
+bool Color::operator!=(const Color& obj) const
+{
+    return _color != obj._color;
 }
 
 Uint32 Color::color() const

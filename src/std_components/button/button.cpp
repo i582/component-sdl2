@@ -9,7 +9,7 @@ Button::Button(string id, string text, string classes)
 
 Component* Button::create(string id, string text, string classes)
 {
-	return new Button(id, text, ".button " + classes);
+	return new Button(id, text, classes);
 }
 
 void Button::setup()

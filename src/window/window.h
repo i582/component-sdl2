@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "SDL_syswm.h"
 #include "iostream"
 #include "string"
 #include "exception"
@@ -11,6 +12,7 @@
 #include "../component/navigator/navigator.h"
 #include "../component/components/components.h"
 
+#include "Windows.h"
 
 namespace Kit
 {
@@ -40,16 +42,21 @@ public: /** Component Interface */
 	Component* getElementById(const string& id) const;
 	Components getElementsByClassName(const string& className) const;
 
-	Component& add(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
+	Component& add(const string& id, const string& classes, const vector<Component*>& childrens = {});
+    Component& add(const string& classes = "", const vector<Component*>& childrens = {});
 	Component& add(Component* component);
 
-	Component* create(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
+	Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
+    Component* create(const string& classes = "", const vector<Component*>& childrens = {});
 	Component* create(Component* component);
 
 public: /** Component Style Interface */
 
 	CSS::css_block* addStyle(const string& className, CSS::css_block style);
-	
+
+
+public:
+    Component* focusComponent;
 
 
 protected:
@@ -100,8 +107,6 @@ protected: /** Events */
 public: /** Interface */
 	void render();
 	void onEvent(Event* e);
-
-	void onAnimate();
 
 	void show();
 	void hide();
