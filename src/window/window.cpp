@@ -103,6 +103,13 @@ Kit::Component& Kit::Window::add(const string& id, const string& classes, const 
 	return add(_addComponent);
 }
 
+Kit::Component& Kit::Window::add(const std::string& classes, const std::vector<Kit::Component*>& childrens)
+{
+    auto* _addComponent = new Component("", classes, childrens);
+
+    return add(_addComponent);
+}
+
 Kit::Component& Kit::Window::add(Component* component)
 {
 	navigator->append(component);
@@ -113,6 +120,11 @@ Kit::Component& Kit::Window::add(Component* component)
 Kit::Component* Kit::Window::create(const string& id, const string& classes, const vector<Component*>& childrens)
 {
 	return new Component(id, classes, childrens);
+}
+
+Kit::Component* Kit::Window::create(const std::string& classes, const std::vector<Kit::Component*>& childrens)
+{
+    return new Component("", classes, childrens);
 }
 
 Kit::Component* Kit::Window::create(Component* component)
@@ -405,15 +417,15 @@ void Kit::Window::mouseButtonDown(SDL_Event* e)
     {
         if (focusComponent != hover)
         {
-            focusComponent->loseFocus();
+            focusComponent->loseFocus(e);
             focusComponent = hover;
-            focusComponent->getFocus();
+            focusComponent->getFocus(e);
         }
     }
     else
     {
         focusComponent = hover;
-        focusComponent->getFocus();
+        focusComponent->getFocus(e);
     }
 
     focusComponent->mouseButtonDown(e);

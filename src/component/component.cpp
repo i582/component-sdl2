@@ -3,122 +3,15 @@
 
 Kit::Component* Kit::Component::_hoverComponent = nullptr;
 
-Kit::Component::Component(const string &id, const Rect &size, const string &classes) : Component(id, size, classes, {}) {}
+Kit::Component::Component(const std::string& id, const string& classes, const vector<Component*>& childrens)
+: Component(id, {0, 0, 0, 0}, classes, childrens) {}
 
-Kit::Component::Component(const string &id, const Rect &size, const string &classes,
-                          const vector<Component*> &childrens)
+Kit::Component::Component(const string &id, const Rect& size, const string &classes, const vector<Component*> &childrens)
 {
     /** Sizes */
     this->_innerSize = size;
     this->_outerSize = size;
-    this->_isConstructSize = true;
-
-    this->_autoWidth = false;
-    this->_autoHeight = false;
-
-    /** Identifiers */
-    this->_id = id;
-    this->_classes = classes;
-
-
-    /** Parents */
-    this->_parent = nullptr;
-    this->_window = nullptr;
-
-
-    /** Childrens */
-    // this->_childrens = childrens;
-    for (auto &children : childrens)
-    {
-        append(children);
-    }
-
-    this->_childrensSize;
-
-
-    /** Display */
-    this->_isDisplay = true;
-
-
-
-    /** Events listener */
-    this->_eventListeners = {};
-    this->setupEventListeners();
-
-
-    /** User data */
-    this->_userData;
-
-
-    /** State */
-    this->_isHovered = false;
-    this->_isActive = false;
-    this->_isFocused = false;
-
-
-    /** SDL */
-    this->_renderer = nullptr;
-    this->_innerTexture = nullptr;
-    this->_outerTexture = nullptr;
-
-
-    /** Styles */
-    this->_cssBlock = CSS::css_block(id, true);
-
-
-    /** Other for Events */
-    this->_isEnterInComponent = false;
-
-
-    /** Font */
-    this->_fontNormal = font();
-    this->_fontHover = font();
-    this->_fontActive = font();
-
-
-    /** Text */
-    this->_text = nullptr;
-    this->_text_temp = "";
-
-
-    /** Vertical Scroll */
-    this->_verticalScroll = new VerticalScroll(_renderer, {0, 0, 15, 0}, 0, 1);
-    this->_verticalScrollable = false;
-    this->_isVerticalScrollActive = false;
-
-
-    /** Horizontal Scroll */
-    this->_horizontalScroll = new HorizontalScroll(_renderer, {0, 0, 0, 15}, 0, 1);
-    this->_horizontalScrollable = false;
-    this->_isHorizontalScrollActive = false;
-
-    this->_needRenderScroll = true;
-
-
-    /** Image */
-    this->_image = nullptr;
-
-
-    /** CSS component */
-    this->_css_component = nullptr;
-
-
-    /** Animation */
-    this->_animation = new animation<int>(100, 900, 2000, this->_outerSize.start.px(), []()
-    {
-    });
-
-
-    /** Extended text */
-    //this->_extended_text = nullptr;
-}
-
-Kit::Component::Component(const string &id, const string &classes, const vector<Component*> &childrens)
-{
-    /** Sizes */
-    this->_innerSize;
-    this->_outerSize;
-    this->_isConstructSize = false;
+    this->_isConstructSize = !size.empty();
 
     this->_autoWidth = false;
     this->_autoHeight = false;
@@ -126,6 +19,8 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
 
     /** Identifiers */
     this->_id = id;
+    checkID();
+
     this->_classes = classes;
 
 
@@ -190,13 +85,13 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
 
 
     /** Vertical Scroll */
-    this->_verticalScroll = new VerticalScroll(_renderer, {0, 0, 15, 0}, 0, 1);
+    this->_verticalScroll = nullptr;
     this->_verticalScrollable = false;
     this->_isVerticalScrollActive = false;
 
 
     /** Horizontal Scroll */
-    this->_horizontalScroll = new HorizontalScroll(_renderer, {0, 0, 0, 15}, 0, 1);
+    this->_horizontalScroll = nullptr;
     this->_horizontalScrollable = false;
     this->_isHorizontalScrollActive = false;
 
@@ -209,12 +104,6 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
 
     /** CSS component */
     this->_css_component = nullptr;
-
-
-    /** Animation */
-    this->_animation = new animation<int>(100, 900, 2000, this->_outerSize.start.px(), []()
-    {
-    });
 
 
     /** Extended text */
@@ -238,6 +127,8 @@ void Kit::Component::setupEventListeners()
 {
     _eventListeners["click"] = Component::_emptyCallback;
     _eventListeners["hover"] = Component::_emptyCallback;
+    _eventListeners["focus"] = Component::_emptyCallback;
+    _eventListeners["focusout"] = Component::_emptyCallback;
     _eventListeners["mousemotion"] = Component::_emptyCallback;
     _eventListeners["onmousedown"] = Component::_emptyCallback;
     _eventListeners["onmouseup"] = Component::_emptyCallback;
@@ -337,10 +228,10 @@ void Kit::Component::computeSize()
 
     /** find the maximum border size */
 
-
     auto& normalBlock = _cssBlock.normal();
     auto& hoverBlock = _cssBlock.hover();
     auto& activeBlock = _cssBlock.active();
+
     const auto topSize = Utils::max_of(
             normalBlock.get<int>("border-top-size"),
             hoverBlock.get<int>("border-top-size"),
@@ -577,6 +468,20 @@ void Kit::Component::setupText()
     }
 }
 
+void Kit::Component::setupScrolls()
+{
+    this->_verticalScroll = new VerticalScroll(_renderer, {0, 0, 15, 0}, 0, 1);
+
+    this->_horizontalScroll = new HorizontalScroll(_renderer, {0, 0, 0, 15}, 0, 1);
+
+
+
+    for (auto &children : _childrens)
+    {
+        children->setupScrolls();
+    }
+}
+
 void Kit::Component::setupExtendedText()
 {
     auto font_size = _cssBlock.normal().get<int>("font-size");
@@ -589,6 +494,14 @@ void Kit::Component::setupExtendedText()
     for (auto &children : _childrens)
     {
         children->setupExtendedText();
+    }
+}
+
+void Kit::Component::checkID()
+{
+    if (this->_id.empty())
+    {
+        this->_id = Component::generateRandomString();
     }
 }
 
@@ -975,10 +888,12 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 
 void Kit::Component::setupComponents()
 {
+    setupScrolls();
     setupChildrenRenderer();
 
     setupSize();
     computeSize();
+
 
     setupChildrenPosition();
     computeChildrenSize();
@@ -987,6 +902,7 @@ void Kit::Component::setupComponents()
     setupBackgroundImage();
     setupFont();
     setupText();
+
 
     setupExtendedText();
 }
@@ -1320,18 +1236,39 @@ void Kit::Component::outerTop(int value)
     _outerSize.y(value);
 }
 
-void Kit::Component::getFocus()
+void Kit::Component::getFocus(SDL_Event* e)
 {
     cout << _id << " getFocus" << endl;
 
+
+    _eventListeners["focus"](this, e);
     this->_isFocused = true;
 }
 
-void Kit::Component::loseFocus()
+void Kit::Component::loseFocus(SDL_Event* e)
 {
     cout << _id << " loseFocus" << endl;
 
+    _eventListeners["focusout"](this, e);
     this->_isFocused = false;
 }
 
+std::string Kit::Component::generateRandomString()
+{
+    srand(clock());
+    size_t length = rand() % 7 + 8;
 
+    auto rand_char = []() -> char
+    {
+        const char charset[] =
+                "0123456789"
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                "abcdefghijklmnopqrstuvwxyz";
+
+        const size_t max_index = (sizeof(charset) - 1);
+        return charset[ rand() % max_index ];
+    };
+    std::string str(length, 0);
+    std::generate_n( str.begin(), length, rand_char );
+    return str;
+}

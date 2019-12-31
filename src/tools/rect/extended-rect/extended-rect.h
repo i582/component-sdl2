@@ -73,6 +73,8 @@ public:
 	int dw(int d);
 	int dh(int d);
 
+	bool empty() const;
+
 public:
 	/**
 	 * @brief return a rectangle in the format understood by SDL API

@@ -108,6 +108,7 @@ protected:
 	Text* _text;
 	string _text_temp;
 
+
 	/** Image */
 	Image* _image;
 
@@ -116,18 +117,13 @@ protected:
 	CSS::css* _css_component;
 
 
-	/** Animation */
-	animation<int>* _animation;
-
-
 	/** Extended text */
     //Text2* _extended_text;
 
 public:
-	Component(const string& id, const Rect& size, const string& classes);
-	Component(const string& id, const Rect& size, const string& classes, const vector<Component*>& childrens);
+    explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
 
-	explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
+    explicit Component(const string& id = "", const Rect& size = { 0, 0, 0, 0 }, const string& classes = "", const vector<Component*>& childrens = {});
 
 	virtual ~Component();
 
@@ -157,6 +153,11 @@ protected:
 
 
 	CSS::css* getComponentStyles();
+
+
+	static string generateRandomString();
+
+
 
 protected: /** Setup Functions */
 
@@ -199,7 +200,12 @@ protected: /** Setup Functions */
     /**
      * @brief Configures text inside a component
      */
-	void setupText();
+    void setupText();
+
+    /**
+     * @brief Configures scrolls inside a component
+     */
+    void setupScrolls();
 
 	/**
 	 * @brief Setting the parent window for elements when adding directly
@@ -216,9 +222,11 @@ protected: /** Setup Functions */
 
 
 
-
     void setupExtendedText();
 
+
+
+    void checkID();
 
 	/**
 	 * @brief The function corrects the coordinates of the mouse
@@ -399,8 +407,8 @@ public: /** Style Interface */
 
 
 public: /** Focus Interface */
-    void getFocus();
-    void loseFocus();
+    void getFocus(SDL_Event* e);
+    void loseFocus(SDL_Event* e);
 
 };
 

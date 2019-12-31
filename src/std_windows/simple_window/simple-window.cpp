@@ -64,7 +64,10 @@ void SimpleWindow::setup()
     }
 
 
-
+    add(".class");
+    add(".class");
+    add(".class");
+    add(".class");
 
     add("#test-scrolls", ".test-scrolls",
     {

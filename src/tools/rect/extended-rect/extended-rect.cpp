@@ -153,3 +153,8 @@ SDL_Rect Rect::toSdlRect() const
 {
 	return { start._x, start._y, size._w, size._h };
 }
+
+bool Rect::empty() const
+{
+    return start._x == 0 && start._y == 0 && size._w == 0 && size._h == 0;
+}

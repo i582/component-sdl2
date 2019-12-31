@@ -98,7 +98,7 @@ namespace Utils
         }
         else
         {
-            return max_of(a, min_of(args...));
+            return min_of(a, min_of(args...));
         }
     }
 }
