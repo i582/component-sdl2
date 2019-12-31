@@ -49,6 +49,7 @@ include_directories(src/std_components/select)
 include_directories(src/std_windows/simple_window)
 include_directories(src/tools/text2)
 include_directories(src/tools/draw)
+include_directories(src/std_components/table)
 
 add_executable(component_sdl2_cmake
         src/component/animation/animation.h
@@ -132,7 +133,9 @@ add_executable(component_sdl2_cmake
         main.cpp
         src/tools/text2/word.cpp
         src/tools/draw/draw.h
-        src/tools/draw/draw.cpp)
+        src/tools/draw/draw.cpp
+        src/std_components/table/table.cpp
+        src/std_components/table/table.h src/std_components/table/table_header.cpp src/std_components/table/table_header.h src/std_components/table/table_row.cpp src/std_components/table/table_row.h src/std_components/table/table_item.cpp src/std_components/table/table_item.h src/std_components/table/table_header_item.cpp src/std_components/table/table_header_item.h)
 
 
 

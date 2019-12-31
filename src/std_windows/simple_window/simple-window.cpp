@@ -22,76 +22,26 @@ void SimpleWindow::setup()
 	$$->append(new Component("#system-collapse", { "100% - 135px", "0px", "45px", "30px" }, ".system-button .system-collapse"));
 
 
-    $$->append(new Component("#label", { "100px", "100px", "100px", "30px" }, ".label"))
-    ->setText("Hello World!");
 
 
     add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
     add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
 
-
-    add(Checkbox::create("#checkbox", "First item", ".first-checkbox"));
-
-
-    auto select = Select::create("#select-1", "Choose item", ".select-1");
-
-
-    for (int i = 0; i < 3; ++i)
-    {
-        select->append(SelectItem::create("#item-" + to_string(i), "text " + to_string(i)));
-    }
+    add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
 
 
 
-    add(select);
+	add(new Table("#table", ".table-test"));
 
+    auto table = (Table*)Window::getElementById("#table");
 
+    table->addCollumn("#");
+    table->addCollumn("ФИО");
+    table->addCollumn("Русский язык");
+    table->addCollumn("Математика");
 
-    add("#test-outer-auto", ".test-outer-auto",
-    {
-        create("#test-inner-block", ".test-inner-block",
-        {
-            create("#test-inner-inner", ".test-inner-inner-block")
-        })
-    });
-
-
-    auto block = Window::getElementById("#test-inner-inner");
-
-    for (int i = 0; i < 10; ++i)
-    {
-        block->append(create("#inner-item-" + to_string(i), ".inner-item"))->setText("block-" +  to_string(i));
-    }
-
-
-    add(".class");
-    add(".class");
-    add(".class");
-    add(".class");
-
-    add("#test-scrolls", ".test-scrolls",
-    {
-        create("#big-block", ".big-block")
-    });
-
-
-
-
-    Window::getElementById("#checkbox")->addEventListener("change", [](Component* sender, Event* e)
-    {
-        cout << "Состояние изменено!" << endl;
-    });
-
-//
-//	add("#test-block", ".test-class",
-//	{
-//		create("#test-block-inner", ".test-class-inner-1",
-//		{
-//			create("#test-block-inner-inner", ".test-class-inner-inner")
-//		}),
-//		create("#test-block-inner-2", ".test-class-inner-2")
-//	});
-
-
+    table->addRow({ "1", "Молодой человек", "85", "90" });
+    table->addRow({ "2", "Старый человек", "75", "100" });
+    table->addRow({ "3", "Старый человек", "75", "100" });
 
 }

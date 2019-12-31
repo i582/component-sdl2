@@ -19,7 +19,7 @@ Kit::Component::Component(const string &id, const Rect& size, const string &clas
 
     /** Identifiers */
     this->_id = id;
-    checkID();
+    this->checkID();
 
     this->_classes = classes;
 
@@ -238,19 +238,19 @@ void Kit::Component::computeSize()
             activeBlock.get<int>("border-top-size")
     );
     const auto bottomSize = Utils::max_of(
-            normalBlock.get<int>("border-top-size"),
-            hoverBlock.get<int>("border-top-size"),
-            activeBlock.get<int>("border-top-size")
+            normalBlock.get<int>("border-bottom-size"),
+            hoverBlock.get<int>("border-bottom-size"),
+            activeBlock.get<int>("border-bottom-size")
     );
     const auto leftSize = Utils::max_of(
-            normalBlock.get<int>("border-top-size"),
-            hoverBlock.get<int>("border-top-size"),
-            activeBlock.get<int>("border-top-size")
+            normalBlock.get<int>("border-left-size"),
+            hoverBlock.get<int>("border-left-size"),
+            activeBlock.get<int>("border-left-size")
     );
     const auto rightSize = Utils::max_of(
-            normalBlock.get<int>("border-top-size"),
-            hoverBlock.get<int>("border-top-size"),
-            activeBlock.get<int>("border-top-size")
+            normalBlock.get<int>("border-right-size"),
+            hoverBlock.get<int>("border-right-size"),
+            activeBlock.get<int>("border-right-size")
     );
 
 
@@ -545,6 +545,25 @@ void Kit::Component::setupChildrenPosition()
                 children->outerTop(new_y_position);
             }
         }
+        else if (display_type == "inline-block")
+        {
+            auto& first_children = _childrens[0];
+
+            first_children->outerLeft(0);
+            first_children->outerTop(0);
+
+
+            for (size_t i = 1; i < _childrens.size(); ++i)
+            {
+                auto& children = _childrens[i];
+                auto& children_prev = _childrens[i - 1];
+
+                const int new_x_position = children_prev->outerSize().w() + children_prev->outerSize().x();
+
+                children->outerTop(0);
+                children->outerLeft(new_x_position);
+            }
+        }
 
     }
 
@@ -613,12 +632,21 @@ void Kit::Component::render()
     const auto& borderRadius = blockState->get<int>("border-radius");
 
 
-    //roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, backgroundColor.colorReverse());
+    const bool outline = blockState->get<Color>("outline") != Color(0);
 
+    if (outline)
+    {
+        const auto outlineColor = blockState->get<Color>("outline");
 
-    const SimpleRect _innerRectSize = { 0, 0, _innerSize.w(), _innerSize.h() };
+        const SimpleRect _outlineRectSize = { 0, 0, _innerSize.w(), _innerSize.h() };
+        Draw::roundedRect(_renderer, _outlineRectSize, borderRadius, outlineColor);
+    }
 
+    const SimpleRect _innerRectSize = { outline, outline, _innerSize.w() - 2*outline, _innerSize.h() - 2*outline };
     Draw::roundedRect(_renderer, _innerRectSize, borderRadius, backgroundColor);
+
+
+
 
 
     if (this->_image != nullptr)
@@ -668,15 +696,11 @@ void Kit::Component::render()
     SDL_SetRenderTarget(_renderer, _outerTexture);
 
 
-    const auto &topSize = blockState->get<int>("border-top-size");
-    const auto &bottomSize = blockState->get<int>("border-bottom-size");
-    const auto &leftSize = blockState->get<int>("border-left-size");
-    const auto &rightSize = blockState->get<int>("border-right-size");
+    const auto& topSize = blockState->get<int>("border-top-size");
+    const auto& bottomSize = blockState->get<int>("border-bottom-size");
+    const auto& leftSize = blockState->get<int>("border-left-size");
+    const auto& rightSize = blockState->get<int>("border-right-size");
 
-
-   /* roundedBoxColor(_renderer, _innerSize.x() - leftSize, _innerSize.y() - topSize,
-                    _innerSize.x() + _innerSize.w() - 1 + rightSize, _innerSize.y() + _innerSize.h() - 1 + bottomSize,
-                    borderRadius, borderColor.colorReverse());*/
 
     const SDL_Rect _innerRectBorderSize =
     {
@@ -685,17 +709,9 @@ void Kit::Component::render()
             _innerSize.w() + leftSize + rightSize,
             _innerSize.h() + topSize + bottomSize
     };
+    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius, borderColor);
 
 
-    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius + 2, borderColor);
-
-
-
-//    filledEllipseColor(_renderer, 20, 20, 20, 21, 0xffffffff);
-    //aacircleColor(_renderer, 20, 20, 3, 0x5E6060fe);
-//
-//    filledEllipseColor(_renderer, 20, 20, 19, 20, 0xCE4848ff);
-//    aacircleColor(_renderer, 20, 20, 20, 0xCE4848ff);
 
 
 

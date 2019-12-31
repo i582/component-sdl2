@@ -34,6 +34,7 @@ private:
 
 public:
 	bool operator==(const Color& obj) const;
+    bool operator!=(const Color& obj) const;
 
 public:
 

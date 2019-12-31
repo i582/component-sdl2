@@ -45,7 +45,7 @@ css_variant CSS::css_attribute::get(const string& attribute, const string& value
 		return std::stod(value);
 	}
 
-	if (attribute == "background-color" || attribute == "border-color" || attribute == "color")
+	if (attribute == "background-color" || attribute == "border-color" || attribute == "color" || attribute == "outline")
 	{
 		return Color(value);
 	}

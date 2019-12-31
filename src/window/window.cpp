@@ -441,6 +441,15 @@ void Kit::Window::mouseButtonUp(SDL_Event* e)
 
 void Kit::Window::mouseMotion(SDL_Event* e)
 {
+    if (focusComponent != nullptr)
+    {
+        if (focusComponent->_isHorizontalScrollActive || focusComponent->_isVerticalScrollActive)
+        {
+            focusComponent->mouseMotion(e);
+            return;
+        }
+    }
+
     Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
     if (hover != nullptr)

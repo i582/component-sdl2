@@ -84,14 +84,14 @@
 .button-ok
 {
     top: 100px;
-    left: 300px;
+    left: 800px;
 
 }
 
 .button-cancel
 {
     top: 100px;
-    left: 400px;
+    left: 900px;
 }
 
 .label
@@ -101,8 +101,8 @@
 
 .first-checkbox
 {
-    top: 200px;
-    left: 400px;
+    top: 150px;
+    left: 800px;
 }
 
 
@@ -218,6 +218,23 @@
 
 
     border-radius: 4px;
+}
 
 
+.table-test
+{
+    width: 350px;
+
+    top: 100px;
+    left: 200px;
+}
+
+.header-item-1
+{
+    width: 30px;
+}
+
+.row-item-0
+{
+    width: 30px;
 }
