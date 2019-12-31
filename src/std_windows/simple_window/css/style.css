@@ -83,150 +83,34 @@
 /* Buttons */
 .button-ok
 {
-    top: 100px;
-    left: 800px;
+    top: 380px;
+    left: 20px;
 
 }
 
 .button-cancel
 {
-    top: 100px;
-    left: 900px;
+    top: 380px;
+    left: 110px;
 }
 
-.label
-{
-    color: #ffffff;
-}
+
 
 .first-checkbox
 {
-    top: 150px;
-    left: 800px;
+    top: 350px;
+    left: 20px;
 }
 
-
-.select-1
-{
-    top: 300px;
-    left: 400px;
-}
-
-.select-1-header
-{
-    width: 100px;
-    height: 22px;
-}
-
-.select-1-body
-{
-    width: 100px;
-
-}
-
-.select-1-body-item
-{
-    height: 22px;
-}
-
-.test-outer-auto
-{
-    width: auto;
-    height: auto;
-
-    top: 200px;
-    left: 100px;
-
-    background-color: #3D6185;
-}
-
-.test-inner-block
-{
-    width: auto;
-    height: auto;
-    top: 10px;
-    left: 10px;
-
-    background-color: #ce4848;
-}
-
-.test-inner-inner-block
-{
-    width: 200px;
-    height: auto;
-
-    top: 30px;
-
-    background-color: #dadacb;
-
-    display: block;
-}
-
-.inner-item
-{
-    width: 100%;
-    height: 30px;
-
-    background-color: #b8d7a3;
-    border-color: #dadacb;
-
-    border-bottom: 1px solid #ffffff;
-}
-
-.inner-item:hover
-{
-    background-color: #9bb589;
-}
-
-.test-scrolls
-{
-    width: 200px;
-    height: 200px;
-
-    top: 400px;
-    left: 600px;
-
-    background-color: #4C708C;
-}
-
-.big-block
-{
-    width: 200%;
-    height: 200%;
-
-    top: 50px;
-    left: 50px;
-
-    background-color: #ce4848;
-}
-
-.button-item
-{
-    width: 100%;
-}
-
-.test-border
-{
-    width: 100px;
-    height: 100px;
-
-    top: 100px;
-    left: 900px;
-
-    background-color: #ce4848;
-
-
-
-    border-radius: 4px;
-}
 
 
 .table-test
 {
     width: 350px;
+    height: 300px;
 
-    top: 100px;
-    left: 200px;
+    top: 40px;
+    left: 20px;
 }
 
 .header-item-1

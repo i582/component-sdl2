@@ -11,6 +11,9 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2_gfx-brightgreen.svg)](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
 
 
+# Пример интерфейса
+
+![example](docs/1.png)
 
 # Использование библиотеки
 

@@ -58,3 +58,13 @@
 
     outline: #456B91;
 }
+
+.button-blue:active
+{
+    outline:#4E6E8F;
+}
+
+.button-blue:focus
+{
+    outline:#4E6E8F;
+}
