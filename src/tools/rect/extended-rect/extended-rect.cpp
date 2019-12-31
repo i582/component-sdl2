@@ -7,7 +7,7 @@ Rect::Rect()
 	this->isCalculated = true;
 }
 
-Rect::Rect(const Point start, const Size size)
+Rect::Rect(const Point& start, const Size& size)
 {
 	this->size = size;
 	this->start = start;
@@ -23,7 +23,7 @@ Rect::Rect(int x, int y, int w, int h)
 	this->isCalculated = true;
 }
 
-Rect::Rect(string left, string top, string width, string height)
+Rect::Rect(const string& left, const string& top, const string& width, const string& height)
 {
 	this->size = Size(width, height);
 	this->start = Point(left, top);

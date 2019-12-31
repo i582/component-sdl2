@@ -204,3 +204,20 @@
 {
     width: 100%;
 }
+
+.test-border
+{
+    width: 100px;
+    height: 100px;
+
+    top: 100px;
+    left: 900px;
+
+    background-color: #ce4848;
+
+
+
+    border-radius: 4px;
+
+
+}

@@ -12,9 +12,10 @@
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
 #include "animation/animation.h"
-
+//#include "../tools/text2/text.h"
 #include "component-header.h"
 
+#include "../tools/draw/draw.h"
 
 namespace Kit
 {
@@ -68,7 +69,7 @@ protected:
 	/** State */
 	bool _isHovered;
 	bool _isActive;
-
+    bool _isFocused;
 
 	/** SDL */
 	SDL_Renderer* _renderer;
@@ -102,7 +103,7 @@ protected:
 	font _fontNormal;
 	font _fontHover;
 	font _fontActive;
-
+    font _fontFocus;
 
 	Text* _text;
 	string _text_temp;
@@ -119,6 +120,8 @@ protected:
 	animation<int>* _animation;
 
 
+	/** Extended text */
+    //Text2* _extended_text;
 
 public:
 	Component(const string& id, const Rect& size, const string& classes);
@@ -210,6 +213,11 @@ protected: /** Setup Functions */
      * of children
      */
 	void setupChildrenPosition();
+
+
+
+
+    void setupExtendedText();
 
 
 	/**
@@ -386,14 +394,14 @@ public: /** Scroll Interface */
 	bool isHorizontalScrollable() const;
 
 
-public: /**const  Block& Style Interface */
+public: /** Style Interface */
 	void include(const string& path);
 
 
-public: /** Animation Interface */
- 	void animate();
-	void startAnimation();
-	void endAnimation();
+public: /** Focus Interface */
+    void getFocus();
+    void loseFocus();
+
 };
 
 

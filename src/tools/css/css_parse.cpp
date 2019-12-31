@@ -154,7 +154,7 @@ CSS::TokenType CSS::css_parser::whatIsToken(const string& token)
 	{
 		return TokenType::RPAR;
 	}
-	else if (token == "hover" || token == "active")
+	else if (token == "hover" || token == "active" || token == "focus")
 	{
 		return TokenType::PSEUDO;
 	}
@@ -410,6 +410,10 @@ void CSS::css_parser::syntaxParseOneBlock(vector<string>& block)
 			{
 				block_css.active(block_css_state);
 			}
+            else if (pseudo == "focus")
+            {
+                block_css.focus(block_css_state);
+            }
 			else
 			{
 				block_css.normal(block_css_state);
@@ -468,7 +472,8 @@ void CSS::css_parser::mergeStyleComponent()
 {
 	for (auto& [id, block] : css_blocks)
 	{
-		block.hover().mergeWithBaseIs(block.normal());
+        block.focus().mergeWithBaseIs(block.normal());
+		block.hover().mergeWithBaseIs(block.focus());
 		block.active().mergeWithBaseIs(block.hover());
 	}
 }
@@ -476,10 +481,6 @@ void CSS::css_parser::updateCSS()
 {
     for (auto& [id, block] : css_blocks)
     {
-        //CSS::css_block block_raw(block.second.name(), true);
-
-        //block_raw.mergeWith(block.second);
-
         css_parent->add(block);
     }
 }

@@ -1,12 +1,12 @@
 .button
 {
     width: 70px;
-    height: 25px;
+    height: 24px;
     
     background-color: rgb(76, 80, 82);
 
     border-color: #5E6060;
-    border-radius: 3px;
+    border-radius: 4px;
     border-bottom: 1px solid #5E6060;
     border-right: 1px solid #5E6060;
     border-left: 1px solid #5E6060;
@@ -30,7 +30,17 @@
     font-style: normal;
     font-weight: 400;
 
-    border-color: #3D6185;
+    border-color: #43688C;
+    border-radius: 4px;
+    border-bottom: 3px solid #5E6060;
+    border-right: 3px solid #5E6060;
+    border-left: 3px solid #5E6060;
+    border-top: 3px solid #5E6060;
+}
+
+.button:focus
+{
+    border-color: #43688C;
     border-radius: 4px;
     border-bottom: 3px solid #5E6060;
     border-right: 3px solid #5E6060;

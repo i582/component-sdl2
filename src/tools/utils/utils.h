@@ -66,25 +66,41 @@ namespace Utils
 
 
 
-    template<typename T>
-    auto max_of(T a)
-    {
-        return a;
-    }
 
-    template<typename T>
-    auto max_of(T a, T b)
+
+    template<typename T, typename... Args>
+    T max_of(T a, Args... args)
     {
-        return a > b ? a : b;
+        if constexpr (sizeof...(args) == 0)
+        {
+            return a;
+        }
+        else if constexpr (sizeof...(args) == 1)
+        {
+            return (a > max_of(args...)) ? (a) : (max_of(args...));
+        }
+        else
+        {
+            return max_of(a, max_of(args...));
+        }
     }
 
     template<typename T, typename... Args>
-    auto max_of(T a, T b, Args... args)
+    T min_of(T a, Args... args)
     {
-        return max_of(a, max_of(args...));
+        if constexpr (sizeof...(args) == 0)
+        {
+            return a;
+        }
+        else if constexpr (sizeof...(args) == 1)
+        {
+            return (a < min_of(args...)) ? (a) : (min_of(args...));
+        }
+        else
+        {
+            return max_of(a, min_of(args...));
+        }
     }
-
-
 }
 
 

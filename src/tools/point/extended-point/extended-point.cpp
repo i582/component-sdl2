@@ -100,12 +100,11 @@ Point::Point(const Point& obj)
 }
 
 
-Point::Point(SDL_Point p) : Point(p.x, p.y) {}
-Point::Point(SDL_Point& p) : Point(p.x, p.y) {}
+Point::Point(const SDL_Point& p) : Point(p.x, p.y) {}
 Point::Point(SDL_Point* p) : Point(p->x, p->y) {}
 
 
-Point::Point(string left, string top)
+Point::Point(const string& left, const string& top)
 {
 	this->left = left;
 	this->top = top;
@@ -145,22 +144,22 @@ Point& Kit::Point::operator=(const Point& obj)
 	return *this;
 }
 
-Point Point::operator*(int scale)
+Point Point::operator*(const int& scale)
 {
 	return { this->_x * scale, this->_y * scale };
 }
 
-Point Point::operator*(double scale)
+Point Point::operator*(const double& scale)
 {
 	return { (int)(this->_x * scale), (int)(this->_y * scale) };
 }
 
-Point Point::operator/(int scale)
+Point Point::operator/(const int& scale)
 {
 	return { this->_x / scale, this->_y / scale };
 }
 
-Point Point::operator/(double scale)
+Point Point::operator/(const double& scale)
 {
 	return { (int)(this->_x / scale), (int)(this->_y / scale) };
 }
@@ -240,7 +239,7 @@ SDL_Point Point::toSDLPoint() const
 	return { _x, _y };
 }
 
-bool Point::in(Rect rect, bool ignorePosition) const
+bool Point::in(const Rect& rect, bool ignorePosition) const
 {
 	SDL_Point p = { _x, _y };
 	SDL_Rect r = rect.toSdlRect();
@@ -254,18 +253,14 @@ bool Point::in(Rect rect, bool ignorePosition) const
 	return SDL_PointInRect(&p, &r);
 }
 
-bool Point::in(Rect* r, const bool ignorePosition) const
-{
-	return in(*r, ignorePosition);
-}
-
 bool Point::in(SDL_Rect* r) const
 {
 	SDL_Point p = { _x, _y };
 	return SDL_PointInRect(&p, r);
 }
 
-bool Point::in(SDL_Rect r) const
+bool Point::in(const SDL_Rect& r) const
 {
-	return in(&r);
+    SDL_Point p = { _x, _y };
+    return SDL_PointInRect(&p, &r);
 }

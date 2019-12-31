@@ -11,6 +11,7 @@ private:
 	css_block_state _normal;
 	css_block_state _hover;
 	css_block_state _active;
+    css_block_state _focus;
 
 	string _name;
 
@@ -52,15 +53,20 @@ public:
 	 */
 	css_block_state& normal();
 	/*
-	 * @brief Function for get the normal hover state
+	 * @brief Function for get the hover state
 	 * @return [css_block_state&] Block state reference
 	 */
 	css_block_state& hover();
 	/*
-	 * @brief Function for get the normal active state
+	 * @brief Function for get the active state
 	 * @return [css_block_state&] Block state reference
 	 */
 	css_block_state& active();
+    /*
+     * @brief Function for get the focus state
+     * @return [css_block_state&] Block state reference
+     */
+    css_block_state& focus();
 
 
 	/*
@@ -78,6 +84,11 @@ public:
 	 * @param [in] name: State block
 	 */
 	void active(const css_block_state& new_block);
+    /*
+	 * @brief Functions for setup active state block
+	 * @param [in] name: State block
+	 */
+    void focus(const css_block_state& new_block);
 
 
 	/*

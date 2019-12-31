@@ -18,9 +18,9 @@ public:
 
 public:
 	Rect();
-	Rect(Point start, Size size);
+	Rect(const Point& start, const Size& size);
 	Rect(int x, int y, int w, int h);
-	Rect(string left, string top, string width, string height);
+	Rect(const string& left, const string& top, const string& width, const string& height);
 
 	bool operator==(const Rect& obj);
 	Rect& operator=(const Rect& obj);

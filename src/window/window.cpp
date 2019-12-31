@@ -57,7 +57,7 @@ Kit::Component* Kit::Window::addElement(Component* component)
 
 	if (allComponents.find(objectID) != allComponents.end())
 	{
-		throw std::logic_error("item with id: " + objectID + " already exists");
+		throw std::logic_error("Component with id: " + objectID + " already exists");
 	}
 	else
 	{
@@ -73,7 +73,7 @@ Kit::Component* Kit::Window::getElementById(const string& id) const
 
 	if (component == nullptr)
 	{
-        throw std::logic_error("Item with id: " + id + " not found!");
+        throw std::logic_error("Component with id: " + id + " not found!");
 	}
 	else
 	{
@@ -140,6 +140,8 @@ Kit::Window::Window(const string& title, SimpleRect size)
 	this->wasSetupStyle = false;
 	this->wasSetupComponents = false;
 
+	this->focusComponent = nullptr;
+
 	this->init();
 }
 
@@ -175,6 +177,8 @@ void Kit::Window::init()
 	}
 
 	this->_id = SDL_GetWindowID(window);
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
 	preSetup();
 }
@@ -277,11 +281,6 @@ void Kit::Window::onEvent(Event* e)
 
 		
 	}
-}
-
-void Kit::Window::onAnimate()
-{
-	navigator->animate();
 }
 
 void Kit::Window::show()
@@ -400,32 +399,42 @@ void Kit::Window::setDraggableArea(SimpleRect _area)
 
 void Kit::Window::mouseButtonDown(SDL_Event* e)
 {
-	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
+    Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
-	if (hover != nullptr)
-	{
-		hover->mouseButtonDown(e);
-	}
+    if (focusComponent != nullptr)
+    {
+        if (focusComponent != hover)
+        {
+            focusComponent->loseFocus();
+            focusComponent = hover;
+            focusComponent->getFocus();
+        }
+    }
+    else
+    {
+        focusComponent = hover;
+        focusComponent->getFocus();
+    }
+
+    focusComponent->mouseButtonDown(e);
 }
 
 void Kit::Window::mouseButtonUp(SDL_Event* e)
 {
-	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
-
-	if (hover != nullptr)
-	{
-		hover->mouseButtonUp(e);
-	}
+    if (focusComponent != nullptr)
+    {
+        focusComponent->mouseButtonUp(e);
+    }
 }
 
 void Kit::Window::mouseMotion(SDL_Event* e)
 {
-	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
+    Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
-	if (hover != nullptr)
-	{
-		hover->mouseMotion(e);
-	}
+    if (hover != nullptr)
+    {
+        hover->mouseMotion(e);
+    }
 }
 
 void Kit::Window::mouseWheel(SDL_Event* e)
@@ -437,12 +446,12 @@ void Kit::Window::mouseWheel(SDL_Event* e)
 		SDL_GetMouseState(&e->motion.x, &e->motion.y);
 	}
 
-	Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
+    Component* hover = navigator->onComponentHover({ e->motion.x, e->motion.y });
 
-	if (hover != nullptr)
-	{
-		hover->mouseScroll(e, scrollDirection);
-	}
+    if (hover != nullptr)
+    {
+        hover->mouseScroll(e, scrollDirection);
+    }
 }
 
 void Kit::Window::keyDown(SDL_Event* e)

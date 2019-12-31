@@ -47,16 +47,15 @@ public:
 	Point(int x, int y);
 	Point(const Point& obj);
 	
-	explicit Point(SDL_Point p);
-	explicit Point(SDL_Point& p);
+	explicit Point(const SDL_Point& p);
 	explicit Point(SDL_Point* p);
 
 	Point operator+(const Point& obj);
 	Point operator-(const Point& obj);
-	Point operator*(int scale);
-	Point operator*(double scale);
-	Point operator/(int scale);
-	Point operator/(double scale);
+	Point operator*(const int& scale);
+	Point operator*(const double& scale);
+	Point operator/(const int& scale);
+	Point operator/(const double& scale);
 
 	bool operator==(const Point& obj) const;
 	bool operator!=(const Point& obj) const;
@@ -75,7 +74,7 @@ public:
 	bool isCalculated;
 
 public:
-	Point(string top, string left);
+	Point(const string& top, const string& left);
 
 	/**
 	 * @brief Function calculating sizes from strings
@@ -116,10 +115,9 @@ public:
 	 * @param ignorePosition flag meaning not taking into account the position of the rectangle
 	 * @return [true|false]
 	 */
-	bool in(Rect, bool ignorePosition = false) const;
-	bool in(Rect* r, bool ignorePosition = false) const;
+	bool in(const Rect&, bool ignorePosition = false) const;
 
-	bool in(SDL_Rect r) const;
+	bool in(const SDL_Rect& r) const;
 	bool in(SDL_Rect* r) const;
 };
 

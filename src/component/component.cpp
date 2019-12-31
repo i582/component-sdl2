@@ -43,7 +43,7 @@ Kit::Component::Component(const string &id, const Rect &size, const string &clas
 
     /** Events listener */
     this->_eventListeners = {};
-    this->setupEventListeners(); // TO DO
+    this->setupEventListeners();
 
 
     /** User data */
@@ -53,7 +53,7 @@ Kit::Component::Component(const string &id, const Rect &size, const string &clas
     /** State */
     this->_isHovered = false;
     this->_isActive = false;
-
+    this->_isFocused = false;
 
 
     /** SDL */
@@ -108,6 +108,9 @@ Kit::Component::Component(const string &id, const Rect &size, const string &clas
     {
     });
 
+
+    /** Extended text */
+    //this->_extended_text = nullptr;
 }
 
 Kit::Component::Component(const string &id, const string &classes, const vector<Component*> &childrens)
@@ -148,7 +151,7 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
 
     /** Events listener */
     this->_eventListeners = {};
-    this->setupEventListeners(); // TO DO
+    this->setupEventListeners();
 
 
     /** User data */
@@ -158,7 +161,7 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
     /** State */
     this->_isHovered = false;
     this->_isActive = false;
-
+    this->_isFocused = false;
 
 
     /** SDL */
@@ -212,6 +215,10 @@ Kit::Component::Component(const string &id, const string &classes, const vector<
     this->_animation = new animation<int>(100, 900, 2000, this->_outerSize.start.px(), []()
     {
     });
+
+
+    /** Extended text */
+    //this->_extended_text = nullptr;
 }
 
 Kit::Component::~Component()
@@ -543,6 +550,13 @@ void Kit::Component::setupFont()
     this->_fontActive = font(font_family, font_style, font_weight);
 
 
+    font_family = _cssBlock.focus().get<string>("font-family");
+    font_style = _cssBlock.focus().get<string>("font-style");
+    font_weight = _cssBlock.focus().get<int>("font-weight");
+
+    this->_fontFocus = font(font_family, font_style, font_weight);
+
+
     for (auto &children : _childrens)
     {
         children->setupFont();
@@ -560,6 +574,21 @@ void Kit::Component::setupText()
     for (auto &children : _childrens)
     {
         children->setupText();
+    }
+}
+
+void Kit::Component::setupExtendedText()
+{
+    auto font_size = _cssBlock.normal().get<int>("font-size");
+
+    //this->_extended_text = new Text2(_renderer, _innerTexture, "Hello", {0, 0, _innerSize.w(), _innerSize.h()},
+    //        _fontNormal, font_size,Color(0x00000000));
+
+
+
+    for (auto &children : _childrens)
+    {
+        children->setupExtendedText();
     }
 }
 
@@ -641,6 +670,13 @@ void Kit::Component::render()
 
     font& blockFont = _fontNormal;
 
+
+    if (_isFocused)
+    {
+        blockState = &_cssBlock.focus();
+        blockFont = _fontFocus;
+    }
+
     if (_isHovered)
     {
         if (_isActive)
@@ -664,7 +700,12 @@ void Kit::Component::render()
     const auto& borderRadius = blockState->get<int>("border-radius");
 
 
-    roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, backgroundColor.colorReverse());
+    //roundedBoxColor(_renderer, 0, 0, _innerSize.w(), _innerSize.h(), borderRadius, backgroundColor.colorReverse());
+
+
+    const SimpleRect _innerRectSize = { 0, 0, _innerSize.w(), _innerSize.h() };
+
+    Draw::roundedRect(_renderer, _innerRectSize, borderRadius, backgroundColor);
 
 
     if (this->_image != nullptr)
@@ -701,6 +742,10 @@ void Kit::Component::render()
     _text->render();
 
 
+//    if (this->_extended_text != nullptr)
+//        this->_extended_text->render();
+
+
     for (auto &children : _childrens)
     {
         children->render();
@@ -716,9 +761,29 @@ void Kit::Component::render()
     const auto &rightSize = blockState->get<int>("border-right-size");
 
 
-    roundedBoxColor(_renderer, _innerSize.x() - leftSize, _innerSize.y() - topSize,
+   /* roundedBoxColor(_renderer, _innerSize.x() - leftSize, _innerSize.y() - topSize,
                     _innerSize.x() + _innerSize.w() - 1 + rightSize, _innerSize.y() + _innerSize.h() - 1 + bottomSize,
-                    borderRadius, borderColor.colorReverse());
+                    borderRadius, borderColor.colorReverse());*/
+
+    const SDL_Rect _innerRectBorderSize =
+    {
+            _innerSize.x() - leftSize,
+            _innerSize.y() - topSize,
+            _innerSize.w() + leftSize + rightSize,
+            _innerSize.h() + topSize + bottomSize
+    };
+
+
+    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius + 2, borderColor);
+
+
+
+//    filledEllipseColor(_renderer, 20, 20, 20, 21, 0xffffffff);
+    //aacircleColor(_renderer, 20, 20, 3, 0x5E6060fe);
+//
+//    filledEllipseColor(_renderer, 20, 20, 19, 20, 0xCE4848ff);
+//    aacircleColor(_renderer, 20, 20, 20, 0xCE4848ff);
+
 
 
     Rect copy = _innerSize;
@@ -922,6 +987,8 @@ void Kit::Component::setupComponents()
     setupBackgroundImage();
     setupFont();
     setupText();
+
+    setupExtendedText();
 }
 
 
@@ -1232,26 +1299,6 @@ void Kit::Component::include(const string &path)
     _css_component->open(path);
 }
 
-void Kit::Component::animate()
-{
-    _animation->check();
-
-
-    for (auto &children : _childrens)
-    {
-        children->animate();
-    }
-}
-
-void Kit::Component::startAnimation()
-{
-    _animation->start();
-}
-
-void Kit::Component::endAnimation()
-{
-    _animation->end();
-}
 
 void Kit::Component::outerWidth(int value)
 {
@@ -1272,4 +1319,19 @@ void Kit::Component::outerTop(int value)
 {
     _outerSize.y(value);
 }
+
+void Kit::Component::getFocus()
+{
+    cout << _id << " getFocus" << endl;
+
+    this->_isFocused = true;
+}
+
+void Kit::Component::loseFocus()
+{
+    cout << _id << " loseFocus" << endl;
+
+    this->_isFocused = false;
+}
+
 

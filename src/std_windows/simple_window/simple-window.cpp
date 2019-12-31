@@ -47,7 +47,6 @@ void SimpleWindow::setup()
 
 
 
-
     add("#test-outer-auto", ".test-outer-auto",
     {
         create("#test-inner-block", ".test-inner-block",

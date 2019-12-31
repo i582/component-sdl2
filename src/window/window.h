@@ -51,7 +51,10 @@ public: /** Component Interface */
 public: /** Component Style Interface */
 
 	CSS::css_block* addStyle(const string& className, CSS::css_block style);
-	
+
+
+public:
+    Component* focusComponent;
 
 
 protected:
@@ -102,8 +105,6 @@ protected: /** Events */
 public: /** Interface */
 	void render();
 	void onEvent(Event* e);
-
-	void onAnimate();
 
 	void show();
 	void hide();
