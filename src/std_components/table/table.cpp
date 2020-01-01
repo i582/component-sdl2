@@ -54,6 +54,8 @@ void Table::addRow(const vector<string>& collumns)
 
     for (int i = 0; i < count_collumns && i < collumns.size(); ++i)
     {
-        row->append(new TableItem(_id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i), collumns[i], ".row-item-" + to_string(i)));
+        row->append(
+                new TableItem(_id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i), collumns[i], ".row-item-" + to_string(i))
+        )->ignoreEvents();
     }
 }

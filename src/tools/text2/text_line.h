@@ -1,7 +1,7 @@
 #pragma once
 
-#include "word.h"
 #include "../texture/texture.h"
+#include "../utils/utils.h"
 
 namespace Kit
 {
@@ -41,9 +41,10 @@ class TextLine
 private:
 	size_t id;
 	string text;
+
 	SimpleSize size;
 	
-	const Text2* parent;
+	Text2* parent;
 
 	SDL_Texture* texture;
 
@@ -51,16 +52,12 @@ private:
 	CursorPosition startCursorSelect;
 	CursorPosition endCursorSelect;
 
-	vector<string> tokens;
-	vector<Word> words;
-
-	string keyword;
-	string operators;
-	string quotes;
+	int shiftByX;
 
 public:
 	TextLine(Text2* parent, const string& text);
 	~TextLine();
+
 
 public:
 	friend Text2;
@@ -72,19 +69,13 @@ private:
 	void setup();
 	void render();
 
-	void splitByToken();
-	static bool isSplitSymbol(char symbol);
-	TokenType whatIsToken(const string& token);
 
-	void colorize();
-
-	void setup_token_types();
+    bool removeSymbol(int place);
+    bool removeSymbolAfter(int place);
 
 public:
 	void setText(const string& text);
-	void addText(const string& text, int place);
-	bool removeSymbol(int place);
-	bool removeSymbolAfter(int place);
+	void addText(const string& additionalText, int place);
 };
 
 

@@ -107,7 +107,11 @@ Kit::Component::Component(const string &id, const Rect& size, const string &clas
 
 
     /** Extended text */
-    //this->_extended_text = nullptr;
+    this->_extended_text = nullptr;
+    this->_withExtendedText = false;
+
+    /** Ignore Some Event */
+    this-> _ignoreEvents = false;
 }
 
 Kit::Component::~Component()
@@ -333,8 +337,6 @@ void Kit::Component::computeChildrenSize()
 
 
 
-        //_outerSize.dh(this->_horizontalScroll->_bodySize.h());
-
         _innerSize.dh(-this->_horizontalScroll->_bodySize.h());
 
         Texture::destroy(this->_innerTexture);
@@ -378,10 +380,10 @@ void Kit::Component::computeChildrenSize()
         this->_verticalScroll->_renderer = _renderer;
         this->_verticalScroll->init();
 
-        //_outerSize.dw(this->_verticalScroll->_bodySize.w());
-
 
         _innerSize.dw(-this->_verticalScroll->_bodySize.w());
+
+
 
         Texture::destroy(this->_innerTexture);
         this->_innerTexture = Texture::create(_renderer, _innerSize);
@@ -422,7 +424,6 @@ void Kit::Component::setupFont()
     auto font_family = _cssBlock.normal().get<string>("font-family");
     auto font_style = _cssBlock.normal().get<string>("font-style");
     auto font_weight = _cssBlock.normal().get<int>("font-weight");
-
 
     this->_fontNormal = font(font_family, font_style, font_weight);
 
@@ -484,12 +485,16 @@ void Kit::Component::setupScrolls()
 
 void Kit::Component::setupExtendedText()
 {
-    auto font_size = _cssBlock.normal().get<int>("font-size");
+    if (_withExtendedText)
+    {
+        auto fontSize = _cssBlock.normal().get<int>("font-size");
+        auto textColor = _cssBlock.normal().get<Color>("color");
+        auto lineHeight = _cssBlock.normal().get<double>("line-height");
 
-    //this->_extended_text = new Text2(_renderer, _innerTexture, "Hello", {0, 0, _innerSize.w(), _innerSize.h()},
-    //        _fontNormal, font_size,Color(0x00000000));
-
-
+        this->_extended_text = new Text2(this, _text_temp,
+                                         {0, 0, _innerSize.w(), _innerSize.h()},
+                                         _fontNormal, fontSize, textColor, lineHeight, true);
+    }
 
     for (auto &children : _childrens)
     {
@@ -655,12 +660,12 @@ void Kit::Component::render()
         this->_image->setPath(blockState->get<string>("background-image"));
 
 
-        const int &x_shift = blockState->get<int>("background-position-x");
-        const int &y_shift = blockState->get<int>("background-position-y");
+        const int& x_shift = blockState->get<int>("background-position-x");
+        const int& y_shift = blockState->get<int>("background-position-y");
         this->_image->setImageShift({x_shift, y_shift});
 
 
-        const string &newSize = blockState->get<string>("background-size");
+        const string& newSize = blockState->get<string>("background-size");
         this->_image->setImageWidth(newSize);
 
 
@@ -668,23 +673,44 @@ void Kit::Component::render()
     }
 
 
-    _text->setFont(blockFont);
-    _text->setColor(blockState->get<Color>("color"));
-    _text->setFontSize(blockState->get<int>("font-size"));
-    _text->setLineHeight(blockState->get<double>("line-height"));
-    _text->setTextAlign(blockState->get<string>("text-align"));
-    _text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
+    if (!_withExtendedText)
+    {
 
-    _text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
-    _text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
-    _text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
-    _text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+        _text->setFont(blockFont);
+        _text->setColor(blockState->get<Color>("color"));
+        _text->setFontSize(blockState->get<int>("font-size"));
+        _text->setLineHeight(blockState->get<double>("line-height"));
+        _text->setTextAlign(blockState->get<string>("text-align"));
+        _text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
 
-    _text->render();
+        _text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
+        _text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
+        _text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
+        _text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+
+        _text->render();
+
+    }
 
 
-//    if (this->_extended_text != nullptr)
-//        this->_extended_text->render();
+    if (this->_extended_text != nullptr && _withExtendedText)
+    {
+        this->_extended_text->setFont(blockFont);
+        this->_extended_text->setColor(blockState->get<Color>("color"));
+        this->_extended_text->setFontSize(blockState->get<int>("font-size"));
+        this->_extended_text->setLineHeight(blockState->get<double>("line-height"));
+        this->_extended_text->setTextAlign(blockState->get<string>("text-align"));
+        this->_extended_text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
+
+        this->_extended_text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
+        this->_extended_text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
+        this->_extended_text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
+        this->_extended_text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+
+        this->_extended_text->setFocus(_isFocused);
+
+        this->_extended_text->render();
+    }
 
 
     for (auto &children : _childrens)
@@ -760,6 +786,8 @@ void Kit::Component::mouseButtonDown(Event* e)
         return;
 
 
+    cout << _id << " mouseButtonDown" << endl;
+
     Point mouseP(e->motion.x, e->motion.y);
 
     adjustMousePoint(mouseP);
@@ -790,6 +818,17 @@ void Kit::Component::mouseButtonDown(Event* e)
     _eventListeners["onmousedown"](this, e);
 
     _isActive = true;
+
+    if (_withExtendedText)
+    {
+        _extended_text->mouseButtonDown(e, mouseP);
+        return;
+    }
+
+    if (_parent != nullptr)
+    {
+        _parent->mouseButtonDown(e);
+    }
 }
 
 void Kit::Component::mouseButtonUp(Event* e)
@@ -797,12 +836,29 @@ void Kit::Component::mouseButtonUp(Event* e)
     if (!_isDisplay)
         return;
 
+    cout << _id << " mouseButtonUp" << endl;
+
     _eventListeners["onmouseup"](this, e);
 
 
     _isVerticalScrollActive = false;
     _isHorizontalScrollActive = false;
     _isActive = false;
+
+
+    if (_withExtendedText)
+    {
+        Point mouseP(e->motion.x, e->motion.y);
+        adjustMousePoint(mouseP);
+
+        _extended_text->mouseButtonUp(e, mouseP);
+        return;
+    }
+
+    if (_parent != nullptr)
+    {
+        _parent->mouseButtonUp(e);
+    }
 }
 
 void Kit::Component::mouseMotion(Event* e)
@@ -838,6 +894,14 @@ void Kit::Component::mouseMotion(Event* e)
         _hoverComponent = this;
     }
 
+
+    if (_withExtendedText)
+    {
+        Point mouseP(e->motion.x, e->motion.y);
+        adjustMousePoint(mouseP);
+
+        _extended_text->mouseMotion(e, mouseP);
+    }
 
     _isHovered = true;
 
@@ -900,6 +964,22 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
         }
     }
 
+}
+
+void Kit::Component::keyDown(Event* e)
+{
+    if (_withExtendedText)
+    {
+        _extended_text->keyDown(e);
+    }
+}
+
+void Kit::Component::textInput(Event* e)
+{
+    if (_withExtendedText)
+    {
+        _extended_text->textInput(e);
+    }
 }
 
 void Kit::Component::setupComponents()
@@ -1079,9 +1159,9 @@ Kit::Component* Kit::Component::onComponentHover(Point point)
 
         for (int i = _childrens.size() - 1; i >= 0; i--)
         {
-            auto &children = _childrens[i];
+            auto& children = _childrens[i];
 
-            if (children->onHover(point))
+            if (children->onHover(point) && !children->isIgnoreEvents())
             {
                 // adjust coord
                 point = point - children->outerSize().start;
@@ -1089,6 +1169,8 @@ Kit::Component* Kit::Component::onComponentHover(Point point)
                 return children->onComponentHover(point);
             }
         }
+
+
     }
 
     return this;
@@ -1210,6 +1292,12 @@ void Kit::Component::setText(const string &text)
         return;
     }
 
+    if (_extended_text != nullptr && _withExtendedText)
+    {
+        _extended_text->setText(text);
+        return;
+    }
+
     this->_text_temp = text;
 }
 
@@ -1287,4 +1375,29 @@ std::string Kit::Component::generateRandomString()
     std::string str(length, 0);
     std::generate_n( str.begin(), length, rand_char );
     return str;
+}
+
+void Kit::Component::ignoreEvents()
+{
+    this->_ignoreEvents = true;
+}
+
+void Kit::Component::noIgnoreEvents()
+{
+    this->_ignoreEvents = false;
+}
+
+bool Kit::Component::isIgnoreEvents()
+{
+    return this->_ignoreEvents;
+}
+
+void Kit::Component::useExtendedText()
+{
+    this->_withExtendedText = true;
+}
+
+void Kit::Component::unuseExtendedText()
+{
+    this->_withExtendedText = false;
 }

@@ -122,3 +122,64 @@
 {
     width: 30px;
 }
+
+
+.text
+{
+    width: 200px;
+    height: 24px;
+
+    top: 150px;
+    left: 50px;
+
+    color: #dadacb;
+
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.05;
+    vertical-align: center;
+}
+
+.button-1
+{
+    top: 230px;
+    left: 50px;
+}
+
+.test-text
+{
+    width: 200px;
+    height: 24px;
+
+    top: 200px;
+    left: 50px;
+
+
+    color: #dadacb;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    line-height: 1.1;
+
+    background-color: rgb(76, 80, 82);
+    outline: #646464;
+
+    vertical-align: middle;
+
+    margin-left: 10px;
+
+    font-style: italic;
+}
+
+.test-text:focus
+{
+    border-color: #3D6185;
+    outline: #466D94;
+
+    border-bottom: 2px solid #5E6060;
+    border-right: 2px solid #5E6060;
+    border-left: 2px solid #5E6060;
+    border-top: 2px solid #5E6060;
+}

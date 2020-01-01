@@ -12,7 +12,7 @@
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
 #include "animation/animation.h"
-//#include "../tools/text2/text.h"
+#include "../tools/text2/text.h"
 #include "component-header.h"
 
 #include "../tools/draw/draw.h"
@@ -118,7 +118,11 @@ protected:
 
 
 	/** Extended text */
-    //Text2* _extended_text;
+    Text2* _extended_text;
+    bool _withExtendedText;
+
+    /** Ignore Some Event */
+    bool _ignoreEvents;
 
 public:
     explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
@@ -130,7 +134,6 @@ public:
 
 public:
 	friend Window;
-
 
 protected:
 
@@ -250,7 +253,8 @@ public: /** Events Interface */
 	void mouseMotion(Event* e);
 	void mouseOut(Event* e);
 	void mouseScroll(Event* e, int scrollDirection);
-
+    void keyDown(Event* e);
+    void textInput(Event* e);
 
 public: /** Setup Interface */
 
@@ -393,6 +397,7 @@ public: /** Class Interface */
     const string& classes();
     void classes(const string& newClasses);
 
+
 public: /** Text Interface */
 	virtual void setText(const string& text);
 
@@ -410,6 +415,16 @@ public: /** Focus Interface */
     void getFocus(SDL_Event* e);
     void loseFocus(SDL_Event* e);
 
+
+public: /** Ignore Event Interface */
+    void ignoreEvents();
+    void noIgnoreEvents();
+    bool isIgnoreEvents();
+
+
+public: /** Extended Text Interface */
+    void useExtendedText();
+    void unuseExtendedText();
 };
 
 

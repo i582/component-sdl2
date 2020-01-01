@@ -1,13 +1,13 @@
 #include "button.h"
 
-Button::Button(string id, string text, string classes)
+Button::Button(const string& id, const string& text, const string& classes)
 	: Component(id, ".button " + classes)
 {
 	this->text = text;
 	setup();
 }
 
-Component* Button::create(string id, string text, string classes)
+Component* Button::create(const string& id, const string& text, const string& classes)
 {
 	return new Button(id, text, classes);
 }

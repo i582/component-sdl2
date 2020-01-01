@@ -107,6 +107,7 @@ void Kit::KitApplication::render()
 
 void Kit::KitApplication::onEvent()
 {
+    SDL_StartTextInput();
 	while (is_running && SDL_WaitEvent(&e) && !windows.empty())
 	{
         const int windowId = e.window.windowID;
@@ -116,6 +117,7 @@ void Kit::KitApplication::onEvent()
             windows[windowId]->render();
         }
 	}
+    SDL_StopTextInput();
 }
 
 void Kit::KitApplication::close()
