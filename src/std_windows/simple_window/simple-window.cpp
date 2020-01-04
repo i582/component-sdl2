@@ -2,7 +2,7 @@
 #include "kit-main.h"
 
 
-SimpleWindow::SimpleWindow(string title, SimpleRect size)
+SimpleWindow::SimpleWindow(const string& title, SimpleRect size)
 	: Window(title, size)
 {
 	setup();
@@ -17,12 +17,15 @@ void SimpleWindow::setup()
 	$$->append(new Component("#window-header", { 0, 0, _size.w - 135, 30 }, ".window-header"))
 		->setText(this->title);
 
-	$$->append(new Component("#system-exit", { "100% - 45px", "0px", "45px", "30px" }, ".system-button .system-exit"));
-	$$->append(new Component("#system-expand", { "100% - 90px", "0px", "45px", "30px" }, ".system-button .system-expand"));
-	$$->append(new Component("#system-collapse", { "100% - 135px", "0px", "45px", "30px" }, ".system-button .system-collapse"));
+    add("#system-exit", ".system-button .system-exit");
+    add("#system-expand", ".system-button .system-expand");
+    add("#system-collapse", ".system-button .system-collapse");
 
 
-
+    Window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e)
+    {
+        sender->window()->collapse();
+    });
 
     add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
     add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
@@ -43,5 +46,13 @@ void SimpleWindow::setup()
     table->addRow({ "1", "Молодой человек", "85", "90" });
     table->addRow({ "2", "Старый человек", "75", "100" });
     table->addRow({ "3", "Старый человек", "75", "100" });
+
+
+
+    add("#test-text", ".test-text").useExtendedText();
+    auto test = Window::getElementById("#test-text");
+    test->setText("C:/");
+
+    add(Button::create("#button-browse", "Browse", ".button-browse"));
 
 }

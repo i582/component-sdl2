@@ -4,5 +4,6 @@
 
 namespace Kit
 {
-	using Event = SDL_Event;
+    using Event = SDL_Event;
+
 }

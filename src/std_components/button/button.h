@@ -10,10 +10,10 @@ private:
 	string text;
 
 public:
-	Button(string id, string text = "Button", string classes = "");
+	Button(const string& id, const string& text = "Button", const string& classes = "");
 
 public:
-	static Component* create(string id, string text = "Button", string classes = "");
+	static Component* create(const string& id, const string& text = "Button", const string& classes = "");
 		
 	void setup();
 };

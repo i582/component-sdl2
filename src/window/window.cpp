@@ -218,10 +218,7 @@ void Kit::Window::render()
 	SDL_SetRenderTarget(renderer, nullptr);
 
 	SDL_SetRenderDrawColor(renderer,  0x00, 0x00, 0x00, 0x00 );
-	SDL_RenderFillRect(renderer, nullptr);
-
-	SDL_SetRenderDrawColor(renderer,  0xff, 0xff, 0xff, 0x00 );
-	SDL_RenderDrawRect(renderer, nullptr);
+	SDL_RenderClear(renderer);
 
 
 
@@ -271,6 +268,12 @@ void Kit::Window::onEvent(Event* e)
 		keyUp(e);
 		break;
 	}
+
+    case SDL_TEXTINPUT:
+    {
+        textInput(e);
+        break;
+    }
 
 	case SDL_WINDOWEVENT:
 	{
@@ -477,8 +480,21 @@ void Kit::Window::mouseWheel(SDL_Event* e)
 
 void Kit::Window::keyDown(SDL_Event* e)
 {
+    if (focusComponent != nullptr)
+    {
+        focusComponent->keyDown(e);
+    }
 }
 
 void Kit::Window::keyUp(SDL_Event* e)
 {
+
+}
+
+void Kit::Window::textInput(SDL_Event* e)
+{
+    if (focusComponent != nullptr)
+    {
+        focusComponent->textInput(e);
+    }
 }

@@ -55,6 +55,15 @@
     background-color: #3C3F41;
 }
 
+.light:focus
+{
+    background-color: #4B6EAF;
+}
+
+.table-row:focus
+{
+    background-color: #4B6EAF;
+}
 
 .table-header-item
 {

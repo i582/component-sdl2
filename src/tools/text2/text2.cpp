@@ -1,26 +1,46 @@
 #include "text.h"
+#include "../../component/component.h"
 
-Kit::Text2::Text2(SDL_Renderer* renderer, const string& text, SimpleRect size, const class font& new_font, size_t fontSize, const Color& colorFont)
-	: Text2(renderer, nullptr, text, size, new_font, fontSize, colorFont)
-{}
-
-Kit::Text2::Text2(SDL_Renderer* renderer, SDL_Texture* parentTarget, const string& text, SimpleRect size, const class font& new_font, size_t fontSize, const Color& colorFont)
+Kit::Text2::Text2(Component* parent, const string& text, SimpleRect size,
+        const class font& new_font, size_t fontSize, const Color& colorFont, const double& lineHeight, bool isOneLine)
 {
-	this->renderer = renderer;
+    if (parent == nullptr)
+    {
+        cout << "ERROR: Parent is nullptr" << endl;
+        return;
+    }
+
+	this->renderer = parent->renderer();
+	this->texture = nullptr;
 	this->size = size;
 
-	this->parentTarget = parentTarget;
+	this->parent = parent;
 
 	this->text = text;
 	this->font = new_font;
 	this->fontSize = fontSize;
-	this->colorFont = colorFont;
+	this->color = colorFont;
 	this->fontTTF = font.at(fontSize);
 
-	this->lineHeight = 1.3;
+	this->lineHeight = lineHeight;
 
 	this->isSelected = false;
 
+    this->mousePush = false;
+
+    this->isOneLine = isOneLine;
+
+    this->needUpdate = true;
+
+    this->isFocus = false;
+
+    this->textAlign = TextAlign2::LEFT;
+    this->textVerticalAlign = TextBlockVerticalAlign2::TOP;
+
+    this->textMarginTop = 0;
+    this->textMarginBottom = 0;
+    this->textMarginLeft = 0;
+    this->textMarginRight = 0;
 
 	splitByLines();
 	setup();
@@ -29,74 +49,62 @@ Kit::Text2::Text2(SDL_Renderer* renderer, SDL_Texture* parentTarget, const strin
 Kit::Text2::~Text2()
 {
 	SDL_DestroyTexture(texture);
+
+	for (auto& line : lines)
+    {
+	    delete line;
+    }
+}
+
+void Kit::Text2::setup()
+{
+    const int heightLine = lines[0] == nullptr ? 0 : lines[0]->size.h;
+
+    size.h = (int)(lines.size() * heightLine * lineHeight);
+
+    for (auto& line : lines)
+    {
+        if (line->size.w > size.w)
+        {
+            size.w = line->size.w;
+        }
+    }
+
+    Texture::destroy(texture);
+    texture = Texture::create(renderer, size);
+
+
+    deleteSelect();
+
+    this->needUpdate = true;
 }
 
 void Kit::Text2::splitByLines()
 {
+    if (isOneLine)
+    {
+        lines.push_back(new TextLine(this, text));
+        return;
+    }
+
+
 	vector<string>* text_lines = Utils::split(text, '\n');
 	
 	for (auto& line : *text_lines)
 	{
-		auto new_line = new TextLine(this, line);
-		lines.push_back(new_line);
+		lines.push_back(new TextLine(this, line));
 	}
 	
 	delete text_lines;
 }
 
-void Kit::Text2::setup()
-{
-	size.h = (int)(lines.size() * fontSize * lineHeight);
-
-	for (auto& line : lines)
-	{
-		if (line->size.w > size.w)
-		{
-			size.w = line->size.w;
-		}
-	}
-
-	Texture::destroy(texture);
-	Texture::create(renderer, size);
-
-	splitLinesByToken();
-	deleteSelect();
-}
-
-void Kit::Text2::splitLinesByToken()
-{
-	for (auto& line : lines)
-	{
-		line->splitByToken();
-	}
-}
-
-void Kit::Text2::renderCursor()
-{
-	// calculate cursor position
-	int y = (int)(cursorPos.y * fontSize * lineHeight);
-	int x = 0;
-
-
-	const string& textBeforeCursor = lines[cursorPos.y]->text.substr(0, cursorPos.x);
-	TTF_SizeUTF8(fontTTF, textBeforeCursor.c_str(), &x, nullptr);
-
-
-	const SDL_Rect cursorRect = { x, y, 1, (int)(fontSize * lineHeight) };
-	SDL_SetRenderDrawColor(renderer, 0xdf, 0xdf, 0xbf, 0xff);
-
-	
-	SDL_RenderFillRect(renderer, &cursorRect);
-
-}
-
 void Kit::Text2::handleSelect()
 {
-	//
 	for (auto& line : lines)
 	{
 		line->deleteSelected();
 	}
+
 
 	CursorPosition tempStartCursorSelect = startCursorSelect;
 	CursorPosition tempEndCursorSelect = endCursorSelect;
@@ -142,6 +150,8 @@ void Kit::Text2::handleSelect()
 		lines[tempEndCursorSelect.y]->startCursorSelect.x = 0;
 		lines[tempEndCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
 	}
+
+	this->needUpdate = true;
 }
 
 void Kit::Text2::deleteSelect()
@@ -154,27 +164,104 @@ void Kit::Text2::deleteSelect()
 	}
 }
 
+Kit::string Kit::Text2::copySelect()
+{
+    if (!isSelected)
+        return "";
+
+
+    string result;
+
+    CursorPosition tempStartCursorSelect = startCursorSelect;
+    CursorPosition tempEndCursorSelect = endCursorSelect;
+
+    if (tempStartCursorSelect.y > tempEndCursorSelect.y)
+    {
+        std::swap(tempStartCursorSelect, tempEndCursorSelect);
+    }
+
+
+    if (tempStartCursorSelect.y == tempEndCursorSelect.y)
+    {
+        int start = tempStartCursorSelect.x;
+        int end = tempEndCursorSelect.x;
+
+        if (start > end)
+        {
+            std::swap(start, end);
+        }
+
+        result = lines[tempStartCursorSelect.y]->text.substr(start, end - start);
+    }
+
+    else if (tempStartCursorSelect.y == tempEndCursorSelect.y - 1)
+    {
+        int start = tempStartCursorSelect.x;
+        int end = lines[tempStartCursorSelect.y]->text.size();
+
+        result += lines[tempStartCursorSelect.y]->text.substr(start, end - start) + '\n';
+
+
+        start = 0;
+        end = tempEndCursorSelect.x;
+
+        result += lines[tempEndCursorSelect.y]->text.substr(start, end - start);
+    }
+    else if (tempEndCursorSelect.y - tempStartCursorSelect.y > 1)
+    {
+        int start = tempStartCursorSelect.x;
+        int end = lines[tempStartCursorSelect.y]->text.size();
+
+        result += lines[tempStartCursorSelect.y]->text.substr(start, end - start) + '\n';
+
+
+
+        for (size_t i = tempStartCursorSelect.y + 1; i < tempEndCursorSelect.y; i++)
+        {
+            start = 0;
+            end = lines[i]->text.size();
+
+            result += lines[i]->text.substr(start, end) + '\n';
+        }
+
+
+
+        start = 0;
+        end = tempEndCursorSelect.x;
+        result += lines[tempEndCursorSelect.y]->text.substr(start, end - start);
+    }
+
+    return result;
+}
+
 Kit::CursorPosition Kit::Text2::whereIsCursor(SimplePoint mouse)
 {
 	int numberLine = mouse.y / (int)(fontSize * lineHeight);
 
 	if (numberLine > lines.size() - 1)
-		numberLine = lines.size() - 1;
+    {
+	    numberLine = (int)lines.size() - 1;
+    }
 
-	int calcWidth = 0;
+	const auto currentLine = lines[numberLine];
+
+	int calcWidth = lines[numberLine]->shiftByX;
 	int countSymbol = 0;
-	for (auto& symbol : lines[numberLine]->text)
+
+	for (auto& symbol : currentLine->text)
 	{
 		int widthSymbol = 0;
 		char str[2] = { symbol, '\0' };
 		TTF_SizeUTF8(fontTTF, str, &widthSymbol, nullptr);
 
+
 		calcWidth += widthSymbol;
 		countSymbol++;
 
+
 		if (calcWidth > mouse.x)
 		{
-			int delta = calcWidth - mouse.x;
+			const int delta = calcWidth - mouse.x;
 
 			if (delta > widthSymbol / 2.)
 			{
@@ -188,105 +275,86 @@ Kit::CursorPosition Kit::Text2::whereIsCursor(SimplePoint mouse)
 	return { countSymbol, numberLine };
 }
 
-Kit::string Kit::Text2::copySelect()
+void Kit::Text2::renderCursor()
 {
-	if (!isSelected)
-		return "";
+    const int heightLine = lines[0] == nullptr ? 0 : lines[0]->size.h;
 
-	string result;
-
-	CursorPosition tempStartCursorSelect = startCursorSelect;
-	CursorPosition tempEndCursorSelect = endCursorSelect;
-
-	if (tempStartCursorSelect.y > tempEndCursorSelect.y)
-	{
-		std::swap(tempStartCursorSelect, tempEndCursorSelect);
-	}
+    // calculate cursor position
+    int y = (int)(cursorPos.y * heightLine * lineHeight);
+    int x = 0;
 
 
-	if (tempStartCursorSelect.y == tempEndCursorSelect.y)
-	{
-		int start = tempStartCursorSelect.x;
-		int end = tempEndCursorSelect.x;
+    const string& textBeforeCursor = lines[cursorPos.y]->text.substr(0, cursorPos.x);
+    TTF_SizeUTF8(fontTTF, textBeforeCursor.c_str(), &x, nullptr);
 
-		if (start > end)
-		{
-			std::swap(start, end);
-		}
+    x += lines[cursorPos.y]->shiftByX;
 
-		result = lines[tempStartCursorSelect.y]->text.substr(start, end - start);
-	}
+    const SDL_Rect cursorRect = { x, y, 1, (int)(heightLine * lineHeight) };
+    SDL_SetRenderDrawColor(renderer, 0xdf, 0xdf, 0xbf, 0xff);
 
-	else if (tempStartCursorSelect.y == tempEndCursorSelect.y - 1)
-	{
-		int start = tempStartCursorSelect.x;
-		int end = lines[tempStartCursorSelect.y]->text.size();
 
-		result += lines[tempStartCursorSelect.y]->text.substr(start, end - start) + '\n';
+    SDL_RenderFillRect(renderer, &cursorRect);
+}
+
+void Kit::Text2::update()
+{
+    SDL_SetRenderTarget(renderer, texture);
+
+    SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0x00);
+    SDL_RenderClear(renderer);
 
 
 
-		start = 0;
-		end = tempEndCursorSelect.x;
+    if (this->textVerticalAlign == TextBlockVerticalAlign2::TOP)
+    {
+        size.y = textMarginTop;
+    }
+    else if (this->textVerticalAlign == TextBlockVerticalAlign2::MIDDLE)
+    {
+        size.y = (parent->innerSize().h() - size.h) / 2;
 
-		result += lines[tempEndCursorSelect.y]->text.substr(start, end - start);
-	}
-	else if (tempEndCursorSelect.y - tempStartCursorSelect.y > 1)
-	{
-		int start = tempStartCursorSelect.x;
-		int end = lines[tempStartCursorSelect.y]->text.size();
+        size.y += textMarginTop;
+    }
+    else if (this->textVerticalAlign == TextBlockVerticalAlign2::BOTTOM)
+    {
+        size.y = parent->innerSize().h() - size.h;
 
-		result += lines[tempStartCursorSelect.y]->text.substr(start, end - start) + '\n';
-
-
-
-		for (size_t i = tempStartCursorSelect.y + 1; i < tempEndCursorSelect.y; i++)
-		{
-			start = 0;
-			end = lines[i]->text.size();
-
-			result += lines[i]->text.substr(start, end) + '\n';
-		}
+        size.y -= textMarginBottom;
+    }
 
 
 
-		start = 0;
-		end = tempEndCursorSelect.x;
-		result += lines[tempEndCursorSelect.y]->text.substr(start, end - start);
-	}
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        auto& line = lines[i];
 
-	return result;
+        const int y = (int)(i * line->size.h * lineHeight);
+
+        const SDL_Rect rect = { 0, y, size.w, line->size.h };
+
+        line->render();
+
+
+        SDL_SetRenderTarget(renderer, texture);
+        SDL_RenderCopy(renderer, line->texture, nullptr, &rect);
+    }
+
+
+    if (!lines.empty() && isFocus)
+    {
+        renderCursor();
+    }
 }
 
 void Kit::Text2::render()
 {
+    if (needUpdate)
+    {
+        update();
+    }
 
 
-	SDL_SetRenderTarget(renderer, texture);
-
-	SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0x00);
-	SDL_RenderClear(renderer);
-
-	for (size_t i = 0; i < lines.size(); i++)
-	{
-		auto& line = lines[i];
-
-		int y = (int)(i * fontSize * lineHeight);
-
-		SDL_Rect rect = { 0, y, line->size.w, line->size.h };
-
-		line->render();
-
-		//SDL_SetRenderDrawColor(renderer, 0x33, 0x33, 0x33, 0xff);
-		//SDL_RenderFillRect(renderer, &rect);
-		SDL_SetRenderTarget(renderer, texture);
-		SDL_RenderCopy(renderer, line->texture, nullptr, &rect);
-	}
-
-	if (!lines.empty())
-		renderCursor();
-
-	SDL_SetRenderTarget(renderer, parentTarget);
+	SDL_SetRenderTarget(renderer, parent->innerTexture());
 
 	SDL_RenderCopy(renderer, texture, nullptr, &size);
 }
@@ -299,14 +367,173 @@ void Kit::Text2::setText(const string& new_text)
 	setup();
 }
 
-void Kit::Text2::mouseMotion(SDL_Event* e)
+void Kit::Text2::setSize(const SimpleRect& newSize)
+{
+    if (SimpleRectFunc::equal(this->size, newSize))
+        return;
+
+    this->size = newSize;
+
+    Texture::destroy(texture);
+    texture = Texture::create(renderer, newSize);
+
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setFont(const class font& newFont)
+{
+    if (this->font == newFont)
+        return;
+
+    this->font = newFont;
+
+    this->fontTTF = font.at(fontSize);
+
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setFontSize(const size_t& newFontSize)
+{
+    if (this->fontSize == newFontSize)
+        return;
+
+    this->fontSize = newFontSize;
+
+    this->fontTTF = font.at(fontSize);
+
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setColor(const Color& newColor)
+{
+    if (this->color == newColor)
+        return;
+
+    this->color = newColor;
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setLineHeight(const double& lineHeight)
+{
+    if (this->lineHeight == lineHeight)
+        return;
+
+
+    this->lineHeight = lineHeight;
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setTextAlign(const string& align)
+{
+    TextAlign2 temp = TextAlign2::LEFT;
+
+    if (align == "left")
+    {
+        temp = TextAlign2::LEFT;
+    }
+    else if (align == "center")
+    {
+        temp = TextAlign2::CENTER;
+    }
+    else if (align == "right")
+    {
+        temp = TextAlign2::RIGHT;
+    }
+
+    if (this->textAlign == temp)
+        return;
+
+    this->textAlign = temp;
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setTextBlockVerticalAlign(const string& align)
+{
+    TextBlockVerticalAlign2 temp;
+    if (align == "top")
+    {
+        temp = TextBlockVerticalAlign2::TOP;
+    }
+    else if (align == "middle")
+    {
+        temp = TextBlockVerticalAlign2::MIDDLE;
+    }
+    else if (align == "bottom")
+    {
+        temp = TextBlockVerticalAlign2::BOTTOM;
+    }
+    else
+    {
+        return;
+    }
+
+    if (this->textVerticalAlign == temp)
+        return;
+
+    this->textVerticalAlign = temp;
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setTextBlockMargin(const string& side, int value)
+{
+    if (side == "top")
+    {
+        if (textMarginTop == value)
+            return;
+
+        textMarginTop = value;
+    }
+    else if (side == "bottom")
+    {
+        if (textMarginBottom == value)
+            return;
+
+        textMarginBottom = value;
+    }
+    else if (side == "left")
+    {
+        if (textMarginLeft == value)
+            return;
+
+        textMarginLeft = value;
+    }
+    else if (side == "right")
+    {
+        if (textMarginRight == value)
+            return;
+
+        textMarginRight = value;
+    }
+    else
+    {
+        return;
+    }
+
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::setFocus(bool focus)
+{
+    this->isFocus = focus;
+
+    this->needUpdate = true;
+}
+
+void Kit::Text2::mouseMotion(SDL_Event* e, const Point& _mouse)
 {
 	if (!mousePush)
 		return;
 
-	SimplePoint mouse = { e->motion.x, e->motion.y };
-	mouse.x -= size.x;
-	mouse.y -= size.y;
+	SimplePoint mouse = { _mouse.x(), _mouse.y() };
+
 
 	if (!isSelected)
 	{
@@ -321,25 +548,24 @@ void Kit::Text2::mouseMotion(SDL_Event* e)
 	handleSelect();
 }
 
-void Kit::Text2::mouseButtonUp(SDL_Event* e)
+void Kit::Text2::mouseButtonUp(SDL_Event* e, const Point& _mouse)
 {
 	mousePush = false;
+
+    this->needUpdate = true;
 }
 
-void Kit::Text2::mouseButtonDown(SDL_Event* e)
+void Kit::Text2::mouseButtonDown(SDL_Event* e, const Point& _mouse)
 {
 	mousePush = true;
 
-	SimplePoint mouse = { e->motion.x, e->motion.y };
-	mouse.x -= size.x;
-	mouse.y -= size.y;
-
-	
+    SimplePoint mouse = { _mouse.x(), _mouse.y() };
 
 	cursorPos = whereIsCursor(mouse);
 
-
 	deleteSelect();
+
+    this->needUpdate = true;
 }
 
 void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
@@ -358,12 +584,7 @@ void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
 	{
 		char symbol = now_line->text[i];
 
-		if (TextLine::isSplitSymbol(symbol) || i == 0)
-		{
-			startCursorSelect.x = i == 0 ? 0 : i + 1;
-			startCursorSelect.y = nowCursorPosition.y;
-			break;
-		}
+
 	}
 
 
@@ -371,12 +592,7 @@ void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
 	{
 		char symbol = now_line->text[i];
 
-		if (TextLine::isSplitSymbol(symbol) || i == now_line->text.size() - 1)
-		{
-			endCursorSelect.x = i;
-			endCursorSelect.y = nowCursorPosition.y;
-			break;
-		}
+
 	}
 
 	cursorPos = endCursorSelect;
@@ -455,6 +671,11 @@ void Kit::Text2::keyDown(SDL_Event* e)
 
 	case SDLK_RETURN:
 	{
+	    if (isOneLine)
+        {
+	        return;
+        }
+
 		string new_line_text;
 
 
@@ -767,6 +988,7 @@ void Kit::Text2::keyDown(SDL_Event* e)
 	default:break;
 	}
 
+    this->needUpdate = true;
 	render();
 }
 

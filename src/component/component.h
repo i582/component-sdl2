@@ -12,7 +12,7 @@
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
 #include "animation/animation.h"
-//#include "../tools/text2/text.h"
+#include "../tools/text2/text.h"
 #include "component-header.h"
 
 #include "../tools/draw/draw.h"
@@ -63,7 +63,7 @@ protected:
 
 
 	/** User Data */
-	map <string, void*> _userData;
+	map <string, std::any> _userData;
 
 
 	/** State */
@@ -118,7 +118,11 @@ protected:
 
 
 	/** Extended text */
-    //Text2* _extended_text;
+    Text2* _extended_text;
+    bool _withExtendedText;
+
+    /** Ignore Some Event */
+    bool _ignoreEvents;
 
 public:
     explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
@@ -130,7 +134,6 @@ public:
 
 public:
 	friend Window;
-
 
 protected:
 
@@ -152,16 +155,27 @@ protected:
 	Component* getFirstHorizontalScrollableParent();
 
 
+	/**
+	 * @brief Function for getting component styles that were connected directly in it
+	 * @return Pointer to css styles
+	 */
 	CSS::css* getComponentStyles();
 
 
+	/**
+	 * @brief Function for generating a random string for an identifier
+	 * @return Random string
+	 */
 	static string generateRandomString();
 
 
 
 protected: /** Setup Functions */
 
-
+    /**
+     * @brief Configures component dimensions using either sizes from styles or
+     * dimensions specified directly in the constructor
+     */
 	void setupSize();
 
 	/**
@@ -221,12 +235,17 @@ protected: /** Setup Functions */
 	void setupChildrenPosition();
 
 
-
+    /**
+     * @brief Configures extended text inside a component
+     */
     void setupExtendedText();
 
 
-
+    /**
+     * @brief Sets the generated identifier if the identifier is an empty string
+     */
     void checkID();
+
 
 	/**
 	 * @brief The function corrects the coordinates of the mouse
@@ -237,28 +256,58 @@ protected: /** Setup Functions */
 	void adjustMousePoint(Point& p);
 
 
+
+protected: /** Setup */
+
+    /**
+     * @brief Function to configure the container and all its childrens
+     */
+    void setupComponents();
+
+
+
+protected: /** Events */
+
+    void mouseButtonDown(Event* e);
+    void mouseButtonUp(Event* e);
+    void mouseMotion(Event* e);
+    void mouseOut(Event* e);
+    void mouseScroll(Event* e, int scrollDirection);
+    void keyDown(Event* e);
+    void textInput(Event* e);
+
+
+protected: /** Hover */
+
+    /**
+     * @brief Checks if a given point is internal to an external size
+     * @return true|false
+     */
+    bool onHover(const Point& point);
+
+    /**
+     * @brief It passes through all the children and finds in which component
+     * the transmitted point is located. Moreover, if the point is in the component,
+     * and at the same time in this component it is in the child, then the child
+     * is returned. That is, the function goes as deep as possible until there
+     * is an unambiguous component in which the point is now
+     */
+    Component* onComponentHover(Point point);
+
+protected: /** State */
+
+    bool isHovered();
+    bool isActive();
+
+
+protected: /** Scroll */
+    bool isVerticalScrollable() const;
+    bool isHorizontalScrollable() const;
+
+
 public: /** Render Interface */
 
 	void render();
-
-
-
-public: /** Events Interface */
-
-	void mouseButtonDown(Event* e);
-	void mouseButtonUp(Event* e);
-	void mouseMotion(Event* e);
-	void mouseOut(Event* e);
-	void mouseScroll(Event* e, int scrollDirection);
-
-
-public: /** Setup Interface */
-
-	/**
-	 * @brief Function to configure the container and all its childs
-	 */
-	void setupComponents();
-
 
 
 public: /** Size Interface */
@@ -310,29 +359,10 @@ public: /** Ralation Interface */
 	bool isParentObject(Component* obj) const;
 
 
+
     virtual Component* append(Component* component);
 	Component* append(const vector<Component*>& components);
 
-
-	
-	
-
-public: /** Hover Interface */
-
-	/**
-	 * @brief Checks if a given point is internal to an external size
-	 * @return true|false
-	 */
-	bool onHover(const Point& point);
-
-	/**
-	 * @brief It passes through all the children and finds in which component
-	 * the transmitted point is located. Moreover, if the point is in the component,
-	 * and at the same time in this component it is in the child, then the child
-	 * is returned. That is, the function goes as deep as possible until there
-	 * is an unambiguous component in which the point is now
-	 */
-	Component* onComponentHover(Point point);
 
 
 public: /** Identifiers Interface */
@@ -373,15 +403,9 @@ public: /** Event listeners Interface */
 
 public: /** User Data Interface */
 
-	map <string, void*>& userData();
-	void addUserData(const string& key, void* data);
-	void* userData(const string& key);
-
-
-public: /** State Interface */
-
-	bool isHovered();
-	bool isActive();
+	map <string, std::any>& userData();
+	void addUserData(const string& key, const std::any& data);
+    std::any userData(const string& key);
 
 
 public: /** Class Interface */
@@ -393,13 +417,9 @@ public: /** Class Interface */
     const string& classes();
     void classes(const string& newClasses);
 
+
 public: /** Text Interface */
 	virtual void setText(const string& text);
-
-
-public: /** Scroll Interface */
-	bool isVerticalScrollable() const;
-	bool isHorizontalScrollable() const;
 
 
 public: /** Style Interface */
@@ -407,8 +427,20 @@ public: /** Style Interface */
 
 
 public: /** Focus Interface */
-    void getFocus(SDL_Event* e);
-    void loseFocus(SDL_Event* e);
+    void getFocus(Event* e);
+    void loseFocus(Event* e);
+
+
+public: /** Ignore Event Interface */
+    void ignoreEvents();
+    void noIgnoreEvents();
+    bool isIgnoreEvents();
+
+
+public: /** Extended Text Interface */
+    void useExtendedText();
+    void unuseExtendedText();
+
 
 };
 

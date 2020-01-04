@@ -50,6 +50,7 @@ include_directories(src/std_windows/simple_window)
 include_directories(src/tools/text2)
 include_directories(src/tools/draw)
 include_directories(src/std_components/table)
+include_directories(src/std_components/tabs)
 
 add_executable(component_sdl2_cmake
         src/component/animation/animation.h
@@ -129,13 +130,20 @@ add_executable(component_sdl2_cmake
         src/tools/text2/text2.cpp
         src/tools/text2/text_line.h
         src/tools/text2/text_line.cpp
-        src/tools/text2/word.h
         main.cpp
-        src/tools/text2/word.cpp
         src/tools/draw/draw.h
         src/tools/draw/draw.cpp
         src/std_components/table/table.cpp
-        src/std_components/table/table.h src/std_components/table/table_header.cpp src/std_components/table/table_header.h src/std_components/table/table_row.cpp src/std_components/table/table_row.h src/std_components/table/table_item.cpp src/std_components/table/table_item.h src/std_components/table/table_header_item.cpp src/std_components/table/table_header_item.h)
+        src/std_components/table/table.h
+        src/std_components/table/table_header.cpp
+        src/std_components/table/table_header.h
+        src/std_components/table/table_row.cpp
+        src/std_components/table/table_row.h
+        src/std_components/table/table_item.cpp
+        src/std_components/table/table_item.h
+        src/std_components/table/table_header_item.cpp
+        src/std_components/table/table_header_item.h
+        src/tools/rect/simple-rect/simple-rect.cpp src/std_components/tabs/tabs.cpp src/std_components/tabs/tabs.h)
 
 
 
