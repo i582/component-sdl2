@@ -83,22 +83,27 @@
 /* Buttons */
 .button-ok
 {
-    top: 380px;
+    top: 420px;
     left: 20px;
 
 }
 
 .button-cancel
 {
-    top: 380px;
-    left: 110px;
+    top: 420px;
+    left: 100px;
 }
 
+.button-browse
+{
+    top: 350px;
+    left: 300px;
+}
 
 
 .first-checkbox
 {
-    top: 350px;
+    top: 384px;
     left: 20px;
 }
 
@@ -130,7 +135,7 @@
     height: 24px;
 
     top: 150px;
-    left: 50px;
+    left: 20px;
 
     color: #dadacb;
 
@@ -148,11 +153,11 @@
 
 .test-text
 {
-    width: 200px;
+    width: 260px;
     height: 24px;
 
-    top: 200px;
-    left: 50px;
+    top: 350px;
+    left: 20px;
 
 
     color: #dadacb;
@@ -182,4 +187,11 @@
     border-right: 2px solid #5E6060;
     border-left: 2px solid #5E6060;
     border-top: 2px solid #5E6060;
+}
+
+
+.test-tabs
+{
+    left: 450px;
+    top: 100px;
 }

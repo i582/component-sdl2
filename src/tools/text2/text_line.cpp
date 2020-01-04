@@ -39,6 +39,7 @@ void Kit::TextLine::setup()
 
 	Texture::destroy(texture);
     texture = Texture::create(parent->renderer, textureSize);
+    //SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
 }
 
 void Kit::TextLine::render()
@@ -53,7 +54,7 @@ void Kit::TextLine::render()
     }
 
 
-	SDL_SetRenderDrawColor(parent->renderer, 0x3b, 0x49, 0x47, 0xff);
+	SDL_SetRenderDrawColor(parent->renderer, 0x4b, 0x6e, 0xaf, 0xff);
 
 
     SDL_Surface* textSurface = TTF_RenderUTF8_Blended(parent->fontTTF, text.c_str(), parent->color.colorSDL());
@@ -78,6 +79,8 @@ void Kit::TextLine::render()
     const int copyRectShiftY = (int)(parent->fontSize * parent->lineHeight - parent->fontSize) / 2;
 
     this->shiftByX = copyRectShiftX;
+
+
 
 	// render select
 	SDL_Rect selectedRect = { 0, 0, 0, size.h };

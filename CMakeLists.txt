@@ -50,6 +50,7 @@ include_directories(src/std_windows/simple_window)
 include_directories(src/tools/text2)
 include_directories(src/tools/draw)
 include_directories(src/std_components/table)
+include_directories(src/std_components/tabs)
 
 add_executable(component_sdl2_cmake
         src/component/animation/animation.h
@@ -142,7 +143,7 @@ add_executable(component_sdl2_cmake
         src/std_components/table/table_item.h
         src/std_components/table/table_header_item.cpp
         src/std_components/table/table_header_item.h
-        src/tools/rect/simple-rect/simple-rect.cpp)
+        src/tools/rect/simple-rect/simple-rect.cpp src/std_components/tabs/tabs.cpp src/std_components/tabs/tabs.h)
 
 
 

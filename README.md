@@ -1,8 +1,7 @@
 
 # Component-sdl2
 
-[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
-[![Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
+[![Language](https://img.shields.io/badge/language-C++17-blue.svg)](https://isocpp.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://mit-license.org/)
 
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2-brightgreen.svg)](https://www.Kitsdl.org/)
@@ -29,13 +28,11 @@
 #include "kit.h"
 ```
 
-Вся библиотека расположена в пространстве имен `Kit`, чтобы каждый раз не писать `Kit::*` можно прописать следующую строку
+Вся библиотека расположена в пространстве имен `Kit`, чтобы каждый раз не писать `Kit::*` в дальнейшем будет подразумеваться следующая строка
 
 ```cpp
 using namespace Kit;
 ```
-
-**Важно!** Функция `main` должна принимать две переменных: `int argc, char** argv`.
 
 После подключения библиотеки, доступ к объекту библиотеки осуществляется через короткое имя `$`.
 
@@ -51,7 +48,7 @@ int main(int argc, char** argv)
 }
 ```
 
-Рассмотрим базовый функционал.
+## Базовый функционал
 
 Метод (здесь и далее будет употреблен термин "метод", как более короткий и понятный):
 
@@ -92,10 +89,10 @@ int main(int argc, char** argv)
 Для наследования необходимо подключить заголовочный файл базового класса окна:
 
 ```cpp
-#include "../window/window.h"
+#include "../kit/window/window.h"
 ```
 
-Далее, создаем класс `MyWindow` и наследуем его от `Window`, перегружаем конструктор и добавляем один метод `setup`, который вызываем в конструкторе. Здесь, пока класс небольшой, напишем реализацию в заголовочном файле.
+Далее, создаем класс `MyWindow` и наследуем его от `Window`, перегружаем конструктор и добавляем один метод `setup`, который вызываем в конструкторе. Пока класс небольшой, напишем реализацию в заголовочном файле.
 
 ```cpp
 #pragma once
@@ -214,9 +211,9 @@ void setup()
 
 ### Стилизация компонентов
 
-Для стилизации компонентов библиотека использует `css`. 
+Для стилизации компонентов используется `css`. 
 
-Чтобы подключить стили к окну используется функция `include`:
+Чтобы подключить стили к окну используется метод `include`:
 
 ```cpp
 void include(string path);
@@ -237,7 +234,7 @@ add("#button", ".button");
 ```cpp
 void setup()
 {
-    include("css/style.css");
+    include("./MyWindow/css/style.css");
 
     add("#button", ".button");
 }
@@ -273,6 +270,8 @@ void setup()
     border-color: #0F1518;
 }
 ```
+
+В итоге мы получим стилизованный прямоугольник заданных размеров.
 
 Список всех поддерживаемых стилей приведен в конце.
 
@@ -338,6 +337,7 @@ void setup()
 }
 ```
 
+В итоге данный комонент уже больше походит на кнопку, чем на стилизованный прямоугольник.
 
 ### Расширенная настройка стилей компонента
 
@@ -393,8 +393,7 @@ void setup()
 {
     include("css/style.css");
 
-    $$->append(new Component("#button", { 50, 50, 75, 25 }, ".button")->setText("text");
-
+    add("#button", ".button").setText("ok");
 
     Window::getElementById("#button")->addEventListener("click", 
     [](Component* sender, Event* e)
@@ -404,9 +403,7 @@ void setup()
 }
 ```
 
-Для вывода также подключим библиотеку `iostream`.
-
-Теперь при нажатии левой кнопкой мыши на компонент, в консоли будут появляться сообщения о том, что компонент был нажат.
+Теперь при нажатии левой кнопкой мыши на компонент, в консоли будут выводиться сообщения.
 
 Данная реализация кнопки довольно неудобна, из-за использования дополнительных методов, далее будет рассмотрено создание своих компонентов на базе класса `Component` в которых вся логика будет инкапсулирована в компоненте.
 
@@ -449,8 +446,8 @@ private:
     string text;
 
 public:
-    Button(string id, Rect size, string classes, string text)
-    	: Component(id, size, classes)
+    Button(string id, string classes, string text)
+    	: Component(id, classes)
     {
         this->text = text;
         setup();
@@ -497,7 +494,7 @@ public:
     {
         include("css/style.css");
 
-        $$->append(new Button("#button", { 50, 50, 75, 25 }, ".button", "Ok");
+        add(new Button("#button", ".button", "Ok");
     }
 
 };
@@ -508,7 +505,9 @@ public:
 
 ## Подключение стилей в компоненте
 
-До этого все стили подключались глобально для всего окна, но каждый компонент может также содержать в себе необходимые стили, тем самым, этот компонент будет полностью обособлен от окна. Для добавления стилей для компонента используется функция `include`:
+До этого все стили подключались глобально для всего окна, но каждый компонент может также содержать в себе необходимые стили, тем самым, этот компонент будет полностью обособлен от окна. 
+
+Для добавления стилей для компонента используется функция `include`:
 
 ```cpp
 void include(string path);
@@ -517,11 +516,6 @@ void include(string path);
 Например вынесем стили кнопок в стили отдельного компонента. Создадим в папке `Button` папку `css` и добавим в нее файл `button.css` и пропишем в нем стили из `style.css`:
 
 ```css
-.button:hover
-{
-    background-color: #0D1012;
-}
-
 .button
 {
     background-color: #263238;
@@ -534,6 +528,12 @@ void include(string path);
     text-align: center;
     vertical-align: center;
 }
+
+.button:hover
+{
+    background-color: #0D1012;
+}
+
 ```
 
 а затем подключим его:
@@ -541,7 +541,7 @@ void include(string path);
 ```cpp
 void setup()
 {
-    include("css/button.css");
+    include("../Button/css/button.css");
 
     setText(this->text);
 }
@@ -549,20 +549,20 @@ void setup()
 
 И удалим стили кнопки из `style.css`. 
 
-Теперь компонент `Button` полностью обособлен. При его добавлении подключать стили в стилях окна нет необходимости, так как компонент сам подключит нужные для себя стили.
+Теперь компонент `Button` полностью обособлен. При его добавлении подключать стили в стилях окна нет необходимости, так как компонент сам подключит нужные стили.
 
 ## Дополнительная информация в компоненте
 
 Любой компонент может хранить в себе дополнительную информацию. Для добавления используется метод `addUserData`:
 
 ```cpp
-void addUserData(string key, void* data);
+void addUserData(string key, std::any data);
 ```
 
 А для получения информации по ключу --- метод `userData`:
 
 ```cpp
-void* userData(string key);
+std::any userData(string key);
 ```
 
 
@@ -571,14 +571,11 @@ void* userData(string key);
 Классовые идентификаторы используются для стилизации компонентов, для работ с ними есть несколько методов. Названия методов говорят сами за себя.
 
 ```cpp
-bool hasClass(string className) const;
-Component* removeClass(string className);
-Component* addClass(string className);
-Component* toggleClass(string className);
+bool hasClass(const string& className) const;
+Component* removeClass(const string& className);
+Component* addClass(const string& className);
+Component* toggleClass(const string& className);
 ```
-
-Добавление/удаление классовых идентификатором может понадобится, например, при создании `Checkbox` для изменения класса с `unchecked` на `checked`.
-
 
 ## Получение компонентов по классовому идентификатору
 
@@ -589,7 +586,7 @@ Component* toggleClass(string className);
 Для получения коллекции используется метод `getElementsByClassName`:
 
 ```cpp
-Components getElementsByClassName(string className);
+Components getElementsByClassName(const string& className);
 ```
 
 Класс `Components` является оберткой над коллекцией компонентов. Над коллекцией можно производить следующие действия:

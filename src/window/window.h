@@ -96,13 +96,13 @@ protected:
 
 
 protected: /** Events */
-	void mouseButtonDown(SDL_Event* e);
-	void mouseButtonUp(SDL_Event* e);
-	void mouseMotion(SDL_Event* e);
-	void mouseWheel(SDL_Event* e);
-	void keyDown(SDL_Event* e);
-	void keyUp(SDL_Event* e);
-    void textInput(SDL_Event* e);
+	void mouseButtonDown(Event* e);
+	void mouseButtonUp(Event* e);
+	void mouseMotion(Event* e);
+	void mouseWheel(Event* e);
+	void keyDown(Event* e);
+	void keyUp(Event* e);
+    void textInput(Event* e);
 
 public: /** Interface */
 	void render();

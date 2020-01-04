@@ -12,9 +12,9 @@ using namespace Kit;
 class SimpleWindow : public Window
 {
 public:
-	SimpleWindow(string title, SimpleRect size);
+	SimpleWindow(const string& title, SimpleRect size);
 
 public:
-	void setup();
+	void setup() override;
 
 };

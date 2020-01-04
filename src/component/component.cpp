@@ -1203,17 +1203,17 @@ void Kit::Component::callEventListener(const string &action, Event* e)
     }
 }
 
-Kit::map<Kit::string, void*> &Kit::Component::userData()
+Kit::map<Kit::string, std::any> &Kit::Component::userData()
 {
     return _userData;
 }
 
-void Kit::Component::addUserData(const string &key, void* data)
+void Kit::Component::addUserData(const string &key, const std::any& data)
 {
     _userData.insert(make_pair(key, data));
 }
 
-void* Kit::Component::userData(const string &key)
+std::any Kit::Component::userData(const string &key)
 {
     return _userData[key];
 }
