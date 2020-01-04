@@ -3,19 +3,19 @@
 
 
 SimpleWindow::SimpleWindow(const string& title, SimpleRect size)
-	: Window(title, size)
+    : Window(title, size)
 {
-	setup();
+    setup();
 }
 
 void SimpleWindow::setup()
 {
-	include("../src/std_windows/simple_window/css/style.css");
-	setDraggableArea({ 0, 0, _size.w - 135, 25 });
+    include("../src/std_windows/simple_window/css/style.css");
+    setDraggableArea({ 0, 0, _size.w - 135, 25 });
 
 
-	$$->append(new Component("#window-header", { 0, 0, _size.w - 135, 30 }, ".window-header"))
-		->setText(this->title);
+    $$->append(new Component("#window-header", { 0, 0, _size.w - 135, 30 }, ".window-header"))
+        ->setText(this->title);
 
     add("#system-exit", ".system-button .system-exit");
     add("#system-expand", ".system-button .system-expand");
@@ -34,7 +34,7 @@ void SimpleWindow::setup()
 
 
 
-	add(new Table("#table", ".table-test"));
+    add(new Table("#table", ".table-test"));
 
     auto table = (Table*)Window::getElementById("#table");
 
