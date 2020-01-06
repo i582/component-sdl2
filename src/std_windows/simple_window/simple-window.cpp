@@ -2,15 +2,15 @@
 #include "kit-main.h"
 
 
-SimpleWindow::SimpleWindow(const string& title, SimpleRect size)
-    : Window(title, size)
+SimpleWindow::SimpleWindow(const string& title, SimpleRect size, bool noBorder)
+    : Window(title, size, noBorder)
 {
     setup();
 }
 
 void SimpleWindow::setup()
 {
-    include("../src/std_windows/simple_window/css/style.css");
+    style("../src/std_windows/simple_window/css/style.css");
     setDraggableArea({ 0, 0, _size.w - 135, 25 });
 
 
@@ -33,10 +33,15 @@ void SimpleWindow::setup()
     add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
 
 
+    Cmpt::create();
+    Component::create();
 
-    add(new Table("#table", ".table-test"));
 
-    auto table = (Table*)Window::getElementById("#table");
+
+
+    auto table = (Table*)add(new Table("#table", ".table-test"));
+
+
 
     table->addCollumn("#");
     table->addCollumn("ФИО");
@@ -49,7 +54,7 @@ void SimpleWindow::setup()
 
 
 
-    add("#test-text", ".test-text").useExtendedText();
+    add("#test-text", ".test-text")->useExtendedText();
     auto test = Window::getElementById("#test-text");
     test->setText("C:/");
 

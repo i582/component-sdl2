@@ -23,8 +23,16 @@ using CSS::Color;
 
 class Window;
 
+using Cmpt = Component;
+
 class Component
 {
+
+public:
+    static Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
+    static Component* create(const string& classes = "", const vector<Component*>& childrens = {});
+    static Component* create(Component* component);
+
 private:
 	/** For Event */
 	static Component* _hoverComponent;
@@ -380,7 +388,7 @@ public: /** Event listeners Interface */
 	 * @param action - Event id
 	 * @param eventCallback - Functor with form is "function <void (Component* sender, Event* e)>"
 	 */
-	void addEventListener(const string& action, eventCallback callback_function);
+    Component* addEventListener(const string& action, eventCallback callback_function);
 
 
 	/**
@@ -388,7 +396,7 @@ public: /** Event listeners Interface */
 	 *
 	 * @param action - Event id
 	 */
-	void removeEventListener(const string& action);
+    Component* removeEventListener(const string& action);
 
 
 	/**
@@ -398,13 +406,13 @@ public: /** Event listeners Interface */
 	 * @param action - Event id
 	 * @param e - Event data
 	 */
-	void callEventListener(const string& action, Event* e);
+    Component* callEventListener(const string& action, Event* e);
 
 
 public: /** User Data Interface */
 
 	map <string, std::any>& userData();
-	void addUserData(const string& key, const std::any& data);
+    Component* addUserData(const string& key, const std::any& data);
     std::any userData(const string& key);
 
 
@@ -415,31 +423,31 @@ public: /** Class Interface */
 	Component* addClass(const string& className);
 	Component* toggleClass(const string& className);
     const string& classes();
-    void classes(const string& newClasses);
+    Component* classes(const string& newClasses);
 
 
 public: /** Text Interface */
-	virtual void setText(const string& text);
+	virtual Component* setText(const string& text);
 
 
 public: /** Style Interface */
-	void include(const string& path);
+    Component* include(const string& path);
 
 
 public: /** Focus Interface */
-    void getFocus(Event* e);
-    void loseFocus(Event* e);
+    Component* getFocus(Event* e);
+    Component* loseFocus(Event* e);
 
 
 public: /** Ignore Event Interface */
-    void ignoreEvents();
-    void noIgnoreEvents();
+    Component* ignoreEvents();
+    Component* noIgnoreEvents();
     bool isIgnoreEvents();
 
 
 public: /** Extended Text Interface */
-    void useExtendedText();
-    void unuseExtendedText();
+    Component* useExtendedText();
+    Component* unuseExtendedText();
 
 
 };

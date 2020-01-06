@@ -34,10 +34,10 @@ public:
 
 
 	/*
-	 * @brief Constructor with style file path, parser starts automatically
-	 * if file not found, an exception will be thrown
+	 * @brief Constructor with style lib path, parser starts automatically
+	 * if lib not found, an exception will be thrown
 	 * 
-	 * @param [in] Path to file
+	 * @param [in] Path to lib
 	 */
 	explicit css(const string& path);
 
@@ -46,7 +46,7 @@ public:
 	 * @brief Constructor with css-code, parser starts automatically
 	 *
 	 * @param [in] code: String with css-code
-	 * @param [in] isCode: Flag to separate code from file 
+	 * @param [in] isCode: Flag to separate code from lib
 	 */
 	css(const string& code, bool isCode);
 
@@ -59,12 +59,12 @@ public:
 public:
 
 	/*
-	 * @brief Function for open css style file, parser starts automatically
-	 * if file not found, an exeception will be thrown
+	 * @brief Function for open css style lib, parser starts automatically
+	 * if lib not found, an exeception will be thrown
 	 *
 	 * If the parser created with a simple constructor, then this function is required
 	 *
-	 * @param [in] Path to file
+	 * @param [in] Path to lib
 	 */
 	void open(const string& path);
 

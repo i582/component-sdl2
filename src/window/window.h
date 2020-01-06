@@ -42,9 +42,9 @@ public: /** Component Interface */
 	Component* getElementById(const string& id) const;
 	Components getElementsByClassName(const string& className) const;
 
-	Component& add(const string& id, const string& classes, const vector<Component*>& childrens = {});
-    Component& add(const string& classes = "", const vector<Component*>& childrens = {});
-	Component& add(Component* component);
+	Component* add(const string& id, const string& classes, const vector<Component*>& childrens = {});
+    Component* add(const string& classes = "", const vector<Component*>& childrens = {});
+	Component* add(Component* component);
 
 	Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
     Component* create(const string& classes = "", const vector<Component*>& childrens = {});
@@ -52,7 +52,7 @@ public: /** Component Interface */
 
 public: /** Component Style Interface */
 
-	CSS::css_block* addStyle(const string& className, CSS::css_block style);
+	CSS::css_block* addStyle(const string& className, const CSS::css_block& style);
 
 
 public:
@@ -67,12 +67,14 @@ protected:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 
-	bool is_display;
+	bool isDisplay;
+
+	bool noBorder;
 
 	Navigator* navigator;
 	Navigator* $$;
 
-	CSS::css main_css;
+	CSS::css mainCSS;
 	bool wasSetupStyle;
 	bool wasSetupComponents;
 
@@ -80,7 +82,7 @@ protected:
 	KitApplication* parent;
 
 public: /** constructor & destructor*/
-	Window(const string& title, SimpleRect size);
+	Window(const string& title, SimpleRect size, bool noBorder = false);
 	~Window();
 
 public:
@@ -144,7 +146,7 @@ public: /** CSS Interface */
 	/**
 	 *  @brief Function for include css style file
 	 */
-	void include(const string& path);
+	void style(const string& path);
 
 };
 

@@ -37,7 +37,7 @@ void CSS::css::parse()
 	}
 	else
 	{
-		cout << "ERROR: parser not configured. Set the code or path to the CSS file!" << endl;
+		cout << "ERROR: parser not configured. Set the code or path to the CSS lib!" << endl;
 	}
 }
 

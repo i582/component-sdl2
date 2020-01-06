@@ -3,6 +3,23 @@
 
 Kit::Component* Kit::Component::_hoverComponent = nullptr;
 
+
+Kit::Component* Kit::Component::create(const string& id, const string& classes, const vector<Component*>& childrens)
+{
+    return new Component(id, classes, childrens);
+}
+
+Kit::Component* Kit::Component::create(const std::string& classes, const std::vector<Kit::Component*>& childrens)
+{
+    return new Component("", classes, childrens);
+}
+
+Kit::Component* Kit::Component::create(Component* component)
+{
+    return component;
+}
+
+
 Kit::Component::Component(const std::string& id, const string& classes, const vector<Component*>& childrens)
 : Component(id, {0, 0, 0, 0}, classes, childrens) {}
 
@@ -1181,17 +1198,21 @@ const Kit::string &Kit::Component::id() const
     return _id;
 }
 
-void Kit::Component::addEventListener(const string &action, eventCallback callback_function)
+Kit::Component* Kit::Component::addEventListener(const string &action, eventCallback callback_function)
 {
     _eventListeners[action] = std::move(callback_function);
+
+    return this;
 }
 
-void Kit::Component::removeEventListener(const string &action)
+Kit::Component* Kit::Component::removeEventListener(const string &action)
 {
     _eventListeners[action] = Component::_emptyCallback;
+
+    return this;
 }
 
-void Kit::Component::callEventListener(const string &action, Event* e)
+Kit::Component* Kit::Component::callEventListener(const string &action, Event* e)
 {
     if (_eventListeners.find(action) != _eventListeners.end())
     {
@@ -1201,6 +1222,8 @@ void Kit::Component::callEventListener(const string &action, Event* e)
     {
         cout << "Error: The transmitted event cannot be triggered because it has not been set!" << endl;
     }
+
+    return this;
 }
 
 Kit::map<Kit::string, std::any> &Kit::Component::userData()
@@ -1208,9 +1231,11 @@ Kit::map<Kit::string, std::any> &Kit::Component::userData()
     return _userData;
 }
 
-void Kit::Component::addUserData(const string &key, const std::any& data)
+Kit::Component* Kit::Component::addUserData(const string &key, const std::any& data)
 {
     _userData.insert(make_pair(key, data));
+
+    return this;
 }
 
 std::any Kit::Component::userData(const string &key)
@@ -1274,31 +1299,35 @@ Kit::Component* Kit::Component::toggleClass(const string &className)
     return this;
 }
 
-const std::string &Kit::Component::classes()
+const std::string& Kit::Component::classes()
 {
     return _classes;
 }
 
-void Kit::Component::classes(const std::string& newClasses)
+Kit::Component* Kit::Component::classes(const std::string& newClasses)
 {
     this->_classes = newClasses;
+
+    return this;
 }
 
-void Kit::Component::setText(const string &text)
+Kit::Component* Kit::Component::setText(const string &text)
 {
     if (_text != nullptr)
     {
         _text->setText(text);
-        return;
+        return this;
     }
 
     if (_extended_text != nullptr && _withExtendedText)
     {
         _extended_text->setText(text);
-        return;
+        return this;
     }
 
     this->_text_temp = text;
+
+    return this;
 }
 
 bool Kit::Component::isVerticalScrollable() const
@@ -1311,12 +1340,14 @@ bool Kit::Component::isHorizontalScrollable() const
     return _horizontalScrollable;
 }
 
-void Kit::Component::include(const string &path)
+Kit::Component* Kit::Component::include(const string &path)
 {
     if (_css_component == nullptr)
         _css_component = new CSS::css(path);
 
     _css_component->open(path);
+
+    return this;
 }
 
 
@@ -1340,21 +1371,25 @@ void Kit::Component::outerTop(int value)
     _outerSize.y(value);
 }
 
-void Kit::Component::getFocus(SDL_Event* e)
+Kit::Component* Kit::Component::getFocus(SDL_Event* e)
 {
     cout << _id << " getFocus" << endl;
 
 
     _eventListeners["focus"](this, e);
     this->_isFocused = true;
+
+    return this;
 }
 
-void Kit::Component::loseFocus(SDL_Event* e)
+Kit::Component* Kit::Component::loseFocus(SDL_Event* e)
 {
     cout << _id << " loseFocus" << endl;
 
     _eventListeners["focusout"](this, e);
     this->_isFocused = false;
+
+    return this;
 }
 
 std::string Kit::Component::generateRandomString()
@@ -1377,14 +1412,18 @@ std::string Kit::Component::generateRandomString()
     return str;
 }
 
-void Kit::Component::ignoreEvents()
+Kit::Component* Kit::Component::ignoreEvents()
 {
     this->_ignoreEvents = true;
+
+    return this;
 }
 
-void Kit::Component::noIgnoreEvents()
+Kit::Component* Kit::Component::noIgnoreEvents()
 {
     this->_ignoreEvents = false;
+
+    return this;
 }
 
 bool Kit::Component::isIgnoreEvents()
@@ -1392,12 +1431,16 @@ bool Kit::Component::isIgnoreEvents()
     return this->_ignoreEvents;
 }
 
-void Kit::Component::useExtendedText()
+Kit::Component* Kit::Component::useExtendedText()
 {
     this->_withExtendedText = true;
+
+    return this;
 }
 
-void Kit::Component::unuseExtendedText()
+Kit::Component* Kit::Component::unuseExtendedText()
 {
     this->_withExtendedText = false;
+
+    return this;
 }

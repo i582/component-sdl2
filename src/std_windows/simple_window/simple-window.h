@@ -12,7 +12,7 @@ using namespace Kit;
 class SimpleWindow : public Window
 {
 public:
-	SimpleWindow(const string& title, SimpleRect size);
+	SimpleWindow(const string& title, SimpleRect size, bool noBorder);
 
 public:
 	void setup() override;

@@ -96,25 +96,25 @@ Kit::Components Kit::Window::getElementsByClassName(const string& className) con
 	return Components(componentVector);
 }
 
-Kit::Component& Kit::Window::add(const string& id, const string& classes, const vector<Component*>& childrens)
+Kit::Component* Kit::Window::add(const string& id, const string& classes, const vector<Component*>& childrens)
 {
-	auto* _addComponent = new Component(id, classes, childrens);
+	auto _addComponent = new Component(id, classes, childrens);
 
 	return add(_addComponent);
 }
 
-Kit::Component& Kit::Window::add(const std::string& classes, const std::vector<Kit::Component*>& childrens)
+Kit::Component* Kit::Window::add(const std::string& classes, const std::vector<Kit::Component*>& childrens)
 {
-    auto* _addComponent = new Component("", classes, childrens);
+    auto _addComponent = new Component("", classes, childrens);
 
     return add(_addComponent);
 }
 
-Kit::Component& Kit::Window::add(Component* component)
+Kit::Component* Kit::Window::add(Component* component)
 {
 	navigator->append(component);
 
-	return *component;
+	return component;
 }
 
 Kit::Component* Kit::Window::create(const string& id, const string& classes, const vector<Component*>& childrens)
@@ -132,13 +132,13 @@ Kit::Component* Kit::Window::create(Component* component)
 	return component;
 }
 
-CSS::css_block* Kit::Window::addStyle(const string& className, CSS::css_block style)
+CSS::css_block* Kit::Window::addStyle(const string& className, const CSS::css_block& style)
 {
 	allComponentsStyles.insert(make_pair(className, style));
 	return &allComponentsStyles[className];
 }
 
-Kit::Window::Window(const string& title, SimpleRect size)
+Kit::Window::Window(const string& title, SimpleRect size, bool noBorder)
 {
 	this->title = title;
 	this->_size = size;
@@ -147,7 +147,14 @@ Kit::Window::Window(const string& title, SimpleRect size)
 	this->window = nullptr;
 	this->renderer = nullptr;
 
-	this->is_display = true;
+	this->isDisplay = true;
+
+    this->noBorder = noBorder;
+
+	this->$$ = nullptr;
+	this->navigator = nullptr;
+	this->parent = nullptr;
+
 
 	this->wasSetupStyle = false;
 	this->wasSetupComponents = false;
@@ -173,7 +180,7 @@ void Kit::Window::init()
 	this->window = SDL_CreateWindow(title.c_str(),
 		_size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
 		_size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
-		_size.w, _size.h, SDL_WINDOW_BORDERLESS); //SDL_WINDOW_RESIZABLE
+		_size.w, _size.h, noBorder ? SDL_WINDOW_BORDERLESS : 0); //SDL_WINDOW_RESIZABLE
 
 	if (window == nullptr)
 	{
@@ -302,21 +309,21 @@ void Kit::Window::show()
 {
 	render();
 
-	is_display = true;
+    isDisplay = true;
 
 	SDL_ShowWindow(window);
 }
 
 void Kit::Window::hide()
 {
-	is_display = false;
+    isDisplay = false;
 
 	SDL_HideWindow(window);
 }
 
 bool Kit::Window::isShow()
 {
-	return is_display;
+	return isDisplay;
 }
 
 void Kit::Window::collapse()
@@ -334,10 +341,10 @@ size_t Kit::Window::id()
 	return _id;
 }
 
-void Kit::Window::include(const string& path)
+void Kit::Window::style(const string& path)
 {
-	main_css.open(path);
-	Window::allComponentsStyles = main_css.getStyles();
+	mainCSS.open(path);
+	Window::allComponentsStyles = mainCSS.getStyles();
 }
 
 int Kit::Window::width() const

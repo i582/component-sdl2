@@ -15,8 +15,6 @@ set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 
-
-
 include_directories(src)
 include_directories(src/component)
 include_directories(src/component/animation)
@@ -113,7 +111,7 @@ add_executable(component_sdl2_cmake
         src/kit-enter-point.h
         src/kit-main.cpp
         src/kit-main.h
-        src/kit.h
+        src/component-sdl2
         src/std_components/button/button.h
         src/std_components/button/button.cpp
         src/std_components/checkbox/checkbox.h
@@ -143,7 +141,9 @@ add_executable(component_sdl2_cmake
         src/std_components/table/table_item.h
         src/std_components/table/table_header_item.cpp
         src/std_components/table/table_header_item.h
-        src/tools/rect/simple-rect/simple-rect.cpp src/std_components/tabs/tabs.cpp src/std_components/tabs/tabs.h)
+        src/tools/rect/simple-rect/simple-rect.cpp
+        src/std_components/tabs/tabs.cpp
+        src/std_components/tabs/tabs.h)
 
 
 
@@ -161,6 +161,5 @@ find_package(SDL2_gfx REQUIRED)
 
 # Link SDL2::Main, SDL2::Image and SDL2::GFX to our project
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF SDL2::GFX)
-
 
 target_link_libraries(${PROJECT_NAME} "dwmapi.dll")

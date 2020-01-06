@@ -86,7 +86,7 @@ void CSS::css_parser::deleteExcess()
 				symbol = getc(file);
 			}
 
-			//fseek(file, -1, SEEK_CUR);
+			//fseek(lib, -1, SEEK_CUR);
 
 		}
 

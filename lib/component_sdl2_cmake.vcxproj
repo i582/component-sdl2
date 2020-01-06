@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EDEB2F91-145A-3D69-A55D-AC0C8F2AE40C}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>component_sdl2_cmake</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\Programming\component-sdl2\lib\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">component_sdl2_cmake.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">component_sdl2_cmake</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Programming\component-sdl2\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">component_sdl2_cmake.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">component_sdl2_cmake</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:\Programming\component-sdl2\lib\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">component_sdl2_cmake.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">component_sdl2_cmake</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:\Programming\component-sdl2\lib\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">component_sdl2_cmake.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">component_sdl2_cmake</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\Programming\component-sdl2\src;E:\Programming\component-sdl2\src\component;E:\Programming\component-sdl2\src\component\animation;E:\Programming\component-sdl2\src\component\components;E:\Programming\component-sdl2\src\component\navigator;E:\Programming\component-sdl2\src\component\scroll;E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll;E:\Programming\component-sdl2\src\component\scroll\vertical-scroll;E:\Programming\component-sdl2\src\event;E:\Programming\component-sdl2\src\tools\color;E:\Programming\component-sdl2\src\tools\css;E:\Programming\component-sdl2\src\tools\css\color;E:\Programming\component-sdl2\src\tools\css\css_variant;E:\Programming\component-sdl2\src\tools\css\utils;E:\Programming\component-sdl2\src\tools\font;E:\Programming\component-sdl2\src\tools\font\font-find;E:\Programming\component-sdl2\src\tools\image;E:\Programming\component-sdl2\src\tools\point\extended-point;E:\Programming\component-sdl2\src\tools\point\simple-point;E:\Programming\component-sdl2\src\tools\rect\extended-rect;E:\Programming\component-sdl2\src\tools\rect\simple-rect;E:\Programming\component-sdl2\src\tools\size\extended-size;E:\Programming\component-sdl2\src\tools\size\simple-size;E:\Programming\component-sdl2\src\tools\text;E:\Programming\component-sdl2\src\tools\utils;E:\Programming\component-sdl2\src\window;E:\Programming\component-sdl2\src\std_components\button;E:\Programming\component-sdl2\src\std_components\checkbox;E:\Programming\component-sdl2\src\std_components\select;E:\Programming\component-sdl2\src\std_windows\simple_window;E:\Programming\component-sdl2\src\tools\text2;E:\Programming\component-sdl2\src\tools\draw;E:\Programming\component-sdl2\src\std_components\table;E:\Programming\component-sdl2\src\std_components\tabs;C:\SDL2\include;C:\SDL2\SDL2_image-2.0.4\include;C:\SDL2\SDL2_ttf-2.0.15\include;C:\SDL2\SDL2_gfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Programming\component-sdl2\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule E:/Programming/component-sdl2/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SE:/Programming/component-sdl2 -BE:/Programming/component-sdl2/lib --check-stamp-file E:/Programming/component-sdl2/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:/Programming/component-sdl2/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindThreads.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;E:\Programming\component-sdl2\CMakeLists.txt;E:\Programming\component-sdl2\cmake\FindSDL2.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_gfx.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_image.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_ttf.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCXXCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeRCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeSystem.cmake;E:\Programming\component-sdl2\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\Programming\component-sdl2\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule E:/Programming/component-sdl2/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SE:/Programming/component-sdl2 -BE:/Programming/component-sdl2/lib --check-stamp-file E:/Programming/component-sdl2/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:/Programming/component-sdl2/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindThreads.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;E:\Programming\component-sdl2\CMakeLists.txt;E:\Programming\component-sdl2\cmake\FindSDL2.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_gfx.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_image.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_ttf.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCXXCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeRCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeSystem.cmake;E:\Programming\component-sdl2\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Programming\component-sdl2\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule E:/Programming/component-sdl2/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SE:/Programming/component-sdl2 -BE:/Programming/component-sdl2/lib --check-stamp-file E:/Programming/component-sdl2/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:/Programming/component-sdl2/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindThreads.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;E:\Programming\component-sdl2\CMakeLists.txt;E:\Programming\component-sdl2\cmake\FindSDL2.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_gfx.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_image.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_ttf.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCXXCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeRCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeSystem.cmake;E:\Programming\component-sdl2\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:\Programming\component-sdl2\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule E:/Programming/component-sdl2/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SE:/Programming/component-sdl2 -BE:/Programming/component-sdl2/lib --check-stamp-file E:/Programming/component-sdl2/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:/Programming/component-sdl2/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\FindThreads.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;E:\Programming\component-sdl2\CMakeLists.txt;E:\Programming\component-sdl2\cmake\FindSDL2.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_gfx.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_image.cmake;E:\Programming\component-sdl2\cmake\FindSDL2_ttf.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeCXXCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeRCCompiler.cmake;E:\Programming\component-sdl2\lib\CMakeFiles\3.14.19060802-MSVC_2\CMakeSystem.cmake;E:\Programming\component-sdl2\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:\Programming\component-sdl2\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\animation\animation.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\animation\animation_variant.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\animation\animation_variant.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\components\components.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\components\components.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\navigator\navigator.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\navigator\navigator.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll\horizontal-scroll.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\scroll\horizontal-scroll\horizontal-scroll.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\scroll\vertical-scroll\vertical-scroll.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\scroll\vertical-scroll\vertical-scroll.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\scroll\scroll.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\scroll\scroll.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\component-header.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\component\component.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\component\component.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\event\event.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\color\color.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\color\color.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css_variant\css_variant.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css_variant\css_variant.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\utils\css_utils.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\utils\utils.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css-attributes.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css-attributes.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css_block.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css_block.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css_block_state.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css_block_state.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\css\css_parse.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\css\css_parse.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\font\font-find\font-find.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\font\font-find\font-find.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\font\font.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\font\font.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\image\image.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\image\image.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\point\extended-point\extended-point.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\point\extended-point\extended-point.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\point\simple-point\simple-point.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\rect\extended-rect\extended-rect.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\rect\extended-rect\extended-rect.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\rect\simple-rect\simple-rect.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\size\extended-size\extended-size.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\size\extended-size\extended-size.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\size\simple-size\simple-size.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\size\simple-size\simple-size.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\text\text.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\text\text.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\text\text_line.cpp">
+      <ObjectFileName>$(IntDir)/src/tools/text/text_line.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\text\text_line.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\utils\utils.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\utils\utils.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\window\window.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\window\window.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\kit-enter-point.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\kit-main.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\kit-main.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\kit.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\button\button.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\button\button.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\checkbox\checkbox.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\checkbox\checkbox.cpp" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_windows\simple_window\simple-window.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_windows\simple_window\simple-window.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\select\select.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\select\select.cpp" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\select\select_item.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\select\select_item.h" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\texture\texture.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\texture\texture.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\text2\text.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\text2\text2.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\text2\text_line.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\text2\text_line.cpp">
+      <ObjectFileName>$(IntDir)/src/tools/text2/text_line.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="E:\Programming\component-sdl2\main.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\tools\draw\draw.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\draw\draw.cpp" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\table\table.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\table\table.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\table\table_header.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\table\table_header.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\table\table_row.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\table\table_row.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\table\table_item.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\table\table_item.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\table\table_header_item.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\table\table_header_item.h" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\tools\rect\simple-rect\simple-rect.cpp" />
+    <ClCompile Include="E:\Programming\component-sdl2\src\std_components\tabs\tabs.cpp" />
+    <ClInclude Include="E:\Programming\component-sdl2\src\std_components\tabs\tabs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\Programming\component-sdl2\lib\ZERO_CHECK.vcxproj">
+      <Project>{304C1306-14D5-3867-B5AD-B3B8AE3EC436}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

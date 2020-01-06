@@ -85,7 +85,7 @@
 
 .table-item
 {
-    width: 120px;
+    width: calc(120px + 1px);
     height: 100%;
 
 

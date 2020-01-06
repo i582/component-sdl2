@@ -44,6 +44,8 @@ int Kit::KitApplication::run()
 	onEvent();
 
 	close();
+
+	return 0;
 }
 
 Kit::Window* Kit::KitApplication::at(size_t index)
