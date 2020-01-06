@@ -1,13 +1,22 @@
+<<<<<<< HEAD
 
 # Component-sdl2
 
 [![Language](https://img.shields.io/badge/language-C++17-blue.svg)](https://isocpp.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://mit-license.org/)
 
+=======
+# Component-sdl2
+
+[![Language](https://img.shields.io/badge/language-C++17-blue.svg)](https://isocpp.org/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://mit-license.org/)
+
+>>>>>>> 919e39576eba054330ec8a458378e067487fc272
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2-brightgreen.svg)](https://www.Kitsdl.org/)
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2_ttf-brightgreen.svg)](https://www.Kitsdl.org/tmp/SDL_ttf/)
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2_image-brightgreen.svg)](https://www.Kitsdl.org/tmp/SDL_image/)
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2_gfx-brightgreen.svg)](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
+<<<<<<< HEAD
 
 ## Описание
 
@@ -99,11 +108,15 @@ cmake --build .
 ```
 
 Вся библиотека расположена в пространстве имен `Kit`, чтобы каждый раз не писать `Kit::*` в дальнейшем будет подразумеваться следующая строка
+=======
 
-```cpp
-using namespace Kit;
-```
+## Описание
 
+`component-sdl2` это небольшая кроссплатформенная библиотека для создания интефейсов созданная на базе низкоуровневой графической библиотеки `SDL2`. Она поддерживает полную кастомизацию внешнего вида компонентов при помощи `css`, а так же простое создание кастомных компонентов любой сложности. 
+>>>>>>> 919e39576eba054330ec8a458378e067487fc272
+
+
+<<<<<<< HEAD
 После подключения библиотеки, доступ к объекту библиотеки осуществляется через короткое имя `$`.
 
 Для запуска библиотеки необходимо вызвать у `$` метод `run`, передав в оператор `return`.
@@ -735,3 +748,15 @@ Components getElementsByClassName(const string& className);
 |  Hover | Describes the styles for the state when the mouse cursor is over the component |
 |  Active | Describes styles for the state when the mouse is clicked on a component |
 |  Focus  |Describes styles for the state when the component is in focus.|
+=======
+## Пример интерфейса
+
+![example](docs/1.png)
+
+## Ссылки 
+[Документация](https://i58215.gitbook.io/component-sdl2/)
+
+## Лицензия
+
+MIT
+>>>>>>> 919e39576eba054330ec8a458378e067487fc272
