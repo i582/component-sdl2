@@ -1,5 +1,4 @@
-.tabs
-{
+.tabs {
     width: 200px;
     height: 200px;
 
@@ -8,8 +7,7 @@
     background-color: #3C3F41;
 }
 
-.tabs-header
-{
+.tabs-header {
     width: 100%;
     height: 35px;
 
@@ -21,8 +19,7 @@
     display: inline-block;
 }
 
-.tabs-header-item
-{
+.tabs-header-item {
     width: 80px;
     height: calc(100% - 3px);
 
@@ -39,15 +36,13 @@
     vertical-align: center;
 }
 
-.tabs-header-item-selected
-{
+.tabs-header-item-selected {
     border-color: #4A88C7;
 
     border-bottom: 3px solid #4A88C7;
 }
 
-.tabs-body
-{
+.tabs-body {
     width: 100%;
     height: calc(100% - 36px);
 

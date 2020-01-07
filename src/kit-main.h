@@ -5,52 +5,50 @@
 
 namespace Kit
 {
-	using std::cout; 
-	using std::endl;
+    using std::cout;
+    using std::endl;
 
 
-class KitApplication
-{
-private:
-	static KitApplication* instance;
-	KitApplication();
+    class KitApplication
+    {
+    private:
+        static KitApplication* instance;
 
-public:
-	static KitApplication* create();
-	~KitApplication();
+        KitApplication();
 
+    public:
+        static KitApplication* create();
 
-private:
-	bool is_running;
-	Event e;
-
-    map <size_t, Window*> windows;
+        ~KitApplication();
 
 
-	animation<int>* anim;
+    private:
+        bool is_running;
+        Event e;
 
-public:
-	Window* addWindow(Window* window);
-	void deleteWindow(size_t index);
+        map<size_t, Window*> windows;
 
-	friend Window;
+    public:
+        Window* addWindow(Window* window);
 
-private:
-	void init();
-	int setup();
-	void render();
-	void onEvent();
-	void close();
+        void deleteWindow(size_t index);
 
-public: /** Interface */
-	int run();
+        friend Window;
+
+    private:
+        void init();
+        void render();
+        void onEvent();
+        void close();
+
+    public: /** Interface */
+        int run();
 
 
-public: /** Windows Interface */
-	Window* at(size_t index);
-	Window* operator[](size_t index);
+    public: /** Windows Interface */
+        Window* at(size_t index);
+        Window* operator[](size_t index);
 
-	
-};
+    };
 
 }	

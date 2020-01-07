@@ -22,8 +22,8 @@ void Draw::roundedRect(SDL_Renderer* renderer, const SimpleRect& rect, const int
     const int cx4 = x1 + radius;
     const int cy4 = y2 - radius - 1;
 
-    const SDL_Rect r1 = { cx1, y1, rect.w - 2*radius, rect.h};
-    const SDL_Rect r2 = { x1, cy1, rect.w, rect.h - 2*radius};
+    const SDL_Rect r1 = {cx1, y1, rect.w - 2 * radius, rect.h};
+    const SDL_Rect r2 = {x1, cy1, rect.w, rect.h - 2 * radius};
 
     if (radius == 0 || radius < 0)
     {

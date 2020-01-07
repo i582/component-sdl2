@@ -3,7 +3,7 @@
 
 
 SimpleWindow::SimpleWindow(const string& title, SimpleRect size, bool noBorder)
-    : Window(title, size, noBorder)
+        : Window(title, size, noBorder)
 {
     setup();
 }
@@ -11,11 +11,11 @@ SimpleWindow::SimpleWindow(const string& title, SimpleRect size, bool noBorder)
 void SimpleWindow::setup()
 {
     style("../src/std_windows/simple_window/css/style.css");
-    setDraggableArea({ 0, 0, _size.w - 135, 25 });
+    setDraggableArea({0, 0, _size.w - 135, 25});
 
 
-    $$->append(new Component("#window-header", { 0, 0, _size.w - 135, 30 }, ".window-header"))
-        ->setText(this->title);
+    $$->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
+            ->setText(this->title);
 
     add("#system-exit", ".system-button .system-exit");
     add("#system-expand", ".system-button .system-expand");
@@ -33,14 +33,10 @@ void SimpleWindow::setup()
     add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
 
 
-    Cmpt::create();
-    Component::create();
 
+    auto table = (Table*) add(new Table("#table", ".table-test"));
 
-
-
-    auto table = (Table*)add(new Table("#table", ".table-test"));
-
+    // table->style({{"f: background-color", "#ffffff"}});
 
 
     table->addCollumn("#");
@@ -48,10 +44,9 @@ void SimpleWindow::setup()
     table->addCollumn("Русский язык");
     table->addCollumn("Математика");
 
-    table->addRow({ "1", "Молодой человек", "85", "90" });
-    table->addRow({ "2", "Старый человек", "75", "100" });
-    table->addRow({ "3", "Старый человек", "75", "100" });
-
+    table->addRow({"1", "Молодой человек", "85", "90"});
+    table->addRow({"2", "Старый человек", "75", "100"});
+    table->addRow({"3", "Старый человек", "75", "100"});
 
 
     add("#test-text", ".test-text")->useExtendedText();

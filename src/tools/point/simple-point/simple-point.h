@@ -4,5 +4,5 @@
 
 namespace Kit
 {
-	using SimplePoint = SDL_Point;
+    using SimplePoint = SDL_Point;
 }

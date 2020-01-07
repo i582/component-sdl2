@@ -1,5 +1,4 @@
-.table
-{
+.table {
     width: 300px;
     height: 300px;
 
@@ -14,8 +13,7 @@
     display: block;
 }
 
-.table-header
-{
+.table-header {
     width: auto;
     height: 25px;
 
@@ -30,8 +28,7 @@
     display: inline-block;
 }
 
-.table-body
-{
+.table-body {
     width: auto;
     height: auto;
 
@@ -40,8 +37,7 @@
     display: block;
 }
 
-.table-row
-{
+.table-row {
     width: auto;
     height: 20px;
 
@@ -50,23 +46,19 @@
     display: inline-block;
 }
 
-.light
-{
+.light {
     background-color: #3C3F41;
 }
 
-.light:focus
-{
+.light:focus {
     background-color: #4B6EAF;
 }
 
-.table-row:focus
-{
+.table-row:focus {
     background-color: #4B6EAF;
 }
 
-.table-header-item
-{
+.table-header-item {
     width: 120px;
     height: 100%;
 
@@ -83,8 +75,7 @@
     border-right: 1px solid #5E6060;
 }
 
-.table-item
-{
+.table-item {
     width: calc(120px + 1px);
     height: 100%;
 
@@ -97,8 +88,7 @@
     vertical-align: center;
 }
 
-.table-item:focus
-{
+.table-item:focus {
 
     background-color: #4B6EAF;
 

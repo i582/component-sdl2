@@ -66,7 +66,7 @@ void Text::splitByLines()
 
     textBlockHeight += blockMarginTop;
 
-    for (auto &word : *words)
+    for (auto& word : *words)
     {
 
         if (words->size() > 1)
@@ -140,7 +140,7 @@ void Text::renderLines()
     }
 
 
-    for (auto &line : lines)
+    for (auto& line : lines)
     {
         SDL_Surface* textSurface = TTF_RenderUTF8_Blended(ttf_font, line.c_str(), color.colorSDL());
 
@@ -210,7 +210,7 @@ void Text::render()
     SDL_RenderCopy(renderer, texture, nullptr, &size.toSdlRect());
 }
 
-void Text::setText(const string &new_text)
+void Text::setText(const string& new_text)
 {
     if (this->text == new_text)
         return;
@@ -226,7 +226,7 @@ void Text::setText(const string &new_text)
     this->needReRender = true;
 }
 
-void Text::setSize(const Rect &size)
+void Text::setSize(const Rect& size)
 {
     if (this->size == size)
         return;
@@ -241,7 +241,7 @@ void Text::setSize(const Rect &size)
     this->needReRender = true;
 }
 
-void Text::setFont(const font &font)
+void Text::setFont(const font& font)
 {
     if (this->_font == font)
         return;
@@ -254,7 +254,7 @@ void Text::setFont(const font &font)
     this->needReRender = true;
 }
 
-void Text::setFontSize(const size_t &fontSize)
+void Text::setFontSize(const size_t& fontSize)
 {
     if (this->fontSize == fontSize)
         return;
@@ -268,7 +268,7 @@ void Text::setFontSize(const size_t &fontSize)
     this->needReRender = true;
 }
 
-void Text::setColor(const Color &color)
+void Text::setColor(const Color& color)
 {
     if (this->color == color)
         return;
@@ -278,7 +278,7 @@ void Text::setColor(const Color &color)
     this->needReRender = true;
 }
 
-void Text::setLineHeight(const double &lineHeight)
+void Text::setLineHeight(const double& lineHeight)
 {
     if (this->lineHeight == lineHeight)
         return;
@@ -288,7 +288,7 @@ void Text::setLineHeight(const double &lineHeight)
     this->needReRender = true;
 }
 
-void Text::setTextAlign(const string &align)
+void Text::setTextAlign(const string& align)
 {
     TextAlign temp = TextAlign::LEFT;
 
@@ -313,7 +313,7 @@ void Text::setTextAlign(const string &align)
     this->needReRender = true;
 }
 
-void Text::setTextBlockVerticalAlign(const string &align)
+void Text::setTextBlockVerticalAlign(const string& align)
 {
     TextBlockVerticalAlign temp;
     if (align == "top")
@@ -341,7 +341,7 @@ void Text::setTextBlockVerticalAlign(const string &align)
     this->needReRender = true;
 }
 
-void Text::setTextBlockMargin(const string &side, int value)
+void Text::setTextBlockMargin(const string& side, int value)
 {
     if (side == "top")
     {
@@ -385,7 +385,7 @@ void Text::setRenderer(SDL_Renderer* renderer)
     this->renderer = renderer;
 }
 
-bool Text::onHover(Point &p)
+bool Text::onHover(Point& p)
 {
 
 
@@ -407,7 +407,7 @@ int Text::getFontSize()
     return fontSize;
 }
 
-font &Text::getFont()
+font& Text::getFont()
 {
     return _font;
 }

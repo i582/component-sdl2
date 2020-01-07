@@ -11,7 +11,7 @@ Table::Table(const string& id, const string& classes)
 
 void Table::setup()
 {
-    include("../src/std_components/table/css/style.css");
+    style("../src/std_components/table/css/style.css");
 
     append(new TableHeader(_id + "-header", ".header-table"));
 
@@ -24,7 +24,8 @@ void Table::addCollumn(const string& title)
     this->count_collumns++;
 
     _childrens[0]->append(
-         new TableHeaderItem(_id + "-header-item-" + to_string(this->count_collumns), title, ".header-item-" + to_string(this->count_collumns))
+            new TableHeaderItem(_id + "-header-item-" + to_string(this->count_collumns), title,
+                                ".header-item-" + to_string(this->count_collumns))
     );
 }
 
@@ -33,7 +34,7 @@ void Table::addRow()
     this->count_row++;
 
     _childrens[1]->append(
-        new TableRow(_id + "-row-" + to_string(this->count_row), ".row-" + to_string(this->count_row))
+            new TableRow(_id + "-row-" + to_string(this->count_row), ".row-" + to_string(this->count_row))
     );
 
 }
@@ -48,14 +49,16 @@ void Table::addRow(const vector<string>& collumns)
         is_light = " .light";
     }
 
-    auto row = new TableRow(_id + "-row-" + to_string(this->count_row), ".row-" + to_string(this->count_row) + is_light);
+    auto row = new TableRow(_id + "-row-" + to_string(this->count_row),
+                            ".row-" + to_string(this->count_row) + is_light);
 
     _childrens[1]->append(row);
 
     for (int i = 0; i < count_collumns && i < collumns.size(); ++i)
     {
         row->append(
-                new TableItem(_id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i), collumns[i], ".row-item-" + to_string(i))
+                new TableItem(_id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i), collumns[i],
+                              ".row-item-" + to_string(i))
         )->ignoreEvents();
     }
 }

@@ -4,21 +4,21 @@
 
 namespace Kit
 {
-	class Component;
+    class Component;
 
-	class VerticalScroll : public Scroll
-	{
-	public:
-		VerticalScroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes);
-		
-	protected:
-		virtual void init();
+    class VerticalScroll : public Scroll
+    {
+    public:
+        VerticalScroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes);
 
-	public: 
-		friend Component;
+    protected:
+        virtual void init();
 
-	public:
-		void shift(int delta);
-	};
+    public:
+        friend Component;
+
+    public:
+        void shift(int delta);
+    };
 
 }

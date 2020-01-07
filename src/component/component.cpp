@@ -21,9 +21,12 @@ Kit::Component* Kit::Component::create(Component* component)
 
 
 Kit::Component::Component(const std::string& id, const string& classes, const vector<Component*>& childrens)
-: Component(id, {0, 0, 0, 0}, classes, childrens) {}
+        : Component(id, {0, 0, 0, 0}, classes, childrens)
+{
+}
 
-Kit::Component::Component(const string &id, const Rect& size, const string &classes, const vector<Component*> &childrens)
+Kit::Component::Component(const string& id, const Rect& size, const string& classes,
+                          const vector<Component*>& childrens)
 {
     /** Sizes */
     this->_innerSize = size;
@@ -48,7 +51,7 @@ Kit::Component::Component(const string &id, const Rect& size, const string &clas
 
     /** Childrens */
     // this->_childrens = childrens;
-    for (auto &children : childrens)
+    for (auto& children : childrens)
     {
         append(children);
     }
@@ -128,7 +131,7 @@ Kit::Component::Component(const string &id, const Rect& size, const string &clas
     this->_withExtendedText = false;
 
     /** Ignore Some Event */
-    this-> _ignoreEvents = false;
+    this->_ignoreEvents = false;
 }
 
 Kit::Component::~Component()
@@ -217,7 +220,7 @@ void Kit::Component::setupSize()
         this->_outerSize = size;
     }
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupSize();
     }
@@ -230,7 +233,7 @@ void Kit::Component::setupChildrenRenderer()
         this->_renderer = _parent->renderer();
     }
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupChildrenRenderer();
     }
@@ -287,7 +290,6 @@ void Kit::Component::computeSize()
     _innerSize.start.y(topSize);
 
 
-
     Texture::destroy(this->_outerTexture);
     this->_outerTexture = Texture::create(_renderer, _outerSize);
 
@@ -296,7 +298,7 @@ void Kit::Component::computeSize()
     this->_innerTexture = Texture::create(_renderer, _innerSize);
 
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->computeSize();
     }
@@ -304,7 +306,7 @@ void Kit::Component::computeSize()
 
 void Kit::Component::computeChildrenSize()
 {
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->computeChildrenSize();
     }
@@ -312,7 +314,7 @@ void Kit::Component::computeChildrenSize()
 
     SimpleSize childrenSize = {0, 0};
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         if (!children->display())
             continue;
@@ -353,12 +355,10 @@ void Kit::Component::computeChildrenSize()
         this->_horizontalScroll->init();
 
 
-
         _innerSize.dh(-this->_horizontalScroll->_bodySize.h());
 
         Texture::destroy(this->_innerTexture);
         this->_innerTexture = Texture::create(_renderer, _innerSize);
-
 
 
         this->_horizontalScroll->_parentTexture = this->_outerTexture;
@@ -386,7 +386,7 @@ void Kit::Component::computeChildrenSize()
         /*
          *  TODO: Setup scroll
          */
-        this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w() -  this->_verticalScroll->_bodySize.w());
+        this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w() - this->_verticalScroll->_bodySize.w());
         this->_verticalScroll->_bodySize.y(_innerSize.y());
 
         this->_verticalScroll->_bodySize.h(_innerSize.h());
@@ -399,7 +399,6 @@ void Kit::Component::computeChildrenSize()
 
 
         _innerSize.dw(-this->_verticalScroll->_bodySize.w());
-
 
 
         Texture::destroy(this->_innerTexture);
@@ -430,7 +429,7 @@ void Kit::Component::setupBackgroundImage()
 {
     this->_image = new Image(this);
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupBackgroundImage();
     }
@@ -466,7 +465,7 @@ void Kit::Component::setupFont()
     this->_fontFocus = font(font_family, font_style, font_weight);
 
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupFont();
     }
@@ -480,7 +479,7 @@ void Kit::Component::setupText()
                            Color(0x00000000));
     this->_text->setRenderer(this->_renderer);
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupText();
     }
@@ -493,8 +492,7 @@ void Kit::Component::setupScrolls()
     this->_horizontalScroll = new HorizontalScroll(_renderer, {0, 0, 0, 15}, 0, 1);
 
 
-
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupScrolls();
     }
@@ -513,7 +511,7 @@ void Kit::Component::setupExtendedText()
                                          _fontNormal, fontSize, textColor, lineHeight, true);
     }
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupExtendedText();
     }
@@ -535,7 +533,7 @@ void Kit::Component::setupParentWindow()
         this->_window->addElement(this);
     }
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupParentWindow();
     }
@@ -590,13 +588,13 @@ void Kit::Component::setupChildrenPosition()
     }
 
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->setupChildrenPosition();
     }
 }
 
-void Kit::Component::adjustMousePoint(Point &p)
+void Kit::Component::adjustMousePoint(Point& p)
 {
     if (_parent == nullptr)
         return;
@@ -660,15 +658,12 @@ void Kit::Component::render()
     {
         const auto outlineColor = blockState->get<Color>("outline");
 
-        const SimpleRect _outlineRectSize = { 0, 0, _innerSize.w(), _innerSize.h() };
+        const SimpleRect _outlineRectSize = {0, 0, _innerSize.w(), _innerSize.h()};
         Draw::roundedRect(_renderer, _outlineRectSize, borderRadius, outlineColor);
     }
 
-    const SimpleRect _innerRectSize = { outline, outline, _innerSize.w() - 2*outline, _innerSize.h() - 2*outline };
+    const SimpleRect _innerRectSize = {outline, outline, _innerSize.w() - 2 * outline, _innerSize.h() - 2 * outline};
     Draw::roundedRect(_renderer, _innerRectSize, borderRadius, backgroundColor);
-
-
-
 
 
     if (this->_image != nullptr)
@@ -730,7 +725,7 @@ void Kit::Component::render()
     }
 
 
-    for (auto &children : _childrens)
+    for (auto& children : _childrens)
     {
         children->render();
     }
@@ -746,16 +741,11 @@ void Kit::Component::render()
 
 
     const SDL_Rect _innerRectBorderSize =
-    {
-            _innerSize.x() - leftSize,
-            _innerSize.y() - topSize,
-            _innerSize.w() + leftSize + rightSize,
-            _innerSize.h() + topSize + bottomSize
-    };
+            {
+                    _innerSize.x() - leftSize, _innerSize.y() - topSize, _innerSize.w() + leftSize + rightSize,
+                    _innerSize.h() + topSize + bottomSize
+            };
     Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius, borderColor);
-
-
-
 
 
     Rect copy = _innerSize;
@@ -1041,17 +1031,17 @@ int Kit::Component::left() const
     return _outerSize.x();
 }
 
-const Kit::Rect &Kit::Component::size() const
+const Kit::Rect& Kit::Component::size() const
 {
     return _innerSize;
 }
 
-const Kit::Rect &Kit::Component::outerSize() const
+const Kit::Rect& Kit::Component::outerSize() const
 {
     return _outerSize;
 }
 
-const Kit::Rect &Kit::Component::innerSize() const
+const Kit::Rect& Kit::Component::innerSize() const
 {
     return _innerSize;
 }
@@ -1099,7 +1089,7 @@ Kit::Component* Kit::Component::parent() const
     return _parent;
 }
 
-const Kit::vector<Kit::Component*> &Kit::Component::childs() const
+const Kit::vector<Kit::Component*>& Kit::Component::childs() const
 {
     return _childrens;
 }
@@ -1115,7 +1105,7 @@ bool Kit::Component::isChildrenObject(Component* obj) const
 
     if (!_childrens.empty() && !is_child)
     {
-        for (auto &children : _childrens)
+        for (auto& children : _childrens)
         {
             is_child |= children->isChildrenObject(obj);
         }
@@ -1152,9 +1142,9 @@ Kit::Component* Kit::Component::append(Component* component)
     return component;
 }
 
-Kit::Component* Kit::Component::append(const vector<Component*> &components)
+Kit::Component* Kit::Component::append(const vector<Component*>& components)
 {
-    for (auto &component : components)
+    for (auto& component : components)
     {
         append(component);
     }
@@ -1162,7 +1152,7 @@ Kit::Component* Kit::Component::append(const vector<Component*> &components)
     return this;
 }
 
-bool Kit::Component::onHover(const Point &point)
+bool Kit::Component::onHover(const Point& point)
 {
     return _isDisplay && point.in(_outerSize);
 }
@@ -1193,26 +1183,26 @@ Kit::Component* Kit::Component::onComponentHover(Point point)
     return this;
 }
 
-const Kit::string &Kit::Component::id() const
+const Kit::string& Kit::Component::id() const
 {
     return _id;
 }
 
-Kit::Component* Kit::Component::addEventListener(const string &action, eventCallback callback_function)
+Kit::Component* Kit::Component::addEventListener(const string& action, eventCallback callback_function)
 {
     _eventListeners[action] = std::move(callback_function);
 
     return this;
 }
 
-Kit::Component* Kit::Component::removeEventListener(const string &action)
+Kit::Component* Kit::Component::removeEventListener(const string& action)
 {
     _eventListeners[action] = Component::_emptyCallback;
 
     return this;
 }
 
-Kit::Component* Kit::Component::callEventListener(const string &action, Event* e)
+Kit::Component* Kit::Component::callEventListener(const string& action, Event* e)
 {
     if (_eventListeners.find(action) != _eventListeners.end())
     {
@@ -1226,39 +1216,29 @@ Kit::Component* Kit::Component::callEventListener(const string &action, Event* e
     return this;
 }
 
-Kit::map<Kit::string, std::any> &Kit::Component::userData()
+Kit::map<Kit::string, std::any>& Kit::Component::userData()
 {
     return _userData;
 }
 
-Kit::Component* Kit::Component::addUserData(const string &key, const std::any& data)
+Kit::Component* Kit::Component::addUserData(const string& key, const std::any& data)
 {
     _userData.insert(make_pair(key, data));
 
     return this;
 }
 
-std::any Kit::Component::userData(const string &key)
+std::any Kit::Component::userData(const string& key)
 {
     return _userData[key];
 }
 
-bool Kit::Component::isHovered()
-{
-    return _isHovered;
-}
-
-bool Kit::Component::isActive()
-{
-    return _isActive;
-}
-
-bool Kit::Component::hasClass(const string &className) const
+bool Kit::Component::hasClass(const string& className) const
 {
     return _classes.find(className) != -1;
 }
 
-Kit::Component* Kit::Component::removeClass(const string &className)
+Kit::Component* Kit::Component::removeClass(const string& className)
 {
     int indexStart = _classes.find(className);
 
@@ -1276,7 +1256,7 @@ Kit::Component* Kit::Component::removeClass(const string &className)
     return this;
 }
 
-Kit::Component* Kit::Component::addClass(const string &className)
+Kit::Component* Kit::Component::addClass(const string& className)
 {
     _classes += " " + className;
 
@@ -1285,7 +1265,7 @@ Kit::Component* Kit::Component::addClass(const string &className)
     return this;
 }
 
-Kit::Component* Kit::Component::toggleClass(const string &className)
+Kit::Component* Kit::Component::toggleClass(const string& className)
 {
     if (hasClass(className))
     {
@@ -1311,7 +1291,7 @@ Kit::Component* Kit::Component::classes(const std::string& newClasses)
     return this;
 }
 
-Kit::Component* Kit::Component::setText(const string &text)
+Kit::Component* Kit::Component::setText(const string& text)
 {
     if (_text != nullptr)
     {
@@ -1340,16 +1320,50 @@ bool Kit::Component::isHorizontalScrollable() const
     return _horizontalScrollable;
 }
 
-Kit::Component* Kit::Component::include(const string &path)
+Kit::Component* Kit::Component::style(const string& path)
 {
     if (_css_component == nullptr)
         _css_component = new CSS::css(path);
 
-    _css_component->open(path);
-
     return this;
 }
 
+Kit::Component* Kit::Component::style(const std::map<std::string, std::string>& inlineStyles)
+{
+    enum class styleType
+    {
+        NORMAL,
+        HOVER,
+        ACTIVE,
+        FOCUS
+    };
+
+    //this->_inlineStyles = inlineStyles;
+
+    map<string, CSS::css_variant> temp_styles;
+
+    for (auto&[attribute, value] : inlineStyles)
+    {
+        styleType type = styleType::NORMAL;
+
+        auto split_attr = Utils::split(attribute, ':');
+
+        if (split_attr->size() == 1)
+        {
+            auto value_variant = CSS::css_attribute::get(attribute, value);
+
+            temp_styles.insert(std::make_pair(attribute, value_variant));
+        }
+        else if (split_attr->size() == 2)
+        {
+
+        }
+
+        delete split_attr;
+    }
+
+    return this;
+}
 
 void Kit::Component::outerWidth(int value)
 {
@@ -1405,10 +1419,10 @@ std::string Kit::Component::generateRandomString()
                 "abcdefghijklmnopqrstuvwxyz";
 
         const size_t max_index = (sizeof(charset) - 1);
-        return charset[ rand() % max_index ];
+        return charset[rand() % max_index];
     };
     std::string str(length, 0);
-    std::generate_n( str.begin(), length, rand_char );
+    std::generate_n(str.begin(), length, rand_char);
     return str;
 }
 

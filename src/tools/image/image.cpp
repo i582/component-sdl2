@@ -5,113 +5,111 @@ using namespace Kit;
 
 Image::Image(Component* parent)
 {
-	if (parent == nullptr)
-		return;
+    if (parent == nullptr)
+        return;
 
-	IMG_Init(IMG_INIT_PNG);
+    IMG_Init(IMG_INIT_PNG);
 
-	this->parent = parent;
-	this->renderer = parent->renderer();
-	this->parentTexture = parent->innerTexture();
+    this->parent = parent;
+    this->renderer = parent->renderer();
+    this->parentTexture = parent->innerTexture();
 
-	this->containerSize = { 0, 0 , parent->width(), parent->height() };
+    this->containerSize = {0, 0, parent->width(), parent->height()};
 
     this->texture = nullptr;
 
 
-
-
-	this->needReRender = true;
+    this->needReRender = true;
 }
 
 void Image::setPath(const string& path)
 {
-	if (path.empty())
-		return;
-	
-	if (this->path == path)
-		return;
+    if (path.empty())
+        return;
+
+    if (this->path == path)
+        return;
 
 
-	this->path = path;
+    this->path = path;
 
-	SDL_DestroyTexture(this->texture);
-	this->texture = IMG_LoadTexture(renderer, this->path.c_str());
+    SDL_DestroyTexture(this->texture);
+    this->texture = IMG_LoadTexture(renderer, this->path.c_str());
 
-	if (this->texture == nullptr)
-	{
-		cout << "Error: " << IMG_GetError() << endl;
-		return;
-	}
+    if (this->texture == nullptr)
+    {
+        cout << "Error: " << IMG_GetError() << endl;
+        return;
+    }
 
-	SDL_QueryTexture(this->texture, nullptr, nullptr, &this->generalSize.w, &this->generalSize.h);
+    SDL_QueryTexture(this->texture, nullptr, nullptr, &this->generalSize.w, &this->generalSize.h);
 
-	this->needReRender = true;
+    this->needReRender = true;
 }
 
 void Image::setRenderer(SDL_Renderer* renderer)
 {
-	this->renderer = renderer;
+    this->renderer = renderer;
 }
 
 void Image::setImageSize(const SimpleRect& generalSize)
 {
-	this->generalSize = generalSize;
+    this->generalSize = generalSize;
 }
 
 void Image::setImageShift(const SimplePoint& p)
 {
-	this->generalSize.x = p.x;
-	this->generalSize.y = p.y;
+    this->generalSize.x = p.x;
+    this->generalSize.y = p.y;
 }
 
 void Image::setImageWidth(const string& size)
 {
-	if (size == "")
-		return;
+    if (size == "")
+        return;
 
 
-	int newWidth = Point::parseStringToNumber(size, parent->width());
+    int newWidth = Point::parseStringToNumber(size, parent->width());
 
-	double imageRatio = this->generalSize.w / (double)this->generalSize.h;
+    double imageRatio = this->generalSize.w / (double) this->generalSize.h;
 
-	this->generalSize.w = newWidth;
-	this->generalSize.h = newWidth / imageRatio;
+    this->generalSize.w = newWidth;
+    this->generalSize.h = newWidth / imageRatio;
 
 }
 
 void Image::createTexture()
 {
-	if (this->texture != nullptr)
-	{
-		SDL_DestroyTexture(this->texture);
-		this->texture = nullptr;
-	}
+    if (this->texture != nullptr)
+    {
+        SDL_DestroyTexture(this->texture);
+        this->texture = nullptr;
+    }
 
-	if (this->path.empty())
-		return;
+    if (this->path.empty())
+        return;
 
-	this->texture = IMG_LoadTexture(renderer, this->path.c_str());
+    this->texture = IMG_LoadTexture(renderer, this->path.c_str());
 
-	if (this->texture == nullptr)
-	{
-		cout << "Error: " << IMG_GetError() << endl;
-		return;
-	}
+    if (this->texture == nullptr)
+    {
+        cout << "Error: " << IMG_GetError() << endl;
+        return;
+    }
 
-	SDL_QueryTexture(this->texture, nullptr, nullptr, &textureSize.w, &textureSize.h);
+    SDL_QueryTexture(this->texture, nullptr, nullptr, &textureSize.w, &textureSize.h);
 
-	needReRender = false;
+    needReRender = false;
 }
 
 void Image::render()
 {
-	if (needReRender)
-		createTexture();
+    if (needReRender)
+        createTexture();
 
-	SDL_SetRenderTarget(renderer, this->parentTexture);
+    SDL_SetRenderTarget(renderer, this->parentTexture);
 
-	SimpleRect srcRect = { 0, 0, generalSize.w, generalSize.h };
+    SimpleRect srcRect = {0, 0, generalSize.w, generalSize.h};
 
-	SDL_RenderCopy(renderer, this->texture, NULL, &generalSize);
+    SDL_RenderCopy(renderer, this->texture, NULL, &generalSize);
 }

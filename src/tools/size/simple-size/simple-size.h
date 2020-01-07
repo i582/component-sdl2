@@ -4,13 +4,14 @@
 
 namespace Kit
 {
-	struct SimpleSize
-	{
-		int w, h;
+    struct SimpleSize
+    {
+        int w, h;
 
-		SimpleSize();
-		SimpleSize(int w, int h);
+        SimpleSize();
 
-		SDL_Point toSdlPoint();
-	};
+        SimpleSize(int w, int h);
+
+        SDL_Point toSdlPoint();
+    };
 }

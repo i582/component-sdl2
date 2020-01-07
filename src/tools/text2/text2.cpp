@@ -2,7 +2,8 @@
 #include "../../component/component.h"
 
 Kit::Text2::Text2(Component* parent, const string& text, SimpleRect size,
-        const class font& new_font, size_t fontSize, const Color& colorFont, const double& lineHeight, bool isOneLine)
+                  const class font& new_font, size_t fontSize, const Color& colorFont, const double& lineHeight,
+                  bool isOneLine)
 {
     if (parent == nullptr)
     {
@@ -10,21 +11,21 @@ Kit::Text2::Text2(Component* parent, const string& text, SimpleRect size,
         return;
     }
 
-	this->renderer = parent->renderer();
-	this->texture = nullptr;
-	this->size = size;
+    this->renderer = parent->renderer();
+    this->texture = nullptr;
+    this->size = size;
 
-	this->parent = parent;
+    this->parent = parent;
 
-	this->text = text;
-	this->font = new_font;
-	this->fontSize = fontSize;
-	this->color = colorFont;
-	this->fontTTF = font.at(fontSize);
+    this->text = text;
+    this->font = new_font;
+    this->fontSize = fontSize;
+    this->color = colorFont;
+    this->fontTTF = font.at(fontSize);
 
-	this->lineHeight = lineHeight;
+    this->lineHeight = lineHeight;
 
-	this->isSelected = false;
+    this->isSelected = false;
 
     this->mousePush = false;
 
@@ -42,17 +43,17 @@ Kit::Text2::Text2(Component* parent, const string& text, SimpleRect size,
     this->textMarginLeft = 0;
     this->textMarginRight = 0;
 
-	splitByLines();
-	setup();
+    splitByLines();
+    setup();
 }
 
 Kit::Text2::~Text2()
 {
-	SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(texture);
 
-	for (auto& line : lines)
+    for (auto& line : lines)
     {
-	    delete line;
+        delete line;
     }
 }
 
@@ -60,7 +61,7 @@ void Kit::Text2::setup()
 {
     const int heightLine = lines[0] == nullptr ? 0 : lines[0]->size.h;
 
-    size.h = (int)(lines.size() * heightLine * lineHeight);
+    size.h = (int) (lines.size() * heightLine * lineHeight);
 
     for (auto& line : lines)
     {
@@ -88,80 +89,78 @@ void Kit::Text2::splitByLines()
     }
 
 
-	vector<string>* text_lines = Utils::split(text, '\n');
-	
-	for (auto& line : *text_lines)
-	{
-		lines.push_back(new TextLine(this, line));
-	}
-	
-	delete text_lines;
+    vector<string>* text_lines = Utils::split(text, '\n');
+
+    for (auto& line : *text_lines)
+    {
+        lines.push_back(new TextLine(this, line));
+    }
+
+    delete text_lines;
 }
 
 void Kit::Text2::handleSelect()
 {
-	for (auto& line : lines)
-	{
-		line->deleteSelected();
-	}
+    for (auto& line : lines)
+    {
+        line->deleteSelected();
+    }
 
 
-	CursorPosition tempStartCursorSelect = startCursorSelect;
-	CursorPosition tempEndCursorSelect = endCursorSelect;
+    CursorPosition tempStartCursorSelect = startCursorSelect;
+    CursorPosition tempEndCursorSelect = endCursorSelect;
 
-	if (tempStartCursorSelect.y > tempEndCursorSelect.y)
-	{
-		std::swap(tempStartCursorSelect, tempEndCursorSelect);
-	}
-
-
-	if (tempStartCursorSelect.y == tempEndCursorSelect.y)
-	{
-		lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
-		lines[tempStartCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
-	}
-
-	else if (tempStartCursorSelect.y == tempEndCursorSelect.y - 1)
-	{
-
-		lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
-		lines[tempStartCursorSelect.y]->endCursorSelect.x = lines[tempStartCursorSelect.y]->text.size();
+    if (tempStartCursorSelect.y > tempEndCursorSelect.y)
+    {
+        std::swap(tempStartCursorSelect, tempEndCursorSelect);
+    }
 
 
-		lines[tempEndCursorSelect.y]->startCursorSelect.x = 0;
-		lines[tempEndCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
-	}
-	else if (tempEndCursorSelect.y - tempStartCursorSelect.y > 1)
-	{
+    if (tempStartCursorSelect.y == tempEndCursorSelect.y)
+    {
+        lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
+        lines[tempStartCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
+    }
 
-		lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
-		lines[tempStartCursorSelect.y]->endCursorSelect.x = lines[tempStartCursorSelect.y]->text.size();
+    else if (tempStartCursorSelect.y == tempEndCursorSelect.y - 1)
+    {
 
-
-
-		for (size_t i = tempStartCursorSelect.y + 1; i < tempEndCursorSelect.y; i++)
-		{
-			lines[i]->startCursorSelect.x = 0;
-			lines[i]->endCursorSelect.x = lines[i]->text.size();
-		}
+        lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
+        lines[tempStartCursorSelect.y]->endCursorSelect.x = lines[tempStartCursorSelect.y]->text.size();
 
 
+        lines[tempEndCursorSelect.y]->startCursorSelect.x = 0;
+        lines[tempEndCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
+    }
+    else if (tempEndCursorSelect.y - tempStartCursorSelect.y > 1)
+    {
 
-		lines[tempEndCursorSelect.y]->startCursorSelect.x = 0;
-		lines[tempEndCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
-	}
+        lines[tempStartCursorSelect.y]->startCursorSelect.x = tempStartCursorSelect.x;
+        lines[tempStartCursorSelect.y]->endCursorSelect.x = lines[tempStartCursorSelect.y]->text.size();
 
-	this->needUpdate = true;
+
+        for (size_t i = tempStartCursorSelect.y + 1; i < tempEndCursorSelect.y; i++)
+        {
+            lines[i]->startCursorSelect.x = 0;
+            lines[i]->endCursorSelect.x = lines[i]->text.size();
+        }
+
+
+        lines[tempEndCursorSelect.y]->startCursorSelect.x = 0;
+        lines[tempEndCursorSelect.y]->endCursorSelect.x = tempEndCursorSelect.x;
+    }
+
+    this->needUpdate = true;
 }
 
 void Kit::Text2::deleteSelect()
 {
-	isSelected = false;
+    isSelected = false;
 
-	for (auto& line : lines)
-	{
-		line->deleteSelected();
-	}
+    for (auto& line : lines)
+    {
+        line->deleteSelected();
+    }
 }
 
 Kit::string Kit::Text2::copySelect()
@@ -215,7 +214,6 @@ Kit::string Kit::Text2::copySelect()
         result += lines[tempStartCursorSelect.y]->text.substr(start, end - start) + '\n';
 
 
-
         for (size_t i = tempStartCursorSelect.y + 1; i < tempEndCursorSelect.y; i++)
         {
             start = 0;
@@ -223,7 +221,6 @@ Kit::string Kit::Text2::copySelect()
 
             result += lines[i]->text.substr(start, end) + '\n';
         }
-
 
 
         start = 0;
@@ -236,43 +233,43 @@ Kit::string Kit::Text2::copySelect()
 
 Kit::CursorPosition Kit::Text2::whereIsCursor(SimplePoint mouse)
 {
-	int numberLine = mouse.y / (int)(fontSize * lineHeight);
+    int numberLine = mouse.y / (int) (fontSize * lineHeight);
 
-	if (numberLine > lines.size() - 1)
+    if (numberLine > lines.size() - 1)
     {
-	    numberLine = (int)lines.size() - 1;
+        numberLine = (int) lines.size() - 1;
     }
 
-	const auto currentLine = lines[numberLine];
+    const auto currentLine = lines[numberLine];
 
-	int calcWidth = lines[numberLine]->shiftByX;
-	int countSymbol = 0;
+    int calcWidth = lines[numberLine]->shiftByX;
+    int countSymbol = 0;
 
-	for (auto& symbol : currentLine->text)
-	{
-		int widthSymbol = 0;
-		char str[2] = { symbol, '\0' };
-		TTF_SizeUTF8(fontTTF, str, &widthSymbol, nullptr);
-
-
-		calcWidth += widthSymbol;
-		countSymbol++;
+    for (auto& symbol : currentLine->text)
+    {
+        int widthSymbol = 0;
+        char str[2] = {symbol, '\0'};
+        TTF_SizeUTF8(fontTTF, str, &widthSymbol, nullptr);
 
 
-		if (calcWidth > mouse.x)
-		{
-			const int delta = calcWidth - mouse.x;
+        calcWidth += widthSymbol;
+        countSymbol++;
 
-			if (delta > widthSymbol / 2.)
-			{
-				countSymbol--;
-			}
 
-			break;
-		}
-	}
+        if (calcWidth > mouse.x)
+        {
+            const int delta = calcWidth - mouse.x;
 
-	return { countSymbol, numberLine };
+            if (delta > widthSymbol / 2.)
+            {
+                countSymbol--;
+            }
+
+            break;
+        }
+    }
+
+    return {countSymbol, numberLine};
 }
 
 void Kit::Text2::renderCursor()
@@ -280,7 +277,7 @@ void Kit::Text2::renderCursor()
     const int heightLine = lines[0] == nullptr ? 0 : lines[0]->size.h;
 
     // calculate cursor position
-    int y = (int)(cursorPos.y * heightLine * lineHeight);
+    int y = (int) (cursorPos.y * heightLine * lineHeight);
     int x = 0;
 
 
@@ -289,7 +286,7 @@ void Kit::Text2::renderCursor()
 
     x += lines[cursorPos.y]->shiftByX;
 
-    const SDL_Rect cursorRect = { x, y, 1, (int)(heightLine * lineHeight) };
+    const SDL_Rect cursorRect = {x, y, 1, (int) (heightLine * lineHeight)};
     SDL_SetRenderDrawColor(renderer, 0xdf, 0xdf, 0xbf, 0xff);
 
 
@@ -302,7 +299,6 @@ void Kit::Text2::update()
 
     SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0x00);
     SDL_RenderClear(renderer);
-
 
 
     if (this->textVerticalAlign == TextBlockVerticalAlign2::TOP)
@@ -323,14 +319,13 @@ void Kit::Text2::update()
     }
 
 
-
     for (size_t i = 0; i < lines.size(); i++)
     {
         auto& line = lines[i];
 
-        const int y = (int)(i * line->size.h * lineHeight);
+        const int y = (int) (i * line->size.h * lineHeight);
 
-        const SDL_Rect rect = { 0, y, size.w, line->size.h };
+        const SDL_Rect rect = {0, y, size.w, line->size.h};
 
         line->render();
 
@@ -354,17 +349,17 @@ void Kit::Text2::render()
     }
 
 
-	SDL_SetRenderTarget(renderer, parent->innerTexture());
+    SDL_SetRenderTarget(renderer, parent->innerTexture());
 
-	SDL_RenderCopy(renderer, texture, nullptr, &size);
+    SDL_RenderCopy(renderer, texture, nullptr, &size);
 }
 
 void Kit::Text2::setText(const string& new_text)
 {
-	this->text = new_text;
+    this->text = new_text;
 
-	splitByLines();
-	setup();
+    splitByLines();
+    setup();
 }
 
 void Kit::Text2::setSize(const SimpleRect& newSize)
@@ -529,475 +524,474 @@ void Kit::Text2::setFocus(bool focus)
 
 void Kit::Text2::mouseMotion(SDL_Event* e, const Point& _mouse)
 {
-	if (!mousePush)
-		return;
+    if (!mousePush)
+        return;
 
-	SimplePoint mouse = { _mouse.x(), _mouse.y() };
+    SimplePoint mouse = {_mouse.x(), _mouse.y()};
 
 
-	if (!isSelected)
-	{
-		isSelected = true;
-		startCursorSelect = endCursorSelect = whereIsCursor(mouse);
-	}
-	else
-	{
-		endCursorSelect = cursorPos = whereIsCursor(mouse);
-	}
+    if (!isSelected)
+    {
+        isSelected = true;
+        startCursorSelect = endCursorSelect = whereIsCursor(mouse);
+    }
+    else
+    {
+        endCursorSelect = cursorPos = whereIsCursor(mouse);
+    }
 
-	handleSelect();
+    handleSelect();
 }
 
 void Kit::Text2::mouseButtonUp(SDL_Event* e, const Point& _mouse)
 {
-	mousePush = false;
+    mousePush = false;
 
     this->needUpdate = true;
 }
 
 void Kit::Text2::mouseButtonDown(SDL_Event* e, const Point& _mouse)
 {
-	mousePush = true;
+    mousePush = true;
 
-    SimplePoint mouse = { _mouse.x(), _mouse.y() };
+    SimplePoint mouse = {_mouse.x(), _mouse.y()};
 
-	cursorPos = whereIsCursor(mouse);
+    cursorPos = whereIsCursor(mouse);
 
-	deleteSelect();
+    deleteSelect();
 
     this->needUpdate = true;
 }
 
 void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
 {
-	SimplePoint mouse = { e->motion.x, e->motion.y };
-	mouse.x -= size.x;
-	mouse.y -= size.y;
+    SimplePoint mouse = {e->motion.x, e->motion.y};
+    mouse.x -= size.x;
+    mouse.y -= size.y;
 
 
-	CursorPosition nowCursorPosition = whereIsCursor(mouse);
+    CursorPosition nowCursorPosition = whereIsCursor(mouse);
 
-	auto& now_line = lines[nowCursorPosition.y];
-
-
-	for (int i = nowCursorPosition.x; i > -1; i--)
-	{
-		char symbol = now_line->text[i];
+    auto& now_line = lines[nowCursorPosition.y];
 
 
-	}
+    for (int i = nowCursorPosition.x; i > -1; i--)
+    {
+        char symbol = now_line->text[i];
 
 
-	for (size_t i = nowCursorPosition.x; i < now_line->text.size(); i++)
-	{
-		char symbol = now_line->text[i];
+    }
 
 
-	}
+    for (size_t i = nowCursorPosition.x; i < now_line->text.size(); i++)
+    {
+        char symbol = now_line->text[i];
 
-	cursorPos = endCursorSelect;
 
-	handleSelect();
+    }
+
+    cursorPos = endCursorSelect;
+
+    handleSelect();
 }
 
 void Kit::Text2::keyDown(SDL_Event* e)
 {
-	switch (e->key.keysym.sym)
-	{
+    switch (e->key.keysym.sym)
+    {
 
-	case SDLK_TAB:
-	{
-		lines.at(cursorPos.y)->addText("   ", cursorPos.x);
-
-		cursorPos.x += 3;
-
-		setup();
-		break;
-	}
-
-	case SDLK_v:
-	{
-		if (SDL_GetModState() & KMOD_CTRL)
-		{
-			const string clipboardText = SDL_GetClipboardText();
-			lines.at(cursorPos.y)->addText(clipboardText, cursorPos.x);
-
-			cursorPos.x += clipboardText.length();
-
-			setup();
-		}
-
-		break;
-	}
-
-	case SDLK_c:
-	{
-		if (SDL_GetModState() & KMOD_CTRL)
-		{
-			const string select_text = copySelect();
-			SDL_SetClipboardText(text.c_str());
-		}
-		
-		break;
-	}
-
-	case SDLK_a:
-	{
-		if (SDL_GetModState() & KMOD_CTRL)
-		{
-			if (startCursorSelect == CursorPosition(0, 0) &&
-				endCursorSelect == CursorPosition((int)(lines[lines.size() - 1]->text.size()), (int)lines.size() - 1))
-			{
-				startCursorSelect = endCursorSelect = { 0, 0 };
-
-				isSelected = false;
-			}
-			else
-			{
-				
-				startCursorSelect = { 0, 0 };
-
-				endCursorSelect =
-				cursorPos = { (int)(lines[lines.size() - 1]->text.size()), (int)lines.size() - 1 };
-
-				isSelected = true;
-			}
-
-			handleSelect();
-		}
-		
-		break;
-	}
-
-	case SDLK_RETURN:
-	{
-	    if (isOneLine)
+        case SDLK_TAB:
         {
-	        return;
+            lines.at(cursorPos.y)->addText("   ", cursorPos.x);
+
+            cursorPos.x += 3;
+
+            setup();
+            break;
         }
 
-		string new_line_text;
+        case SDLK_v:
+        {
+            if (SDL_GetModState() & KMOD_CTRL)
+            {
+                const string clipboardText = SDL_GetClipboardText();
+                lines.at(cursorPos.y)->addText(clipboardText, cursorPos.x);
 
+                cursorPos.x += clipboardText.length();
 
-		if (cursorPos.x != lines[cursorPos.y]->text.length())
-		{
+                setup();
+            }
 
-			new_line_text += lines[cursorPos.y]->text.substr(cursorPos.x, lines[cursorPos.y]->text.length() - cursorPos.x);
+            break;
+        }
 
+        case SDLK_c:
+        {
+            if (SDL_GetModState() & KMOD_CTRL)
+            {
+                const string select_text = copySelect();
+                SDL_SetClipboardText(text.c_str());
+            }
 
-			lines[cursorPos.y]->setText(lines[cursorPos.y]->text.substr(0, cursorPos.x));
-		}
+            break;
+        }
 
-		else
-		{
-			new_line_text = "";
-		}
+        case SDLK_a:
+        {
+            if (SDL_GetModState() & KMOD_CTRL)
+            {
+                if (startCursorSelect == CursorPosition(0, 0) &&
+                    endCursorSelect ==
+                    CursorPosition((int) (lines[lines.size() - 1]->text.size()), (int) lines.size() - 1))
+                {
+                    startCursorSelect = endCursorSelect = {0, 0};
 
-		auto new_line = new TextLine(this, new_line_text);
+                    isSelected = false;
+                }
+                else
+                {
 
-		lines.insert(lines.begin() + cursorPos.y + 1, new_line);
+                    startCursorSelect = {0, 0};
 
-		cursorPos.x = 0;
-		cursorPos.y += 1;
+                    endCursorSelect =
+                    cursorPos = {(int) (lines[lines.size() - 1]->text.size()), (int) lines.size() - 1};
 
-		setup();
-		break;
-	}
+                    isSelected = true;
+                }
 
-	case SDLK_BACKSPACE:
-	{
-		bool line_delete = false;
+                handleSelect();
+            }
 
+            break;
+        }
 
-		if (lines.at(cursorPos.y)->removeSymbol(cursorPos.x) && lines.size() > 1)
-		{
+        case SDLK_RETURN:
+        {
+            if (isOneLine)
+            {
+                return;
+            }
 
-			lines.erase(lines.begin() + cursorPos.y);
-			line_delete = true;
-		}
+            string new_line_text;
 
-		if (cursorPos.x > 0)
-		{
-			cursorPos.x -= 1;
-		}
-		else
-		{
-			if (cursorPos.y > 0)
-			{
-				cursorPos.y -= 1;
 
+            if (cursorPos.x != lines[cursorPos.y]->text.length())
+            {
 
-				cursorPos.x = lines[cursorPos.y]->text.size();
+                new_line_text += lines[cursorPos.y]->text.substr(cursorPos.x,
+                                                                 lines[cursorPos.y]->text.length() - cursorPos.x);
 
-				
 
-				if (!line_delete)
-				{
+                lines[cursorPos.y]->setText(lines[cursorPos.y]->text.substr(0, cursorPos.x));
+            }
 
-					lines[cursorPos.y]->setText(lines[cursorPos.y]->text + lines[cursorPos.y + 1]->text);
+            else
+            {
+                new_line_text = "";
+            }
 
+            auto new_line = new TextLine(this, new_line_text);
 
-					lines.erase(lines.begin() + cursorPos.y + 1);
-				}
-			
-			}
-		}
+            lines.insert(lines.begin() + cursorPos.y + 1, new_line);
 
-		setup();
-		break;
-	}
+            cursorPos.x = 0;
+            cursorPos.y += 1;
 
-	case SDLK_DELETE:
-	{
+            setup();
+            break;
+        }
 
-		if (lines.at(cursorPos.y)->removeSymbolAfter(cursorPos.x) && cursorPos.y < lines.size() - 1)
-		{
+        case SDLK_BACKSPACE:
+        {
+            bool line_delete = false;
 
-			lines.at(cursorPos.y)->setText(lines.at(cursorPos.y)->text + lines.at(cursorPos.y + 1)->text);
 
+            if (lines.at(cursorPos.y)->removeSymbol(cursorPos.x) && lines.size() > 1)
+            {
 
-			lines.erase(lines.begin() + cursorPos.y + 1);
-		}
+                lines.erase(lines.begin() + cursorPos.y);
+                line_delete = true;
+            }
 
-		setup();
+            if (cursorPos.x > 0)
+            {
+                cursorPos.x -= 1;
+            }
+            else
+            {
+                if (cursorPos.y > 0)
+                {
+                    cursorPos.y -= 1;
 
-		break;
-	}
 
+                    cursorPos.x = lines[cursorPos.y]->text.size();
 
-	case SDLK_LEFT:
-	{
-		if (cursorPos.x > 0)
-		{
-			cursorPos.x -= 1;
 
+                    if (!line_delete)
+                    {
 
-			if (SDL_GetModState() & KMOD_SHIFT)
-			{
-				if (!isSelected)
-				{
+                        lines[cursorPos.y]->setText(lines[cursorPos.y]->text + lines[cursorPos.y + 1]->text);
 
-					startCursorSelect = cursorPos;
-					startCursorSelect.x += 1;
-
-
-					endCursorSelect = cursorPos;
-
-					isSelected = true;
-				}
-				else
-				{
-
-					endCursorSelect = cursorPos;
-				}
-
-				handleSelect();
-			}
-			else
-			{
-				isSelected = false;
 
-
-				deleteSelect();
-			}
-		}
-		else
-		{
-			if (cursorPos.y > 0)
-			{
-				cursorPos.y -= 1;
-				cursorPos.x = lines[cursorPos.y]->text.size();
+                        lines.erase(lines.begin() + cursorPos.y + 1);
+                    }
 
-				if (SDL_GetModState() & KMOD_SHIFT)
-				{
+                }
+            }
 
-					endCursorSelect = cursorPos;
-				}
-			}
-				
-		}
+            setup();
+            break;
+        }
 
-		break;
-	}
+        case SDLK_DELETE:
+        {
 
-	case SDLK_RIGHT:
-	{
-		if (cursorPos.x < lines[cursorPos.y]->text.size())	
-		{
-			cursorPos.x += 1;
+            if (lines.at(cursorPos.y)->removeSymbolAfter(cursorPos.x) && cursorPos.y < lines.size() - 1)
+            {
 
-			if (SDL_GetModState() & KMOD_SHIFT)
-			{
-				if (isSelected == false)
-				{
+                lines.at(cursorPos.y)->setText(lines.at(cursorPos.y)->text + lines.at(cursorPos.y + 1)->text);
 
-					startCursorSelect = cursorPos;
-					startCursorSelect.x -= 1;
 
+                lines.erase(lines.begin() + cursorPos.y + 1);
+            }
 
-					endCursorSelect = cursorPos;
+            setup();
 
-					isSelected = true;
-				}
-				else
-				{
-					endCursorSelect = cursorPos;
-				}
+            break;
+        }
 
-				handleSelect();
-			}
-			else
-			{
-				isSelected = false;
 
-				deleteSelect();
-			}
-		}
-		else
-		{
-			if (cursorPos.y < lines.size() - 1)
-			{
-				cursorPos.y += 1;
-				cursorPos.x = 0;
+        case SDLK_LEFT:
+        {
+            if (cursorPos.x > 0)
+            {
+                cursorPos.x -= 1;
 
-				if (SDL_GetModState() & KMOD_SHIFT)
-				{
 
-					endCursorSelect = cursorPos;
-				}
-				else
-				{
-					isSelected = false;
+                if (SDL_GetModState() & KMOD_SHIFT)
+                {
+                    if (!isSelected)
+                    {
 
-					deleteSelect();
-				}
-			}
-		}
-		break;
-	}
+                        startCursorSelect = cursorPos;
+                        startCursorSelect.x += 1;
 
-	case SDLK_DOWN:
-	{
 
-		if (cursorPos.y < lines.size() - 1)
-		{
+                        endCursorSelect = cursorPos;
 
-			cursorPos.y += 1;
+                        isSelected = true;
+                    }
+                    else
+                    {
 
+                        endCursorSelect = cursorPos;
+                    }
 
-			if (cursorPos.x > lines[cursorPos.y]->text.size())
-			{
+                    handleSelect();
+                }
+                else
+                {
+                    isSelected = false;
 
-				cursorPos.x = lines[cursorPos.y]->text.size();
-			}
-		}
 
-		else if (cursorPos.y == lines.size() - 1)
-		{
+                    deleteSelect();
+                }
+            }
+            else
+            {
+                if (cursorPos.y > 0)
+                {
+                    cursorPos.y -= 1;
+                    cursorPos.x = lines[cursorPos.y]->text.size();
 
-			cursorPos.x = lines[cursorPos.y]->text.size();
-		}
+                    if (SDL_GetModState() & KMOD_SHIFT)
+                    {
 
+                        endCursorSelect = cursorPos;
+                    }
+                }
 
+            }
 
-		if (SDL_GetModState() & KMOD_SHIFT)
-		{
-			if (!isSelected)
-			{
+            break;
+        }
 
-				startCursorSelect = cursorPos;
-				startCursorSelect.y -= 1;
+        case SDLK_RIGHT:
+        {
+            if (cursorPos.x < lines[cursorPos.y]->text.size())
+            {
+                cursorPos.x += 1;
 
-				endCursorSelect = cursorPos;
+                if (SDL_GetModState() & KMOD_SHIFT)
+                {
+                    if (isSelected == false)
+                    {
 
-				isSelected = true;
-			}
-			else
-			{
+                        startCursorSelect = cursorPos;
+                        startCursorSelect.x -= 1;
 
-				endCursorSelect = cursorPos;
-			}
 
-			handleSelect();
-		}
-		else
-		{
-			isSelected = false;
+                        endCursorSelect = cursorPos;
 
-			deleteSelect();
-		}
+                        isSelected = true;
+                    }
+                    else
+                    {
+                        endCursorSelect = cursorPos;
+                    }
 
-		break;
-	}
+                    handleSelect();
+                }
+                else
+                {
+                    isSelected = false;
 
-	case SDLK_UP:
-	{
+                    deleteSelect();
+                }
+            }
+            else
+            {
+                if (cursorPos.y < lines.size() - 1)
+                {
+                    cursorPos.y += 1;
+                    cursorPos.x = 0;
 
-		if (cursorPos.y > 0)
-		{
+                    if (SDL_GetModState() & KMOD_SHIFT)
+                    {
 
-			cursorPos.y -= 1;
+                        endCursorSelect = cursorPos;
+                    }
+                    else
+                    {
+                        isSelected = false;
 
+                        deleteSelect();
+                    }
+                }
+            }
+            break;
+        }
 
-			if (cursorPos.x > lines[cursorPos.y]->text.size())
-			{
+        case SDLK_DOWN:
+        {
 
-				cursorPos.x = lines[cursorPos.y]->text.size();
-			}
+            if (cursorPos.y < lines.size() - 1)
+            {
 
-		}
+                cursorPos.y += 1;
 
-		else if (cursorPos.y == 0)
-		{
 
-			cursorPos.x = 0;
-		}
+                if (cursorPos.x > lines[cursorPos.y]->text.size())
+                {
 
+                    cursorPos.x = lines[cursorPos.y]->text.size();
+                }
+            }
 
+            else if (cursorPos.y == lines.size() - 1)
+            {
 
+                cursorPos.x = lines[cursorPos.y]->text.size();
+            }
 
-		if (SDL_GetModState() & KMOD_SHIFT)
-		{
-			if (!isSelected)
-			{
 
-				startCursorSelect = cursorPos;
-				startCursorSelect.y += 1;
+            if (SDL_GetModState() & KMOD_SHIFT)
+            {
+                if (!isSelected)
+                {
 
-				endCursorSelect = cursorPos;
+                    startCursorSelect = cursorPos;
+                    startCursorSelect.y -= 1;
 
-				isSelected = true;
-			}
-			else
-			{
+                    endCursorSelect = cursorPos;
 
-				endCursorSelect = cursorPos;
-			}
+                    isSelected = true;
+                }
+                else
+                {
 
-			handleSelect();
-		}
-		else
-		{
-			isSelected = false;
-			deleteSelect();
-		}
+                    endCursorSelect = cursorPos;
+                }
 
-		break;
-	}
+                handleSelect();
+            }
+            else
+            {
+                isSelected = false;
 
-	default:break;
-	}
+                deleteSelect();
+            }
+
+            break;
+        }
+
+        case SDLK_UP:
+        {
+
+            if (cursorPos.y > 0)
+            {
+
+                cursorPos.y -= 1;
+
+
+                if (cursorPos.x > lines[cursorPos.y]->text.size())
+                {
+
+                    cursorPos.x = lines[cursorPos.y]->text.size();
+                }
+
+            }
+
+            else if (cursorPos.y == 0)
+            {
+
+                cursorPos.x = 0;
+            }
+
+
+            if (SDL_GetModState() & KMOD_SHIFT)
+            {
+                if (!isSelected)
+                {
+
+                    startCursorSelect = cursorPos;
+                    startCursorSelect.y += 1;
+
+                    endCursorSelect = cursorPos;
+
+                    isSelected = true;
+                }
+                else
+                {
+
+                    endCursorSelect = cursorPos;
+                }
+
+                handleSelect();
+            }
+            else
+            {
+                isSelected = false;
+                deleteSelect();
+            }
+
+            break;
+        }
+
+        default:
+            break;
+    }
 
     this->needUpdate = true;
-	render();
+    render();
 }
 
 void Kit::Text2::textInput(SDL_Event* e)
 {
-	lines.at(cursorPos.y)->addText(e->text.text, cursorPos.x);
+    lines.at(cursorPos.y)->addText(e->text.text, cursorPos.x);
 
-	cursorPos.x += 1;
+    cursorPos.x += 1;
 
-	setup();
-	render();
+    setup();
+    render();
 }

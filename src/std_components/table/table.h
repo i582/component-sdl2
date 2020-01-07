@@ -20,7 +20,9 @@ public:
 
 public:
     void addCollumn(const string& title);
+
     void addRow();
+
     void addRow(const vector<string>& collumns);
 };
 

@@ -14,7 +14,7 @@ SelectItem* SelectItem::create(const string& id, const string& text, const strin
 
 void SelectItem::setup()
 {
-    include("../src/std_components/select/css/style.css");
+    style("../src/std_components/select/css/style.css");
 
     setText(this->text);
 }

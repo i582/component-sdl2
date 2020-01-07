@@ -17,30 +17,27 @@ Select::Select(const string& id, const string& text, const string& classes)
     setup();
 }
 
-Select* Select::create(const string &id, const string &text, const string &classes)
+Select* Select::create(const string& id, const string& text, const string& classes)
 {
     return new Select(id, text, classes);
 }
 
 void Select::setup()
 {
-    include("../src/std_components/select/css/style.css");
+    style("../src/std_components/select/css/style.css");
 
 
     Component::append(new Component(_id + "-header", ".select-header " + classname + "-header"))
-    ->setText(text);
+            ->setText(text);
 
     Component::append(new Component(_id + "-body", ".select-body " + classname + "-body"));
-
-
-
 
 
     _childrens[0]->addEventListener("click", [this](Component* sender, Event* e)
     {
         _childrens[1]->toggleDisplay();
 
-        KitApplication::create()->addWindow( new Window("select-window", {100, 100, 200, 200}));
+        KitApplication::create()->addWindow(new Window("select-window", {100, 100, 200, 200}));
     });
 }
 

@@ -11,40 +11,40 @@
 namespace Kit
 {
 
-using std::map;
-using std::string;
-using std::to_string;
-using std::cout;
-using std::endl;
+    using std::map;
+    using std::string;
+    using std::to_string;
+    using std::cout;
+    using std::endl;
 
-class Text;
+    class Text;
 
-class TextLine
-{
-private:
-	string text;
+    class TextLine
+    {
+    private:
+        string text;
 
-	SimpleRect size;
+        SimpleRect size;
 
-	Text* parent;
+        Text* parent;
 
-	SDL_Renderer* renderer;
-	SDL_Texture* parentTexture;
+        SDL_Renderer* renderer;
+        SDL_Texture* parentTexture;
 
-	SDL_Texture* texture;
+        SDL_Texture* texture;
 
-	font _font;
-	size_t fontSize;
-	TTF_Font* fontTTF;
-	CSS::Color color;
+        font _font;
+        size_t fontSize;
+        TTF_Font* fontTTF;
+        CSS::Color color;
 
-public:
-	TextLine(Text* parent, string text, int x, int y);
-
-
-public:
+    public:
+        TextLine(Text* parent, string text, int x, int y);
 
 
-};
+    public:
+
+
+    };
 
 }

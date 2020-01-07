@@ -4,18 +4,18 @@
 
 namespace Kit
 {
-class Window;
+    class Window;
 
-class Navigator : public Component
-{
-public:
-	Navigator(Window* parent);
+    class Navigator : public Component
+    {
+    public:
+        Navigator(Window* parent);
 
-public:
-	void update();
+    public:
+        void update();
 
-	void setupSize(const Rect& new_size);
+        void setupSize(const Rect& new_size);
 
-};
+    };
 
 }

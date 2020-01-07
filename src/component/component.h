@@ -11,7 +11,6 @@
 #include "scroll/vertical-scroll/vertical-scroll.h"
 #include "scroll/horizontal-scroll/horizontal-scroll.h"
 
-#include "animation/animation.h"
 #include "../tools/text2/text.h"
 #include "component-header.h"
 
@@ -19,440 +18,443 @@
 
 namespace Kit
 {
-using CSS::Color;
+    using CSS::Color;
 
-class Window;
+    class Window;
 
-using Cmpt = Component;
+    class Component
+    {
 
-class Component
-{
+    public:
+        static Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
+        static Component* create(const string& classes = "", const vector<Component*>& childrens = {});
+        static Component* create(Component* component);
 
-public:
-    static Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
-    static Component* create(const string& classes = "", const vector<Component*>& childrens = {});
-    static Component* create(Component* component);
 
-private:
-	/** For Event */
-	static Component* _hoverComponent;
+    public: /** Constructors */
+        explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
 
-protected:
-	/** Sizes */
-	Rect _innerSize;
-	Rect _outerSize;
-	bool _isConstructSize;
+        explicit Component(const string& id = "", const Rect& size = {0, 0, 0, 0}, const string& classes = "",
+                           const vector<Component*>& childrens = {});
 
-	bool _autoWidth;
-	bool _autoHeight;
+        virtual ~Component();
 
-	/** Identifiers */
-	string _id;
-	string _classes;
 
+    public: /** Render Interface */
 
-	/** Parents */
-	Component* _parent;
-	Window* _window;
+        void render();
 
 
-	/** Childrens */
-	vector<Component*> _childrens;
-	Rect _childrensSize;
+    public: /** Size Interface */
 
+        int width() const;
+        int height() const;
+        int top() const;
+        int left() const;
 
-	/** Display */
-	bool _isDisplay;
+        const Rect& size() const;
+        const Rect& outerSize() const;
+        const Rect& innerSize() const;
 
+        void outerWidth(int value);
+        void outerHeight(int value);
+        void outerTop(int value);
+        void outerLeft(int value);
 
-	/** Events Listener */
-	map <string, eventCallback> _eventListeners;
-	static void _emptyCallback(Component* sender, Event* e) {};
+    public: /** Display Interface */
 
+        Component* show();
+        Component* hide();
+        Component* toggleDisplay();
+        bool display() const;
 
-	/** User Data */
-	map <string, std::any> _userData;
 
+    public: /** Render Data Interface */
 
-	/** State */
-	bool _isHovered;
-	bool _isActive;
-    bool _isFocused;
+        SDL_Renderer* renderer() const;
+        SDL_Texture* innerTexture() const;
+        SDL_Texture* outerTexture() const;
 
-	/** SDL */
-	SDL_Renderer* _renderer;
-	SDL_Texture* _innerTexture;
-	SDL_Texture* _outerTexture;
 
+    public: /** Ralation Interface */
 
-	/** Styles */ 
-	CSS::css_block _cssBlock;
+        Component* parent() const;
 
+        const vector<Component*>& childs() const;
 
-	/** Other for Events */
-	bool _isEnterInComponent;
+        Window* window() const;
 
+        /**
+         * @brief Checks if the passed object is a child of this
+         * @return true|false
+         */
+        bool isChildrenObject(Component* obj) const;
 
-	/** Vertical Scroll part */
-	VerticalScroll* _verticalScroll;
-	bool _verticalScrollable;
-	bool _isVerticalScrollActive;
+        /**
+         * @brief Checks if the passed object is a parent of this
+         * @return true|false
+         */
+        bool isParentObject(Component* obj) const;
 
 
-	/** Horizontal Scroll part */
-	HorizontalScroll* _horizontalScroll;
-	bool _horizontalScrollable;
-	bool _isHorizontalScrollActive;
-	
-	bool _needRenderScroll;
+        virtual Component* append(Component* component);
 
+        Component* append(const vector<Component*>& components);
 
-	/** Text part */
-	font _fontNormal;
-	font _fontHover;
-	font _fontActive;
-    font _fontFocus;
 
-	Text* _text;
-	string _text_temp;
+    public: /** Identifiers Interface */
 
+        const string& id() const;
 
-	/** Image */
-	Image* _image;
 
+    public: /** Event listeners Interface */
 
-	/** CSS component */
-	CSS::css* _css_component;
+        /**
+         * @brief Associates the passed callback function with the event with the passed
+         * identifier. When an event occurs with the transmitted identifier,
+         * the callback function will be called
+         *
+         * @param action - Event id
+         * @param eventCallback - Functor with form is "function <void (Component* sender, Event* e)>"
+         */
+        Component* addEventListener(const string& action, eventCallback callback_function);
 
 
-	/** Extended text */
-    Text2* _extended_text;
-    bool _withExtendedText;
+        /**
+         * @brief Deletes the callback function for the event with the passed identifier
+         *
+         * @param action - Event id
+         */
+        Component* removeEventListener(const string& action);
 
-    /** Ignore Some Event */
-    bool _ignoreEvents;
 
-public:
-    explicit Component(const string& id, const string& classes = "", const vector<Component*>& childrens = {});
+        /**
+         * @brief Immediately calls the callback function associated with the event
+         * with the passed identifier
+         *
+         * @param action - Event id
+         * @param e - Event data
+         */
+        Component* callEventListener(const string& action, Event* e);
 
-    explicit Component(const string& id = "", const Rect& size = { 0, 0, 0, 0 }, const string& classes = "", const vector<Component*>& childrens = {});
 
-	virtual ~Component();
+    public: /** User Data Interface */
 
+        map<string, std::any>& userData();
+        Component* addUserData(const string& key, const std::any& data);
+        std::any userData(const string& key);
 
-public:
-	friend Window;
 
-protected:
+    public: /** Class Interface */
 
-	/**
-	 * Setup event listeners
-	 */
-	void setupEventListeners();
+        bool hasClass(const string& className) const;
+        Component* removeClass(const string& className);
+        Component* addClass(const string& className);
+        Component* toggleClass(const string& className);
+        const string& classes();
+        Component* classes(const string& newClasses);
 
-	/**
-	 * Helper relationship function
-	 * @return The first parent for the current one that needs vertical scrolling
-	 */
-	Component* getFirstVerticalScrollableParent();
 
-	/**
-	 * Helper relationship function
-	 * @return The first parent for the current one that needs horizontal scrolling
-	 */
-	Component* getFirstHorizontalScrollableParent();
+    public: /** Text Interface */
+        virtual Component* setText(const string& text);
 
 
-	/**
-	 * @brief Function for getting component styles that were connected directly in it
-	 * @return Pointer to css styles
-	 */
-	CSS::css* getComponentStyles();
+    public: /** Style Interface */
+        Component* style(const string& path);
+        Component* style(const map<string, string>& inlineStyles);
 
+    public: /** Focus Interface */
+        Component* getFocus(Event* e);
+        Component* loseFocus(Event* e);
 
-	/**
-	 * @brief Function for generating a random string for an identifier
-	 * @return Random string
-	 */
-	static string generateRandomString();
 
+    public: /** Ignore Event Interface */
+        Component* ignoreEvents();
+        Component* noIgnoreEvents();
+        bool isIgnoreEvents();
 
 
-protected: /** Setup Functions */
+    public: /** Extended Text Interface */
+        Component* useExtendedText();
+        Component* unuseExtendedText();
 
-    /**
-     * @brief Configures component dimensions using either sizes from styles or
-     * dimensions specified directly in the constructor
-     */
-	void setupSize();
 
-	/**
-	 * @brief Sets all descendants to a common renderer starting from the
-	 * component whose function was called. Usually called on the 
-	 * main component (Navigator) of a window
-	 */
-	void setupChildrenRenderer();
 
 
-	/**
-	 * @brief Calculates the dimensions of an element if their sizes are 
-	 * specified as a percentage or as an expression
-	 */
-	void computeSize();
 
 
-	/**
-	 * @brief Calculates the size of the rectangle into which all children can
-	 * fit, if the size of this rectangle is greater than the height of the
-	 * inner one, a vertical scroll is added
-	 */
-	void computeChildrenSize();
-	
+    private:
+        /** For Event */
+        static Component* _hoverComponent;
 
-	/**
-	 * @brief Configures images inside a component
-	 */
-	void setupBackgroundImage();
+    protected:
+        /** Sizes */
+        Rect _innerSize;
+        Rect _outerSize;
+        bool _isConstructSize;
 
-    /**
-     * @brief Configures font inside a component
-     */
-	void setupFont();
+        bool _autoWidth;
+        bool _autoHeight;
 
-    /**
-     * @brief Configures text inside a component
-     */
-    void setupText();
+        /** Identifiers */
+        string _id;
+        string _classes;
 
-    /**
-     * @brief Configures scrolls inside a component
-     */
-    void setupScrolls();
 
-	/**
-	 * @brief Setting the parent window for elements when adding directly
-	 * through the 4 parameter of the Component constructor
-	 */
-	void setupParentWindow();
+        /** Parents */
+        Component* _parent;
+        Window* _window;
 
 
-    /**
-     * @brief Depending on the current value of "display", sets the positions
-     * of children
-     */
-	void setupChildrenPosition();
+        /** Childrens */
+        vector<Component*> _childrens;
+        Rect _childrensSize;
 
 
-    /**
-     * @brief Configures extended text inside a component
-     */
-    void setupExtendedText();
+        /** Display */
+        bool _isDisplay;
 
 
-    /**
-     * @brief Sets the generated identifier if the identifier is an empty string
-     */
-    void checkID();
+        /** Events Listener */
+        map<string, eventCallback> _eventListeners;
 
+        static void _emptyCallback(Component* sender, Event* e){};
 
-	/**
-	 * @brief The function corrects the coordinates of the mouse
-	 * relative to the element in which it is now located
-	 *
-	 * @param p Mouse point
-	 */
-	void adjustMousePoint(Point& p);
 
+        /** User Data */
+        map<string, std::any> _userData;
 
 
-protected: /** Setup */
+        /** State */
+        bool _isHovered;
+        bool _isActive;
+        bool _isFocused;
 
-    /**
-     * @brief Function to configure the container and all its childrens
-     */
-    void setupComponents();
+        /** SDL */
+        SDL_Renderer* _renderer;
+        SDL_Texture* _innerTexture;
+        SDL_Texture* _outerTexture;
 
 
+        /** Styles */
+        CSS::css_block _cssBlock;
 
-protected: /** Events */
 
-    void mouseButtonDown(Event* e);
-    void mouseButtonUp(Event* e);
-    void mouseMotion(Event* e);
-    void mouseOut(Event* e);
-    void mouseScroll(Event* e, int scrollDirection);
-    void keyDown(Event* e);
-    void textInput(Event* e);
+        /** Other for Events */
+        bool _isEnterInComponent;
 
 
-protected: /** Hover */
+        /** Vertical Scroll part */
+        VerticalScroll* _verticalScroll;
+        bool _verticalScrollable;
+        bool _isVerticalScrollActive;
 
-    /**
-     * @brief Checks if a given point is internal to an external size
-     * @return true|false
-     */
-    bool onHover(const Point& point);
 
-    /**
-     * @brief It passes through all the children and finds in which component
-     * the transmitted point is located. Moreover, if the point is in the component,
-     * and at the same time in this component it is in the child, then the child
-     * is returned. That is, the function goes as deep as possible until there
-     * is an unambiguous component in which the point is now
-     */
-    Component* onComponentHover(Point point);
+        /** Horizontal Scroll part */
+        HorizontalScroll* _horizontalScroll;
+        bool _horizontalScrollable;
+        bool _isHorizontalScrollActive;
 
-protected: /** State */
+        bool _needRenderScroll;
 
-    bool isHovered();
-    bool isActive();
 
+        /** Text part */
+        font _fontNormal;
+        font _fontHover;
+        font _fontActive;
+        font _fontFocus;
 
-protected: /** Scroll */
-    bool isVerticalScrollable() const;
-    bool isHorizontalScrollable() const;
+        Text* _text;
+        string _text_temp;
 
 
-public: /** Render Interface */
+        /** Image */
+        Image* _image;
 
-	void render();
 
+        /** CSS component */
+        CSS::css* _css_component;
 
-public: /** Size Interface */
-	
-	int width() const;
-	int height() const;
-	int top() const;
-	int left() const;
-	const Rect& size() const;
-	const Rect& outerSize() const;
-	const Rect& innerSize() const;
 
-    void outerWidth(int value);
-    void outerHeight(int value);
-    void outerTop(int value);
-    void outerLeft(int value);
+        /** Extended text */
+        Text2* _extended_text;
+        bool _withExtendedText;
 
-public: /** Display Interface */
 
-	Component* show();
-	Component* hide();
-	Component* toggleDisplay();
-	bool display() const;
+        /** Ignore Some Event */
+        bool _ignoreEvents;
 
 
-public: /** Render Data Interface */
+        /** Inline Styles */
+        map<string, string> _inlineStyles;
 
-	SDL_Renderer* renderer() const;
-	SDL_Texture* innerTexture() const;
-	SDL_Texture* outerTexture() const;
 
+    private:
+        friend Window;
 
-public: /** Ralation Interface */
+    protected:
 
-	Component* parent() const;
-	const vector <Component*>& childs() const;
-	Window* window() const;
+        /**
+         * Setup event listeners
+         */
+        void setupEventListeners();
 
-	/**
-	 * @brief Checks if the passed object is a child of this
-	 * @return true|false
-	 */
-	bool isChildrenObject(Component* obj) const;
+        /**
+         * Helper relationship function
+         * @return The first parent for the current one that needs vertical scrolling
+         */
+        Component* getFirstVerticalScrollableParent();
 
-	/**
-	 * @brief Checks if the passed object is a parent of this
-	 * @return true|false
-	 */
-	bool isParentObject(Component* obj) const;
+        /**
+         * Helper relationship function
+         * @return The first parent for the current one that needs horizontal scrolling
+         */
+        Component* getFirstHorizontalScrollableParent();
 
 
+        /**
+         * @brief Function for getting component styles that were connected directly in it
+         * @return Pointer to css styles
+         */
+        CSS::css* getComponentStyles();
 
-    virtual Component* append(Component* component);
-	Component* append(const vector<Component*>& components);
 
+        /**
+         * @brief Function for generating a random string for an identifier
+         * @return Random string
+         */
+        static string generateRandomString();
 
 
-public: /** Identifiers Interface */
+    protected: /** Setup Functions */
 
-	const string& id() const;
+        /**
+         * @brief Configures component dimensions using either sizes from styles or
+         * dimensions specified directly in the constructor
+         */
+        void setupSize();
 
+        /**
+         * @brief Sets all descendants to a common renderer starting from the
+         * component whose function was called. Usually called on the
+         * main component (Navigator) of a window
+         */
+        void setupChildrenRenderer();
 
-public: /** Event listeners Interface */
 
-	/**
-	 * @brief Associates the passed callback function with the event with the passed 
-	 * identifier. When an event occurs with the transmitted identifier,
-	 * the callback function will be called
-	 *
-	 * @param action - Event id
-	 * @param eventCallback - Functor with form is "function <void (Component* sender, Event* e)>"
-	 */
-    Component* addEventListener(const string& action, eventCallback callback_function);
+        /**
+         * @brief Calculates the dimensions of an element if their sizes are
+         * specified as a percentage or as an expression
+         */
+        void computeSize();
 
 
-	/**
-	 * @brief Deletes the callback function for the event with the passed identifier
-	 *
-	 * @param action - Event id
-	 */
-    Component* removeEventListener(const string& action);
+        /**
+         * @brief Calculates the size of the rectangle into which all children can
+         * fit, if the size of this rectangle is greater than the height of the
+         * inner one, a vertical scroll is added
+         */
+        void computeChildrenSize();
 
 
-	/**
-	 * @brief Immediately calls the callback function associated with the event
-	 * with the passed identifier
-	 *
-	 * @param action - Event id
-	 * @param e - Event data
-	 */
-    Component* callEventListener(const string& action, Event* e);
+        /**
+         * @brief Configures images inside a component
+         */
+        void setupBackgroundImage();
 
+        /**
+         * @brief Configures font inside a component
+         */
+        void setupFont();
 
-public: /** User Data Interface */
+        /**
+         * @brief Configures text inside a component
+         */
+        void setupText();
 
-	map <string, std::any>& userData();
-    Component* addUserData(const string& key, const std::any& data);
-    std::any userData(const string& key);
+        /**
+         * @brief Configures scrolls inside a component
+         */
+        void setupScrolls();
 
+        /**
+         * @brief Setting the parent window for elements when adding directly
+         * through the 4 parameter of the Component constructor
+         */
+        void setupParentWindow();
 
-public: /** Class Interface */
 
-	bool hasClass(const string& className) const;
-	Component* removeClass(const string& className);
-	Component* addClass(const string& className);
-	Component* toggleClass(const string& className);
-    const string& classes();
-    Component* classes(const string& newClasses);
+        /**
+         * @brief Depending on the current value of "display", sets the positions
+         * of children
+         */
+        void setupChildrenPosition();
 
 
-public: /** Text Interface */
-	virtual Component* setText(const string& text);
+        /**
+         * @brief Configures extended text inside a component
+         */
+        void setupExtendedText();
 
 
-public: /** Style Interface */
-    Component* include(const string& path);
+        /**
+         * @brief Sets the generated identifier if the identifier is an empty string
+         */
+        void checkID();
 
 
-public: /** Focus Interface */
-    Component* getFocus(Event* e);
-    Component* loseFocus(Event* e);
+        /**
+         * @brief The function corrects the coordinates of the mouse
+         * relative to the element in which it is now located
+         *
+         * @param p Mouse point
+         */
+        void adjustMousePoint(Point& p);
 
 
-public: /** Ignore Event Interface */
-    Component* ignoreEvents();
-    Component* noIgnoreEvents();
-    bool isIgnoreEvents();
+    protected: /** Setup */
 
+        /**
+         * @brief Function to configure the container and all its childrens
+         */
+        void setupComponents();
 
-public: /** Extended Text Interface */
-    Component* useExtendedText();
-    Component* unuseExtendedText();
 
+    protected: /** Events */
 
-};
+        void mouseButtonDown(Event* e);
+        void mouseButtonUp(Event* e);
+        void mouseMotion(Event* e);
+        void mouseOut(Event* e);
+        void mouseScroll(Event* e, int scrollDirection);
+        void keyDown(Event* e);
+        void textInput(Event* e);
 
 
+    protected: /** Hover */
+
+        /**
+         * @brief Checks if a given point is internal to an external size
+         * @return true|false
+         */
+        bool onHover(const Point& point);
+
+        /**
+         * @brief It passes through all the children and finds in which component
+         * the transmitted point is located. Moreover, if the point is in the component,
+         * and at the same time in this component it is in the child, then the child
+         * is returned. That is, the function goes as deep as possible until there
+         * is an unambiguous component in which the point is now
+         */
+        Component* onComponentHover(Point point);
+
+
+    protected: /** Scroll */
+        bool isVerticalScrollable() const;
+        bool isHorizontalScrollable() const;
+
+
+    };
 
 
 }

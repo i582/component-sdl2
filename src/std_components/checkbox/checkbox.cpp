@@ -2,19 +2,20 @@
 
 #include <utility>
 
-Checkbox::Checkbox(const string& id, const string& text, const string& classes, function<void(Component* sender, Event* e)> callback)
-	: Component(id, ".checkbox " + classes)
+Checkbox::Checkbox(const string& id, const string& text, const string& classes,
+                   function<void(Component* sender, Event* e)> callback)
+        : Component(id, ".checkbox " + classes)
 {
-	this->callback = std::move(callback);
-	this->text = text;
-	this->state = CheckboxState::UNCHECKED;
-	setup();
+    this->callback = std::move(callback);
+    this->text = text;
+    this->state = CheckboxState::UNCHECKED;
+    setup();
 }
 
 
 void Checkbox::setup()
 {
-    include("../src/std_components/checkbox/css/style.css");
+    style("../src/std_components/checkbox/css/style.css");
 
     this->addEventListener("change", [&](Component* sender, Event* e)
     {
@@ -42,10 +43,10 @@ void Checkbox::setup()
 
 bool Checkbox::isChecked() const
 {
-	return state == CheckboxState::CHECKED;
+    return state == CheckboxState::CHECKED;
 }
 
-Checkbox* Checkbox::create(const string &id, const string &text, const string &classes,
+Checkbox* Checkbox::create(const string& id, const string& text, const string& classes,
                            function<void(Component*, Event*)> callback)
 {
     return new Checkbox(id, text, classes, std::move(callback));

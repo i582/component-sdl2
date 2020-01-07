@@ -6,79 +6,86 @@
 namespace Kit
 {
 
-enum class TokenType
-{
-	UNDEFINED, 
-	TEXT,
+    enum class TokenType
+    {
+        UNDEFINED,
+        TEXT,
 
-	KEYWORD,
-	QUOTES,
-	NUMBER,
-	VALUE,
-	OPERATOR
-};
+        KEYWORD,
+        QUOTES,
+        NUMBER,
+        VALUE,
+        OPERATOR
+    };
 
-struct CursorPosition
-{
-	int x, y;
+    struct CursorPosition
+    {
+        int x, y;
 
-	CursorPosition() : x(0), y(0) {}
-	CursorPosition(int x, int y) : x(x), y(y) {}
+        CursorPosition() : x(0), y(0)
+        {
+        }
 
-	bool operator==(const CursorPosition& obj)
-	{
-		return this->x == obj.x && this->y == obj.y;
-	}
-};
+        CursorPosition(int x, int y) : x(x), y(y)
+        {
+        }
 
-using std::string;
-using std::vector;
+        bool operator==(const CursorPosition& obj)
+        {
+            return this->x == obj.x && this->y == obj.y;
+        }
+    };
 
-class Text2;
+    using std::string;
+    using std::vector;
 
-class TextLine
-{
-private:
-	size_t id;
-	string text;
+    class Text2;
 
-	SimpleSize size;
-	
-	Text2* parent;
+    class TextLine
+    {
+    private:
+        size_t id;
+        string text;
 
-	SDL_Texture* texture;
+        SimpleSize size;
 
-	bool isSelect;
-	CursorPosition startCursorSelect;
-	CursorPosition endCursorSelect;
+        Text2* parent;
 
-	int shiftByX;
+        SDL_Texture* texture;
 
-public:
-	TextLine(Text2* parent, const string& text);
-	~TextLine();
+        bool isSelect;
+        CursorPosition startCursorSelect;
+        CursorPosition endCursorSelect;
 
+        int shiftByX;
 
-public:
-	friend Text2;
+    public:
+        TextLine(Text2* parent, const string& text);
 
-private:
-	void deleteSelected();
-
-private:
-	void setup();
-	void render();
+        ~TextLine();
 
 
-    bool removeSymbol(int place);
-    bool removeSymbolAfter(int place);
+    public:
+        friend Text2;
 
-public:
-	void setText(const string& text);
-	void addText(const string& additionalText, int place);
-};
+    private:
+        void deleteSelected();
+
+    private:
+        void setup();
+
+        void render();
 
 
+        bool removeSymbol(int place);
+
+        bool removeSymbolAfter(int place);
+
+    public:
+        void setText(const string& text);
+
+        void addText(const string& additionalText, int place);
+    };
 
 
 }

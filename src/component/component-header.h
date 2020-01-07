@@ -12,14 +12,15 @@
 
 namespace Kit
 {
-	using std::string;
-	using std::vector;
-	using std::function;
-	using std::map;
+    using std::string;
+    using std::vector;
+    using std::function;
+    using std::map;
     using std::any;
 
-	class Component;
-	using eventCallback = function< void(Component* sender, Event* e) >;
-	using eachCallback = function< void(Component* sender) >;
+    class Component;
+
+    using eventCallback = function<void(Component* sender, Event* e)>;
+    using eachCallback = function<void(Component* sender)>;
 
 }

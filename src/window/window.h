@@ -16,138 +16,158 @@
 
 namespace Kit
 {
-	using std::cout;
-	using std::endl;
-	using std::string;
+    using std::cout;
+    using std::endl;
+    using std::string;
 
-	class KitApplication;
+    class KitApplication;
 
-class Window
-{
+    class Window
+    {
 
-protected:
-	map <string, Component*> allComponents;
-	map <string, CSS::css_block> allComponentsStyles;
+    protected:
+        map<string, Component*> allComponents;
+        map<string, CSS::css_block> allComponentsStyles;
 
-protected:
-	/**
-	 * @brief A function that processes all elements and adds styles
-	 * associated with classes for each component
-	 */
-	void handleStyles();
+    protected:
+        /**
+         * @brief A function that processes all elements and adds styles
+         * associated with classes for each component
+         */
+        void handleStyles();
 
-public: /** Component Interface */
+    public: /** Component Interface */
 
-	Component* addElement(Component* component);
-	Component* getElementById(const string& id) const;
-	Components getElementsByClassName(const string& className) const;
+        Component* addElement(Component* component);
 
-	Component* add(const string& id, const string& classes, const vector<Component*>& childrens = {});
-    Component* add(const string& classes = "", const vector<Component*>& childrens = {});
-	Component* add(Component* component);
+        Component* getElementById(const string& id) const;
 
-	Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
-    Component* create(const string& classes = "", const vector<Component*>& childrens = {});
-	Component* create(Component* component);
+        Components getElementsByClassName(const string& className) const;
 
-public: /** Component Style Interface */
+        Component* add(const string& id, const string& classes, const vector<Component*>& childrens = {});
 
-	CSS::css_block* addStyle(const string& className, const CSS::css_block& style);
+        Component* add(const string& classes = "", const vector<Component*>& childrens = {});
 
+        Component* add(Component* component);
 
-public:
-    Component* focusComponent;
+        Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
 
+        Component* create(const string& classes = "", const vector<Component*>& childrens = {});
 
-protected:
-	SimpleRect _size;
-	string title;
-	size_t _id;
+        Component* create(Component* component);
 
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+    public: /** Component Style Interface */
 
-	bool isDisplay;
-
-	bool noBorder;
-
-	Navigator* navigator;
-	Navigator* $$;
-
-	CSS::css mainCSS;
-	bool wasSetupStyle;
-	bool wasSetupComponents;
+        CSS::css_block* addStyle(const string& className, const CSS::css_block& style);
 
 
-	KitApplication* parent;
-
-public: /** constructor & destructor*/
-	Window(const string& title, SimpleRect size, bool noBorder = false);
-	~Window();
-
-public:
-	friend Component;
-	friend KitApplication;
-
-protected:
-	void init();
-	void preSetup();
-
-	virtual void setup() {};
+    public:
+        Component* focusComponent;
 
 
+    protected:
+        SimpleRect _size;
+        string title;
+        size_t _id;
 
-protected: /** Events */
-	void mouseButtonDown(Event* e);
-	void mouseButtonUp(Event* e);
-	void mouseMotion(Event* e);
-	void mouseWheel(Event* e);
-	void keyDown(Event* e);
-	void keyUp(Event* e);
-    void textInput(Event* e);
+        SDL_Window* window;
+        SDL_Renderer* renderer;
 
-public: /** Interface */
-	void render();
-	void onEvent(Event* e);
+        bool isDisplay;
 
-	void show();
-	void hide();
-	bool isShow();
+        bool noBorder;
 
-	void collapse();
+        Navigator* navigator;
+        Navigator* $$;
 
-	void close();
-
-	size_t id();
+        CSS::css mainCSS;
+        bool wasSetupStyle;
+        bool wasSetupComponents;
 
 
-public: /** Size Interface */
+        KitApplication* parent;
 
-	int width() const;
-	int height() const;
-	int top() const;
-	int left() const;
-	SimpleRect size() const;
+    public: /** constructor & destructor*/
+        Window(const string& title, SimpleRect size, bool noBorder = false);
 
-		
+        ~Window();
 
-public: /** SDL Interface */
+    public:
+        friend Component;
+        friend KitApplication;
 
-	SDL_Renderer* getRenderer() const;
-	SDL_Window* getWindow() const;
+    protected:
+        void init();
+
+        void preSetup();
+
+        virtual void setup(){};
 
 
-public: /** Other Interface */
+    protected: /** Events */
+        void mouseButtonDown(Event* e);
 
-	void setDraggableArea(SimpleRect area);
+        void mouseButtonUp(Event* e);
 
-public: /** CSS Interface */
+        void mouseMotion(Event* e);
 
-	/**
-	 *  @brief Function for include css style file
-	 */
-	void style(const string& path);
+        void mouseWheel(Event* e);
 
-};
+        void keyDown(Event* e);
+
+        void keyUp(Event* e);
+
+        void textInput(Event* e);
+
+    public: /** Interface */
+        void render();
+
+        void onEvent(Event* e);
+
+        void show();
+
+        void hide();
+
+        bool isShow();
+
+        void collapse();
+
+        void close();
+
+        size_t id();
+
+
+    public: /** Size Interface */
+
+        int width() const;
+
+        int height() const;
+
+        int top() const;
+
+        int left() const;
+
+        SimpleRect size() const;
+
+
+    public: /** SDL Interface */
+
+        SDL_Renderer* getRenderer() const;
+
+        SDL_Window* getWindow() const;
+
+
+    public: /** Other Interface */
+
+        void setDraggableArea(SimpleRect area);
+
+    public: /** CSS Interface */
+
+        /**
+         *  @brief Function for include css style file
+         */
+        void style(const string& path);
+
+    };
 
 }

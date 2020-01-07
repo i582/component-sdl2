@@ -1,13 +1,11 @@
-.select
-{
+.select {
     width: auto;
     height: auto;
 
     display: block;
 }
 
-.select-header
-{
+.select-header {
     width: 100px;
     height: 30px;
 
@@ -32,8 +30,7 @@
     vertical-align: center;
 }
 
-.select-body
-{
+.select-body {
     width: 100px;
     height: auto;
 
@@ -45,8 +42,7 @@
     background-color: #3C3F41;
 }
 
-.select-body-item
-{
+.select-body-item {
     width: 100px;
     height: 30px;
 
@@ -71,7 +67,6 @@
 
 }
 
-.select-body-item:hover
-{
+.select-body-item:hover {
     background-color: #4B6EAF;
 }

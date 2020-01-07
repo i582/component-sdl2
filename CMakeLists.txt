@@ -17,7 +17,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 include_directories(src)
 include_directories(src/component)
-include_directories(src/component/animation)
 include_directories(src/component/components)
 include_directories(src/component/navigator)
 include_directories(src/component/scroll)
@@ -51,9 +50,6 @@ include_directories(src/std_components/table)
 include_directories(src/std_components/tabs)
 
 add_executable(component_sdl2_cmake
-        src/component/animation/animation.h
-        src/component/animation/animation_variant.cpp
-        src/component/animation/animation_variant.h
         src/component/components/components.cpp
         src/component/components/components.h
         src/component/navigator/navigator.cpp
@@ -144,7 +140,6 @@ add_executable(component_sdl2_cmake
         src/tools/rect/simple-rect/simple-rect.cpp
         src/std_components/tabs/tabs.cpp
         src/std_components/tabs/tabs.h)
-
 
 
 # Set up SDL2

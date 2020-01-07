@@ -11,47 +11,50 @@
 namespace Kit
 {
 
-using std::string;
-using std::to_string;
-using std::cout;
-using std::endl;
+    using std::string;
+    using std::to_string;
+    using std::cout;
+    using std::endl;
 
-class Component;
+    class Component;
 
-class Image
-{
-private:
-	string path;
-	SimpleRect textureSize;
-	SimpleRect generalSize;
-	SimpleRect containerSize;
+    class Image
+    {
+    private:
+        string path;
+        SimpleRect textureSize;
+        SimpleRect generalSize;
+        SimpleRect containerSize;
 
 
-	SDL_Renderer* renderer;
-	SDL_Texture* texture;
-	SDL_Texture* parentTexture;
+        SDL_Renderer* renderer;
+        SDL_Texture* texture;
+        SDL_Texture* parentTexture;
 
-	Component* parent;
+        Component* parent;
 
-	bool needReRender;
+        bool needReRender;
 
-public:
-	Image(Component* parent);
+    public:
+        Image(Component* parent);
 
-public:
-	void setPath(const string& path);
-	void setRenderer(SDL_Renderer* renderer);
+    public:
+        void setPath(const string& path);
 
-	void setImageSize(const SimpleRect& generalSize);
-	void setImageShift(const SimplePoint& p);
-	void setImageWidth(const string& size);
+        void setRenderer(SDL_Renderer* renderer);
 
-private:
-	void createTexture();
+        void setImageSize(const SimpleRect& generalSize);
 
-public:
-	void render();
+        void setImageShift(const SimplePoint& p);
 
-};
+        void setImageWidth(const string& size);
+
+    private:
+        void createTexture();
+
+    public:
+        void render();
+
+    };
 
 }

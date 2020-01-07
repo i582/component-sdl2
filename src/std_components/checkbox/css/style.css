@@ -1,5 +1,4 @@
-.checkbox
-{
+.checkbox {
     width: 100px;
     height: 16px;
 
@@ -15,7 +14,6 @@
     vertical-align: center;
 }
 
-.checkbox-checked
-{
+.checkbox-checked {
     background-image: url(../src/std_components/checkbox/images/checked.png);
 }

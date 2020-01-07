@@ -7,24 +7,25 @@ namespace Kit
 {
 
 
+    class Components
+    {
+    private:
+        vector<Component*>* components;
 
-class Components
-{
-private:
-	vector <Component*>* components;
+    public:
+        Components(vector<Component*>* components);
 
-public:
-	Components(vector <Component*>* components);
-	~Components();
+        ~Components();
 
-public:
-	void addEventListener(string action, eventCallback event_callback);
-	void each(eachCallback each_callback);
+    public:
+        void addEventListener(string action, eventCallback event_callback);
 
-	Component* at(size_t index);
-	Component* operator[](size_t index);
-};
+        void each(eachCallback each_callback);
 
+        Component* at(size_t index);
+
+        Component* operator[](size_t index);
+    };
 
 
 }

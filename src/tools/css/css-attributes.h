@@ -16,18 +16,19 @@
 namespace CSS
 {
 
-using std::string;
-using std::map;
+    using std::string;
+    using std::map;
 
-class css_attribute
-{
-private:
-	static string parseImagePath(const string& path);
-	static string parseSizes(const string& path);
+    class css_attribute
+    {
+    private:
+        static string parseImagePath(const string& path);
 
-public:
-	static css_variant get(const string& attribute, const string& value);
+        static string parseSizes(const string& path);
 
-};
+    public:
+        static css_variant get(const string& attribute, const string& value);
+
+    };
 
 }

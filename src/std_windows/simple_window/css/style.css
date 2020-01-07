@@ -1,23 +1,175 @@
-.button-1
-{
-    width: 70px;
-    height: 24px;
 
-    top: 100px;
-    left: 100px;
+.navigator {
+    background-color: #3c3f41;
 
-    background-color: #263238;
-    outline: #0F1518;
 }
 
-.button
-{
-    width: 70px;
+.window-header {
+    width: 100%;
+    height: 30px;
+    left: 0;
+    top: 0;
+
+
+    color: #dadacb;
+
+    font-size: 12px;
+    line-height: 1.15;
+
+    margin-left: 20px;
+
+    vertical-align: center;
+
+}
+
+.system-button {
+    background-position-x: 18px;
+    background-position-y: 10px;
+    background-size: 10px;
+
+
+}
+
+.system-exit {
+    left: calc(100% - 45px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/exit.png);
+}
+
+.system-exit:hover {
+    background-color: #ce4848;
+}
+
+
+.system-expand {
+    left: calc(100% - 90px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/expand.png);
+}
+
+.system-expand:hover {
+    background-color: #2B2E2F;
+}
+
+.system-collapse {
+    left: calc(100% - 135px);
+    top: 0;
+    width: 45px;
+    height: 30px;
+
+    background-image: url(../src/std_windows/simple_window/images/collapse.png);
+}
+
+.system-collapse:hover {
+    background-color: #2B2E2F;
+}
+
+
+/* Buttons */
+.button-ok {
+    top: 420px;
+    left: 20px;
+
+}
+
+.button-cancel {
+    top: 420px;
+    left: 100px;
+}
+
+.button-browse {
+    top: 350px;
+    left: 300px;
+}
+
+
+.first-checkbox {
+    top: 384px;
+    left: 20px;
+}
+
+
+.table-test {
+    width: 350px;
+    height: 300px;
+
+    top: 40px;
+    left: 20px;
+}
+
+.header-item-1 {
+    width: 30px;
+}
+
+.row-item-0 {
+    width: 30px;
+}
+
+
+.text {
+    width: 200px;
     height: 24px;
 
-    top: 100px;
-    left: 100px;
+    top: 150px;
+    left: 20px;
 
-    background-color: #263238;
-    outline: #0F1518;
+    color: #dadacb;
+
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.05;
+    vertical-align: center;
+}
+
+.button-1 {
+    top: 230px;
+    left: 50px;
+}
+
+.test-text {
+    width: 260px;
+    height: 24px;
+
+    top: 350px;
+    left: 20px;
+
+
+    color: #dadacb;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    line-height: 1.1;
+
+    background-color: rgb(76, 80, 82);
+    outline: #646464;
+
+    vertical-align: middle;
+
+    margin-left: 10px;
+
+    font-style: italic;
+}
+
+.test-text:focus {
+    border-color: #3D6185;
+    outline: #466D94;
+
+    border-bottom: 2px solid #5E6060;
+    border-right: 2px solid #5E6060;
+    border-left: 2px solid #5E6060;
+    border-top: 2px solid #5E6060;
+}
+
+
+.test-tabs {
+    left: 450px;
+    top: 100px;
 }

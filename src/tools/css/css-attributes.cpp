@@ -4,63 +4,65 @@ using namespace CSS;
 
 string CSS::css_attribute::parseImagePath(const string& path)
 {
-	string result;
+    string result;
 
-	result = path.substr(4, path.size() - 5);
+    result = path.substr(4, path.size() - 5);
 
-	if (result[0] == '"' || result[0] == '\'')
-	{
-		result = result.substr(1, result.size() - 2);
-	}
+    if (result[0] == '"' || result[0] == '\'')
+    {
+        result = result.substr(1, result.size() - 2);
+    }
 
-	return result;
+    return result;
 }
 
 string CSS::css_attribute::parseSizes(const string& path)
 {
-	string result = path;
+    string result = path;
 
-	if (result.find("calc") != -1)
-	{
-		result = result.substr(5, result.size() - 6);
-	}
+    if (result.find("calc") != -1)
+    {
+        result = result.substr(5, result.size() - 6);
+    }
 
-	return result;
+    return result;
 }
 
 css_variant CSS::css_attribute::get(const string& attribute, const string& value)
 {
-	css_variant result;
+    css_variant result;
 
 
-	if (attribute == "font-size" || attribute == "font-weight" || attribute == "margin-top" || attribute == "margin-bottom"
-		|| attribute == "margin-left" || attribute == "margin-right" || attribute == "border-radius"
-		|| attribute == "background-position-x" || attribute == "background-position-y")
-	{
-		return std::stoi(value);
-	}
+    if (attribute == "font-size" || attribute == "font-weight" || attribute == "margin-top" ||
+        attribute == "margin-bottom"
+        || attribute == "margin-left" || attribute == "margin-right" || attribute == "border-radius"
+        || attribute == "background-position-x" || attribute == "background-position-y")
+    {
+        return std::stoi(value);
+    }
 
-	if (attribute == "line-height")
-	{
-		return std::stod(value);
-	}
+    if (attribute == "line-height")
+    {
+        return std::stod(value);
+    }
 
-	if (attribute == "background-color" || attribute == "border-color" || attribute == "color" || attribute == "outline")
-	{
-		return Color(value);
-	}
+    if (attribute == "background-color" || attribute == "border-color" || attribute == "color" ||
+        attribute == "outline")
+    {
+        return Color(value);
+    }
 
-	if (attribute == "background-image")
-	{
-		return parseImagePath(value);
-	}
+    if (attribute == "background-image")
+    {
+        return parseImagePath(value);
+    }
 
-	if (attribute == "width" || attribute == "height" || attribute == "top" || attribute == "left")
-	{
-		return parseSizes(value);
-	}
+    if (attribute == "width" || attribute == "height" || attribute == "top" || attribute == "left")
+    {
+        return parseSizes(value);
+    }
 
-	result = value;
+    result = value;
 
-	return value;
+    return value;
 }

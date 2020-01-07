@@ -17,7 +17,7 @@ Component* Tabs::create(const string& id, const string& classes)
 
 void Tabs::setup()
 {
-    include("../src/std_components/tabs/css/style.css");
+    style("../src/std_components/tabs/css/style.css");
 
 
     append(new Component(_id + "-header", ".tabs-header"));

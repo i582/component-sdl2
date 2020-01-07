@@ -1,15 +1,11 @@
 #include <component-sdl2>
+#include <simple-window.h>
 
 using namespace Kit;
 
 int main(int, char**)
 {
-    auto window = $.addWindow(new Window("Test Window", { -1, -1, 300, 300 }, false));
-
-    // Добавляем стили в окно
-    window->style("../src/std_windows/simple_window/css/style.css");
-
-    window->add("#button", ".button");
+    $.addWindow(new SimpleWindow("Test Window", {-1, -1, 390, 460}, false));
 
     return $.run();
 }

@@ -1,8 +1,7 @@
-.button
-{
+.button {
     width: 70px;
     height: 24px;
-    
+
     background-color: rgb(76, 80, 82);
 
     border-color: #393A3B;
@@ -16,7 +15,7 @@
 
     font-size: 13px;
 
-    
+
     font-style: italic;
 
     line-height: 1.05;
@@ -24,8 +23,7 @@
     vertical-align: center;
 }
 
-.button:active
-{
+.button:active {
     outline: #507193;
 
     font-style: normal;
@@ -39,8 +37,7 @@
     border-top: 2px solid #5E6060;
 }
 
-.button:focus
-{
+.button:focus {
     outline: #507193;
 
     border-color: #3D6185;
@@ -51,20 +48,17 @@
     border-top: 2px solid #5E6060;
 }
 
-.button-blue
-{
+.button-blue {
     background-color: #365880;
 
 
     outline: #456B91;
 }
 
-.button-blue:active
-{
-    outline:#4E6E8F;
+.button-blue:active {
+    outline: #4E6E8F;
 }
 
-.button-blue:focus
-{
-    outline:#4E6E8F;
+.button-blue:focus {
+    outline: #4E6E8F;
 }
