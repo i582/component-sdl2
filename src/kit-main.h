@@ -26,7 +26,7 @@ namespace Kit
          * @param window Pointer to the added window
          * @return Pointer to the added window
          */
-        Window* addWindow(Window* window);
+        window* addWindow(window* window);
 
         /**
          * @brief Deletes a window by its index (the index is set automatically at creation)
@@ -44,25 +44,26 @@ namespace Kit
 
 
     public: /** Windows Interface */
-        Window* at(size_t index);
-        Window* operator[](size_t index);
+        window* at(size_t index);
+        window* operator[](size_t index);
 
+        void terminate();
 
     private:
         bool is_running;
         Event e;
 
-        map<size_t, Window*> windows;
+        map<size_t, window*> windows;
 
     private: /** Friends */
-        friend Window;
+        friend window;
 
 
     private:
         void init();
         void render();
         void onEvent();
-        void close();
+
 
     };
 

@@ -22,6 +22,8 @@ namespace Kit
 
     class Window;
 
+    class window;
+
     class Component
     {
 
@@ -81,7 +83,7 @@ namespace Kit
 
         [[nodiscard]] const vector<Component*>& childrens() const;
 
-        [[nodiscard]] Window* window() const;
+        [[nodiscard]] window* parentWindow() const;
 
         /**
          * @brief Checks if the passed object is a child of this
@@ -212,7 +214,7 @@ namespace Kit
 
         /** Parents */
         Component* _parent;
-        Window* _window;
+        window* _window;
 
 
         /** Childrens */
@@ -300,7 +302,7 @@ namespace Kit
 
     private:
         friend Window;
-
+        friend class window;
 
     protected:
 

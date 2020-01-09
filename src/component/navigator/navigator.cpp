@@ -1,11 +1,11 @@
 #include "navigator.h"
-#include "../../window/window.h"
+#include "window/window.h"
 
-Kit::Navigator::Navigator(Window* parent)
+Kit::Navigator::Navigator(window* parent)
         : Component("#navigator", {1, 1, parent->width() - 2, parent->height() - 2}, ".navigator")
 {
     this->_window = parent;
-    this->_renderer = parent->getRenderer();
+    this->_renderer = parent->renderer();
 }
 
 void Kit::Navigator::update()

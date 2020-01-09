@@ -31,7 +31,7 @@ void Kit::image::load()
 
 
     // check availability in cache
-    const string& needle_image = std::to_string(_parent->window()->id()) + "@" + _path;
+    const string& needle_image = std::to_string(_parent->parentWindow()->id()) + "@" + _path;
     const auto& it = _cache.find(needle_image);
     if (it != _cache.end())
     {
@@ -64,7 +64,7 @@ void Kit::image::load()
 
 
     // add to cache
-    const string& cache_image = std::to_string(_parent->window()->id()) + "@" + _path;
+    const string& cache_image = std::to_string(_parent->parentWindow()->id()) + "@" + _path;
     _cache.insert(std::make_pair(cache_image, _texture));
 }
 

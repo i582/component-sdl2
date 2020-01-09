@@ -1,5 +1,5 @@
 #include "component.h"
-#include "../window/window.h"
+#include "window/window.h"
 
 Kit::Component* Kit::Component::_hoverComponent = nullptr;
 
@@ -1143,7 +1143,7 @@ const Kit::vector<Kit::Component*>& Kit::Component::childrens() const
     return _childrens;
 }
 
-Kit::Window* Kit::Component::window() const
+Kit::window* Kit::Component::parentWindow() const
 {
     return _window;
 }
@@ -1393,7 +1393,6 @@ Kit::Component* Kit::Component::style(const std::map<std::string, std::string>& 
 
     for (auto&[attribute, value] : inlineStyles)
     {
-        styleType type = styleType::NORMAL;
 
         auto split_attr = Utils::split(attribute, ':');
 

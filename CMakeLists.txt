@@ -95,8 +95,6 @@ add_executable(component_sdl2_cmake
         src/tools/text/text_line.h
         src/tools/utils/utils.cpp
         src/tools/utils/utils.h
-        src/window/window.cpp
-        src/window/window.h
         src/kit-enter-point.h
         src/kit-main.cpp
         src/kit-main.h
@@ -132,7 +130,7 @@ add_executable(component_sdl2_cmake
         src/std_components/table/table_header_item.h
         src/tools/rect/simple-rect/simple-rect.cpp
         src/std_components/tabs/tabs.cpp
-        src/std_components/tabs/tabs.h src/tools/image/image.cpp src/tools/image/image.h src/component/scroll/scroll.cpp src/component/scroll/scroll.h src/component/scroll/vertical-scroll/vertical_scroll.cpp src/component/scroll/vertical-scroll/vertical_scroll.h src/component/scroll/horizontal-scroll/horizontal_scroll.cpp src/component/scroll/horizontal-scroll/horizontal_scroll.h)
+        src/std_components/tabs/tabs.h src/tools/image/image.cpp src/tools/image/image.h src/component/scroll/scroll.cpp src/component/scroll/scroll.h src/component/scroll/vertical-scroll/vertical_scroll.cpp src/component/scroll/vertical-scroll/vertical_scroll.h src/component/scroll/horizontal-scroll/horizontal_scroll.cpp src/component/scroll/horizontal-scroll/horizontal_scroll.h src/window/window.cpp src/window/window.h)
 
 
 # Set up SDL2

@@ -4,12 +4,12 @@
 
 namespace Kit
 {
-    class Window;
+    class window;
 
     class Navigator : public Component
     {
     public:
-        explicit Navigator(Window* parent);
+        explicit Navigator(window* parent);
 
     public:
         void update();

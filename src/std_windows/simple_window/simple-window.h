@@ -9,10 +9,10 @@
 
 using namespace Kit;
 
-class SimpleWindow : public Window
+class simple_window : public window
 {
 public:
-    SimpleWindow(const string& title, SimpleRect size, bool noBorder);
+    simple_window(const string& title_, SimpleRect size_, bool noBorder_);
 
 public:
     void setup() override;

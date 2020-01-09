@@ -40,7 +40,7 @@ int Kit::KitApplication::run()
     return 0;
 }
 
-Kit::Window* Kit::KitApplication::at(size_t index)
+Kit::window* Kit::KitApplication::at(size_t index)
 {
     if (windows.find(index) == windows.end())
         return nullptr;
@@ -48,18 +48,18 @@ Kit::Window* Kit::KitApplication::at(size_t index)
     return windows[index];
 }
 
-Kit::Window* Kit::KitApplication::operator[](size_t index)
+Kit::window* Kit::KitApplication::operator[](size_t index)
 {
     return at(index);
 }
 
-Kit::Window* Kit::KitApplication::addWindow(Window* window)
+Kit::window* Kit::KitApplication::addWindow(window* window)
 {
-    window->parent = this;
+    window->_parent = this;
 
     if (window->_id == 1)
     {
-        window->isMainWindow = true;
+        window->_isMainWindow = true;
     }
 
     windows.insert(std::make_pair(window->_id, window));
@@ -115,7 +115,7 @@ void Kit::KitApplication::onEvent()
     SDL_StopTextInput();
 }
 
-void Kit::KitApplication::close()
+void Kit::KitApplication::terminate()
 {
     is_running = false;
 }

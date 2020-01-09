@@ -1,12 +1,298 @@
 #include "window.h"
-
-#include <utility>
-#include <SDL_syswm.h>
 #include "../kit-main.h"
 
-void Kit::Window::handleStyles()
+Kit::window::window(const string& title_, const SimpleRect& size_, bool noBorder_)
 {
-    for (auto&[id, component] : allComponents)
+    this->_focusComponent = nullptr;
+
+    this->_window = nullptr;
+    this->_renderer = nullptr;
+
+
+    this->_size = size_;
+    this->_title = title_;
+    this->_id = -1;
+
+
+    this->_isDisplay = true;
+    this->_noBorder = noBorder_;
+    this->_isMainWindow = false;
+
+    this->_wasSetupStyle = false;
+    this->_wasSetupComponents = false;
+
+    this->_isMaximize = false;
+
+    this->_navigator = nullptr;
+
+
+    this->_parent = nullptr;
+
+
+
+    this->init();
+}
+
+Kit::window::~window()
+{
+    SDL_DestroyWindow(_window);
+    SDL_DestroyRenderer(_renderer);
+}
+
+Kit::Component* Kit::window::getElementById(const std::string& id_) const
+{
+    if (_components.find(id_) == _components.end())
+    {
+        throw std::logic_error("Component with id: " + id_ + " not found!");
+    }
+
+    return _components.at(id_);
+}
+
+Kit::Components Kit::window::getElementsByClassName(const std::string& className_) const
+{
+    auto componentVector = new vector<Component*>;
+
+    for (auto&[id, component] : _components)
+    {
+        if (component->hasClass(className_))
+        {
+            componentVector->push_back(component);
+        }
+    }
+
+    return Components(componentVector);
+}
+
+Kit::Component* Kit::window::add(const std::string& id_, const std::string& classes_,
+                                 const std::vector<Kit::Component*>& childrens_)
+{
+    auto newComponent = new Component(id_, classes_, childrens_);
+
+    return add(newComponent);
+}
+
+Kit::Component* Kit::window::add(const std::string& classes_, const std::vector<Kit::Component*>& childrens_)
+{
+    auto newComponent = new Component("", classes_, childrens_);
+
+    return add(newComponent);
+}
+
+Kit::Component* Kit::window::add(Kit::Component* component_)
+{
+    _navigator->append(component_);
+
+    return component_;
+}
+
+void Kit::window::render()
+{
+    if (!_wasSetupStyle)
+    {
+        handleStyles();
+        _wasSetupStyle = true;
+    }
+
+    if (!_wasSetupComponents)
+    {
+        _navigator->setupComponents();
+        _wasSetupComponents = true;
+    }
+
+
+    SDL_SetRenderTarget(_renderer, nullptr);
+
+    SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0x00);
+    SDL_RenderClear(_renderer);
+
+
+    _navigator->render();
+
+
+    SDL_RenderPresent(_renderer);
+}
+
+void Kit::window::show()
+{
+    _isDisplay = true;
+
+    render();
+
+    SDL_ShowWindow(_window);
+}
+
+void Kit::window::hide()
+{
+    _isDisplay = false;
+
+    SDL_HideWindow(_window);
+}
+
+bool Kit::window::isShow() const
+{
+    return _isDisplay;
+}
+
+void Kit::window::collapse() const
+{
+    SDL_MinimizeWindow(_window);
+}
+
+void Kit::window::maximize() const
+{
+    if (_isMaximize)
+    {
+        SDL_RestoreWindow(_window);
+        _isMaximize = false;
+    }
+    else
+    {
+        SDL_MaximizeWindow(_window);
+        _isMaximize = true;
+    }
+}
+
+void Kit::window::close() const
+{
+    SDL_Event closeEvent;
+    closeEvent.type = SDL_WINDOWEVENT;
+    closeEvent.window.event = SDL_WINDOWEVENT_CLOSE;
+    closeEvent.window.windowID = _id;
+
+    SDL_PushEvent(&closeEvent);
+}
+
+void Kit::window::raise() const
+{
+    SDL_RaiseWindow(_window);
+}
+
+size_t Kit::window::id() const
+{
+    return _id;
+}
+
+int Kit::window::width() const
+{
+    return _size.w;
+}
+
+int Kit::window::height() const
+{
+    return _size.h;
+}
+
+int Kit::window::top() const
+{
+    return _size.y;
+}
+
+int Kit::window::left() const
+{
+    return _size.x;
+}
+
+Kit::SimpleRect Kit::window::size() const
+{
+    return _size;
+}
+
+SDL_Renderer* Kit::window::renderer() const
+{
+    return _renderer;
+}
+
+SDL_Window* Kit::window::sdlWindow() const
+{
+    return _window;
+}
+
+void Kit::window::style(const std::string& path_)
+{
+    _styles.open(path_);
+    _componentsStyles = _styles.getStyles();
+}
+
+void Kit::window::setDraggableArea(const Kit::SimpleRect& area_)
+{
+    // TODO: Recode
+
+    auto size = new SimpleRect;
+    *size = area_;
+
+    auto rects = new vector<SimpleRect>;
+
+    rects->push_back(_size);
+    rects->push_back(area_);
+
+    SDL_SetWindowHitTest(_window, [](SDL_Window* win, const SDL_Point* area, void* callback_data) -> SDL_HitTestResult
+    {
+        auto rects = (vector <SimpleRect>*) callback_data;
+
+        SimpleRect rect = rects->at(1);
+//      SimpleRect size = rects->at(0);
+
+//		SimpleRect rect = *(SimpleRect*)callback_data;
+//
+//		SDL_Rect rec = { 0, 0, rect.w, rect.h };
+
+
+//        SimpleRect resizeBottom = {10, size.h - 10, size.w, 10};
+
+
+        if (SDL_PointInRect(area, &rect))
+            return SDL_HITTEST_DRAGGABLE;
+
+//        if (SDL_PointInRect(area, &resizeBottom))
+//            return SDL_HITTEST_RESIZE_BOTTOM;
+
+        return SDL_HITTEST_NORMAL;
+    }, rects);
+
+}
+
+
+
+/** Protected Further */
+
+void Kit::window::init()
+{
+    _window = SDL_CreateWindow(_title.c_str(),
+                               _size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
+                               _size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
+                               _size.w, _size.h, _noBorder ? SDL_WINDOW_BORDERLESS : 0); //SDL_WINDOW_RESIZABLE
+
+    if (_window == nullptr)
+    {
+        const string error = "Error of initialize new Window: ";
+        throw std::logic_error(error + SDL_GetError());
+    }
+
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
+    if (_renderer == nullptr)
+    {
+        const string error = "Renderer could not be created! SDL Error: ";
+        throw std::logic_error(error + SDL_GetError());
+    }
+    SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
+
+
+    _id = SDL_GetWindowID(_window);
+
+
+    preset();
+}
+
+void Kit::window::preset()
+{
+    _navigator = new Navigator(this);
+    addElement(_navigator);
+}
+
+void Kit::window::handleStyles()
+{
+    for (auto&[id, component] : _components)
     {
         CSS::css* component_css = component->getComponentStyles();
         if (component_css == nullptr)
@@ -14,12 +300,12 @@ void Kit::Window::handleStyles()
 
         for (auto&[block_id, css_block] : component_css->getStyles())
         {
-            allComponentsStyles[block_id] = css_block;
+            _componentsStyles[block_id] = css_block;
         }
     }
 
 
-    for (auto&[id, component] : allComponents)
+    for (auto&[id, component] : _components)
     {
         auto classnames = Utils::split(component->_classes, ' ');
 
@@ -28,9 +314,9 @@ void Kit::Window::handleStyles()
 
         for (auto& classname : *classnames)
         {
-            if (allComponentsStyles.find(classname) != allComponentsStyles.end())
+            if (_componentsStyles.find(classname) != _componentsStyles.end())
             {
-                auto style = allComponentsStyles[classname];
+                auto style = _componentsStyles[classname];
                 ready_block.mergeWith(style);
                 component->_cssBlock.mergeWith(ready_block);
 
@@ -47,231 +333,75 @@ void Kit::Window::handleStyles()
     }
 }
 
-Kit::Component* Kit::Window::addElement(Component* component)
+Kit::Component* Kit::window::addElement(Kit::Component* component_)
 {
-    if (component == nullptr)
+    if (component_ == nullptr)
         return nullptr;
 
-    const string& objectID = component->id();
+    const string& objectID = component_->id();
 
-    if (allComponents.find(objectID) != allComponents.end())
+    if (_components.find(objectID) != _components.end())
     {
         throw std::logic_error("Component with id: " + objectID + " already exists");
     }
     else
     {
-        allComponents.insert(make_pair(objectID, component));
+        _components.insert(make_pair(objectID, component_));
     }
 
-    return allComponents[objectID];
+    return _components[objectID];
 }
 
-Kit::Component* Kit::Window::getElementById(const string& id) const
+void Kit::window::onEvent(Kit::Event* e_)
 {
-    Component* component = allComponents.at(id);
-
-    if (component == nullptr)
-    {
-        throw std::logic_error("Component with id: " + id + " not found!");
-    }
-    else
-    {
-        return component;
-    }
-}
-
-Kit::Components Kit::Window::getElementsByClassName(const string& className) const
-{
-    auto* componentVector = new vector<Component*>;
-
-    for (auto&[id, component] : allComponents)
-    {
-        if (component->hasClass(className))
-        {
-            componentVector->push_back(component);
-        }
-    }
-
-    return Components(componentVector);
-}
-
-Kit::Component* Kit::Window::add(const string& id, const string& classes, const vector<Component*>& childrens)
-{
-    auto _addComponent = new Component(id, classes, childrens);
-
-    return add(_addComponent);
-}
-
-Kit::Component* Kit::Window::add(const std::string& classes, const std::vector<Kit::Component*>& childrens)
-{
-    auto _addComponent = new Component("", classes, childrens);
-
-    return add(_addComponent);
-}
-
-Kit::Component* Kit::Window::add(Component* component)
-{
-    navigator->append(component);
-
-    return component;
-}
-
-
-CSS::css_block* Kit::Window::addStyle(const string& className, const CSS::css_block& style)
-{
-    allComponentsStyles.insert(make_pair(className, style));
-    return &allComponentsStyles[className];
-}
-
-Kit::Window::Window(const string& title, const SimpleRect& size, bool noBorder)
-{
-    this->title = title;
-    this->_size = size;
-    this->_id = -1;
-
-    this->window = nullptr;
-    this->renderer = nullptr;
-
-    this->isDisplay = true;
-
-    this->noBorder = noBorder;
-
-    this->$$ = nullptr;
-    this->navigator = nullptr;
-    this->parent = nullptr;
-
-
-    this->wasSetupStyle = false;
-    this->wasSetupComponents = false;
-
-    this->focusComponent = nullptr;
-
-    this->isMainWindow = false;
-
-    this->init();
-}
-
-Kit::Window::~Window()
-{
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-
-    for (auto&[id, component] : allComponents)
-    {
-        delete component;
-    }
-}
-
-void Kit::Window::init()
-{
-    this->window = SDL_CreateWindow(title.c_str(),
-                                    _size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
-                                    _size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
-                                    _size.w, _size.h, noBorder ? SDL_WINDOW_BORDERLESS : 0); //SDL_WINDOW_RESIZABLE
-
-    if (window == nullptr)
-    {
-        const string error = "Error of initialize new Window: ";
-        throw std::logic_error(error + SDL_GetError());
-    }
-
-    this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == nullptr)
-    {
-        const string error = "Renderer could not be created! SDL Error: ";
-        throw std::logic_error(error + SDL_GetError());
-    }
-
-    this->_id = SDL_GetWindowID(window);
-
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
-    preSetup();
-}
-
-void Kit::Window::preSetup()
-{
-    navigator = $$ = new Navigator(this);
-    Window::addElement(navigator);
-}
-
-void Kit::Window::render()
-{
-    if (!wasSetupStyle)
-    {
-        Window::handleStyles();
-        wasSetupStyle = true;
-    }
-
-    if (!wasSetupComponents)
-    {
-        navigator->setupComponents();
-        wasSetupComponents = true;
-    }
-
-    SDL_SetRenderTarget(renderer, nullptr);
-
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
-    SDL_RenderClear(renderer);
-
-
-    navigator->render();
-
-
-
-    SDL_RenderPresent(renderer);
-}
-
-void Kit::Window::onEvent(Event* e)
-{
-    switch (e->type)
+    switch (e_->type)
     {
 
         case SDL_MOUSEMOTION:
         {
-            mouseMotion(e);
+            mouseMotion(e_);
             break;
         }
 
         case SDL_MOUSEBUTTONDOWN:
         {
-            mouseButtonDown(e);
+            mouseButtonDown(e_);
             break;
         }
 
         case SDL_MOUSEBUTTONUP:
         {
-            mouseButtonUp(e);
+            mouseButtonUp(e_);
             break;
         }
 
         case SDL_MOUSEWHEEL:
         {
-            mouseWheel(e);
+            mouseWheel(e_);
             break;
         }
 
         case SDL_KEYDOWN:
         {
-            keyDown(e);
+            keyDown(e_);
             break;
         }
 
         case SDL_KEYUP:
         {
-            keyUp(e);
+            keyUp(e_);
             break;
         }
 
         case SDL_TEXTINPUT:
         {
-            textInput(e);
+            textInput(e_);
             break;
         }
 
         case SDL_WINDOWEVENT:
         {
-            switch (e->window.event)
+            switch (e_->window.event)
             {
                 case SDL_WINDOWEVENT_MAXIMIZED:
                 case SDL_WINDOWEVENT_RESTORED:
@@ -282,13 +412,13 @@ void Kit::Window::onEvent(Event* e)
 
                 case SDL_WINDOWEVENT_CLOSE:
                 {
-                    if (isMainWindow)
+                    if (_isMainWindow)
                     {
-                        parent->close();
+                        _parent->terminate();
                     }
                     else
                     {
-                        SDL_DestroyWindow(window);
+                        SDL_DestroyWindow(_window);
                     }
                     break;
                 }
@@ -305,207 +435,86 @@ void Kit::Window::onEvent(Event* e)
     }
 }
 
-void Kit::Window::show()
+
+void Kit::window::mouseButtonDown(SDL_Event* e_)
 {
-    render();
+    Component* hover = _navigator->onComponentHover({e_->motion.x, e_->motion.y});
 
-    isDisplay = true;
-
-    SDL_ShowWindow(window);
-}
-
-void Kit::Window::hide()
-{
-    isDisplay = false;
-
-    SDL_HideWindow(window);
-}
-
-bool Kit::Window::isShow()
-{
-    return isDisplay;
-}
-
-void Kit::Window::collapse()
-{
-    SDL_MinimizeWindow(window);
-}
-
-void Kit::Window::close()
-{
-    SDL_Event sdlevent;
-    sdlevent.type = SDL_WINDOWEVENT;
-    sdlevent.window.event = SDL_WINDOWEVENT_CLOSE;
-    sdlevent.window.windowID = _id;
-
-    SDL_PushEvent(&sdlevent);
-}
-
-size_t Kit::Window::id()
-{
-    return _id;
-}
-
-void Kit::Window::style(const string& path)
-{
-    mainCSS.open(path);
-    Window::allComponentsStyles = mainCSS.getStyles();
-}
-
-int Kit::Window::width() const
-{
-    return _size.w;
-}
-
-int Kit::Window::height() const
-{
-    return _size.h;
-}
-
-int Kit::Window::top() const
-{
-    return _size.y;
-}
-
-int Kit::Window::left() const
-{
-    return _size.x;
-}
-
-Kit::SimpleRect Kit::Window::size() const
-{
-    return _size;
-}
-
-SDL_Renderer* Kit::Window::getRenderer() const
-{
-    return renderer;
-}
-
-SDL_Window* Kit::Window::getWindow() const
-{
-    return window;
-}
-
-void Kit::Window::setDraggableArea(SimpleRect _area)
-{
-    auto size = new SimpleRect;
-    *size = _area;
-
-    auto rects = new vector<SimpleRect>;
-
-    rects->push_back(_size);
-    rects->push_back(_area);
-
-    SDL_SetWindowHitTest(window, [](SDL_Window* win, const SDL_Point* area, void* callback_data) -> SDL_HitTestResult
+    if (_focusComponent != nullptr)
     {
-        auto rects = (vector <SimpleRect>*) callback_data;
-
-        SimpleRect rect = rects->at(1);
-        SimpleRect size = rects->at(0);
-
-//		SimpleRect rect = *(SimpleRect*)callback_data;
-//
-//		SDL_Rect rec = { 0, 0, rect.w, rect.h };
-
-
-        SimpleRect resizeBottom = {10, size.h - 10, size.w, 10};
-
-
-        if (SDL_PointInRect(area, &rect))
-            return SDL_HITTEST_DRAGGABLE;
-
-        if (SDL_PointInRect(area, &resizeBottom))
-            return SDL_HITTEST_RESIZE_BOTTOM;
-
-        return SDL_HITTEST_NORMAL;
-    }, rects);
-
-}
-
-void Kit::Window::mouseButtonDown(SDL_Event* e)
-{
-    Component* hover = navigator->onComponentHover({e->motion.x, e->motion.y});
-
-    if (focusComponent != nullptr)
-    {
-        if (focusComponent != hover)
+        if (_focusComponent != hover)
         {
-            focusComponent->loseFocus(e);
-            focusComponent = hover;
-            focusComponent->getFocus(e);
+            _focusComponent->loseFocus(e_);
+            _focusComponent = hover;
+            _focusComponent->getFocus(e_);
         }
     }
     else
     {
-        focusComponent = hover;
-        focusComponent->getFocus(e);
+        _focusComponent = hover;
+        _focusComponent->getFocus(e_);
     }
 
-    focusComponent->mouseButtonDown(e);
+    _focusComponent->mouseButtonDown(e_);
 }
 
-void Kit::Window::mouseButtonUp(SDL_Event* e)
+void Kit::window::mouseButtonUp(SDL_Event* e_)
 {
-    if (focusComponent != nullptr)
+    if (_focusComponent != nullptr)
     {
-        focusComponent->mouseButtonUp(e);
+        _focusComponent->mouseButtonUp(e_);
     }
 }
 
-void Kit::Window::mouseMotion(SDL_Event* e)
+void Kit::window::mouseMotion(SDL_Event* e_)
 {
-    if (focusComponent != nullptr)
+    if (_focusComponent != nullptr)
     {
-        if (focusComponent->_isHorizontalScrollActive || focusComponent->_isVerticalScrollActive)
+        if (_focusComponent->_isHorizontalScrollActive || _focusComponent->_isVerticalScrollActive)
         {
-            focusComponent->mouseMotion(e);
+            _focusComponent->mouseMotion(e_);
             return;
         }
     }
 
-    Component* hover = navigator->onComponentHover({e->motion.x, e->motion.y});
+    Component* hover = _navigator->onComponentHover({e_->motion.x, e_->motion.y});
 
     if (hover != nullptr)
     {
-        hover->mouseMotion(e);
+        hover->mouseMotion(e_);
     }
 }
 
-void Kit::Window::mouseWheel(SDL_Event* e)
+void Kit::window::mouseWheel(SDL_Event* e_)
 {
-    const int scrollDirection = e->wheel.y;
+    const int scrollDirection = e_->wheel.y;
 
-    if (e->motion.x == -1 || e->motion.y == -1 || e->motion.x == 1 || e->motion.y == 1)
+    if (e_->motion.x == -1 || e_->motion.y == -1 || e_->motion.x == 1 || e_->motion.y == 1)
     {
-        SDL_GetMouseState(&e->motion.x, &e->motion.y);
+        SDL_GetMouseState(&e_->motion.x, &e_->motion.y);
     }
 
-    Component* hover = navigator->onComponentHover({e->motion.x, e->motion.y});
+    Component* hover = _navigator->onComponentHover({e_->motion.x, e_->motion.y});
 
     if (hover != nullptr)
     {
-        hover->mouseScroll(e, scrollDirection);
+        hover->mouseScroll(e_, scrollDirection);
     }
 }
 
-void Kit::Window::keyDown(SDL_Event* e)
+void Kit::window::textInput(SDL_Event* e_)
 {
-    if (focusComponent != nullptr)
+    if (_focusComponent != nullptr)
     {
-        focusComponent->keyDown(e);
+        _focusComponent->textInput(e_);
     }
 }
 
-void Kit::Window::keyUp(SDL_Event* e)
+void Kit::window::keyDown(SDL_Event* e_)
 {
-
-}
-
-void Kit::Window::textInput(SDL_Event* e)
-{
-    if (focusComponent != nullptr)
+    if (_focusComponent != nullptr)
     {
-        focusComponent->textInput(e);
+        _focusComponent->keyDown(e_);
     }
 }
+

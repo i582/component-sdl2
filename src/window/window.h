@@ -1,72 +1,89 @@
 #pragma once
 
-#include "SDL.h"
-#include "SDL_syswm.h"
-#include "iostream"
-#include "string"
-#include "exception"
+#include <string>
+#include <SDL.h>
 
-#include "../tools/rect/simple-rect/simple-rect.h"
-#include "../event/event.h"
-
-#include "../component/navigator/navigator.h"
 #include "../component/components/components.h"
+#include "../component/navigator/navigator.h"
 
-#include "Windows.h"
 
 namespace Kit
 {
-    using std::cout;
-    using std::endl;
     using std::string;
+    using CSS::css;
 
     class KitApplication;
 
-    class Window
+    class window
     {
+    public: // Constructor & Destructor
+        window(const string& title_, const SimpleRect& size_, bool noBorder_ = false);
+        ~window();
 
-    public: /** Component Interface */
+    public: // Component Interface
 
         /**
          * @brief Returns the component with the given identifier.
+         * If a component with the specified identifier is not found, an exception is thrown
          */
-        [[nodiscard]] Component* getElementById(const string& id) const;
+        [[nodiscard]] Component* getElementById(const string& id_) const;
 
         /**
          * @brief Returns components with the given class identifier.
          */
-        [[nodiscard]] Components getElementsByClassName(const string& className) const;
+        [[nodiscard]] Components getElementsByClassName(const string& className_) const;
 
 
         /**
-         * @brief Functions for adding components to the window.
-         */
-        Component* add(const string& id, const string& classes, const vector<Component*>& childrens = {});
-        Component* add(const string& classes = "", const vector<Component*>& childrens = {});
-        Component* add(Component* component);
+        * @brief Functions for adding components to the window.
+        */
+        Component* add(const string& id_, const string& classes_, const vector<Component*>& childrens_ = {});
+        Component* add(const string& classes_ = "", const vector<Component*>& childrens_ = {});
+        Component* add(Component* component_);
 
 
-    public: /** constructor & destructor*/
-        Window(const string& title, const SimpleRect& size, bool noBorder = false);
-        ~Window();
 
-
-    public: /** Interface */
+    public: // Render Interface
         void render();
-        void onEvent(Event* e);
 
+
+    public: // Display Interface
         void show();
         void hide();
-        bool isShow();
-
-        void collapse();
-        void close();
-
-        size_t id();
+        [[nodiscard]] bool isShow() const;
 
 
-    public: /** Size Interface */
+    public: // System Event Interface
 
+        /**
+         * @brief Minimize a window to an iconic representation.
+         */
+        void collapse() const;
+
+        /**
+         * @brief Make a window as large as possible or restore
+         * the size and position of a minimized or maximized window.
+         */
+        void maximize() const;
+
+        /**
+         * @brief Closes the window. If the window is first created in the
+         * application, then the application terminates.
+         */
+        void close() const;
+
+        /**
+         * @brief Raise a window above other windows and set the input focus.
+         */
+        void raise() const;
+
+
+
+    public: // ID Interface
+        [[nodiscard]] size_t id() const;
+
+
+    public: // Size Interface
         [[nodiscard]] int width() const;
         [[nodiscard]] int height() const;
         [[nodiscard]] int top() const;
@@ -74,78 +91,78 @@ namespace Kit
         [[nodiscard]] SimpleRect size() const;
 
 
-    public: /** SDL Interface */
-
-        [[nodiscard]] SDL_Renderer* getRenderer() const;
-        [[nodiscard]] SDL_Window* getWindow() const;
-
-
-    public: /** Other Interface */
-
-        /**
-         * @brief Sets the area beyond which the window can be moved.
-         */
-        void setDraggableArea(SimpleRect area);
+    public: // SDL Interface
+        [[nodiscard]] SDL_Renderer* renderer() const;
+        [[nodiscard]] SDL_Window* sdlWindow() const;
 
 
-    public: /** CSS Interface */
+    public: // CSS Interface
 
         /**
          *  @brief Function for include css style file
          */
-        void style(const string& path);
+        void style(const string& path_);
 
 
-    public: /** Component Style Interface */
+    public: // Other Interface
 
-        CSS::css_block* addStyle(const string& className, const CSS::css_block& style);
+        /**
+         * @brief Sets the area beyond which the window can be moved.
+         */
+        void setDraggableArea(const SimpleRect& area_);
+
+
+
+    protected: // Components Part
+        map<string, Component*> _components;
+        map<string, CSS::css_block> _componentsStyles;
 
     protected:
-        map<string, Component*> allComponents;
-        map<string, CSS::css_block> allComponentsStyles;
+        Component* _focusComponent;
 
-    protected:
-        Component* focusComponent;
+
+    protected: // SDL Part
+        SDL_Window* _window;
+        SDL_Renderer* _renderer;
 
     protected:
         SimpleRect _size;
-        string title;
+        string _title;
         size_t _id;
 
-        SDL_Window* window;
-        SDL_Renderer* renderer;
 
-        bool isDisplay;
+    protected: // States
+        bool _isDisplay;
+        bool _noBorder;
+        bool _isMainWindow;
 
-        bool noBorder;
+        bool _wasSetupStyle;
+        bool _wasSetupComponents;
 
-        Navigator* navigator;
-        Navigator* $$;
-
-        CSS::css mainCSS;
-
-
-        bool wasSetupStyle;
-        bool wasSetupComponents;
-
-
-        KitApplication* parent;
-
-
-        bool isMainWindow;
+        mutable bool _isMaximize;
 
     protected:
+        Navigator* _navigator;
+
+    protected: // Style Part
+        css _styles;
+
+    protected: // Parent
+        KitApplication* _parent;
+
+
+    protected: // Friend
         friend Component;
         friend KitApplication;
 
+
     protected:
         void init();
-
-        void preSetup();
-
-        virtual void setup(){};
+        void preset();
+        virtual void setup() {};
 
     protected:
+
         /**
          * @brief A function that processes all elements and adds styles
          * associated with classes for each component
@@ -156,17 +173,20 @@ namespace Kit
          * @brief Adds a component to the window.
          * If a component with such an identifier exists, an exception (logic_error) is thrown.
          */
-        Component* addElement(Component* component);
+        Component* addElement(Component* component_);
 
+    protected:
+        void onEvent(Event* e_);
 
     protected: /** Events */
-        void mouseButtonDown(Event* e);
-        void mouseButtonUp(Event* e);
-        void mouseMotion(Event* e);
-        void mouseWheel(Event* e);
-        void keyDown(Event* e);
-        void keyUp(Event* e);
-        void textInput(Event* e);
+        void mouseButtonDown(Event* e_);
+        void mouseButtonUp(Event* e_);
+        void mouseMotion(Event* e_);
+        void mouseWheel(Event* e_);
+        void textInput(Event* e_);
+        void keyDown(Event* e_);
+
+
     };
 
 }

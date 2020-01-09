@@ -2,34 +2,34 @@
 #include "kit-main.h"
 
 
-SimpleWindow::SimpleWindow(const string& title, SimpleRect size, bool noBorder)
-        : Window(title, size, noBorder)
+simple_window::simple_window(const string& title_, SimpleRect size_, bool noBorder_)
+        : window(title_, size_, noBorder_)
 {
     setup();
 }
 
-void SimpleWindow::setup()
+void simple_window::setup()
 {
     style("../src/std_windows/simple_window/css/style.css");
     setDraggableArea({0, 0, _size.w - 135, 25});
 
 //
-    $$->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
-            ->setText(this->title);
+    _navigator->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
+            ->setText(_title);
 
     add("#system-exit", ".system-button .system-exit");
     add("#system-expand", ".system-button .system-expand");
     add("#system-collapse", ".system-button .system-collapse");
 
 
-    Window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e)
+    window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e)
     {
-        sender->window()->collapse();
+        sender->parentWindow()->collapse();
     });
 
-    Window::getElementById("#system-exit")->addEventListener("click", [](Component* sender, Event* e)
+    window::getElementById("#system-exit")->addEventListener("click", [](Component* sender, Event* e)
     {
-        sender->window()->close();
+        sender->parentWindow()->close();
     });
 
     add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
@@ -57,7 +57,7 @@ void SimpleWindow::setup()
     //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));
 
     add("#test-text", ".test-text")->useExtendedText();
-    auto test = Window::getElementById("#test-text");
+    auto test = window::getElementById("#test-text");
     test->setText("C:/");
 
     add(Button::create("#button-browse", "Browse", ".button-browse"));
