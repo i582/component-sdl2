@@ -12,15 +12,15 @@ double Utils::to_double(const string& str)
     return stod(str);
 }
 
-vector<string>* Utils::split(string str, char symbol)
+vector<string>* Utils::split(const string& str, char symbol)
 {
-    vector<string>* result = new vector<string>;
     string temp;
 
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        char current = str[i];
+    auto result = new vector<string>;
 
+
+    for (char current : str)
+    {
         if (current == symbol)
         {
             result->push_back(temp);
@@ -38,17 +38,15 @@ vector<string>* Utils::split(string str, char symbol)
     return result;
 }
 
-vector<string>* Utils::split(string str, string pattern, char separator)
+vector<string>* Utils::split(const string& str, const string& pattern, char separator)
 {
     vector<string>* separators = Utils::split(pattern, separator);
     vector<string>* result = new vector<string>;
     string temp;
     bool is_sep = false;
 
-    for (size_t i = 0; i < str.length(); i++)
+    for (char current : str)
     {
-        char current = str[i];
-
         for (auto& separator : *separators)
         {
             if (current == separator[0])
@@ -76,12 +74,29 @@ vector<string>* Utils::split(string str, string pattern, char separator)
     return result;
 }
 
-
-bool Utils::is_integer(string str)
+string Utils::to_lower(const string& str)
 {
-    for (size_t i = 0; i < str.length(); i++)
+    string str_result = str;
+
+    std::transform(str_result.begin(), str_result.end(), str_result.begin(), (int (*)(int))std::tolower);
+
+    return str_result;
+}
+
+string Utils::to_upper(const string& str)
+{
+    string str_result = str;
+
+    std::transform(str_result.begin(), str_result.end(), str_result.begin(), (int (*)(int))std::toupper);
+
+    return str_result;
+}
+
+bool Utils::is_integer(const string& str)
+{
+    for (char s : str)
     {
-        if (str.at(i) < '0' || str.at(i) > '9')
+        if (s < '0' || s > '9')
         {
             return false;
         }
@@ -90,11 +105,11 @@ bool Utils::is_integer(string str)
     return true;
 }
 
-bool Utils::is_number(string str)
+bool Utils::is_number(const string& str)
 {
-    for (size_t i = 0; i < str.length(); i++)
+    for (char s : str)
     {
-        if ((str.at(i) < '0' || str.at(i) > '9') && str.at(i) != '.')
+        if ((s < '0' || s > '9') && s != '.')
         {
             return false;
         }

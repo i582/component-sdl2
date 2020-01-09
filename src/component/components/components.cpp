@@ -45,3 +45,8 @@ Kit::Component* Kit::Components::operator[](size_t index)
 {
     return at(index);
 }
+
+size_t Kit::Components::size()
+{
+    return components->size();
+}

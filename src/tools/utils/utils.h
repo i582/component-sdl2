@@ -6,6 +6,7 @@
 
 #include "string"
 #include "vector"
+#include "algorithm"
 
 namespace Kit
 {
@@ -36,7 +37,7 @@ namespace Kit
          * @param symbol The symbol to split the string into
          * @return Array of string
          */
-        vector<string>* split(string str, char symbol);
+        vector<string>* split(const string& str, char symbol);
 
 
         /**
@@ -46,7 +47,19 @@ namespace Kit
          * @param separator Symbol for splitting a pattern string into separate delimiters
          * @return Array of string
          */
-        vector<string>* split(string str, string pattern, char separator = '\t');
+        vector<string>* split(const string& str, const string& pattern, char separator = '\t');
+
+
+        /**
+         * @brief Returns a lowercase string
+         */
+        string to_lower(const string& str);
+
+
+        /**
+         * @brief Returns a uppercase string
+         */
+        string to_upper(const string& str);
 
 
         /**
@@ -54,14 +67,14 @@ namespace Kit
          * @param str String for check
          * @return true|false
          */
-        bool is_integer(string str);
+        bool is_integer(const string& str);
 
         /**
          * @brief Check string for number
          * @param str String for check
          * @return true|false
          */
-        bool is_number(string str);
+        bool is_number(const string& str);
 
 
         template<typename T, typename... Args>

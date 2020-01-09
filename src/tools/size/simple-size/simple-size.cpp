@@ -1,8 +1,6 @@
 #include "simple-size.h"
 
-Kit::SimpleSize::SimpleSize() : SimpleSize(0, 0)
-{
-}
+Kit::SimpleSize::SimpleSize() : SimpleSize(0, 0) {}
 
 Kit::SimpleSize::SimpleSize(int w, int h)
 {

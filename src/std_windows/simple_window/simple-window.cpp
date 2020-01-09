@@ -13,7 +13,7 @@ void SimpleWindow::setup()
     style("../src/std_windows/simple_window/css/style.css");
     setDraggableArea({0, 0, _size.w - 135, 25});
 
-
+//
     $$->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
             ->setText(this->title);
 
@@ -25,6 +25,11 @@ void SimpleWindow::setup()
     Window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e)
     {
         sender->window()->collapse();
+    });
+
+    Window::getElementById("#system-exit")->addEventListener("click", [](Component* sender, Event* e)
+    {
+        sender->window()->close();
     });
 
     add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
@@ -48,6 +53,8 @@ void SimpleWindow::setup()
     table->addRow({"2", "Старый человек", "75", "100"});
     table->addRow({"3", "Старый человек", "75", "100"});
 
+
+    //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));
 
     add("#test-text", ".test-text")->useExtendedText();
     auto test = Window::getElementById("#test-text");

@@ -16,29 +16,15 @@ namespace CSS
 
     class Color
     {
-    private:
-        Uint32 _color;
-        string s_color;
-
     public:
         Color();
 
-        Color(Uint32 color);
+        explicit Color(Uint32 color);
 
-        Color(const string& color);
-
-    private:
-        void parse(const string& color);
-
-        Uint32 parseHEX(const string& color);
-
-        Uint32 parseRGB(const string& color);
-
-        Uint32 parseRGBA(const string& color);
+        explicit Color(const string& color);
 
     public:
         bool operator==(const Color& obj) const;
-
         bool operator!=(const Color& obj) const;
 
     public:
@@ -46,32 +32,41 @@ namespace CSS
         /**
          * @brief Returns color to RGBA
          */
-        Uint32 color() const;
+        [[nodiscard]] Uint32 color() const;
 
 
         /**
          * @brief Returns color to ABGR
          */
-        Uint32 colorReverse() const;
+        [[nodiscard]] Uint32 colorReverse() const;
 
 
         /**
          * @brief Function for sdl api compatibility
          * @return SDL_Color struct
          */
-        SDL_Color colorSDL() const;
+        [[nodiscard]] SDL_Color colorSDL() const;
 
         /**
          * @brief
          * @return Color part
          */
-        Uint8 r() const;
+        [[nodiscard]] Uint8 r() const;
+        [[nodiscard]] Uint8 g() const;
+        [[nodiscard]] Uint8 b() const;
+        [[nodiscard]] Uint8 a() const;
 
-        Uint8 g() const;
+    private:
+        Uint32 _color;
+        string s_color;
 
-        Uint8 b() const;
+    private:
+        void parse(const string& color);
 
-        Uint8 a() const;
+        static Uint32 parseHEX(const string& color);
+        static Uint32 parseRGB(const string& color);
+        static Uint32 parseRGBA(const string& color);
+
     };
 
 }

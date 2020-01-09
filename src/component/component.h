@@ -4,12 +4,12 @@
 
 #include "../tools/rect/extended-rect/extended-rect.h"
 #include "../tools/size/simple-size/simple-size.h"
-#include "../tools/image/image.h"
+#include "tools/image/image.h"
 #include "../tools/font/font.h"
 #include "../tools/text/text.h"
 #include "../tools/css/css.h"
-#include "scroll/vertical-scroll/vertical-scroll.h"
-#include "scroll/horizontal-scroll/horizontal-scroll.h"
+#include "scroll/vertical-scroll/vertical_scroll.h"
+#include "scroll/horizontal-scroll/horizontal_scroll.h"
 
 #include "../tools/text2/text.h"
 #include "component-header.h"
@@ -26,6 +26,10 @@ namespace Kit
     {
 
     public:
+
+        /**
+         * @brief A set of functions for creating class objects.
+         */
         static Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
         static Component* create(const string& classes = "", const vector<Component*>& childrens = {});
         static Component* create(Component* component);
@@ -40,21 +44,16 @@ namespace Kit
         virtual ~Component();
 
 
-    public: /** Render Interface */
-
-        void render();
-
-
     public: /** Size Interface */
 
-        int width() const;
-        int height() const;
-        int top() const;
-        int left() const;
+        [[nodiscard]]  int width() const;
+        [[nodiscard]] int height() const;
+        [[nodiscard]] int top() const;
+        [[nodiscard]] int left() const;
 
-        const Rect& size() const;
-        const Rect& outerSize() const;
-        const Rect& innerSize() const;
+        [[nodiscard]] const Rect& size() const;
+        [[nodiscard]] const Rect& outerSize() const;
+        [[nodiscard]] const Rect& innerSize() const;
 
         void outerWidth(int value);
         void outerHeight(int value);
@@ -66,23 +65,23 @@ namespace Kit
         Component* show();
         Component* hide();
         Component* toggleDisplay();
-        bool display() const;
+        [[nodiscard]] bool display() const;
 
 
     public: /** Render Data Interface */
 
-        SDL_Renderer* renderer() const;
-        SDL_Texture* innerTexture() const;
-        SDL_Texture* outerTexture() const;
+        [[nodiscard]] SDL_Renderer* renderer() const;
+        [[nodiscard]] SDL_Texture* innerTexture() const;
+        [[nodiscard]] SDL_Texture* outerTexture() const;
 
 
     public: /** Ralation Interface */
 
-        Component* parent() const;
+        [[nodiscard]] Component* parent() const;
 
-        const vector<Component*>& childs() const;
+        [[nodiscard]] const vector<Component*>& childrens() const;
 
-        Window* window() const;
+        [[nodiscard]] Window* window() const;
 
         /**
          * @brief Checks if the passed object is a child of this
@@ -97,14 +96,27 @@ namespace Kit
         bool isParentObject(Component* obj) const;
 
 
+    public: /** Append Interface */
+
+        /**
+         * @brief Adds a child component to the component passed as the first parameter.
+         * @param component Pointer to added component
+         * @return Pointer to added component
+         */
         virtual Component* append(Component* component);
 
+
+        /**
+         * @brief Adds a component collection to a component as a collection of child components.
+         * @return Self pointer
+         */
         Component* append(const vector<Component*>& components);
+
 
 
     public: /** Identifiers Interface */
 
-        const string& id() const;
+        [[nodiscard]] const string& id() const;
 
 
     public: /** Event listeners Interface */
@@ -147,7 +159,7 @@ namespace Kit
 
     public: /** Class Interface */
 
-        bool hasClass(const string& className) const;
+        [[nodiscard]] bool hasClass(const string& className) const;
         Component* removeClass(const string& className);
         Component* addClass(const string& className);
         Component* toggleClass(const string& className);
@@ -180,10 +192,7 @@ namespace Kit
 
 
 
-
-
-
-    private:
+    protected:
         /** For Event */
         static Component* _hoverComponent;
 
@@ -245,13 +254,13 @@ namespace Kit
 
 
         /** Vertical Scroll part */
-        VerticalScroll* _verticalScroll;
+        vertical_scroll* _verticalScroll;
         bool _verticalScrollable;
         bool _isVerticalScrollActive;
 
 
         /** Horizontal Scroll part */
-        HorizontalScroll* _horizontalScroll;
+        horizontal_scroll* _horizontalScroll;
         bool _horizontalScrollable;
         bool _isHorizontalScrollActive;
 
@@ -269,7 +278,7 @@ namespace Kit
 
 
         /** Image */
-        Image* _image;
+        image* _image;
 
 
         /** CSS component */
@@ -292,7 +301,11 @@ namespace Kit
     private:
         friend Window;
 
+
     protected:
+
+
+        void render();
 
         /**
          * Setup event listeners
@@ -450,8 +463,8 @@ namespace Kit
 
 
     protected: /** Scroll */
-        bool isVerticalScrollable() const;
-        bool isHorizontalScrollable() const;
+        [[nodiscard]] bool isVerticalScrollable() const;
+        [[nodiscard]] bool isHorizontalScrollable() const;
 
 
     };

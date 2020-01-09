@@ -19,28 +19,17 @@ namespace Kit
 
     public:
         Size();
-
         Size(int w, int h);
-
         Size(const Size& obj);
 
-
         Size operator+(const Size& obj);
-
         Size operator-(const Size& obj);
-
         Size operator*(const int& scale);
-
         Size operator*(const double& scale);
-
         Size operator/(const int& scale);
-
         Size operator/(const double& scale);
-
         bool operator==(const Size& obj) const;
-
         bool operator!=(const Size& obj) const;
-
         Size& operator=(const Size& obj);
 
         /**
@@ -77,15 +66,12 @@ namespace Kit
          */
     public:
         int w() const;
-
         int h() const;
 
         int w(int v);
-
         int h(int v);
 
         int dw(int d);
-
         int dh(int d);
     };
 

@@ -5,6 +5,7 @@
 #include "map"
 #include "iostream"
 
+#include "../../utils/utils.h"
 
 namespace Kit
 {
@@ -55,6 +56,16 @@ namespace Kit
 
     class font_find
     {
+    public:
+        font_find(const string& font_name, font_style font_style, font_weight font_weight);
+
+    public:
+        string find();
+
+        static void delete_cache();
+
+
+    private:
         string _font_name;
         font_style _font_style;
         font_weight _font_weight;
@@ -70,17 +81,6 @@ namespace Kit
 
         /** Cache */
         static vector<font_cache> _cache;
-
-    public:
-        font_find(const string& font_name, font_style font_style, font_weight font_weight);
-
-    private:
-        static string to_lower(const string& str);
-
-    public:
-        string find();
-
-        static void delete_cache();
     };
 
 }

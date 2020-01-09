@@ -1,79 +1,99 @@
 #include "scroll.h"
+#include "component.h"
 
-using namespace Kit;
-
-Scroll::Scroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes)
+Kit::scroll::scroll(Component* parent_)
 {
-    this->_renderer = renderer;
+    this->_parent = parent_;
+
+    this->_renderer = nullptr;
     this->_texture = nullptr;
-    this->_parentTexture = nullptr;
-    this->_bodySize = size;
-    this->_maxValue = maxValue;
-    this->_relSizes = relSizes;
 
-    this->_display = true;
+    this->_body = { 0, 0, 0, 0 };
+    this->_slider = { 0, 0, 0, 0 };
+
+    this->_maxValue = 0;
     this->_nowValue = 0;
-    this->_position = 0.;
+
+    this->_aspectRatio = 0.;
 
 
+    this->_nowPosition = 0.;
+
+    this->init();
 }
 
-Scroll::~Scroll()
+Kit::scroll::~scroll()
 {
     SDL_DestroyTexture(_texture);
 }
 
-void Scroll::init()
+void Kit::scroll::init()
 {
-    this->_texture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _bodySize.w(),
-                                       _bodySize.h());
-    SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-
-
-    _sliderSize = Rect({3, 0}, {_bodySize.w() - 6, (int) (_bodySize.h() * _relSizes)});
+    _renderer = _parent->renderer();
 }
 
-void Scroll::shift(int delta)
+void Kit::scroll::render() const
 {
-    _nowValue += delta;
-
-    if (_nowValue > _maxValue)
-        _nowValue = _maxValue;
-    if (_nowValue < 0)
-        _nowValue = 0;
-
-    _position = _nowValue / (double) _maxValue;
-
-    _sliderSize.y((_bodySize.h() - _sliderSize.h()) * _position);
-}
-
-bool Scroll::onHover(Point p)
-{
-    return p.in(_bodySize);
-}
-
-bool Scroll::onHoverSlider(Point& p)
-{
-    Point pos = p;
-    pos = pos - _bodySize.start;
-
-    return pos.in(_sliderSize);
-}
-
-void Scroll::render()
-{
-    if (!_display)
-        return;
-
     SDL_SetRenderTarget(_renderer, _texture);
 
+    // draw body
     SDL_SetRenderDrawColor(_renderer, 0x26, 0x32, 0x38, 0x00);
     SDL_RenderClear(_renderer);
 
+    // draw slider
     SDL_SetRenderDrawColor(_renderer, 0x59, 0x5b, 0x5d, 0xff);
-    SDL_RenderFillRect(_renderer, &_sliderSize.toSdlRect());
+    SDL_RenderFillRect(_renderer, &_slider);
 
-    SDL_SetRenderTarget(_renderer, _parentTexture);
 
-    SDL_RenderCopy(_renderer, _texture, NULL, &_bodySize.toSdlRect());
+    SDL_SetRenderTarget(_renderer, _parent->outerTexture());
+
+    SDL_RenderCopy(_renderer, _texture, nullptr, &_body);
+}
+
+bool Kit::scroll::onHover(const Kit::Point& point_)
+{
+    const SDL_Point p = point_.toSDLPoint();
+    return SDL_PointInRect(&p, &_body);
+}
+
+bool Kit::scroll::onSliderHover(const Kit::Point& point_)
+{
+    SDL_Point p = point_.toSDLPoint();
+
+    p.x -= _body.x;
+    p.y -= _body.y;
+
+    return SDL_PointInRect(&p, &_slider);
+}
+
+void Kit::scroll::setup(const SimpleRect& body_, const SimpleRect& slider_, int maxValue_, int nowValue_,
+        double aspectRatio_, double nowPosition_)
+{
+    _body = body_;
+    _maxValue = maxValue_;
+    _nowValue = nowValue_;
+    _aspectRatio = aspectRatio_;
+    _nowPosition = nowPosition_;
+
+    Texture::destroy(_texture);
+    _texture = Texture::create(_renderer, _body);
+
+    _slider = slider_;
+}
+
+void Kit::scroll::shift(int delta_)
+{
+    _nowValue += delta_;
+
+    if (_nowValue > _maxValue)
+    {
+        _nowValue = _maxValue;
+    }
+
+    if (_nowValue < 0)
+    {
+        _nowValue = 0;
+    }
+
+    _nowPosition = _nowValue / (double) _maxValue;
 }

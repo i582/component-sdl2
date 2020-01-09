@@ -38,14 +38,10 @@ namespace CSS
     public:
         template<typename T>
         css_variant(T);
-
-        css_variant()
-        {
-        };
+        css_variant() {};
 
     public:
         css_variant& operator=(const css_variant& css_variant);
-
         css_variant& operator=(const raw_css_variant& raw_variant);
 
         template<typename T>
@@ -57,11 +53,8 @@ namespace CSS
         css_variant_type type() const;
 
         int to_int(bool no_exception = false) const;
-
         double to_double(bool no_exception = false) const;
-
         string to_string(bool no_exception = false) const;
-
         Color to_color(bool no_exception = false) const;
     };
 

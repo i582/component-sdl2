@@ -1,58 +1,54 @@
 #pragma once
 
-#include "SDL.h"
-#include "../../tools/rect/extended-rect/extended-rect.h"
-#include "../../tools/point/extended-point/extended-point.h"
+#include "simple-rect.h"
+#include "texture.h"
 
 namespace Kit
 {
-
     class Component;
 
-    class Scroll
+    class scroll
     {
-    protected:
-        Rect _bodySize;
-        Rect _sliderSize;
-
+    protected: // SDL Part
         SDL_Renderer* _renderer;
         SDL_Texture* _texture;
 
-        SDL_Texture* _parentTexture;
+    protected: // Sizes
+        SimpleRect _body;
+        SimpleRect _slider;
 
-        bool _display;
+    protected: // Parent
+        Component* _parent;
 
+    protected: // Main Variable
 
         int _maxValue;
         int _nowValue;
 
-        double _relSizes;
-
-        /* { 0, 1 } */
-        double _position;
-
-    public:
-        Scroll(SDL_Renderer* renderer, Rect size, int maxValue, double relSizes);
-
-        virtual ~Scroll();
-
-    public:
-        friend Component;
+        double _aspectRatio;
+        double _nowPosition;
 
     protected:
-        virtual void init();
+        void init();
 
 
     public:
-        virtual void shift(int d);
-
-        bool onHover(Point p);
-
-        bool onHoverSlider(Point& p);
+        explicit scroll(Component* parent_);
+        virtual ~scroll();
 
     public:
-        void render();
+        bool onHover(const Point& point_);
+        bool onSliderHover(const Point& point_);
+
+    public:
+        virtual void shift(int delta_);
+
+    public:
+        virtual void setup(const SimpleRect& body_, const SimpleRect& slider_, int maxValue_, int nowValue_,
+                double aspectRatio_, double nowPosition_);
+
+    public:
+        void render() const;
 
     };
-
 }

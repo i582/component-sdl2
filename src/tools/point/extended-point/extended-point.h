@@ -44,31 +44,20 @@ namespace Kit
 
     public:
         Point();
-
         Point(int x, int y);
-
         Point(const Point& obj);
 
         explicit Point(const SDL_Point& p);
-
         explicit Point(SDL_Point* p);
 
         Point operator+(const Point& obj);
-
         Point operator-(const Point& obj);
-
         Point operator*(const int& scale);
-
         Point operator*(const double& scale);
-
         Point operator/(const int& scale);
-
         Point operator/(const double& scale);
-
         bool operator==(const Point& obj) const;
-
         bool operator!=(const Point& obj) const;
-
         Point& operator=(const Point& obj);
 
         /**
@@ -101,27 +90,23 @@ namespace Kit
          * @brief general interface
          */
     public:
-        int x() const;
-
-        int y() const;
+        [[nodiscard]] int x() const;
+        [[nodiscard]] int y() const;
 
         int x(int v);
-
         int y(int v);
 
         int dx(int d);
-
         int dy(int d);
 
         int* px();
-
         int* py();
 
         /**
          * @brief
          * @return Point struct understood by SDL API
          */
-        SDL_Point toSDLPoint() const;
+        [[nodiscard]] SDL_Point toSDLPoint() const;
 
         /**
          * @brief Checks if a given point lies in a rectangle
@@ -129,10 +114,8 @@ namespace Kit
          * @param ignorePosition flag meaning not taking into account the position of the rectangle
          * @return [true|false]
          */
-        bool in(const Rect&, bool ignorePosition = false) const;
-
-        bool in(const SDL_Rect& r) const;
-
+        [[nodiscard]] bool in(const Rect&, bool ignorePosition = false) const;
+        [[nodiscard]] bool in(const SDL_Rect& r) const;
         bool in(SDL_Rect* r) const;
     };
 

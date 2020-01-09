@@ -120,7 +120,7 @@ void Kit::TextLine::setText(const string& new_text)
     render();
 }
 
-void Kit::TextLine::addText(const string& additionalText, int place)
+void Kit::TextLine::addText(const string& additionalText, size_t place)
 {
     if (place > text.length())
     {
@@ -144,7 +144,7 @@ void Kit::TextLine::addText(const string& additionalText, int place)
     render();
 }
 
-bool Kit::TextLine::removeSymbol(int place)
+bool Kit::TextLine::removeSymbol(size_t place)
 {
     if (text.length() > 0)
     {
@@ -166,7 +166,7 @@ bool Kit::TextLine::removeSymbol(int place)
     }
 }
 
-bool Kit::TextLine::removeSymbolAfter(int place)
+bool Kit::TextLine::removeSymbolAfter(size_t place)
 {
     if (place < text.length())
     {

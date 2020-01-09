@@ -116,20 +116,6 @@ Kit::Component* Kit::Window::add(Component* component)
     return component;
 }
 
-Kit::Component* Kit::Window::create(const string& id, const string& classes, const vector<Component*>& childrens)
-{
-    return new Component(id, classes, childrens);
-}
-
-Kit::Component* Kit::Window::create(const std::string& classes, const std::vector<Kit::Component*>& childrens)
-{
-    return new Component("", classes, childrens);
-}
-
-Kit::Component* Kit::Window::create(Component* component)
-{
-    return component;
-}
 
 CSS::css_block* Kit::Window::addStyle(const string& className, const CSS::css_block& style)
 {
@@ -137,7 +123,7 @@ CSS::css_block* Kit::Window::addStyle(const string& className, const CSS::css_bl
     return &allComponentsStyles[className];
 }
 
-Kit::Window::Window(const string& title, SimpleRect size, bool noBorder)
+Kit::Window::Window(const string& title, const SimpleRect& size, bool noBorder)
 {
     this->title = title;
     this->_size = size;
@@ -159,6 +145,8 @@ Kit::Window::Window(const string& title, SimpleRect size, bool noBorder)
     this->wasSetupComponents = false;
 
     this->focusComponent = nullptr;
+
+    this->isMainWindow = false;
 
     this->init();
 }
@@ -230,6 +218,7 @@ void Kit::Window::render()
     navigator->render();
 
 
+
     SDL_RenderPresent(renderer);
 }
 
@@ -290,6 +279,19 @@ void Kit::Window::onEvent(Event* e)
                     render();
                     break;
                 }
+
+                case SDL_WINDOWEVENT_CLOSE:
+                {
+                    if (isMainWindow)
+                    {
+                        parent->close();
+                    }
+                    else
+                    {
+                        SDL_DestroyWindow(window);
+                    }
+                    break;
+                }
             }
 
             break;
@@ -331,7 +333,12 @@ void Kit::Window::collapse()
 
 void Kit::Window::close()
 {
-    parent->deleteWindow(this->_id);
+    SDL_Event sdlevent;
+    sdlevent.type = SDL_WINDOWEVENT;
+    sdlevent.window.event = SDL_WINDOWEVENT_CLOSE;
+    sdlevent.window.windowID = _id;
+
+    SDL_PushEvent(&sdlevent);
 }
 
 size_t Kit::Window::id()

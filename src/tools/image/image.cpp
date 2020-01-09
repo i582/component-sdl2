@@ -1,115 +1,125 @@
 #include "image.h"
-#include "../../component/component.h"
+#include "component.h"
+#include "window.h"
 
-using namespace Kit;
+Kit::map<Kit::string, SDL_Texture*> Kit::image::_cache = {};
 
-Image::Image(Component* parent)
+Kit::image::image(Kit::Component* parent_)
 {
-    if (parent == nullptr)
-        return;
+    this->_parent = parent_;
 
+    this->_renderer = nullptr;
+    this->_texture = nullptr;
+    this->_textureSize = { 0, 0, 0, 0 };
+
+    this->_needUpdate = false;
+
+    this->setup();
+}
+
+void Kit::image::setup()
+{
     IMG_Init(IMG_INIT_PNG);
 
-    this->parent = parent;
-    this->renderer = parent->renderer();
-    this->parentTexture = parent->innerTexture();
-
-    this->containerSize = {0, 0, parent->width(), parent->height()};
-
-    this->texture = nullptr;
-
-
-    this->needReRender = true;
+    this->_renderer = _parent->renderer();
 }
 
-void Image::setPath(const string& path)
+void Kit::image::load()
 {
-    if (path.empty())
-        return;
-
-    if (this->path == path)
+    if (_path.empty() || !_needUpdate)
         return;
 
 
-    this->path = path;
-
-    SDL_DestroyTexture(this->texture);
-    this->texture = IMG_LoadTexture(renderer, this->path.c_str());
-
-    if (this->texture == nullptr)
+    // check availability in cache
+    const string& needle_image = std::to_string(_parent->window()->id()) + "@" + _path;
+    const auto& it = _cache.find(needle_image);
+    if (it != _cache.end())
     {
-        cout << "Error: " << IMG_GetError() << endl;
+        _texture = _cache.at(needle_image);
+
+        if (_texture == nullptr)
+        {
+            throw std::runtime_error("ERROR: cache was corrupted!");
+        }
+
+        // get size
+        SDL_QueryTexture(_texture, nullptr, nullptr, &_textureSize.w, &_textureSize.h);
+
+        _needUpdate = false;
         return;
     }
 
-    SDL_QueryTexture(this->texture, nullptr, nullptr, &this->generalSize.w, &this->generalSize.h);
 
-    this->needReRender = true;
-}
+    _texture = IMG_LoadTexture(_renderer, _path.c_str());
 
-void Image::setRenderer(SDL_Renderer* renderer)
-{
-    this->renderer = renderer;
-}
-
-void Image::setImageSize(const SimpleRect& generalSize)
-{
-    this->generalSize = generalSize;
-}
-
-void Image::setImageShift(const SimplePoint& p)
-{
-    this->generalSize.x = p.x;
-    this->generalSize.y = p.y;
-}
-
-void Image::setImageWidth(const string& size)
-{
-    if (size == "")
-        return;
-
-
-    int newWidth = Point::parseStringToNumber(size, parent->width());
-
-    double imageRatio = this->generalSize.w / (double) this->generalSize.h;
-
-    this->generalSize.w = newWidth;
-    this->generalSize.h = newWidth / imageRatio;
-
-}
-
-void Image::createTexture()
-{
-    if (this->texture != nullptr)
+    if (_texture == nullptr)
     {
-        SDL_DestroyTexture(this->texture);
-        this->texture = nullptr;
+        throw std::runtime_error(string("ERROR: ") + IMG_GetError());
     }
 
-    if (this->path.empty())
-        return;
+    // get size
+    SDL_QueryTexture(_texture, nullptr, nullptr, &_textureSize.w, &_textureSize.h);
 
-    this->texture = IMG_LoadTexture(renderer, this->path.c_str());
+    _needUpdate = false;
 
-    if (this->texture == nullptr)
-    {
-        cout << "Error: " << IMG_GetError() << endl;
-        return;
-    }
 
-    SDL_QueryTexture(this->texture, nullptr, nullptr, &textureSize.w, &textureSize.h);
-
-    needReRender = false;
+    // add to cache
+    const string& cache_image = std::to_string(_parent->window()->id()) + "@" + _path;
+    _cache.insert(std::make_pair(cache_image, _texture));
 }
 
-void Image::render()
+Kit::image* Kit::image::path(const string& path_)
 {
-    if (needReRender)
-        createTexture();
+    if (path_.empty() || path_ == _path)
+        return this;
 
-    SDL_SetRenderTarget(renderer, this->parentTexture);
+    _path = path_;
+    _needUpdate = true;
 
-    SimpleRect srcRect = {0, 0, generalSize.w, generalSize.h};
+    load();
 
-    SDL_RenderCopy(renderer, this->texture, NULL, &generalSize);
+    return this;
+}
+
+Kit::image* Kit::image::position(const Point& position_)
+{
+    _size.start = position_;
+    _size.calc(_parent->innerSize());
+
+    return this;
+}
+
+Kit::image* Kit::image::size(const Kit::Size& size_, bool saveProportion_)
+{
+    _size.size = size_;
+    _size.calc(_parent->innerSize());
+
+
+    if (saveProportion_)
+    {
+        const int width = _size.size.w();
+        const double originalProportion = _textureSize.h / (double)_textureSize.w;
+
+        const int newHeight = (int)(width * originalProportion);
+
+        _size.size.h(newHeight);
+    }
+
+    return this;
+}
+
+void Kit::image::render() const
+{
+    SDL_SetRenderTarget(_renderer, _parent->innerTexture());
+
+    const SDL_Rect dstRect = _size.toSdlRect();
+
+    SDL_RenderCopy(_renderer, _texture, nullptr, &dstRect);
+
+    SDL_SetRenderTarget(_renderer, nullptr);
+}
+
+void Kit::image::delete_cache()
+{
+    _cache.clear();
 }

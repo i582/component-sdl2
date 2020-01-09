@@ -3,58 +3,57 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "iostream"
-#include "string"
+#include "map"
 
 #include "../rect/simple-rect/simple-rect.h"
+#include "../rect/extended-rect/extended-rect.h"
 #include "../point/simple-point/simple-point.h"
+
 
 namespace Kit
 {
-
     using std::string;
-    using std::to_string;
-    using std::cout;
-    using std::endl;
+    using std::map;
 
     class Component;
 
-    class Image
+
+    class image
     {
-    private:
-        string path;
-        SimpleRect textureSize;
-        SimpleRect generalSize;
-        SimpleRect containerSize;
+    private: // SDL Part
+        SDL_Renderer* _renderer;
+        SDL_Texture* _texture;
+        SDL_Rect _textureSize;
 
+    private: // Image Part
+        string _path;
+        Rect _size;
 
-        SDL_Renderer* renderer;
-        SDL_Texture* texture;
-        SDL_Texture* parentTexture;
+        bool _needUpdate;
 
-        Component* parent;
+    private: // Parent Part
+        Component* _parent;
 
-        bool needReRender;
-
-    public:
-        Image(Component* parent);
-
-    public:
-        void setPath(const string& path);
-
-        void setRenderer(SDL_Renderer* renderer);
-
-        void setImageSize(const SimpleRect& generalSize);
-
-        void setImageShift(const SimplePoint& p);
-
-        void setImageWidth(const string& size);
+    private: // Cache
+        static map<string, SDL_Texture*> _cache;
 
     private:
-        void createTexture();
+        void setup();
+        void load();
+
 
     public:
-        void render();
+        explicit image(Component* parent_);
 
+    public: // Main Interface
+
+        image* path(const string& path_);
+        image* position(const Point& position_);
+        image* size(const Size& size_, bool saveProportion_ = true);
+
+        void render() const;
+
+        static void delete_cache();
     };
 
 }

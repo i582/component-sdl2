@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "css-attributes.h"
 
 namespace CSS
@@ -25,31 +24,9 @@ namespace CSS
         LPAR, // (
         RPAR, // )
 
-        PSEUDO, // hover or active
+        PSEUDO, // hover or active or focus
 
         FIELD
-    };
-
-    enum State
-    {
-        NEXT_TOKEN_IS_ID,
-        NEXT_TOKEN_IS_CLASSNAME,
-
-        NEXT_TOKEN_IS_LBRA,
-
-        NEXT_TOKEN_IS_COLON,
-        NEXT_TOKEN_IS_SEMICOLON,
-
-        NEXT_TOKEN_IS_ATTRIBUTE,
-        NEXT_TOKEN_IS_VALUE,
-
-        NEXT_TOKEN_IS_PSEUDO,
-
-        NEXT_TOKEN_IS_COMPLEX_VALUE,
-
-        END_BLOCK,
-
-        START_PARSE
     };
 
     enum class state
@@ -98,9 +75,7 @@ namespace CSS
         string code;
 
         vector<string> tokens;
-
         vector<vector<string> > blocks;
-
         map<string, CSS::css_block> css_blocks;
 
         CSS::css* css_parent;
@@ -122,23 +97,16 @@ namespace CSS
 
         TokenType whatIsToken(const string& token);
 
-
     private:
         void skipComment(size_t& i);
 
     private:
         void splitByBlock();
-
         void splitByToken();
-
-        void syntaxParseOneBlock(vector<string>& block);
-
         void syntaxParse();
-
+        void syntaxParseOneBlock(vector<string>& block);
         void mergeStyleComponent();
-
         void updateCSS();
-
 
         void syntaxParseIfComplexValue(string attribute, string value, CSS::css_block_state* block_state);
 

@@ -39,6 +39,7 @@ include_directories(src/tools/size/extended-size)
 include_directories(src/tools/size/simple-size)
 include_directories(src/tools/text)
 include_directories(src/tools/utils)
+include_directories(src/tools/texture)
 include_directories(src/window)
 include_directories(src/std_components/button)
 include_directories(src/std_components/checkbox)
@@ -54,12 +55,6 @@ add_executable(component_sdl2_cmake
         src/component/components/components.h
         src/component/navigator/navigator.cpp
         src/component/navigator/navigator.h
-        src/component/scroll/horizontal-scroll/horizontal-scroll.cpp
-        src/component/scroll/horizontal-scroll/horizontal-scroll.h
-        src/component/scroll/vertical-scroll/vertical-scroll.cpp
-        src/component/scroll/vertical-scroll/vertical-scroll.h
-        src/component/scroll/scroll.cpp
-        src/component/scroll/scroll.h
         src/component/component-header.h
         src/component/component.cpp
         src/component/component.h
@@ -84,8 +79,6 @@ add_executable(component_sdl2_cmake
         src/tools/font/font-find/font-find.h
         src/tools/font/font.cpp
         src/tools/font/font.h
-        src/tools/image/image.cpp
-        src/tools/image/image.h
         src/tools/point/extended-point/extended-point.cpp
         src/tools/point/extended-point/extended-point.h
         src/tools/point/simple-point/simple-point.h
@@ -139,7 +132,7 @@ add_executable(component_sdl2_cmake
         src/std_components/table/table_header_item.h
         src/tools/rect/simple-rect/simple-rect.cpp
         src/std_components/tabs/tabs.cpp
-        src/std_components/tabs/tabs.h)
+        src/std_components/tabs/tabs.h src/tools/image/image.cpp src/tools/image/image.h src/component/scroll/scroll.cpp src/component/scroll/scroll.h src/component/scroll/vertical-scroll/vertical_scroll.cpp src/component/scroll/vertical-scroll/vertical_scroll.h src/component/scroll/horizontal-scroll/horizontal_scroll.cpp src/component/scroll/horizontal-scroll/horizontal_scroll.h)
 
 
 # Set up SDL2

@@ -82,7 +82,6 @@ namespace Kit
               const class font& new_font, size_t fontSize, const Color& colorFont, const double& lineHeight,
               bool isOneLine = false);
 
-
         ~Text2();
 
     public:
@@ -94,15 +93,11 @@ namespace Kit
 
         void splitByLines();
 
-
         void handleSelect();
-
         void deleteSelect();
-
         string copySelect();
 
         CursorPosition whereIsCursor(SimplePoint p);
-
         void renderCursor();
 
         void update();
@@ -111,36 +106,22 @@ namespace Kit
         void render();
 
         void setText(const string& text);
-
         void setSize(const SimpleRect& newSize);
-
         void setFont(const class font& newFont);
-
         void setFontSize(const size_t& newFontSize);
-
         void setColor(const Color& newColor);
-
         void setLineHeight(const double& lineHeight);
-
         void setTextAlign(const string& align);
-
         void setTextBlockVerticalAlign(const string& align);
-
         void setTextBlockMargin(const string& side, int value);
-
         void setFocus(bool focus);
 
 
         void mouseMotion(SDL_Event* e, const Point& mouse);
-
         void mouseButtonUp(SDL_Event* e, const Point& mouse);
-
         void mouseButtonDown(SDL_Event* e, const Point& mouse);
-
         void mouseButtonDoubleDown(SDL_Event* e);
-
         void keyDown(SDL_Event* e);
-
         void textInput(SDL_Event* e);
 
     };

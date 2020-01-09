@@ -95,6 +95,28 @@
 }
 
 
+.scrolls
+{
+    width: 350px;
+    height: 300px;
+
+    top: 40px;
+    left: 20px;
+
+    background-color: #ce4848;
+}
+
+.inner-scroll
+{
+    width: 200%;
+    height: 200%;
+
+    top: 50px;
+    left: 50px;
+
+    background-color: #4A88C7;
+}
+
 .table-test {
     width: 350px;
     height: 300px;

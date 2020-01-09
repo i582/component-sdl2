@@ -16,7 +16,6 @@ void Table::setup()
     append(new TableHeader(_id + "-header", ".header-table"));
 
     append(new Component(_id + "-body", ".table-body"));
-
 }
 
 void Table::addCollumn(const string& title)

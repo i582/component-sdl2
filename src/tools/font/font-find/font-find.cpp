@@ -5,50 +5,36 @@ using namespace Kit;
 
 vector<font_cache> Kit::font_find::_cache = {};
 
-string Kit::font_find::to_lower(const string& str)
-{
-    string str_result = str;
-
-    for (auto& symbol : str_result)
-    {
-        symbol = tolower(symbol);
-    }
-
-    return str_result;
-}
-
 Kit::font_find::font_find(const string& font_name, font_style font_style, font_weight font_weight)
 {
-    this->_font_name = to_lower(font_name);
+    this->_font_name = Utils::to_lower(font_name);
     this->_font_style = font_style;
     this->_font_weight = font_weight;
 
 
     this->_equivalent_names = {
-            {  "segoe script"   , "segoesc"}
-            , {"segoe print"    , "segoepr"}
-            , {"segoe ui"       , "segoeui"}
-            , {"consolas"       , "consola"}
-            , {"comic sans"     , "comic"}
-            , {"courier"        , "cour"}
-            , {"times new roman", "times"}
-            , {"trebuchet"      , "trebuc"}
-            , {"palatino"       , "pala"}
-            ,
+            {"segoe script",    "segoesc"},
+            {"segoe print",     "segoepr"},
+            {"segoe ui",        "segoeui"},
+            {"consolas",        "consola"},
+            {"comic sans",      "comic"},
+            {"courier",         "cour"},
+            {"times new roman", "times"},
+            {"trebuchet",       "trebuc"},
+            {"palatino",        "pala"},
     };
 
     this->_count_font_weights = 9;
     this->_font_weight_string = {
-            {  "hairline"}
-            , {"thin"   , "extralight"}
-            , {"light"}
-            , {"regular", "book"}
-            , {"medium"}
-            , {"semibold"}
-            , {"bold"}
-            , {"extrabold"}
-            , {"black"}
-            ,
+            {"hairline"},
+            {"thin",    "extralight"},
+            {"light"},
+            {"regular", "book"},
+            {"medium"},
+            {"semibold"},
+            {"bold"},
+            {"extrabold"},
+            {"black"},
     };
 
     this->_font_weight_found = {false, false, false, false, false, false, false, false, false};
@@ -108,7 +94,7 @@ string Kit::font_find::find()
         if (p.path().filename().extension() == ".ttf" ||
             p.path().filename().extension() == ".otf")
         {
-            const string& path = to_lower(p.path().filename().generic_string());
+            const string& path = Utils::to_lower(p.path().filename().generic_string());
 
             if (path.find(_font_name) != -1)
             {
@@ -123,7 +109,7 @@ string Kit::font_find::find()
         if (p.path().filename().extension() == ".ttf" ||
             p.path().filename().extension() == ".otf")
         {
-            const string& path = to_lower(p.path().filename().generic_string());
+            const string& path = Utils::to_lower(p.path().filename().generic_string());
 
             if (path.find(_font_name) != -1)
             {
@@ -148,8 +134,8 @@ string Kit::font_find::find()
         {
             for (auto& path : paths)
             {
-                const string& filename = to_lower(path.filename().generic_string());
-                const string& filename_without_ext = to_lower(path.filename().stem().generic_string());
+                const string& filename = Utils::to_lower(path.filename().generic_string());
+                const string& filename_without_ext = Utils::to_lower(path.filename().stem().generic_string());
 
                 if (filename_without_ext.find("italic") == -1 &&
                     filename_without_ext.find("it") == -1 &&
@@ -165,8 +151,8 @@ string Kit::font_find::find()
         {
             for (auto& path : paths)
             {
-                const string& filename = to_lower(path.filename().generic_string());
-                const string& filename_without_ext = to_lower(path.filename().stem().generic_string());
+                const string& filename = Utils::to_lower(path.filename().generic_string());
+                const string& filename_without_ext = Utils::to_lower(path.filename().stem().generic_string());
 
                 if (filename_without_ext.find("italic") != -1 ||
                     filename_without_ext[filename_without_ext.size() - 1] == 'i' ||
@@ -197,7 +183,7 @@ string Kit::font_find::find()
 
     for (auto& path : paths_with_style)
     {
-        const string& filename_without_ext = to_lower(path.filename().stem().generic_string());
+        const string& filename_without_ext = Utils::to_lower(path.filename().stem().generic_string());
 
         for (size_t i = 0; i < _count_font_weights; i++)
         {
@@ -224,7 +210,7 @@ string Kit::font_find::find()
 
     for (auto& path : paths_with_style)
     {
-        const string& filename_without_ext = to_lower(path.filename().stem().generic_string());
+        const string& filename_without_ext = Utils::to_lower(path.filename().stem().generic_string());
 
         // if font_name like "consola" and file_name like "consolai" or "consolaz"
         if (filename_without_ext.size() - _font_name.size() < 3)

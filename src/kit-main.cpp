@@ -2,7 +2,7 @@
 
 Kit::KitApplication* Kit::KitApplication::instance = nullptr;
 
-Kit::KitApplication* Kit::KitApplication::create()
+Kit::KitApplication* Kit::KitApplication::getInstance()
 {
     if (instance == nullptr)
         instance = new KitApplication;
@@ -13,7 +13,7 @@ Kit::KitApplication* Kit::KitApplication::create()
 Kit::KitApplication::KitApplication()
 {
     this->is_running = true;
-    this->e = {};
+    this->e = {0};
 
     this->init();
 }
@@ -25,8 +25,9 @@ Kit::KitApplication::~KitApplication()
         delete window;
     }
 
-    font::clear_cache();
+    font::delete_cache();
     font_find::delete_cache();
+    image::delete_cache();
 
     delete instance;
 }
@@ -56,11 +57,16 @@ Kit::Window* Kit::KitApplication::addWindow(Window* window)
 {
     window->parent = this;
 
-    windows.insert(std::make_pair(window->id(), window));
+    if (window->_id == 1)
+    {
+        window->isMainWindow = true;
+    }
+
+    windows.insert(std::make_pair(window->_id, window));
 
     render();
 
-    return windows[window->id()];
+    return windows[window->_id];
 }
 
 void Kit::KitApplication::deleteWindow(size_t index)

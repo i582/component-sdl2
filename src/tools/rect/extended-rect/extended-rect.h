@@ -26,7 +26,6 @@ namespace Kit
         Rect(const string& left, const string& top, const string& width, const string& height);
 
         bool operator==(const Rect& obj);
-
         Rect& operator=(const Rect& obj);
         /**
          * @brief Part for where definition from a string, like 100px or 24%
@@ -59,11 +58,8 @@ namespace Kit
          * @return Value from function name or -1 if strings are not calculated
          */
         int x() const;
-
         int y() const;
-
         int w() const;
-
         int h() const;
 
         /**
@@ -71,19 +67,13 @@ namespace Kit
          * @return New value from function name
          */
         int x(int v);
-
         int y(int v);
-
         int w(int v);
-
         int h(int v);
 
         int dx(int d);
-
         int dy(int d);
-
         int dw(int d);
-
         int dh(int d);
 
         bool empty() const;

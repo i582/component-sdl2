@@ -37,7 +37,7 @@ void Select::setup()
     {
         _childrens[1]->toggleDisplay();
 
-        KitApplication::create()->addWindow(new Window("select-window", {100, 100, 200, 200}));
+        KitApplication::getInstance()->addWindow(new Window("select-window", {100, 100, 200, 200}));
     });
 }
 

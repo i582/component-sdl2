@@ -5,9 +5,7 @@ using namespace std;
 
 map<string, TTF_Font*> Kit::font::_cache = {};
 
-Kit::font::font() : font("Segoe UI", font_style::NORMAL, font_weight::REGULAR)
-{
-}
+Kit::font::font() : font("Segoe UI", font_style::NORMAL, font_weight::REGULAR) {}
 
 Kit::font::font(const string& name, font_style style, font_weight weight)
 {
@@ -40,11 +38,6 @@ Kit::font::font(const string& name, const string& style, int weight)
 
     font_find find(name, _style, _weight);
     path = find.find();
-}
-
-Kit::font::~font()
-{
-
 }
 
 void Kit::font::init()
@@ -106,7 +99,7 @@ font& Kit::font::operator=(const font& font)
     return *this;
 }
 
-void Kit::font::clear_cache()
+void Kit::font::delete_cache()
 {
     for (auto& _cache_font : _cache)
     {

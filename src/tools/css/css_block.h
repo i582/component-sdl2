@@ -101,7 +101,7 @@ namespace CSS
          * @brief Function for get the block name
          * @return [string] Block name
          */
-        string name() const;
+        [[nodiscard]] string name() const;
 
 
         /*

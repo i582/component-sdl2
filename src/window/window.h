@@ -25,45 +25,87 @@ namespace Kit
     class Window
     {
 
-    protected:
-        map<string, Component*> allComponents;
-        map<string, CSS::css_block> allComponentsStyles;
-
-    protected:
-        /**
-         * @brief A function that processes all elements and adds styles
-         * associated with classes for each component
-         */
-        void handleStyles();
-
     public: /** Component Interface */
 
-        Component* addElement(Component* component);
+        /**
+         * @brief Returns the component with the given identifier.
+         */
+        [[nodiscard]] Component* getElementById(const string& id) const;
 
-        Component* getElementById(const string& id) const;
+        /**
+         * @brief Returns components with the given class identifier.
+         */
+        [[nodiscard]] Components getElementsByClassName(const string& className) const;
 
-        Components getElementsByClassName(const string& className) const;
 
+        /**
+         * @brief Functions for adding components to the window.
+         */
         Component* add(const string& id, const string& classes, const vector<Component*>& childrens = {});
-
         Component* add(const string& classes = "", const vector<Component*>& childrens = {});
-
         Component* add(Component* component);
 
-        Component* create(const string& id, const string& classes, const vector<Component*>& childrens = {});
 
-        Component* create(const string& classes = "", const vector<Component*>& childrens = {});
+    public: /** constructor & destructor*/
+        Window(const string& title, const SimpleRect& size, bool noBorder = false);
+        ~Window();
 
-        Component* create(Component* component);
+
+    public: /** Interface */
+        void render();
+        void onEvent(Event* e);
+
+        void show();
+        void hide();
+        bool isShow();
+
+        void collapse();
+        void close();
+
+        size_t id();
+
+
+    public: /** Size Interface */
+
+        [[nodiscard]] int width() const;
+        [[nodiscard]] int height() const;
+        [[nodiscard]] int top() const;
+        [[nodiscard]] int left() const;
+        [[nodiscard]] SimpleRect size() const;
+
+
+    public: /** SDL Interface */
+
+        [[nodiscard]] SDL_Renderer* getRenderer() const;
+        [[nodiscard]] SDL_Window* getWindow() const;
+
+
+    public: /** Other Interface */
+
+        /**
+         * @brief Sets the area beyond which the window can be moved.
+         */
+        void setDraggableArea(SimpleRect area);
+
+
+    public: /** CSS Interface */
+
+        /**
+         *  @brief Function for include css style file
+         */
+        void style(const string& path);
+
 
     public: /** Component Style Interface */
 
         CSS::css_block* addStyle(const string& className, const CSS::css_block& style);
 
+    protected:
+        map<string, Component*> allComponents;
+        map<string, CSS::css_block> allComponentsStyles;
 
-    public:
+    protected:
         Component* focusComponent;
-
 
     protected:
         SimpleRect _size;
@@ -81,18 +123,18 @@ namespace Kit
         Navigator* $$;
 
         CSS::css mainCSS;
+
+
         bool wasSetupStyle;
         bool wasSetupComponents;
 
 
         KitApplication* parent;
 
-    public: /** constructor & destructor*/
-        Window(const string& title, SimpleRect size, bool noBorder = false);
 
-        ~Window();
+        bool isMainWindow;
 
-    public:
+    protected:
         friend Component;
         friend KitApplication;
 
@@ -103,71 +145,28 @@ namespace Kit
 
         virtual void setup(){};
 
+    protected:
+        /**
+         * @brief A function that processes all elements and adds styles
+         * associated with classes for each component
+         */
+        void handleStyles();
+
+        /**
+         * @brief Adds a component to the window.
+         * If a component with such an identifier exists, an exception (logic_error) is thrown.
+         */
+        Component* addElement(Component* component);
+
 
     protected: /** Events */
         void mouseButtonDown(Event* e);
-
         void mouseButtonUp(Event* e);
-
         void mouseMotion(Event* e);
-
         void mouseWheel(Event* e);
-
         void keyDown(Event* e);
-
         void keyUp(Event* e);
-
         void textInput(Event* e);
-
-    public: /** Interface */
-        void render();
-
-        void onEvent(Event* e);
-
-        void show();
-
-        void hide();
-
-        bool isShow();
-
-        void collapse();
-
-        void close();
-
-        size_t id();
-
-
-    public: /** Size Interface */
-
-        int width() const;
-
-        int height() const;
-
-        int top() const;
-
-        int left() const;
-
-        SimpleRect size() const;
-
-
-    public: /** SDL Interface */
-
-        SDL_Renderer* getRenderer() const;
-
-        SDL_Window* getWindow() const;
-
-
-    public: /** Other Interface */
-
-        void setDraggableArea(SimpleRect area);
-
-    public: /** CSS Interface */
-
-        /**
-         *  @brief Function for include css style file
-         */
-        void style(const string& path);
-
     };
 
 }

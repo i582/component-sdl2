@@ -26,4 +26,5 @@ SDL_Texture* Kit::Texture::create(SDL_Renderer* renderer, const Kit::SimpleSize&
 void Kit::Texture::destroy(SDL_Texture* texture)
 {
     SDL_DestroyTexture(texture);
+    texture = nullptr;
 }

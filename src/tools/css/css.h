@@ -23,8 +23,8 @@ namespace CSS
     class css
     {
     private:
-        map<string, css_block> blocks;
-        css_parser* parser;
+        map<string, css_block> _blocks;
+        css_parser* _parser;
 
     public:
         /*
@@ -102,7 +102,7 @@ namespace CSS
          * a simple constructor
          * @param [in] code: Code string
          */
-        void set_code(const string& code);
+        void setCode(const string& code);
 
 
         /*

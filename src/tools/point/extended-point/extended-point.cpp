@@ -30,7 +30,7 @@ int Point::parseStringToNumber(const string& str, int relativeValue)
     }
     else
     {
-        cout << "ERROR: string does not contain 'px' or '%'!" << endl;
+        cout << "ERROR: string '" << str << "' does not contain 'px' or '%'!" << endl;
         return -1;
     }
 }
@@ -43,11 +43,11 @@ int Point::parseExpressionToNumber(const string& str, int relativeValue)
     vector<string>* expression = nullptr;
 
 
-    if ((findMinus = str.find("-")) != -1)
+    if ((findMinus = str.find('-')) != -1)
     {
         expression = Utils::split(str, '-');
     }
-    else if ((findPlus = str.find("+")) != -1)
+    else if ((findPlus = str.find('+')) != -1)
     {
         expression = Utils::split(str, '+');
     }
@@ -80,9 +80,7 @@ int Point::parseExpressionToNumber(const string& str, int relativeValue)
     return result;
 }
 
-Point::Point() : Point(0, 0)
-{
-}
+Point::Point() : Point(0, 0) {}
 
 Point::Point(int x, int y)
 {
@@ -100,18 +98,14 @@ Point::Point(const Point& obj)
     this->isCalculated = obj.isCalculated;
 }
 
+Point::Point(const SDL_Point& p) : Point(p.x, p.y) {}
 
-Point::Point(const SDL_Point& p) : Point(p.x, p.y)
-{
-}
-
-Point::Point(SDL_Point* p) : Point(p->x, p->y)
-{
-}
-
+Point::Point(SDL_Point* p) : Point(p->x, p->y) {}
 
 Point::Point(const string& left, const string& top)
 {
+    this->_x = 0;
+    this->_y = 0;
     this->left = left;
     this->top = top;
     this->isCalculated = false;

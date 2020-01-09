@@ -145,7 +145,7 @@ Uint32 Color::colorReverse() const
 
 SDL_Color Color::colorSDL() const
 {
-    Uint8* c = (Uint8*) &_color;
+    auto c = (Uint8*) &_color;
     const SDL_Color sdl_color = {c[3], c[2], c[1], c[0]};
     return sdl_color;
 }

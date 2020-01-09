@@ -340,29 +340,47 @@ void Kit::Component::computeChildrenSize()
         newTextureSize.w(childrenSize.w);
 
 
-        /*
-         *  TODO: Setup scroll
-         */
-        this->_horizontalScroll->_bodySize.x(_innerSize.x());
-        this->_horizontalScroll->_bodySize.y(_innerSize.y() + _innerSize.h() - this->_horizontalScroll->_bodySize.h());
 
-        this->_horizontalScroll->_bodySize.w(_innerSize.w());
+        // setup horizontal scroll
+        const int scrollBodyHeight = 15;
 
-        this->_horizontalScroll->_maxValue = newTextureSize.w() - _innerSize.w();
+        const int scrollSliderHeight = scrollBodyHeight - 6;
+        const int scrollSliderPositionY = (scrollBodyHeight - scrollSliderHeight) / 2;
 
-        this->_horizontalScroll->_relSizes = _innerSize.w() / (double) newTextureSize.w();
-        this->_horizontalScroll->_renderer = _renderer;
-        this->_horizontalScroll->init();
+        const SimpleRect scrollBody =
+        {
+        /* x */ _innerSize.x(),
+        /* y */ _innerSize.y() + _innerSize.h() - scrollBodyHeight,
+        /* w */ _innerSize.w(),
+        /* h */  scrollBodyHeight
+        };
+
+        const SimpleRect scrollSlider =
+        {
+        /* x */ 0, // auto
+        /* y */ scrollSliderPositionY,
+        /* w */ 0, // auto
+        /* h */ scrollSliderHeight
+        };
+
+        const int maxValue = newTextureSize.w() - _innerSize.w();
+        const int nowValue = 0;
+        const double aspectRatio = _innerSize.w() / (double) newTextureSize.w();
+        const double nowPosition = 0;
+
+        _horizontalScroll->setup(
+            scrollBody,
+            scrollSlider,
+            maxValue,
+            nowValue,
+            aspectRatio,
+            nowPosition
+        );
+
+        _horizontalScrollable = true;
 
 
-        _innerSize.dh(-this->_horizontalScroll->_bodySize.h());
-
-        Texture::destroy(this->_innerTexture);
-        this->_innerTexture = Texture::create(_renderer, _innerSize);
-
-
-        this->_horizontalScroll->_parentTexture = this->_outerTexture;
-        this->_horizontalScrollable = true;
+        _innerSize.dh(-scrollBodyHeight);
 
     }
     else if (_autoWidth)
@@ -383,30 +401,46 @@ void Kit::Component::computeChildrenSize()
 
 
 
-        /*
-         *  TODO: Setup scroll
-         */
-        this->_verticalScroll->_bodySize.x(_innerSize.x() + _innerSize.w() - this->_verticalScroll->_bodySize.w());
-        this->_verticalScroll->_bodySize.y(_innerSize.y());
+        // setup vertical scroll
+        const int scrollBodyWidth = 15;
 
-        this->_verticalScroll->_bodySize.h(_innerSize.h());
+        const int scrollSliderWidth = scrollBodyWidth - 6;
+        const int scrollSliderPositionX = (scrollBodyWidth - scrollSliderWidth) / 2;
 
-        this->_verticalScroll->_maxValue = newTextureSize.h() - _innerSize.h();
+        const SimpleRect scrollBody =
+        {
+        /* x */ _innerSize.x() + _innerSize.w() - scrollBodyWidth,
+        /* y */ _innerSize.y(),
+        /* w */  scrollBodyWidth,
+        /* h */ _innerSize.h()
+        };
 
-        this->_verticalScroll->_relSizes = _innerSize.h() / (double) newTextureSize.h();
-        this->_verticalScroll->_renderer = _renderer;
-        this->_verticalScroll->init();
+        const SimpleRect scrollSlider =
+        {
+        /* x */ scrollSliderPositionX,
+        /* y */ 0, // auto
+        /* w */ scrollSliderWidth,
+        /* h */ 0 // auto
+        };
+
+        const int maxValue = newTextureSize.h() - _innerSize.h();
+        const int nowValue = 0;
+        const double aspectRatio = _innerSize.h() / (double) newTextureSize.h();
+        const double nowPosition = 0;
+
+        _verticalScroll->setup(
+            scrollBody,
+            scrollSlider,
+            maxValue,
+            nowValue,
+            aspectRatio,
+            nowPosition
+        );
+
+        _verticalScrollable = true;
 
 
-        _innerSize.dw(-this->_verticalScroll->_bodySize.w());
-
-
-        Texture::destroy(this->_innerTexture);
-        this->_innerTexture = Texture::create(_renderer, _innerSize);
-
-
-        this->_verticalScroll->_parentTexture = this->_outerTexture;
-        this->_verticalScrollable = true;
+        _innerSize.dw(-scrollBodyWidth);
 
     }
     else if (_autoHeight)
@@ -427,7 +461,7 @@ void Kit::Component::computeChildrenSize()
 
 void Kit::Component::setupBackgroundImage()
 {
-    this->_image = new Image(this);
+    this->_image = new image(this);
 
     for (auto& children : _childrens)
     {
@@ -487,9 +521,9 @@ void Kit::Component::setupText()
 
 void Kit::Component::setupScrolls()
 {
-    this->_verticalScroll = new VerticalScroll(_renderer, {0, 0, 15, 0}, 0, 1);
+    this->_verticalScroll = new vertical_scroll(this);
 
-    this->_horizontalScroll = new HorizontalScroll(_renderer, {0, 0, 0, 15}, 0, 1);
+    this->_horizontalScroll = new horizontal_scroll(this);
 
 
     for (auto& children : _childrens)
@@ -668,20 +702,20 @@ void Kit::Component::render()
 
     if (this->_image != nullptr)
     {
-
-        this->_image->setPath(blockState->get<string>("background-image"));
-
-
-        const int& x_shift = blockState->get<int>("background-position-x");
-        const int& y_shift = blockState->get<int>("background-position-y");
-        this->_image->setImageShift({x_shift, y_shift});
+        const string& pathToImage = blockState->get<string>("background-image");
+        _image->path(pathToImage);
 
 
-        const string& newSize = blockState->get<string>("background-size");
-        this->_image->setImageWidth(newSize);
+        const string& x_shift = blockState->get<string>("background-position-x");
+        const string& y_shift = blockState->get<string>("background-position-y");
+        _image->position({x_shift, y_shift});
 
 
-        this->_image->render();
+        const string& imageWidth = blockState->get<string>("background-size");
+        _image->size({imageWidth, "0px"}, true);
+
+
+        _image->render();
     }
 
 
@@ -741,10 +775,12 @@ void Kit::Component::render()
 
 
     const SDL_Rect _innerRectBorderSize =
-            {
-                    _innerSize.x() - leftSize, _innerSize.y() - topSize, _innerSize.w() + leftSize + rightSize,
-                    _innerSize.h() + topSize + bottomSize
-            };
+    {
+        _innerSize.x() - leftSize,
+        _innerSize.y() - topSize,
+        _innerSize.w() + leftSize + rightSize,
+        _innerSize.h() + topSize + bottomSize
+    };
     Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius, borderColor);
 
 
@@ -763,18 +799,27 @@ void Kit::Component::render()
     }
     else
     {
-        copy.x(this->_horizontalScroll->_nowValue);
         copy.y(this->_verticalScroll->_nowValue);
+        copy.x(this->_horizontalScroll->_nowValue);
     }
 
 
-    SDL_RenderCopy(_renderer, _innerTexture, &copy.toSdlRect(), &_innerSize.toSdlRect());
+    const SDL_Rect copy_sdl = copy.toSdlRect();
+    const SDL_Rect innerSize_sdl = _innerSize.toSdlRect();
+
+    SDL_RenderCopy(_renderer, _innerTexture, &copy_sdl, &innerSize_sdl);
 
 
-    if (_needRenderScroll)
+    if (_verticalScrollable)
+    {
         _verticalScroll->render();
+    }
 
-    _horizontalScroll->render();
+    if (_horizontalScrollable)
+    {
+        _horizontalScroll->render();
+    }
+
 
 
     SDL_Texture* parentTexture = nullptr;
@@ -784,7 +829,10 @@ void Kit::Component::render()
     }
 
     SDL_SetRenderTarget(_renderer, parentTexture);
-    SDL_RenderCopy(_renderer, _outerTexture, nullptr, &_outerSize.toSdlRect());
+
+
+    const SDL_Rect outerSize_sdl = _outerSize.toSdlRect();
+    SDL_RenderCopy(_renderer, _outerTexture, nullptr, &outerSize_sdl);
 }
 
 void Kit::Component::mouseButtonDown(Event* e)
@@ -800,7 +848,7 @@ void Kit::Component::mouseButtonDown(Event* e)
     adjustMousePoint(mouseP);
 
 
-    if (_verticalScroll->onHoverSlider(mouseP))
+    if (_verticalScroll->onSliderHover(mouseP))
     {
         cout << "_verticalScroll slider" << endl;
 
@@ -810,7 +858,7 @@ void Kit::Component::mouseButtonDown(Event* e)
         return;
     }
 
-    if (_horizontalScroll->onHoverSlider(mouseP))
+    if (_horizontalScroll->onSliderHover(mouseP))
     {
         cout << "_horizontalScroll slider" << endl;
 
@@ -991,8 +1039,9 @@ void Kit::Component::textInput(Event* e)
 
 void Kit::Component::setupComponents()
 {
-    setupScrolls();
     setupChildrenRenderer();
+
+    setupScrolls();
 
     setupSize();
     computeSize();
@@ -1089,7 +1138,7 @@ Kit::Component* Kit::Component::parent() const
     return _parent;
 }
 
-const Kit::vector<Kit::Component*>& Kit::Component::childs() const
+const Kit::vector<Kit::Component*>& Kit::Component::childrens() const
 {
     return _childrens;
 }
@@ -1458,3 +1507,4 @@ Kit::Component* Kit::Component::unuseExtendedText()
 
     return this;
 }
+                                                                                          

@@ -22,13 +22,8 @@ namespace Kit
     {
         int x, y;
 
-        CursorPosition() : x(0), y(0)
-        {
-        }
-
-        CursorPosition(int x, int y) : x(x), y(y)
-        {
-        }
+        CursorPosition() : x(0), y(0){}
+        CursorPosition(int x, int y) : x(x), y(y){}
 
         bool operator==(const CursorPosition& obj)
         {
@@ -73,18 +68,14 @@ namespace Kit
 
     private:
         void setup();
-
         void render();
 
-
-        bool removeSymbol(int place);
-
-        bool removeSymbolAfter(int place);
+        bool removeSymbol(size_t place);
+        bool removeSymbolAfter(size_t place);
 
     public:
         void setText(const string& text);
-
-        void addText(const string& additionalText, int place);
+        void addText(const string& additionalText, size_t place);
     };
 
 

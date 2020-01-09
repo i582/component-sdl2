@@ -2,140 +2,140 @@
 
 CSS::css_block_state::css_block_state()
 {
-    styles["width"] = 0;
-    styles["height"] = 0;
-    styles["left"] = 0;
-    styles["top"] = 0;
+    _styles["width"] = 0;
+    _styles["height"] = 0;
+    _styles["left"] = 0;
+    _styles["top"] = 0;
 
-    styles["background-color"] = 0;
-    styles["border-color"] = 0;
-    styles["color"] = 0;
+    _styles["background-color"] = 0;
+    _styles["border-color"] = 0;
+    _styles["color"] = 0;
 
-    styles["background-image"] = 0;
-    styles["background-position-x"] = 0;
-    styles["background-position-y"] = 0;
+    _styles["background-image"] = 0;
+    _styles["background-position-x"] = 0;
+    _styles["background-position-y"] = 0;
 
-    styles["background-size"] = 0;
+    _styles["background-size"] = 0;
 
-    styles["font-family"] = 0;
-    styles["font-weight"] = 0;
-    styles["font-style"] = 0;
-    styles["font-size"] = 0;
+    _styles["font-family"] = 0;
+    _styles["font-weight"] = 0;
+    _styles["font-style"] = 0;
+    _styles["font-size"] = 0;
 
-    styles["line-height"] = 0;
-    styles["text-align"] = 0;
+    _styles["line-height"] = 0;
+    _styles["text-align"] = 0;
 
-    styles["vertical-align"] = 0;
-    styles["horizontal-align"] = 0;
+    _styles["vertical-align"] = 0;
+    _styles["horizontal-align"] = 0;
 
-    styles["margin-top"] = 0;
-    styles["margin-bottom"] = 0;
+    _styles["margin-top"] = 0;
+    _styles["margin-bottom"] = 0;
 
-    styles["margin-left"] = 0;
-    styles["margin-right"] = 0;
+    _styles["margin-left"] = 0;
+    _styles["margin-right"] = 0;
 
-    styles["border-radius"] = 0;
+    _styles["border-radius"] = 0;
 
 
-    styles["border-top"] = 0;
-    styles["border-top-size"] = 0;
-    styles["border-top-color"] = 0;
-    styles["border-top-type"] = 0;
+    _styles["border-top"] = 0;
+    _styles["border-top-size"] = 0;
+    _styles["border-top-color"] = 0;
+    _styles["border-top-type"] = 0;
 
-    styles["border-bottom"] = 0;
-    styles["border-bottom-size"] = 0;
-    styles["border-bottom-color"] = 0;
-    styles["border-bottom-type"] = 0;
+    _styles["border-bottom"] = 0;
+    _styles["border-bottom-size"] = 0;
+    _styles["border-bottom-color"] = 0;
+    _styles["border-bottom-type"] = 0;
 
-    styles["border-left"] = 0;
-    styles["border-left-size"] = 0;
-    styles["border-left-color"] = 0;
-    styles["border-left-type"] = 0;
+    _styles["border-left"] = 0;
+    _styles["border-left-size"] = 0;
+    _styles["border-left-color"] = 0;
+    _styles["border-left-type"] = 0;
 
-    styles["border-right"] = 0;
-    styles["border-right-size"] = 0;
-    styles["border-right-color"] = 0;
-    styles["border-right-type"] = 0;
+    _styles["border-right"] = 0;
+    _styles["border-right-size"] = 0;
+    _styles["border-right-color"] = 0;
+    _styles["border-right-type"] = 0;
 
-    styles["outline"] = 0;
+    _styles["outline"] = 0;
 
-    styles["overflow"] = 0;
+    _styles["overflow"] = 0;
 
-    styles["display"] = 0;
+    _styles["display"] = 0;
 }
 
 CSS::css_block_state::css_block_state(bool general)
 {
-    styles["width"] = "0px";
-    styles["height"] = "0px";
-    styles["left"] = "0px";
-    styles["top"] = "0px";
+    _styles["width"] = "0px";
+    _styles["height"] = "0px";
+    _styles["left"] = "0px";
+    _styles["top"] = "0px";
 
-    styles["background-color"] = Color(0xffffff00);
-    styles["border-color"] = Color(0x00000000);
-    styles["color"] = Color(0x000000ff);
+    _styles["background-color"] = Color(0xffffff00);
+    _styles["border-color"] = Color(0x00000000);
+    _styles["color"] = Color(0x000000ff);
 
-    styles["background-image"] = "";
-    styles["background-position-x"] = 0;
-    styles["background-position-y"] = 0;
+    _styles["background-image"] = "";
+    _styles["background-position-x"] = "0px";
+    _styles["background-position-y"] = "0px";
 
-    styles["background-size"] = "";
+    _styles["background-size"] = "0px";
 
-    styles["font-family"] = "Segoe UI";
-    styles["font-weight"] = 400;
-    styles["font-style"] = "normal";
-    styles["font-size"] = 13;
+    _styles["font-family"] = "Segoe UI";
+    _styles["font-weight"] = 400;
+    _styles["font-style"] = "normal";
+    _styles["font-size"] = 13;
 
-    styles["line-height"] = 1.1;
-    styles["text-align"] = "left";
+    _styles["line-height"] = 1.1;
+    _styles["text-align"] = "left";
 
-    styles["vertical-align"] = "top";
-    styles["horizontal-align"] = "left";
+    _styles["vertical-align"] = "top";
+    _styles["horizontal-align"] = "left";
 
-    styles["margin-top"] = 0;
-    styles["margin-bottom"] = 0;
+    _styles["margin-top"] = 0;
+    _styles["margin-bottom"] = 0;
 
-    styles["margin-left"] = 0;
-    styles["margin-right"] = 0;
+    _styles["margin-left"] = 0;
+    _styles["margin-right"] = 0;
 
-    styles["border-radius"] = 0;
-
-
-    styles["border-top"] = 0;
-    styles["border-top-size"] = 0;
-    styles["border-top-color"] = 0;
-    styles["border-top-type"] = "solid";
-
-    styles["border-bottom"] = 0;
-    styles["border-bottom-size"] = 0;
-    styles["border-bottom-color"] = 0;
-    styles["border-bottom-type"] = "solid";
-
-    styles["border-left"] = 0;
-    styles["border-left-size"] = 0;
-    styles["border-left-color"] = 0;
-    styles["border-left-type"] = "solid";
-
-    styles["border-right"] = 0;
-    styles["border-right-size"] = 0;
-    styles["border-right-color"] = 0;
-    styles["border-right-type"] = "solid";
-
-    styles["outline"] = Color(0x00000000);
-
-    styles["overflow"] = "unset";
+    _styles["border-radius"] = 0;
 
 
-    styles["display"] = "unset";
+    _styles["border-top"] = 0;
+    _styles["border-top-size"] = 0;
+    _styles["border-top-color"] = 0;
+    _styles["border-top-type"] = "solid";
+
+    _styles["border-bottom"] = 0;
+    _styles["border-bottom-size"] = 0;
+    _styles["border-bottom-color"] = 0;
+    _styles["border-bottom-type"] = "solid";
+
+    _styles["border-left"] = 0;
+    _styles["border-left-size"] = 0;
+    _styles["border-left-color"] = 0;
+    _styles["border-left-type"] = "solid";
+
+    _styles["border-right"] = 0;
+    _styles["border-right-size"] = 0;
+    _styles["border-right-color"] = 0;
+    _styles["border-right-type"] = "solid";
+
+    _styles["outline"] = Color(0x00000000);
+
+    _styles["overflow"] = "unset";
+
+
+    _styles["display"] = "unset";
 }
 
 void CSS::css_block_state::mergeWith(css_block_state& block)
 {
     map<string, css_variant> mergedStyles;
 
-    for (auto&[attr, thisStyle] : styles)
+    for (auto&[attr, thisStyle] : _styles)
     {
-        auto otherStyle = block.styles.at(attr);
+        auto otherStyle = block._styles.at(attr);
 
         if (otherStyle.type() == css_variant_type::INT)
         {
@@ -150,16 +150,16 @@ void CSS::css_block_state::mergeWith(css_block_state& block)
         }
     }
 
-    this->styles = mergedStyles;
+    this->_styles = mergedStyles;
 }
 
 void CSS::css_block_state::mergeWithBaseIs(css_block_state& block)
 {
     map<string, css_variant> mergedStyles;
 
-    for (auto&[attr, thisStyle] : styles)
+    for (auto&[attr, thisStyle] : _styles)
     {
-        auto otherStyle = block.styles.at(attr);
+        auto otherStyle = block._styles.at(attr);
 
         if (thisStyle.type() == css_variant_type::INT)
         {
@@ -174,5 +174,5 @@ void CSS::css_block_state::mergeWithBaseIs(css_block_state& block)
         }
     }
 
-    this->styles = mergedStyles;
+    this->_styles = mergedStyles;
 }

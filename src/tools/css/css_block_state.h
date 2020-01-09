@@ -11,7 +11,7 @@ namespace CSS
     class css_block_state
     {
     private:
-        map<string, css_variant> styles;
+        map<string, css_variant> _styles;
 
 
     public:
@@ -39,7 +39,7 @@ namespace CSS
         if (key.empty())
             return;
 
-        styles[key] = value;
+        _styles[key] = value;
     }
 
     template<typename T>
@@ -47,7 +47,7 @@ namespace CSS
     {
         T result;
 
-        if (styles.find(key) == styles.end())
+        if (_styles.find(key) == _styles.end())
         {
             cout << "ERROR: " << key << " is NOT found in this map!" << endl;
             return T(0);
@@ -55,7 +55,7 @@ namespace CSS
 
         try
         {
-            result = styles[key].get<T>();
+            result = _styles[key].get<T>();
         }
         catch (const std::exception& e)
         {

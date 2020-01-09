@@ -9,7 +9,7 @@ namespace Kit
     class Navigator : public Component
     {
     public:
-        Navigator(Window* parent);
+        explicit Navigator(Window* parent);
 
     public:
         void update();

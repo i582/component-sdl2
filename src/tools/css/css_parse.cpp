@@ -14,7 +14,7 @@ CSS::css_parser::css_parser(const string& file_path, CSS::css* css_parent)
     this->css_parent = css_parent;
     this->file_path = file_path;
 
-    openFile();
+    openFile(); 
 }
 
 CSS::css_parser::css_parser(const string& code, bool is_code, CSS::css* css_parent)
