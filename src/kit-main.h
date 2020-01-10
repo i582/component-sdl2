@@ -50,10 +50,10 @@ namespace Kit
         void terminate();
 
     private:
-        bool is_running;
-        Event e;
+        bool _isRunning;
+        Event _e;
 
-        map<size_t, window*> windows;
+        map<size_t, window*> _windows;
 
     private: /** Friends */
         friend window;

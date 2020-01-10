@@ -5,15 +5,14 @@
 simple_window::simple_window(const string& title_, SimpleRect size_, bool noBorder_)
         : window(title_, size_, noBorder_)
 {
-    setup();
+    simple_window::setup();
 }
 
 void simple_window::setup()
 {
-    style("../src/std_windows/simple_window/css/style.css");
+    style("../styles/std_windows/simple_window/style.css");
     setDraggableArea({0, 0, _size.w - 135, 25});
 
-//
     _navigator->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
             ->setText(_title);
 
@@ -22,12 +21,12 @@ void simple_window::setup()
     add("#system-collapse", ".system-button .system-collapse");
 
 
-    window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e)
+    window::getElementById("#system-collapse")->addEventListener("click", [](Component* sender, Event* e_)
     {
         sender->parentWindow()->collapse();
     });
 
-    window::getElementById("#system-exit")->addEventListener("click", [](Component* sender, Event* e)
+    window::getElementById("#system-exit")->addEventListener("click", [](Component* sender, Event* e_)
     {
         sender->parentWindow()->close();
     });

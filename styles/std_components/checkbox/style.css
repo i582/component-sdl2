@@ -2,7 +2,7 @@
     width: 100px;
     height: 16px;
 
-    background-image: url(../src/std_components/checkbox/images/unchecked.png);
+    background-image: url(../styles/std_components/checkbox/images/unchecked.png);
     background-size: 16px;
 
     color: #dadacb;
@@ -15,5 +15,5 @@
 }
 
 .checkbox-checked {
-    background-image: url(../src/std_components/checkbox/images/checked.png);
+    background-image: url(../styles/std_components/checkbox/images/checked.png);
 }

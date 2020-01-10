@@ -107,6 +107,8 @@ void Kit::window::render()
     SDL_RenderClear(_renderer);
 
 
+
+
     _navigator->render();
 
 
@@ -387,12 +389,6 @@ void Kit::window::onEvent(Kit::Event* e_)
             break;
         }
 
-        case SDL_KEYUP:
-        {
-            keyUp(e_);
-            break;
-        }
-
         case SDL_TEXTINPUT:
         {
             textInput(e_);
@@ -517,4 +513,5 @@ void Kit::window::keyDown(SDL_Event* e_)
         _focusComponent->keyDown(e_);
     }
 }
+
 

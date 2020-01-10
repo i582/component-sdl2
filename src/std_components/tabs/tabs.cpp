@@ -17,7 +17,7 @@ Component* Tabs::create(const string& id, const string& classes)
 
 void Tabs::setup()
 {
-    style("../src/std_components/tabs/css/style.css");
+    style("../styles/std_components/tabs/style.css");
 
 
     append(new Component(_id + "-header", ".tabs-header"));
@@ -40,7 +40,7 @@ Component* Tabs::add(const string& title)
     tabs_pointer.push_back(new_item);
 
 
-    new_item->addEventListener("click", [this](Component* sender, Event* e)
+    new_item->addEventListener("click", [this](Component* sender, Event* e_)
     {
         auto select_item = std::any_cast<size_t>(sender->userData("item-number"));
 

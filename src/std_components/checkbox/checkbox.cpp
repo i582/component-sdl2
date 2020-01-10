@@ -3,7 +3,7 @@
 #include <utility>
 
 Checkbox::Checkbox(const string& id, const string& text, const string& classes,
-                   function<void(Component* sender, Event* e)> callback)
+                   function<void(Component* sender, Event* e_)> callback)
         : Component(id, ".checkbox " + classes)
 {
     this->callback = std::move(callback);
@@ -15,14 +15,14 @@ Checkbox::Checkbox(const string& id, const string& text, const string& classes,
 
 void Checkbox::setup()
 {
-    style("../src/std_components/checkbox/css/style.css");
+    style("../styles/std_components/checkbox/style.css");
 
-    this->addEventListener("change", [&](Component* sender, Event* e)
+    this->addEventListener("change", [&](Component* sender, Event* e_)
     {
-        callback(sender, e);
+        callback(sender, e_);
     });
 
-    this->addEventListener("onmouseup", [&](Component* sender, Event* e)
+    this->addEventListener("onmouseup", [&](Component* sender, Event* e_)
     {
         if (state == CheckboxState::CHECKED)
         {
@@ -35,7 +35,7 @@ void Checkbox::setup()
             state = CheckboxState::CHECKED;
         }
 
-        callEventListener("change", e);
+        callEventListener("change", e_);
     });
 
     setText(text);

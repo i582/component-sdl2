@@ -248,12 +248,14 @@ Kit::CursorPosition Kit::Text2::whereIsCursor(SimplePoint mouse)
     for (auto& symbol : currentLine->text)
     {
         int widthSymbol = 0;
-        char str[2] = {symbol, '\0'};
-        TTF_SizeUTF8(fontTTF, str, &widthSymbol, nullptr);
 
+
+        const char str[] = { symbol, '\0'};
+        TTF_SizeUTF8(fontTTF, str, &widthSymbol, nullptr);
 
         calcWidth += widthSymbol;
         countSymbol++;
+
 
 
         if (calcWidth > mouse.x)
@@ -264,6 +266,7 @@ Kit::CursorPosition Kit::Text2::whereIsCursor(SimplePoint mouse)
             {
                 countSymbol--;
             }
+
 
             break;
         }
@@ -412,13 +415,13 @@ void Kit::Text2::setColor(const Color& newColor)
     this->needUpdate = true;
 }
 
-void Kit::Text2::setLineHeight(const double& lineHeight)
+void Kit::Text2::setLineHeight(const double& lineHeight_)
 {
-    if (this->lineHeight == lineHeight)
+    if (this->lineHeight == lineHeight_)
         return;
 
 
-    this->lineHeight = lineHeight;
+    this->lineHeight = lineHeight_;
 
     this->needUpdate = true;
 }
@@ -522,7 +525,7 @@ void Kit::Text2::setFocus(bool focus)
     this->needUpdate = true;
 }
 
-void Kit::Text2::mouseMotion(SDL_Event* e, const Point& _mouse)
+void Kit::Text2::mouseMotion(SDL_Event* e_, const Point& _mouse)
 {
     if (!mousePush)
         return;
@@ -543,29 +546,33 @@ void Kit::Text2::mouseMotion(SDL_Event* e, const Point& _mouse)
     handleSelect();
 }
 
-void Kit::Text2::mouseButtonUp(SDL_Event* e, const Point& _mouse)
+void Kit::Text2::mouseButtonUp(SDL_Event* e_, const Point& _mouse)
 {
     mousePush = false;
 
     this->needUpdate = true;
 }
 
-void Kit::Text2::mouseButtonDown(SDL_Event* e, const Point& _mouse)
+void Kit::Text2::mouseButtonDown(SDL_Event* e_, const Point& _mouse)
 {
     mousePush = true;
 
     SimplePoint mouse = {_mouse.x(), _mouse.y()};
 
+
+
     cursorPos = whereIsCursor(mouse);
+
+
 
     deleteSelect();
 
     this->needUpdate = true;
 }
 
-void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
+void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e_)
 {
-    SimplePoint mouse = {e->motion.x, e->motion.y};
+    SimplePoint mouse = {e_->motion.x, e_->motion.y};
     mouse.x -= size.x;
     mouse.y -= size.y;
 
@@ -595,9 +602,9 @@ void Kit::Text2::mouseButtonDoubleDown(SDL_Event* e)
     handleSelect();
 }
 
-void Kit::Text2::keyDown(SDL_Event* e)
+void Kit::Text2::keyDown(SDL_Event* e_)
 {
-    switch (e->key.keysym.sym)
+    switch (e_->key.keysym.sym)
     {
 
         case SDLK_TAB:
@@ -901,7 +908,13 @@ void Kit::Text2::keyDown(SDL_Event* e)
                 {
 
                     startCursorSelect = cursorPos;
-                    startCursorSelect.y -= 1;
+
+                    if (startCursorSelect.y > 0)
+                    {
+                        startCursorSelect.y -= 1;
+                    }
+
+
 
                     endCursorSelect = cursorPos;
 
@@ -936,12 +949,10 @@ void Kit::Text2::keyDown(SDL_Event* e)
 
                 if (cursorPos.x > lines[cursorPos.y]->text.size())
                 {
-
                     cursorPos.x = lines[cursorPos.y]->text.size();
                 }
 
             }
-
             else if (cursorPos.y == 0)
             {
 
@@ -953,9 +964,14 @@ void Kit::Text2::keyDown(SDL_Event* e)
             {
                 if (!isSelected)
                 {
-
                     startCursorSelect = cursorPos;
-                    startCursorSelect.y += 1;
+
+                    if (startCursorSelect.y < this->lines.size() - 1)
+                    {
+                        startCursorSelect.y += 1;
+                    }
+
+
 
                     endCursorSelect = cursorPos;
 
@@ -986,9 +1002,9 @@ void Kit::Text2::keyDown(SDL_Event* e)
     render();
 }
 
-void Kit::Text2::textInput(SDL_Event* e)
+void Kit::Text2::textInput(SDL_Event* e_)
 {
-    lines.at(cursorPos.y)->addText(e->text.text, cursorPos.x);
+    lines.at(cursorPos.y)->addText(e_->text.text, cursorPos.x);
 
     cursorPos.x += 1;
 

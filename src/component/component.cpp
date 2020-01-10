@@ -634,6 +634,7 @@ void Kit::Component::adjustMousePoint(Point& p)
         return;
 
     p = p - _outerSize.start;
+    p = p - _innerSize.start;
 
     _parent->adjustMousePoint(p);
 }
@@ -835,7 +836,7 @@ void Kit::Component::render()
     SDL_RenderCopy(_renderer, _outerTexture, nullptr, &outerSize_sdl);
 }
 
-void Kit::Component::mouseButtonDown(Event* e)
+void Kit::Component::mouseButtonDown(Event* e_)
 {
     if (!_isDisplay)
         return;
@@ -843,7 +844,7 @@ void Kit::Component::mouseButtonDown(Event* e)
 
     cout << _id << " mouseButtonDown" << endl;
 
-    Point mouseP(e->motion.x, e->motion.y);
+    Point mouseP(e_->motion.x, e_->motion.y);
 
     adjustMousePoint(mouseP);
 
@@ -869,31 +870,31 @@ void Kit::Component::mouseButtonDown(Event* e)
     }
 
 
-    _eventListeners["click"](this, e);
-    _eventListeners["onmousedown"](this, e);
+    _eventListeners["click"](this, e_);
+    _eventListeners["onmousedown"](this, e_);
 
     _isActive = true;
 
     if (_withExtendedText)
     {
-        _extended_text->mouseButtonDown(e, mouseP);
+        _extended_text->mouseButtonDown(e_, mouseP);
         return;
     }
 
     if (_parent != nullptr)
     {
-        _parent->mouseButtonDown(e);
+        _parent->mouseButtonDown(e_);
     }
 }
 
-void Kit::Component::mouseButtonUp(Event* e)
+void Kit::Component::mouseButtonUp(Event* e_)
 {
     if (!_isDisplay)
         return;
 
     cout << _id << " mouseButtonUp" << endl;
 
-    _eventListeners["onmouseup"](this, e);
+    _eventListeners["onmouseup"](this, e_);
 
 
     _isVerticalScrollActive = false;
@@ -903,39 +904,39 @@ void Kit::Component::mouseButtonUp(Event* e)
 
     if (_withExtendedText)
     {
-        Point mouseP(e->motion.x, e->motion.y);
+        Point mouseP(e_->motion.x, e_->motion.y);
         adjustMousePoint(mouseP);
 
-        _extended_text->mouseButtonUp(e, mouseP);
+        _extended_text->mouseButtonUp(e_, mouseP);
         return;
     }
 
     if (_parent != nullptr)
     {
-        _parent->mouseButtonUp(e);
+        _parent->mouseButtonUp(e_);
     }
 }
 
-void Kit::Component::mouseMotion(Event* e)
+void Kit::Component::mouseMotion(Event* e_)
 {
     if (!_isDisplay)
         return;
 
     if (_isVerticalScrollActive)
     {
-        _verticalScroll->shift(e->motion.yrel * (_childrensSize.h() / _innerSize.h()));
+        _verticalScroll->shift(e_->motion.yrel * (_childrensSize.h() / _innerSize.h()));
         return;
     }
 
     if (_isHorizontalScrollActive)
     {
-        _horizontalScroll->shift(e->motion.xrel * (_childrensSize.w() / _innerSize.w()));
+        _horizontalScroll->shift(e_->motion.xrel * (_childrensSize.w() / _innerSize.w()));
         return;
     }
 
     if (!_isEnterInComponent)
     {
-        _eventListeners["onmouseover"](this, e);
+        _eventListeners["onmouseover"](this, e_);
         _isEnterInComponent = true;
     }
 
@@ -943,7 +944,7 @@ void Kit::Component::mouseMotion(Event* e)
     {
         if (_hoverComponent != nullptr && !_hoverComponent->isChildrenObject(this))
         {
-            _hoverComponent->mouseOut(e);
+            _hoverComponent->mouseOut(e_);
         }
 
         _hoverComponent = this;
@@ -952,30 +953,30 @@ void Kit::Component::mouseMotion(Event* e)
 
     if (_withExtendedText)
     {
-        Point mouseP(e->motion.x, e->motion.y);
+        Point mouseP(e_->motion.x, e_->motion.y);
         adjustMousePoint(mouseP);
 
-        _extended_text->mouseMotion(e, mouseP);
+        _extended_text->mouseMotion(e_, mouseP);
     }
 
     _isHovered = true;
 
-    _eventListeners["mousemotion"](this, e);
-    _eventListeners["hover"](this, e);
+    _eventListeners["mousemotion"](this, e_);
+    _eventListeners["hover"](this, e_);
 }
 
-void Kit::Component::mouseOut(Event* e)
+void Kit::Component::mouseOut(Event* e_)
 {
     if (!_isDisplay)
         return;
 
-    _eventListeners["onmouseout"](this, e);
+    _eventListeners["onmouseout"](this, e_);
 
     _isHovered = false;
     _isEnterInComponent = false;
 }
 
-void Kit::Component::mouseScroll(Event* e, int scrollDirection)
+void Kit::Component::mouseScroll(Event* e_, int scrollDirection)
 {
     if (!_isDisplay)
         return;
@@ -988,7 +989,7 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 
             if (firstScrollableParent != nullptr)
             {
-                firstScrollableParent->mouseScroll(e, scrollDirection);
+                firstScrollableParent->mouseScroll(e_, scrollDirection);
             }
         }
         else
@@ -1007,7 +1008,7 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 
             if (firstScrollableParent != nullptr)
             {
-                firstScrollableParent->mouseScroll(e, scrollDirection);
+                firstScrollableParent->mouseScroll(e_, scrollDirection);
             }
         }
         else
@@ -1021,19 +1022,19 @@ void Kit::Component::mouseScroll(Event* e, int scrollDirection)
 
 }
 
-void Kit::Component::keyDown(Event* e)
+void Kit::Component::keyDown(Event* e_)
 {
     if (_withExtendedText)
     {
-        _extended_text->keyDown(e);
+        _extended_text->keyDown(e_);
     }
 }
 
-void Kit::Component::textInput(Event* e)
+void Kit::Component::textInput(Event* e_)
 {
     if (_withExtendedText)
     {
-        _extended_text->textInput(e);
+        _extended_text->textInput(e_);
     }
 }
 
@@ -1251,11 +1252,11 @@ Kit::Component* Kit::Component::removeEventListener(const string& action)
     return this;
 }
 
-Kit::Component* Kit::Component::callEventListener(const string& action, Event* e)
+Kit::Component* Kit::Component::callEventListener(const string& action, Event* e_)
 {
     if (_eventListeners.find(action) != _eventListeners.end())
     {
-        _eventListeners[action](this, e);
+        _eventListeners[action](this, e_);
     }
     else
     {
@@ -1433,22 +1434,22 @@ void Kit::Component::outerTop(int value)
     _outerSize.y(value);
 }
 
-Kit::Component* Kit::Component::getFocus(SDL_Event* e)
+Kit::Component* Kit::Component::getFocus(SDL_Event* e_)
 {
     cout << _id << " getFocus" << endl;
 
 
-    _eventListeners["focus"](this, e);
+    _eventListeners["focus"](this, e_);
     this->_isFocused = true;
 
     return this;
 }
 
-Kit::Component* Kit::Component::loseFocus(SDL_Event* e)
+Kit::Component* Kit::Component::loseFocus(SDL_Event* e_)
 {
     cout << _id << " loseFocus" << endl;
 
-    _eventListeners["focusout"](this, e);
+    _eventListeners["focusout"](this, e_);
     this->_isFocused = false;
 
     return this;

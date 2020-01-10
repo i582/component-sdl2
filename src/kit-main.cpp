@@ -12,15 +12,15 @@ Kit::KitApplication* Kit::KitApplication::getInstance()
 
 Kit::KitApplication::KitApplication()
 {
-    this->is_running = true;
-    this->e = {0};
+    this->_isRunning = true;
+    this->_e = {0};
 
     this->init();
 }
 
 Kit::KitApplication::~KitApplication()
 {
-    for (auto&[id, window] : windows)
+    for (auto&[id, window] : _windows)
     {
         delete window;
     }
@@ -42,10 +42,10 @@ int Kit::KitApplication::run()
 
 Kit::window* Kit::KitApplication::at(size_t index)
 {
-    if (windows.find(index) == windows.end())
+    if (_windows.find(index) == _windows.end())
         return nullptr;
 
-    return windows[index];
+    return _windows[index];
 }
 
 Kit::window* Kit::KitApplication::operator[](size_t index)
@@ -62,19 +62,19 @@ Kit::window* Kit::KitApplication::addWindow(window* window)
         window->_isMainWindow = true;
     }
 
-    windows.insert(std::make_pair(window->_id, window));
+    _windows.insert(std::make_pair(window->_id, window));
 
     render();
 
-    return windows[window->_id];
+    return _windows[window->_id];
 }
 
 void Kit::KitApplication::deleteWindow(size_t index)
 {
-    if (windows.find(index) == windows.end())
+    if (_windows.find(index) == _windows.end())
         return;
 
-    windows.erase(index);
+    _windows.erase(index);
 }
 
 void Kit::KitApplication::init()
@@ -94,7 +94,7 @@ void Kit::KitApplication::init()
 
 void Kit::KitApplication::render()
 {
-    for (auto&[id, window] : windows)
+    for (auto&[id, window] : _windows)
     {
         window->render();
     }
@@ -103,13 +103,13 @@ void Kit::KitApplication::render()
 void Kit::KitApplication::onEvent()
 {
     SDL_StartTextInput();
-    while (is_running && SDL_WaitEvent(&e) && !windows.empty())
+    while (_isRunning && SDL_WaitEvent(&_e) && !_windows.empty())
     {
-        const int windowId = e.window.windowID;
-        if (windows.find(windowId) != windows.end())
+        const int windowId = _e.window.windowID;
+        if (_windows.find(windowId) != _windows.end())
         {
-            windows[windowId]->onEvent(&e);
-            windows[windowId]->render();
+            _windows[windowId]->onEvent(&_e);
+            _windows[windowId]->render();
         }
     }
     SDL_StopTextInput();
@@ -117,5 +117,5 @@ void Kit::KitApplication::onEvent()
 
 void Kit::KitApplication::terminate()
 {
-    is_running = false;
+    _isRunning = false;
 }

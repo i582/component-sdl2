@@ -11,7 +11,7 @@ Table::Table(const string& id, const string& classes)
 
 void Table::setup()
 {
-    style("../src/std_components/table/css/style.css");
+    style("../styles/std_components/table/style.css");
 
     append(new TableHeader(_id + "-header", ".header-table"));
 

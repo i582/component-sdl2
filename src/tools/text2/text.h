@@ -117,12 +117,12 @@ namespace Kit
         void setFocus(bool focus);
 
 
-        void mouseMotion(SDL_Event* e, const Point& mouse);
-        void mouseButtonUp(SDL_Event* e, const Point& mouse);
-        void mouseButtonDown(SDL_Event* e, const Point& mouse);
-        void mouseButtonDoubleDown(SDL_Event* e);
-        void keyDown(SDL_Event* e);
-        void textInput(SDL_Event* e);
+        void mouseMotion(SDL_Event* e_, const Point& mouse);
+        void mouseButtonUp(SDL_Event* e_, const Point& mouse);
+        void mouseButtonDown(SDL_Event* e_, const Point& mouse);
+        void mouseButtonDoubleDown(SDL_Event* e_);
+        void keyDown(SDL_Event* e_);
+        void textInput(SDL_Event* e_);
 
     };
 

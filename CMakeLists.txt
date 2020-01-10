@@ -14,7 +14,6 @@ set(CMAKE_USE_WIN32_THREADS_INIT 0)
 set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
-
 include_directories(src)
 include_directories(src/component)
 include_directories(src/component/components)
@@ -43,7 +42,6 @@ include_directories(src/tools/texture)
 include_directories(src/window)
 include_directories(src/std_components/button)
 include_directories(src/std_components/checkbox)
-include_directories(src/std_components/select)
 include_directories(src/std_windows/simple_window)
 include_directories(src/tools/text2)
 include_directories(src/tools/draw)
@@ -105,10 +103,6 @@ add_executable(component_sdl2_cmake
         src/std_components/checkbox/checkbox.cpp
         src/std_windows/simple_window/simple-window.cpp
         src/std_windows/simple_window/simple-window.h
-        src/std_components/select/select.h
-        src/std_components/select/select.cpp
-        src/std_components/select/select_item.cpp
-        src/std_components/select/select_item.h
         src/tools/texture/texture.h
         src/tools/texture/texture.cpp
         src/tools/text2/text.h
@@ -130,7 +124,17 @@ add_executable(component_sdl2_cmake
         src/std_components/table/table_header_item.h
         src/tools/rect/simple-rect/simple-rect.cpp
         src/std_components/tabs/tabs.cpp
-        src/std_components/tabs/tabs.h src/tools/image/image.cpp src/tools/image/image.h src/component/scroll/scroll.cpp src/component/scroll/scroll.h src/component/scroll/vertical-scroll/vertical_scroll.cpp src/component/scroll/vertical-scroll/vertical_scroll.h src/component/scroll/horizontal-scroll/horizontal_scroll.cpp src/component/scroll/horizontal-scroll/horizontal_scroll.h src/window/window.cpp src/window/window.h)
+        src/std_components/tabs/tabs.h
+        src/tools/image/image.cpp
+        src/tools/image/image.h
+        src/component/scroll/scroll.cpp
+        src/component/scroll/scroll.h
+        src/component/scroll/vertical-scroll/vertical_scroll.cpp
+        src/component/scroll/vertical-scroll/vertical_scroll.h
+        src/component/scroll/horizontal-scroll/horizontal_scroll.cpp
+        src/component/scroll/horizontal-scroll/horizontal_scroll.h
+        src/window/window.cpp
+        src/window/window.h)
 
 
 # Set up SDL2

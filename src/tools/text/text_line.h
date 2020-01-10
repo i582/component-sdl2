@@ -26,7 +26,7 @@ namespace Kit
 
         SimpleRect size;
 
-        Text* parent;
+        Text* _parent;
 
         SDL_Renderer* renderer;
         SDL_Texture* parentTexture;

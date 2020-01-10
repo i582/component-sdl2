@@ -8,7 +8,7 @@ TextLine::TextLine(Text* parent, string text, int x, int y)
     if (parent == nullptr)
         return;
 
-    this->parent = parent;
+    this->_parent = parent;
     this->text = text;
 
     this->renderer = parent->getRenderer();

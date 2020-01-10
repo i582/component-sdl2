@@ -14,7 +14,7 @@ Component* Button::create(const string& id, const string& text, const string& cl
 
 void Button::setup()
 {
-    style("../src/std_components/button/css/button.css");
+    style("../styles/std_components/button/style.css");
 
     setText(text);
 }

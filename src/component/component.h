@@ -20,8 +20,6 @@ namespace Kit
 {
     using CSS::Color;
 
-    class Window;
-
     class window;
 
     class Component
@@ -147,9 +145,9 @@ namespace Kit
          * with the passed identifier
          *
          * @param action - Event id
-         * @param e - Event data
+         * @param e_ - Event data
          */
-        Component* callEventListener(const string& action, Event* e);
+        Component* callEventListener(const string& action, Event* e_);
 
 
     public: /** User Data Interface */
@@ -178,8 +176,8 @@ namespace Kit
         Component* style(const map<string, string>& inlineStyles);
 
     public: /** Focus Interface */
-        Component* getFocus(Event* e);
-        Component* loseFocus(Event* e);
+        Component* getFocus(Event* e_);
+        Component* loseFocus(Event* e_);
 
 
     public: /** Ignore Event Interface */
@@ -229,7 +227,7 @@ namespace Kit
         /** Events Listener */
         map<string, eventCallback> _eventListeners;
 
-        static void _emptyCallback(Component* sender, Event* e){};
+        static void _emptyCallback(Component* sender, Event* e_){};
 
 
         /** User Data */
@@ -301,7 +299,6 @@ namespace Kit
 
 
     private:
-        friend Window;
         friend class window;
 
     protected:
@@ -437,13 +434,13 @@ namespace Kit
 
     protected: /** Events */
 
-        void mouseButtonDown(Event* e);
-        void mouseButtonUp(Event* e);
-        void mouseMotion(Event* e);
-        void mouseOut(Event* e);
-        void mouseScroll(Event* e, int scrollDirection);
-        void keyDown(Event* e);
-        void textInput(Event* e);
+        void mouseButtonDown(Event* e_);
+        void mouseButtonUp(Event* e_);
+        void mouseMotion(Event* e_);
+        void mouseOut(Event* e_);
+        void mouseScroll(Event* e_, int scrollDirection);
+        void keyDown(Event* e_);
+        void textInput(Event* e_);
 
 
     protected: /** Hover */

@@ -36,7 +36,7 @@
     width: 45px;
     height: 30px;
 
-    background-image: url(../src/std_windows/simple_window/images/exit.png);
+    background-image: url(../styles/std_windows/simple_window/images/exit.png);
 }
 
 .system-exit:hover {
@@ -50,7 +50,7 @@
     width: 45px;
     height: 30px;
 
-    background-image: url(../src/std_windows/simple_window/images/expand.png);
+    background-image: url(../styles/std_windows/simple_window/images/expand.png);
 }
 
 .system-expand:hover {
@@ -63,7 +63,7 @@
     width: 45px;
     height: 30px;
 
-    background-image: url(../src/std_windows/simple_window/images/collapse.png);
+    background-image: url(../styles/std_windows/simple_window/images/collapse.png);
 }
 
 .system-collapse:hover {

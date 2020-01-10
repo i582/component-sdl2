@@ -44,7 +44,7 @@ namespace Kit
 
         SimpleSize size;
 
-        Text2* parent;
+        Text2* _parent;
 
         SDL_Texture* texture;
 

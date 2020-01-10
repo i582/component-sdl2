@@ -20,7 +20,7 @@ namespace Kit
 
     class Component;
 
-    using eventCallback = function<void(Component* sender, Event* e)>;
+    using eventCallback = function<void(Component* sender, Event* e_)>;
     using eachCallback = function<void(Component* sender)>;
 
 }
