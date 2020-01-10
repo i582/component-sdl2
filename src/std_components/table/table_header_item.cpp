@@ -10,7 +10,7 @@ TableHeaderItem::TableHeaderItem(const string& id, const string& text, const str
 
 void TableHeaderItem::setup()
 {
-    style("../src/std_components/table/css/style.css");
+    style("../styles/std_components/table/style.css");
 
     setText(this->text);
 }

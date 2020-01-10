@@ -8,5 +8,5 @@ TableHeader::TableHeader(const string& id, const string& classes)
 
 void TableHeader::setup()
 {
-    style("../src/std_components/table/css/style.css");
+    style("../styles/std_components/table/style.css");
 }

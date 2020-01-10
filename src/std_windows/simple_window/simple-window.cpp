@@ -1,6 +1,7 @@
 #include "simple-window.h"
 #include "kit-main.h"
 
+#include "select_window.h"
 
 simple_window::simple_window(const string& title_, SimpleRect size_, bool noBorder_)
         : window(title_, size_, noBorder_)
@@ -12,6 +13,9 @@ void simple_window::setup()
 {
     style("../styles/std_windows/simple_window/style.css");
     setDraggableArea({0, 0, _size.w - 135, 25});
+
+
+
 
     _navigator->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
             ->setText(_title);
@@ -38,6 +42,8 @@ void simple_window::setup()
 
 
 
+
+
     auto table = (Table*) add(new Table("#table", ".table-test"));
 
     // table->style({{"f: background-color", "#ffffff"}});
@@ -61,4 +67,20 @@ void simple_window::setup()
 
     add(Button::create("#button-browse", "Browse", ".button-browse"));
 
+    window::getElementById("#button-browse")->addEventListener("click", [](Component* sender, Event* e_)
+    {
+        const SimpleRect position = {
+            sender->parentWindow()->left() + sender->left() - 20,
+            sender->parentWindow()->top() + sender->top() - 100 /*+ sender->parentWindow()->topBorderSize()*/,
+            0, 0
+        };
+
+
+
+        sender->parentWindow()->parent()->addWindow(
+             new select_window("Select", {position.x, position.y, 100, 100}, true)
+        );
+    });
+
+    //.addWindow(new select_window("Select", {100, 100, 100, 100}, false));
 }

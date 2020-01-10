@@ -12,6 +12,9 @@ namespace Kit
     using std::string;
     using CSS::css;
 
+
+    using windowEventCallback = function<void(window* sender, Event* e_)>;
+
     class KitApplication;
 
     class window
@@ -90,6 +93,7 @@ namespace Kit
         [[nodiscard]] int left() const;
         [[nodiscard]] SimpleRect size() const;
 
+        [[nodiscard]] int topBorderSize() const;
 
     public: // SDL Interface
         [[nodiscard]] SDL_Renderer* renderer() const;
@@ -112,6 +116,12 @@ namespace Kit
         void setDraggableArea(const SimpleRect& area_);
 
 
+        KitApplication* parent();
+
+    public: // Event Listeners Interface
+        void addEventListener(const string& action_, windowEventCallback callback_);
+
+        void removeEventListener(const string& action_);
 
     protected: // Components Part
         map<string, Component*> _components;
@@ -141,6 +151,11 @@ namespace Kit
 
         mutable bool _isMaximize;
 
+
+        map<string, windowEventCallback> _eventListeners;
+
+        static void _emptyCallback(window* sender, Event* e){};
+
     protected:
         Navigator* _navigator;
 
@@ -159,6 +174,7 @@ namespace Kit
     protected:
         void init();
         void preset();
+        void setupEventListeners();
         virtual void setup() {};
 
     protected:

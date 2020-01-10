@@ -10,7 +10,7 @@ TableItem::TableItem(const string& id, const string& text, const string& classes
 
 void TableItem::setup()
 {
-    style("../src/std_components/table/css/style.css");
+    style("../styles/std_components/table/style.css");
 
     setText(this->text);
 }

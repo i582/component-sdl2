@@ -47,6 +47,7 @@ include_directories(src/tools/text2)
 include_directories(src/tools/draw)
 include_directories(src/std_components/table)
 include_directories(src/std_components/tabs)
+include_directories(src/std_windows/select_window)
 
 add_executable(component_sdl2_cmake
         src/component/components/components.cpp
@@ -134,7 +135,7 @@ add_executable(component_sdl2_cmake
         src/component/scroll/horizontal-scroll/horizontal_scroll.cpp
         src/component/scroll/horizontal-scroll/horizontal_scroll.h
         src/window/window.cpp
-        src/window/window.h)
+        src/window/window.h src/std_windows/select_window/select_window.cpp src/std_windows/select_window/select_window.h)
 
 
 # Set up SDL2

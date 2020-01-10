@@ -47,7 +47,7 @@ void CSS::css_parser::openFile()
 
     if (file == nullptr)
     {
-        cout << "Error: css file not found!" << endl;
+        cout << "Error: css file (" << file_path << ") not found!" << endl;
         return;
     }
 
