@@ -47,6 +47,7 @@ include_directories(src/tools/text2)
 include_directories(src/tools/draw)
 include_directories(src/std_components/table)
 include_directories(src/std_components/tabs)
+include_directories(src/std_components/select)
 include_directories(src/std_windows/select_window)
 
 add_executable(component_sdl2_cmake
@@ -72,8 +73,6 @@ add_executable(component_sdl2_cmake
         src/tools/css/css_block.h
         src/tools/css/css_block_state.cpp
         src/tools/css/css_block_state.h
-        src/tools/css/css_parse.cpp
-        src/tools/css/css_parse.h
         src/tools/font/font-find/font-find.cpp
         src/tools/font/font-find/font-find.h
         src/tools/font/font.cpp
@@ -135,7 +134,11 @@ add_executable(component_sdl2_cmake
         src/component/scroll/horizontal-scroll/horizontal_scroll.cpp
         src/component/scroll/horizontal-scroll/horizontal_scroll.h
         src/window/window.cpp
-        src/window/window.h src/std_windows/select_window/select_window.cpp src/std_windows/select_window/select_window.h)
+        src/window/window.h
+        src/std_windows/select_window/select_window.cpp
+        src/std_windows/select_window/select_window.h
+        src/std_components/select/select.cpp
+        src/std_components/select/select.h src/std_components/select/select_item.cpp src/std_components/select/select_item.h src/tools/css/css_parser.cpp src/tools/css/css_parser.h)
 
 
 # Set up SDL2

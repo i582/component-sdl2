@@ -25,8 +25,12 @@ namespace CSS
 
         void mergeWithBaseIs(css_block_state& block);
 
-        template<typename T>
-        void set(const string& key, T value);
+
+        void set(const string& attribute, const string& value);
+
+        template <typename T>
+        void set(const string& attribute, T value);
+
 
         template<typename T>
         T get(const string& key);
@@ -34,13 +38,14 @@ namespace CSS
 
 
     template<typename T>
-    void css_block_state::set(const string& key, T value)
+    void CSS::css_block_state::set(const std::string& attribute, T value)
     {
-        if (key.empty())
+        if (attribute.empty())
             return;
 
-        _styles[key] = value;
+        _styles[attribute] = value;
     }
+
 
     template<typename T>
     T css_block_state::get(const string& key)
@@ -49,8 +54,7 @@ namespace CSS
 
         if (_styles.find(key) == _styles.end())
         {
-            cout << "ERROR: " << key << " is NOT found in this map!" << endl;
-            return T(0);
+            throw std::logic_error(string("ERROR: ") + key + " is NOT found in this map!");
         }
 
         try

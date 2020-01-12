@@ -176,3 +176,40 @@ void CSS::css_block_state::mergeWithBaseIs(css_block_state& block)
 
     this->_styles = mergedStyles;
 }
+
+
+void CSS::css_block_state::set(const string& attribute, const string& value)
+{
+    if (attribute.empty())
+        return;
+
+
+    if (attribute == "font-size" || attribute == "font-weight" || attribute == "margin-top" ||
+        attribute == "margin-bottom"
+        || attribute == "margin-left" || attribute == "margin-right" || attribute == "border-radius"
+    )
+    {
+        _styles[attribute] = std::stoi(value);
+    }
+    else if (attribute == "line-height")
+    {
+        _styles[attribute] = std::stod(value);
+    }
+    else if (attribute == "background-color" || attribute == "border-color" || attribute == "color" ||
+             attribute == "outline")
+    {
+        _styles[attribute] = Color(value);
+    }
+    else if (attribute == "background-image")
+    {
+        _styles[attribute] = css_attribute::parseImagePath(value);
+    }
+    else if (attribute == "width" || attribute == "height" || attribute == "top" || attribute == "left")
+    {
+        _styles[attribute] = css_attribute::parseSizes(value);
+    }
+    else
+    {
+        _styles[attribute] = value;
+    }
+}

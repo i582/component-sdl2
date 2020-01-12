@@ -10,7 +10,7 @@ select_window::select_window(const string& title_, const SimpleRect& size_, bool
 
 void select_window::setup()
 {
-    //style("../styles/std_windows/simple_window/style.css");
+    style("../styles/std_windows/select_window/style.css");
 
     addEventListener("focus_lost", [](window* sender, Event* e)
     {

@@ -23,4 +23,5 @@ namespace Kit
     using eventCallback = function<void(Component* sender, Event* e_)>;
     using eachCallback = function<void(Component* sender)>;
 
+    using lifecycleHookCallback = function<void(Component* sender)>;
 }

@@ -191,6 +191,9 @@ namespace Kit
         Component* unuseExtendedText();
 
 
+    public: /** Lifecycle Hooks Interface */
+
+
 
     protected:
         /** For Event */
@@ -298,6 +301,10 @@ namespace Kit
         map<string, string> _inlineStyles;
 
 
+        /** Lifecycle Hooks */
+        map<string, lifecycleHookCallback> _lifecycleHooks;
+        static void _emptyLifecycleHook(Component* sender){};
+
     private:
         friend class window;
 
@@ -310,6 +317,11 @@ namespace Kit
          * Setup event listeners
          */
         void setupEventListeners();
+
+        /**
+         * Setup lifecycle hooks
+         */
+        void setupLifecycleHooks();
 
         /**
          * Helper relationship function
@@ -424,7 +436,14 @@ namespace Kit
         void adjustMousePoint(Point& p);
 
 
-    protected: /** Setup */
+        /**
+         * @brief A function that processes styles connected through the include method.
+         * The function is called each time the append method is called.
+         */
+        void handleStyles();
+
+
+    public: /** Setup */
 
         /**
          * @brief Function to configure the container and all its childrens

@@ -2,6 +2,11 @@
 .navigator {
     background-color: #3c3f41;
 
+
+    border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
 }
 
 .window-header {
@@ -194,4 +199,13 @@
 .test-tabs {
     left: 450px;
     top: 100px;
+}
+
+
+
+
+.select-test
+{
+    top: 50px;
+    left: 20px;
 }

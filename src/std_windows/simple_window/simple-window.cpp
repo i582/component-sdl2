@@ -65,14 +65,28 @@ void simple_window::setup()
     auto test = window::getElementById("#test-text");
     test->setText("C:/");
 
+
+
     add(Button::create("#button-browse", "Browse", ".button-browse"));
 
+//    auto select = (Select*)add(Select::create("#test-select", ".select-test"));
+//
+//    select->addItem("Item");
+
+
+
+/*
+    auto select = (Select*)add(Select::create("#test-select", ".select-test"));
+
+    select->addItem("Item");*/
+
+/*
     window::getElementById("#button-browse")->addEventListener("click", [](Component* sender, Event* e_)
     {
         const SimpleRect position = {
             sender->parentWindow()->left() + sender->left() - 20,
-            sender->parentWindow()->top() + sender->top() - 100 /*+ sender->parentWindow()->topBorderSize()*/,
-            0, 0
+            sender->parentWindow()->top() + sender->top() - 100 /*+ sender->parentWindow()->topBorderSize()*//*,
+           0, 0
         };
 
 
@@ -81,6 +95,6 @@ void simple_window::setup()
              new select_window("Select", {position.x, position.y, 100, 100}, true)
         );
     });
-
+*/
     //.addWindow(new select_window("Select", {100, 100, 100, 100}, false));
 }

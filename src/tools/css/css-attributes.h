@@ -21,7 +21,7 @@ namespace CSS
 
     class css_attribute
     {
-    private:
+    public:
         static string parseImagePath(const string& path);
 
         static string parseSizes(const string& path);

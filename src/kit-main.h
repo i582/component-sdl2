@@ -61,6 +61,9 @@ namespace Kit
 
     private:
         void init();
+
+        void setupWindows();
+
         void render();
         void onEvent();
 

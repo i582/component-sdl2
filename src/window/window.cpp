@@ -14,7 +14,7 @@ Kit::window::window(const string& title_, const SimpleRect& size_, bool noBorder
     this->_id = -1;
 
 
-    this->_isDisplay = true;
+    this->_isDisplay = false;
     this->_noBorder = noBorder_;
     this->_isMainWindow = false;
 
@@ -88,31 +88,27 @@ Kit::Component* Kit::window::add(Kit::Component* component_)
 
 void Kit::window::render()
 {
-    if (!_wasSetupStyle)
-    {
-        handleStyles();
-        _wasSetupStyle = true;
-    }
-
-    if (!_wasSetupComponents)
-    {
-        _navigator->setupComponents();
-        _wasSetupComponents = true;
-    }
-
-
     SDL_SetRenderTarget(_renderer, nullptr);
-
     SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0x00);
     SDL_RenderClear(_renderer);
 
 
-
-
     _navigator->render();
 
+    if (_isDisplay)
+    {
+        SDL_RenderPresent(_renderer);
+    }
 
-    SDL_RenderPresent(_renderer);
+    if (!_isDisplay)
+    {
+        _navigator->render();
+
+        SDL_RenderPresent(_renderer);
+
+        _isDisplay = true;
+        SDL_ShowWindow(_window);
+    }
 }
 
 void Kit::window::show()
@@ -272,7 +268,7 @@ void Kit::window::init()
     _window = SDL_CreateWindow(_title.c_str(),
                                _size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
                                _size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
-                               _size.w, _size.h, _noBorder ? SDL_WINDOW_BORDERLESS : 0); //SDL_WINDOW_RESIZABLE
+                               _size.w, _size.h, _noBorder ? SDL_WINDOW_BORDERLESS : 0 | SDL_WINDOW_HIDDEN); //SDL_WINDOW_RESIZABLE
 
     if (_window == nullptr)
     {
@@ -328,8 +324,18 @@ void Kit::window::setupEventListeners()
     _eventListeners["hit_test"] = window::_emptyCallback;
 }
 
+void Kit::window::finalSetup()
+{
+    handleStyles();
+
+
+    _navigator->setupComponents();
+}
+
 void Kit::window::handleStyles()
 {
+    //_navigator->handleStyles();
+
     for (auto&[id, component] : _components)
     {
         CSS::css* component_css = component->getComponentStyles();
@@ -369,6 +375,7 @@ void Kit::window::handleStyles()
 
         delete classnames;
     }
+
 }
 
 Kit::Component* Kit::window::addElement(Kit::Component* component_)
@@ -438,18 +445,21 @@ void Kit::window::onEvent(Kit::Event* e_)
                 case SDL_WINDOWEVENT_SHOWN:
                 {
                     _eventListeners["shown"](this, e_);
+
                     break;
                 }
 
                 case SDL_WINDOWEVENT_HIDDEN:
                 {
                     _eventListeners["hidden"](this, e_);
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_EXPOSED:
                 {
                     _eventListeners["exposed"](this, e_);
+                    return;
                     break;
                 }
 
@@ -459,6 +469,7 @@ void Kit::window::onEvent(Kit::Event* e_)
                     _size.y = e_->window.data2;
 
                     _eventListeners["moved"](this, e_);
+                    return;
                     break;
                 }
 
@@ -482,7 +493,6 @@ void Kit::window::onEvent(Kit::Event* e_)
 
                 case SDL_WINDOWEVENT_RESTORED:
                 {
-                    render();
                     _eventListeners["restored"](this, e_);
                     break;
                 }
@@ -490,24 +500,28 @@ void Kit::window::onEvent(Kit::Event* e_)
                 case SDL_WINDOWEVENT_ENTER:
                 {
                     _eventListeners["enter"](this, e_);
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_LEAVE:
                 {
                     _eventListeners["leave"](this, e_);
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
                 {
                     _eventListeners["focus_gained"](this, e_);
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_FOCUS_LOST:
                 {
                     _eventListeners["focus_lost"](this, e_);
+                    return;
                     break;
                 }
 
@@ -524,31 +538,35 @@ void Kit::window::onEvent(Kit::Event* e_)
                         SDL_DestroyWindow(_window);
                         SDL_DestroyRenderer(_renderer);
                     }
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_TAKE_FOCUS:
                 {
                     _eventListeners["take_focus"](this, e_);
+                    return;
                     break;
                 }
 
                 case SDL_WINDOWEVENT_HIT_TEST:
                 {
                     _eventListeners["hit_test"](this, e_);
+                    return;
                     break;
                 }
+
+                default: return;
             }
 
             break;
         }
 
 
-        default:
-            break;
-
-
+        default: return;
     }
+
+    render();
 }
 
 
@@ -645,6 +663,3 @@ int Kit::window::topBorderSize() const
     SDL_GetWindowBordersSize(_window, &top, nullptr, nullptr, nullptr);
     return top;
 }
-
-
-

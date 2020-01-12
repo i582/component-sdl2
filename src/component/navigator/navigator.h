@@ -6,10 +6,15 @@ namespace Kit
 {
     class window;
 
+    class Select;
+
     class Navigator : public Component
     {
     public:
         explicit Navigator(window* parent);
+
+    public:
+        friend Select;
 
     public:
         void update();

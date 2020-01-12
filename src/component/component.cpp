@@ -160,6 +160,14 @@ void Kit::Component::setupEventListeners()
     _eventListeners["onmouseout"] = Component::_emptyCallback;
 }
 
+void Kit::Component::setupLifecycleHooks()
+{
+    _lifecycleHooks["componentWillMount"] = Component::_emptyLifecycleHook; // время сразу после создания компонента
+    _lifecycleHooks["componentWillUnmount"] = Component::_emptyLifecycleHook; // время перед удалением компонента
+
+    _lifecycleHooks["allComponentsDidConfigured"] = Component::_emptyLifecycleHook; // вызывается у каждого компонента,
+                                                                                    // в момент когда все копоненты настроены
+}
 
 Kit::Component* Kit::Component::getFirstVerticalScrollableParent()
 {
@@ -637,6 +645,76 @@ void Kit::Component::adjustMousePoint(Point& p)
     p = p - _innerSize.start;
 
     _parent->adjustMousePoint(p);
+}
+
+void Kit::Component::handleStyles()
+{
+    if (_css_component == nullptr)
+        return;
+
+    auto styles = _css_component->getStyles();
+
+
+    // получаем все классы текущего компонента
+    auto classnames = Utils::split(this->_classes, ' ');
+
+    auto is_have_styles = false;
+
+    // создаем временный блок хранения стилей с стандартными стилями
+    CSS::css_block ready_block(this->_id, true);
+
+
+    for (auto& classname : *classnames)
+    {
+        // если в наших стилях есть стиль для текущего класса-идентификатора
+        if (styles.find(classname) != styles.end())
+        {
+            auto style = styles[classname];
+
+            // добавляем их в временный блок
+            ready_block.mergeWith(style);
+
+            // добавляем все в основной блок стилей
+            this->_cssBlock.mergeWith(ready_block);
+
+            is_have_styles = true;
+        }
+    }
+
+    // если стили не были найдены то просто добавляем временные стили в блок стилей
+    if (!is_have_styles)
+    {
+        this->_cssBlock.mergeWith(ready_block);
+    }
+
+    delete classnames;
+
+
+    // проходим по стилям и если там если стили для дочерних компонентов то устанавливаем им
+    // данные стили в временное хранилище css, что бы при следующем проходе установить их как показано выше
+    for (auto& [block_class, block] : styles)
+    {
+        for (auto& children : _childrens)
+        {
+            auto children_classnames = Utils::split(children->_classes, ' ');
+
+            for (auto& children_classname : *children_classnames)
+            {
+                if (children_classname == block_class)
+                {
+                    children->_css_component = this->_css_component;
+                }
+            }
+
+            delete children_classnames;
+        }
+    }
+
+
+    for (auto& children : _childrens)
+    {
+        children->handleStyles();
+    }
 }
 
 void Kit::Component::render()
@@ -1184,10 +1262,11 @@ Kit::Component* Kit::Component::append(Component* component)
 
     component->_parent = this;
 
-    this->_childrens.push_back(component);
+    _childrens.push_back(component);
 
 
     setupParentWindow();
+    //handleStyles();
 
     return component;
 }
@@ -1302,7 +1381,6 @@ Kit::Component* Kit::Component::removeClass(const string& className)
 
 
     _window->handleStyles();
-    _window->render();
     return this;
 }
 
@@ -1311,7 +1389,7 @@ Kit::Component* Kit::Component::addClass(const string& className)
     _classes += " " + className;
 
     _window->handleStyles();
-    _window->render();
+
     return this;
 }
 
@@ -1507,4 +1585,4 @@ Kit::Component* Kit::Component::unuseExtendedText()
 
     return this;
 }
-                                                                                          
+

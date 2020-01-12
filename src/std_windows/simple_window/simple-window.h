@@ -5,6 +5,7 @@
 #include "button.h"
 #include "checkbox.h"
 #include "table.h"
+#include "select.h"
 
 using namespace Kit;
 

@@ -34,7 +34,7 @@ Kit::KitApplication::~KitApplication()
 
 int Kit::KitApplication::run()
 {
-    render();
+    setupWindows();
     onEvent();
 
     return 0;
@@ -64,7 +64,6 @@ Kit::window* Kit::KitApplication::addWindow(window* window)
 
     _windows.insert(std::make_pair(window->_id, window));
 
-    render();
 
     return _windows[window->_id];
 }
@@ -92,6 +91,15 @@ void Kit::KitApplication::init()
     SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 }
 
+void Kit::KitApplication::setupWindows()
+{
+    for (auto&[id, window] : _windows)
+    {
+        window->finalSetup();
+       // window->render();
+    }
+}
+
 void Kit::KitApplication::render()
 {
     for (auto&[id, window] : _windows)
@@ -109,7 +117,6 @@ void Kit::KitApplication::onEvent()
         if (_windows.find(windowId) != _windows.end())
         {
             _windows[windowId]->onEvent(&_e);
-            _windows[windowId]->render();
         }
     }
     SDL_StopTextInput();
@@ -119,3 +126,4 @@ void Kit::KitApplication::terminate()
 {
     _isRunning = false;
 }
+

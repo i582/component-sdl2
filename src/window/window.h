@@ -17,6 +17,8 @@ namespace Kit
 
     class KitApplication;
 
+    class Select;
+
     class window
     {
     public: // Constructor & Destructor
@@ -44,10 +46,6 @@ namespace Kit
         Component* add(const string& classes_ = "", const vector<Component*>& childrens_ = {});
         Component* add(Component* component_);
 
-
-
-    public: // Render Interface
-        void render();
 
 
     public: // Display Interface
@@ -170,12 +168,20 @@ namespace Kit
         friend Component;
         friend KitApplication;
 
+        friend Select;
+        friend Navigator;
 
     protected:
         void init();
         void preset();
         void setupEventListeners();
         virtual void setup() {};
+        void render();
+
+        /**
+         * @brief Function for final configuration of the window and window components
+         */
+        void finalSetup();
 
     protected:
 
