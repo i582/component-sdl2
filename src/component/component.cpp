@@ -1251,6 +1251,28 @@ Kit::window* Kit::Component::parentWindow() const
     return _window;
 }
 
+Kit::Component* Kit::Component::children(const string& id_)
+{
+    for (auto& children : _childrens)
+    {
+        if (children->_id == id_)
+        {
+            return children;
+            break;
+        }
+    }
+
+    throw std::logic_error("Children component with id: " + id_ + " not found!");
+}
+
+Kit::Component* Kit::Component::children(size_t number_)
+{
+    if (number_ > _childrens.size())
+        throw std::logic_error("The transmitted number is greater than the number of child components!");
+
+    return _childrens[number_];
+}
+
 bool Kit::Component::isChildrenObject(Component* obj) const
 {
     bool is_child = this == obj;

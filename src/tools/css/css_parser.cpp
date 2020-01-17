@@ -78,7 +78,7 @@ void CSS::css_parser::splitByToken()
 
             if (symbol != ' ')
             {
-                const string symbolToken(symbol, 0);
+                const string symbolToken(1, symbol);
 
                 tokens.push_back(symbolToken);
             }

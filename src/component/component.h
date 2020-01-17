@@ -86,6 +86,22 @@ namespace Kit
 
         [[nodiscard]] window* parentWindow() const;
 
+
+        /**
+         * @brief Function for searching among child components of a
+         * component with a given id
+         * @param id_ Children component id
+         * @return Pointer to a child component with the given id
+         */
+        [[nodiscard]] Component* children(const string& id_);
+
+        /**
+         * @brief Function to search for a child component by its serial number
+         * @param number_ Children serial number
+         * @return Pointer to a child component with the given serial number
+         */
+        [[nodiscard]] Component* children(size_t number_);
+
         /**
          * @brief Checks if the passed object is a child of this
          * @return true|false

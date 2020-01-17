@@ -1,7 +1,7 @@
 #pragma once
 
-#include "simple-rect.h"
-#include "texture.h"
+#include "../../tools/rect/simple-rect/simple-rect.h"
+#include "../../tools/texture/texture.h"
 
 namespace Kit
 {

@@ -2,9 +2,9 @@
 
 #include "SDL.h"
 
-#include "extended-rect.h"
-#include "simple-rect.h"
-#include "simple-size.h"
+#include "../rect/extended-rect/extended-rect.h"
+#include "../rect/simple-rect/simple-rect.h"
+#include "../size/simple-size/simple-size.h"
 
 namespace Kit
 {

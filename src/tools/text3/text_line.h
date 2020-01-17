@@ -4,8 +4,9 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include "simple-rect.h"
-#include "texture.h"
+
+#include "../rect/simple-rect/simple-rect.h"
+#include "../texture/texture.h"
 
 #include "text_cursor.h"
 

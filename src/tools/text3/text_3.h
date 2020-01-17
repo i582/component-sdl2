@@ -1,16 +1,14 @@
 #pragma once
 
-
 #include <vector>
 
-#include "utils.h"
-#include "simple-rect.h"
-#include "simple-point.h"
-#include "font.h"
-#include "color.h"
+#include "../rect/simple-rect/simple-rect.h"
+#include "../point/simple-point/simple-point.h"
+#include "../point/extended-point/extended-point.h"
+#include "../font/font.h"
+#include "../css/color/color.h"
 
 #include "text_align.h"
-
 #include "text_line.h"
 
 namespace Kit

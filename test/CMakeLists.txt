@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
     test-utils.cpp
-    test-extended-point.cpp)
+    test-extended-point.cpp
+    test-component.cpp)
 
 add_subdirectory(googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
