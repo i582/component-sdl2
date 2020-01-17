@@ -9,7 +9,7 @@ using namespace Kit;
 class Table : public Component
 {
 private:
-    int count_collumns;
+    int count_columns;
     int count_row;
 
 public:
@@ -19,10 +19,10 @@ public:
     void setup();
 
 public:
-    void addCollumn(const string& title);
+    void addColumn(const string& title);
 
     void addRow();
 
-    void addRow(const vector<string>& collumns);
+    void addRow(const vector<string>& columns);
 };
 

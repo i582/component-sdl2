@@ -49,10 +49,10 @@ void simple_window::setup()
     // table->style({{"f: background-color", "#ffffff"}});
 
 
-    table->addCollumn("#");
-    table->addCollumn("ФИО");
-    table->addCollumn("Русский язык");
-    table->addCollumn("Математика");
+    table->addColumn("#");
+    table->addColumn("ФИО");
+    table->addColumn("Русский язык");
+    table->addColumn("Математика");
 
     table->addRow({"1", "Молодой человек", "85", "90"});
     table->addRow({"2", "Старый человек", "75", "100"});

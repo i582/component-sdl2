@@ -4,7 +4,7 @@ Table::Table(const string& id, const string& classes)
         : Component(id, ".table " + classes)
 {
     this->count_row = 0;
-    this->count_collumns = 0;
+    this->count_columns = 0;
 
     setup();
 }
@@ -18,46 +18,62 @@ void Table::setup()
     append(new Component(_id + "-body", ".table-body"));
 }
 
-void Table::addCollumn(const string& title)
+void Table::addColumn(const string& title)
 {
-    this->count_collumns++;
+    this->count_columns++;
 
-    _childrens[0]->append(
-            new TableHeaderItem(_id + "-header-item-" + to_string(this->count_collumns), title,
-                                ".header-item-" + to_string(this->count_collumns))
-    );
+    const auto header = children(_id + "-header");
+
+    const string header_item_id = _id + "-header-item-" + to_string(this->count_columns);
+    const string header_item_class = ".header-item-" + to_string(this->count_columns);
+    const string& header_item_text = title;
+
+    const auto header_item = new TableHeaderItem(header_item_id, header_item_text, header_item_class);
+
+
+    header->append(header_item);
 }
 
 void Table::addRow()
 {
     this->count_row++;
 
-    _childrens[1]->append(
-            new TableRow(_id + "-row-" + to_string(this->count_row), ".row-" + to_string(this->count_row))
-    );
+    const auto body = children(_id + "-body");
 
+    const string row_id = _id + "-row-" + to_string(this->count_row);
+    const string row_class = ".row-" + to_string(this->count_row);
+
+    auto row = new TableRow(row_id, row_class);
+
+
+    body->append(row);
 }
 
-void Table::addRow(const vector<string>& collumns)
+void Table::addRow(const vector<string>& columns)
 {
     this->count_row++;
 
-    string is_light;
-    if (this->count_row % 2 == 0)
+    const auto body = children(_id + "-body");
+
+    const string row_id = _id + "-row-" + to_string(this->count_row);
+    const string row_class = ".row-" + to_string(this->count_row) + (count_row % 2 ? " .light" : "");
+
+    const auto row = new TableRow(row_id, row_class);
+
+
+    body->append(row);
+
+
+    for (int i = 0; i < count_columns && i < columns.size(); ++i)
     {
-        is_light = " .light";
-    }
+        const string item_id = _id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i);
+        const string item_class = ".row-item-" + to_string(i);
+        const string item_text = columns[i];
 
-    auto row = new TableRow(_id + "-row-" + to_string(this->count_row),
-                            ".row-" + to_string(this->count_row) + is_light);
+        auto item = new TableItem(item_id, item_text, item_class);
+        item->ignoreEvents();
 
-    _childrens[1]->append(row);
 
-    for (int i = 0; i < count_collumns && i < collumns.size(); ++i)
-    {
-        row->append(
-                new TableItem(_id + "-row-" + to_string(this->count_row) + "-item-" + to_string(i), collumns[i],
-                              ".row-item-" + to_string(i))
-        )->ignoreEvents();
+        row->append(item);
     }
 }
