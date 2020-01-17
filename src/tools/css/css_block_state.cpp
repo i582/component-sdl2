@@ -200,14 +200,6 @@ void CSS::css_block_state::set(const string& attribute, const string& value)
     {
         _styles[attribute] = Color(value);
     }
-    else if (attribute == "background-image")
-    {
-        _styles[attribute] = css_attribute::parseImagePath(value);
-    }
-    else if (attribute == "width" || attribute == "height" || attribute == "top" || attribute == "left")
-    {
-        _styles[attribute] = css_attribute::parseSizes(value);
-    }
     else
     {
         _styles[attribute] = value;

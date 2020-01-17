@@ -130,6 +130,11 @@ Kit::Component::Component(const string& id, const Rect& size, const string& clas
     this->_extended_text = nullptr;
     this->_withExtendedText = false;
 
+
+    /** New Extended Text */
+    this->_text_extended = nullptr;
+
+
     /** Ignore Some Event */
     this->_ignoreEvents = false;
 }
@@ -548,9 +553,14 @@ void Kit::Component::setupExtendedText()
         auto textColor = _cssBlock.normal().get<Color>("color");
         auto lineHeight = _cssBlock.normal().get<double>("line-height");
 
-        this->_extended_text = new Text2(this, _text_temp,
-                                         {0, 0, _innerSize.w(), _innerSize.h()},
-                                         _fontNormal, fontSize, textColor, lineHeight, true);
+//        this->_extended_text = new Text2(this, _text_temp,
+//                                         {0, 0, _innerSize.w(), _innerSize.h()},
+//                                         _fontNormal, fontSize, textColor, lineHeight, true);
+
+
+        _text_extended = new text(this, _text_temp, {0, 0}, _fontNormal, fontSize, textColor, lineHeight);
+
+
     }
 
     for (auto& children : _childrens)
@@ -834,8 +844,20 @@ void Kit::Component::render()
 
         this->_extended_text->setFocus(_isFocused);
 
+
         this->_extended_text->render();
     }
+
+
+
+
+
+    if (_text_extended != nullptr)
+    {
+        _text_extended->render();
+    }
+
+
 
 
     for (auto& children : _childrens)
@@ -955,7 +977,8 @@ void Kit::Component::mouseButtonDown(Event* e_)
 
     if (_withExtendedText)
     {
-        _extended_text->mouseButtonDown(e_, mouseP);
+        _text_extended->mouseButtonDown(e_, mouseP);
+        //_extended_text->mouseButtonDown(e_, mouseP);
         return;
     }
 
@@ -985,7 +1008,8 @@ void Kit::Component::mouseButtonUp(Event* e_)
         Point mouseP(e_->motion.x, e_->motion.y);
         adjustMousePoint(mouseP);
 
-        _extended_text->mouseButtonUp(e_, mouseP);
+        _text_extended->mouseButtonUp(e_, mouseP);
+        //_extended_text->mouseButtonUp(e_, mouseP);
         return;
     }
 
@@ -1034,7 +1058,7 @@ void Kit::Component::mouseMotion(Event* e_)
         Point mouseP(e_->motion.x, e_->motion.y);
         adjustMousePoint(mouseP);
 
-        _extended_text->mouseMotion(e_, mouseP);
+        //_extended_text->mouseMotion(e_, mouseP);
     }
 
     _isHovered = true;
@@ -1104,7 +1128,7 @@ void Kit::Component::keyDown(Event* e_)
 {
     if (_withExtendedText)
     {
-        _extended_text->keyDown(e_);
+        //_extended_text->keyDown(e_);
     }
 }
 
@@ -1112,7 +1136,7 @@ void Kit::Component::textInput(Event* e_)
 {
     if (_withExtendedText)
     {
-        _extended_text->textInput(e_);
+        //_extended_text->textInput(e_);
     }
 }
 
@@ -1477,9 +1501,7 @@ Kit::Component* Kit::Component::style(const std::map<std::string, std::string>& 
 
         if (split_attr->size() == 1)
         {
-            auto value_variant = CSS::css_attribute::get(attribute, value);
 
-            temp_styles.insert(std::make_pair(attribute, value_variant));
         }
         else if (split_attr->size() == 2)
         {
@@ -1585,4 +1607,3 @@ Kit::Component* Kit::Component::unuseExtendedText()
 
     return this;
 }
-

@@ -1,9 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <map>
+
 #include "SDL.h"
 #include "SDL_image.h"
-#include "iostream"
-#include "map"
 
 #include "../rect/simple-rect/simple-rect.h"
 #include "../rect/extended-rect/extended-rect.h"

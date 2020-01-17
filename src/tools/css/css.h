@@ -7,14 +7,11 @@
 
 #pragma once
 
+#include <string>
+
 #include "css_block.h"
 #include "css_parser.h"
-
-#include "string"
-
 #include "../utils/utils.h"
-
-#include "ctime"
 
 namespace CSS
 {

@@ -2,7 +2,8 @@
 
 #include "SDL.h"
 #include "SDL2_gfxPrimitives.h"
-#include "simple-rect.h"
+
+#include "../rect/simple-rect/simple-rect.h"
 #include "../css/color/color.h"
 #include "../utils/utils.h"
 

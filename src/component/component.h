@@ -4,7 +4,7 @@
 
 #include "../tools/rect/extended-rect/extended-rect.h"
 #include "../tools/size/simple-size/simple-size.h"
-#include "tools/image/image.h"
+#include "../tools/image/image.h"
 #include "../tools/font/font.h"
 #include "../tools/text/text.h"
 #include "../tools/css/css.h"
@@ -12,9 +12,12 @@
 #include "scroll/horizontal-scroll/horizontal_scroll.h"
 
 #include "../tools/text2/text.h"
-#include "component-header.h"
+
+#include "../tools/text3/text_3.h"
 
 #include "../tools/draw/draw.h"
+
+#include "component-header.h"
 
 namespace Kit
 {
@@ -293,6 +296,9 @@ namespace Kit
         bool _withExtendedText;
 
 
+        /** New Extended Text */
+        text* _text_extended;
+
         /** Ignore Some Event */
         bool _ignoreEvents;
 
@@ -307,6 +313,7 @@ namespace Kit
 
     private:
         friend class window;
+
 
     protected:
 

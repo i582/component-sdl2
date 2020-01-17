@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <SDL.h>
+#include "SDL.h"
 
 #include "../component/components/components.h"
 #include "../component/navigator/navigator.h"

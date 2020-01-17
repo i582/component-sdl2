@@ -6,3 +6,4 @@ namespace Kit
 {
     using SimplePoint = SDL_Point;
 }
+

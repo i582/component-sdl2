@@ -14,6 +14,11 @@ set(CMAKE_USE_WIN32_THREADS_INIT 0)
 set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
+
+add_subdirectory(test)
+
+enable_testing()
+
 include_directories(src)
 include_directories(src/component)
 include_directories(src/component/components)
@@ -50,7 +55,9 @@ include_directories(src/std_components/tabs)
 include_directories(src/std_components/select)
 include_directories(src/std_windows/select_window)
 
-add_executable(component_sdl2_cmake
+
+
+add_executable(component_sdl2_cmake #STATIC
         src/component/components/components.cpp
         src/component/components/components.h
         src/component/navigator/navigator.cpp
@@ -65,8 +72,6 @@ add_executable(component_sdl2_cmake
         src/tools/css/css_variant/css_variant.h
         src/tools/css/utils/css_utils.cpp
         src/tools/css/utils/utils.h
-        src/tools/css/css-attributes.cpp
-        src/tools/css/css-attributes.h
         src/tools/css/css.cpp
         src/tools/css/css.h
         src/tools/css/css_block.cpp
@@ -138,7 +143,18 @@ add_executable(component_sdl2_cmake
         src/std_windows/select_window/select_window.cpp
         src/std_windows/select_window/select_window.h
         src/std_components/select/select.cpp
-        src/std_components/select/select.h src/std_components/select/select_item.cpp src/std_components/select/select_item.h src/tools/css/css_parser.cpp src/tools/css/css_parser.h)
+        src/std_components/select/select.h
+        src/std_components/select/select_item.cpp
+        src/std_components/select/select_item.h
+        src/tools/css/css_parser.cpp
+        src/tools/css/css_parser.h
+        src/tools/text3/text_3.cpp
+        src/tools/text3/text_3.h
+        src/tools/text3/text_align.h
+        src/tools/text3/text_line.cpp
+        src/tools/text3/text_line.h
+        src/tools/text3/text_cursor.h
+        src/tools/text3/text_cursor.cpp)
 
 
 # Set up SDL2
@@ -156,4 +172,3 @@ find_package(SDL2_gfx REQUIRED)
 # Link SDL2::Main, SDL2::Image and SDL2::GFX to our project
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF SDL2::GFX)
 
-target_link_libraries(${PROJECT_NAME} "dwmapi.dll")

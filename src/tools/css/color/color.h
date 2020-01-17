@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SDL.h"
+#include <string>
+#include <iostream>
 
-#include "string"
-#include "iostream"
+#include "SDL.h"
 
 #include "../utils/utils.h"
 

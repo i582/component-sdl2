@@ -5,7 +5,6 @@ using namespace Kit;
 
 int Point::parseStringToNumber(const string& str, int relativeValue)
 {
-
     if (auto index = str.find("px"); index != string::npos)
     {
         return stoi(str.substr(0, index));
@@ -111,12 +110,12 @@ Point::Point(const string& left, const string& top)
     this->isCalculated = false;
 }
 
-Point Point::operator+(const Point& obj)
+Point Point::operator+(const Point& obj) const
 {
     return {this->_x + obj._x, this->_y + obj._y};
 }
 
-Point Point::operator-(const Point& obj)
+Point Point::operator-(const Point& obj) const
 {
     return {this->_x - obj._x, this->_y - obj._y};
 }
@@ -144,22 +143,22 @@ Point& Kit::Point::operator=(const Point& obj)
     return *this;
 }
 
-Point Point::operator*(const int& scale)
+Point Point::operator*(const int& scale) const
 {
     return {this->_x * scale, this->_y * scale};
 }
 
-Point Point::operator*(const double& scale)
+Point Point::operator*(const double& scale) const
 {
     return {(int) (this->_x * scale), (int) (this->_y * scale)};
 }
 
-Point Point::operator/(const int& scale)
+Point Point::operator/(const int& scale) const
 {
     return {this->_x / scale, this->_y / scale};
 }
 
-Point Point::operator/(const double& scale)
+Point Point::operator/(const double& scale) const
 {
     return {(int) (this->_x / scale), (int) (this->_y / scale)};
 }

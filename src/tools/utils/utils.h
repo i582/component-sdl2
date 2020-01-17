@@ -1,12 +1,11 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
 #include "SDL.h"
-
-#include "iostream"
-
-#include "string"
-#include "vector"
-#include "algorithm"
 
 namespace Kit
 {

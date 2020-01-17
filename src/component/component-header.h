@@ -1,11 +1,12 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <map>
+#include <functional>
+#include <any>
+
 #include "SDL.h"
-#include "string"
-#include "vector"
-#include "map"
-#include "functional"
-#include "any"
 
 #include "../event/event.h"
 #include "../tools/texture/texture.h"

@@ -1,6 +1,15 @@
 #pragma once
+
+#include <iostream>
 #include <fstream>
-#include "css-attributes.h"
+#include <vector>
+#include <string>
+#include <map>
+
+#include "color/color.h"
+#include "utils/utils.h"
+
+#include "css_variant/css_variant.h"
 
 namespace CSS
 {
@@ -79,16 +88,17 @@ namespace CSS
         void openFile();
 
         /**
-         * @brief Removes extra characters (space, \r, \n) from code.
-         */
-        void deleteExcessSymbolsInCode();
-
-        /**
          * @brief Function to skip comments in code.
          * @param i_ The function takes the current index in a row in the splitByToken
          * method and adds the index to it until the comment ends.
          */
         void skipComment(size_t& i_);
+
+        /**
+         * @brief Function to skip extra characters (space, \r, \n) in code.
+         * @param i_ The function takes the current index in a row in the splitByToken method
+         */
+        void skipExcessSymbols(size_t& i_);
 
         /**
          * @brief Function split the source code into tokens.
@@ -144,7 +154,7 @@ namespace CSS
          * @param value_ Value
          * @param block_state_ Current block
          */
-        static void syntaxParseIfComplexValueStatic(const string& attribute_, const string& value_, CSS::css_block_state* block_state_);
+        static void syntaxParseIfComplexValueStatic(const string& attribute_, const vector<string>& values_, CSS::css_block_state* block_state_);
 
     public:
         /**

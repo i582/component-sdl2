@@ -33,7 +33,6 @@ CSS::css_parser::css_parser(const string& code_, bool is_code, CSS::css* css_par
 
 void CSS::css_parser::parse()
 {
-    deleteExcessSymbolsInCode();
     splitByToken();
     splitByBlock();
     syntaxParse();
@@ -56,21 +55,6 @@ void CSS::css_parser::openFile()
     code[size] = 0;
 }
 
-void CSS::css_parser::deleteExcessSymbolsInCode()
-{
-    string newCode;
-
-    for (auto& symbol : code)
-    {
-        if (symbol != ' ' && symbol != '\r' && symbol != '\n')
-        {
-            newCode += symbol;
-        }
-    }
-
-    code = newCode;
-}
-
 void CSS::css_parser::splitByToken()
 {
     string tempToken;
@@ -79,7 +63,7 @@ void CSS::css_parser::splitByToken()
     for (size_t i = 0; i < code.size(); i++)
     {
         skipComment(i);
-
+        skipExcessSymbols(i);
 
         auto& symbol = code[i];
 
@@ -92,10 +76,12 @@ void CSS::css_parser::splitByToken()
                 tempToken.clear();
             }
 
-            string symbolToken;
-            symbolToken += symbol;
+            if (symbol != ' ')
+            {
+                const string symbolToken(symbol, 0);
 
-            tokens.push_back(symbolToken);
+                tokens.push_back(symbolToken);
+            }
 
             continue;
         }
@@ -110,11 +96,12 @@ void CSS::css_parser::splitByToken()
     }
 }
 
-
-
 bool CSS::css_parser::isSplitSymbol(const char& symbol)
 {
-    return symbol == ':' || symbol == ';' || symbol == '{' || symbol == '}';
+    return  symbol == ' ' || symbol == ':' ||
+            symbol == ';' || symbol == '{' ||
+            symbol == '}' || symbol == '(' ||
+            symbol == ')';
 }
 
 void CSS::css_parser::splitByBlock()
@@ -196,22 +183,21 @@ CSS::TokenType CSS::css_parser::whatIsToken(const std::string_view& token_)
 void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
 {
     string attribute;
-    string value;
     string pseudo;
 
+    vector<string> values;
 
     css_block block_css;
     css_block_state block_css_state;
 
-    string identificator;
+    string identifier;
     state state;
     state_next next_state;
 
     next_state = state_next::NEXT_TOKEN_IS_IDENTIFICATOR;
-    identificator = block_[0];
+    identifier = block_[0];
 
-    if (next_state == state_next::NEXT_TOKEN_IS_IDENTIFICATOR &&
-        whatIsToken(identificator) != TokenType::CLASSNAME)
+    if (whatIsToken(identifier) != TokenType::CLASSNAME)
     {
         cout << "ERROR: The first parameter in the block must be either a class identifier!" << endl;
         return;
@@ -252,7 +238,7 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
             {
                 if (type != TokenType::COLON)
                 {
-                    cout << "ERROR: next token is invalid! Token: " << block_[i - 3] << block_[i - 2] << token << block_[i + 2] << " Line " << __LINE__ << endl;
+                    cout << "ERROR: next token is invalid! Token: " << token << " Line " << __LINE__ << endl;
                 }
                 break;
             }
@@ -300,10 +286,21 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
 
             case TokenType::SEMICOLON:
             {
-                syntaxParseIfComplexValueStatic(attribute, value, &block_css_state);
+
+                if (values.size() > 1)
+                {
+                    syntaxParseIfComplexValueStatic(attribute, values, &block_css_state);
+                }
+                else if (values.size() == 1)
+                {
+                    const auto value = values[0];
+                    block_css_state.set(attribute, value);
+                }
 
 
-                block_css_state.set(attribute, value);
+                values.clear();
+
+
 
                 state = state::THIS_TOKEN_IS_ATTRIBUTE;
                 next_state = state_next::NEXT_TOKEN_IS_FIELD;
@@ -322,7 +319,7 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
 
             case TokenType::LBRA:
             {
-                block_css.name(identificator);
+                block_css.name(identifier);
 
                 state = state::THIS_TOKEN_IS_ATTRIBUTE;
                 next_state = state_next::NEXT_TOKEN_IS_FIELD;
@@ -348,13 +345,13 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
                     block_css.normal(block_css_state);
                 }
 
-                if (css_blocks.find(identificator) != css_blocks.end())
+                if (css_blocks.find(identifier) != css_blocks.end())
                 {
-                    css_blocks[identificator].mergeWith(block_css);
+                    css_blocks[identifier].mergeWith(block_css);
                 }
                 else
                 {
-                    css_blocks.insert(std::make_pair(identificator, block_css));
+                    css_blocks.insert(std::make_pair(identifier, block_css));
                 }
 
                 state = state::THIS_TOKEN_IS_ANY;
@@ -366,8 +363,13 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
             {
                 if (state == state::THIS_TOKEN_IS_VALUE)
                 {
-                    value.clear();
-                    value = token;
+                    while (i < block_.size() && block_[i] != ";")
+                    {
+                        values.push_back(block_[i]);
+                        i++;
+                    }
+
+                    i--;
 
                     next_state = state_next::NEXT_TOKEN_IS_SEMICOLON;
                 }
@@ -389,7 +391,7 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
     }
 }
 
-void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribute_, const std::string& value_,
+void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribute_, const vector<string>& values_,
                                                       CSS::css_block_state* block_state_)
 {
     if (block_state_ == nullptr)
@@ -399,21 +401,15 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
     if (attribute_ == "border-top" || attribute_ == "border-bottom" ||
         attribute_ == "border-left" || attribute_ == "border-right")
     {
-        string value = value_;
-
-        value.replace(value.find("px"), 2, " ");
-        value.replace(value.find('#'), 1, " ");
-
-        vector<string>* tokens = Utils::split(value, ' ');
-        if (tokens->size() != 3)
+        if (values_.size() != 3)
         {
             cout << "ERROR: attribute_ " << attribute_ << " must have 3 values, but only "
-                 << tokens->size() << " passed! Value: " << value << endl;
+                 << values_.size() << " passed!" << endl;
             return;
         }
 
-        int border_size = Utils::to_integer(tokens->at(0));
-        string border_type = tokens->at(1);
+        const int border_size = Utils::to_integer(values_[0]);
+        string border_type = values_[1];
 
         if (border_type != "solid")
         {
@@ -421,7 +417,7 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
             border_type = "solid";
         }
 
-        Color border_color("#" + tokens->at(2));
+        const Color border_color(values_[2]);
 
 
         block_state_->set(attribute_ + "-size", border_size);
@@ -431,6 +427,23 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
         return;
     }
 
+
+    if (attribute_ == "width" || attribute_ == "height" ||
+        attribute_ == "top"   || attribute_ == "left")
+    {
+        const string result = values_[2] + values_[3] + values_[4];
+
+        block_state_->set(attribute_, result);
+        return;
+    }
+
+    if (attribute_ == "background-image")
+    {
+        const string result = values_[2];
+
+        block_state_->set(attribute_, result);
+        return;
+    }
 }
 
 void CSS::css_parser::mergeStyleComponent()
@@ -461,6 +474,25 @@ void CSS::css_parser::skipComment(size_t& i_)
                 comment = false;
                 i_++;
             }
+            i_++;
+        }
+    }
+}
+
+void CSS::css_parser::skipExcessSymbols(size_t& i_)
+{
+    char current_symbol = code[i_];
+
+    while (current_symbol == '\n' || current_symbol == '\r')
+    {
+        i_++;
+        current_symbol = code[i_];
+    }
+
+    if (current_symbol == ' ')
+    {
+        if (i_ + 1 < code.size() && code[i_ + 1] == ' ')
+        {
             i_++;
         }
     }

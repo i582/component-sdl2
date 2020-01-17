@@ -1,7 +1,8 @@
 #pragma once
 
-#include "string"
-#include "variant"
+#include <string>
+#include <variant>
+
 #include "../color/color.h"
 
 namespace CSS

@@ -107,9 +107,22 @@ bool Utils::is_integer(const string& str)
 
 bool Utils::is_number(const string& str)
 {
+    bool point = false;
+
     for (char s : str)
     {
-        if ((s < '0' || s > '9') && s != '.')
+        if (s == '.' && !point)
+        {
+            point = true;
+            continue;
+        }
+
+        if (s == '.')
+        {
+            return false;
+        }
+
+        if ((s < '0' || s > '9'))
         {
             return false;
         }

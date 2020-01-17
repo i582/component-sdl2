@@ -1,6 +1,15 @@
 #pragma once
 
-#include "css-attributes.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+
+
+#include "color/color.h"
+#include "utils/utils.h"
+
+#include "css_variant/css_variant.h"
 
 namespace CSS
 {

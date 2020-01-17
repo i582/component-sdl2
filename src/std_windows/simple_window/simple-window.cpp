@@ -61,9 +61,9 @@ void simple_window::setup()
 
     //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));
 
-    add("#test-text", ".test-text")->useExtendedText();
+    /*add("#test-text", ".test-text")->useExtendedText();
     auto test = window::getElementById("#test-text");
-    test->setText("C:/");
+    test->setText("This is just simple text for check!");*/
 
 
 

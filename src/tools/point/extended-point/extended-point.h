@@ -6,7 +6,6 @@
 
 namespace Kit
 {
-
     using std::string;
     using std::cout;
     using std::endl;
@@ -24,7 +23,7 @@ namespace Kit
          * @param parentValue Value relative to which values ​​containing percentages are calculated
          * @return Calculated value or -1 if error
          */
-        static int parseStringToNumber(const string& str, int relativeValue = -1);
+        [[nodiscard]] static int parseStringToNumber(const string& str, int relativeValue = -1);
 
         /**
          * @brief Parsing an expression of the form (x + y) or (x - y), where x and y can be
@@ -34,7 +33,7 @@ namespace Kit
          * @param parentValue Value relative to which values ​​containing percentages are calculated
          * @return Calculated value or -1 if error
          */
-        static int parseExpressionToNumber(const string& str, int relativeValue = -1);
+        [[nodiscard]] static int parseExpressionToNumber(const string& str, int relativeValue = -1);
 
         /**
          * @brief Part for numerical size
@@ -50,12 +49,12 @@ namespace Kit
         explicit Point(const SDL_Point& p);
         explicit Point(SDL_Point* p);
 
-        Point operator+(const Point& obj);
-        Point operator-(const Point& obj);
-        Point operator*(const int& scale);
-        Point operator*(const double& scale);
-        Point operator/(const int& scale);
-        Point operator/(const double& scale);
+        Point operator+(const Point& obj) const;
+        Point operator-(const Point& obj) const;
+        Point operator*(const int& scale) const;
+        Point operator*(const double& scale) const;
+        Point operator/(const int& scale) const;
+        Point operator/(const double& scale) const;
         bool operator==(const Point& obj) const;
         bool operator!=(const Point& obj) const;
         Point& operator=(const Point& obj);
@@ -99,8 +98,8 @@ namespace Kit
         int dx(int d);
         int dy(int d);
 
-        int* px();
-        int* py();
+        [[nodiscard]] int* px();
+        [[nodiscard]] int* py();
 
         /**
          * @brief
@@ -116,7 +115,7 @@ namespace Kit
          */
         [[nodiscard]] bool in(const Rect&, bool ignorePosition = false) const;
         [[nodiscard]] bool in(const SDL_Rect& r) const;
-        bool in(SDL_Rect* r) const;
+        [[nodiscard]] bool in(SDL_Rect* r) const;
     };
 
 
