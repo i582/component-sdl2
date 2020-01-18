@@ -49,7 +49,7 @@ namespace Kit
 
     public: /** Size Interface */
 
-        [[nodiscard]]  int width() const;
+        [[nodiscard]] int width() const;
         [[nodiscard]] int height() const;
         [[nodiscard]] int top() const;
         [[nodiscard]] int left() const;
@@ -174,6 +174,9 @@ namespace Kit
         map<string, std::any>& userData();
         Component* addUserData(const string& key, const std::any& data);
         std::any userData(const string& key);
+
+        template<typename T>
+        T userData(const string& key);
 
 
     public: /** Class Interface */
@@ -510,5 +513,27 @@ namespace Kit
 
     };
 
+
+    template<typename T>
+    T Component::userData(const string& key)
+    {
+        if (_userData.find(key) == _userData.end())
+        {
+            throw std::logic_error("User information for " + key + " does not exist!");
+        }
+
+        T result;
+
+        try
+        {
+            result = std::any_cast<T>(_userData[key]);
+        }
+        catch (...)
+        {
+            throw std::logic_error("Any does not currently contain this type!");
+        }
+
+        return result;
+    }
 
 }

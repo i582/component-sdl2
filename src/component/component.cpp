@@ -1405,6 +1405,11 @@ Kit::Component* Kit::Component::addUserData(const string& key, const std::any& d
 
 std::any Kit::Component::userData(const string& key)
 {
+    if (_userData.find(key) == _userData.end())
+    {
+        throw std::logic_error("User information for " + key + " does not exist.");
+    }
+
     return _userData[key];
 }
 
@@ -1426,7 +1431,11 @@ Kit::Component* Kit::Component::removeClass(const string& className)
     _classes.erase(_classes.begin() + indexStart, _classes.begin() + indexStart + className.length());
 
 
-    _window->handleStyles();
+    if (_window != nullptr)
+    {
+        _window->handleStyles();
+    }
+
     return this;
 }
 
@@ -1434,7 +1443,10 @@ Kit::Component* Kit::Component::addClass(const string& className)
 {
     _classes += " " + className;
 
-    _window->handleStyles();
+    if (_window != nullptr)
+    {
+        _window->handleStyles();
+    }
 
     return this;
 }

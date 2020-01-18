@@ -57,7 +57,7 @@ include_directories(src/std_windows/select_window)
 
 
 
-add_executable(component_sdl2_cmake #STATIC
+add_library(component_sdl2_cmake STATIC
         src/component/components/components.cpp
         src/component/components/components.h
         src/component/navigator/navigator.cpp
