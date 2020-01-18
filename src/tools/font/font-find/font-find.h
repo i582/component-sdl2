@@ -1,6 +1,13 @@
 #pragma once
 
+#ifdef _MSC_VER
 #include <filesystem>
+#endif
+
+#ifdef __GNUC__
+#include "boost/filesystem.hpp"
+#endif
+
 #include <string>
 #include <map>
 #include <iostream>
@@ -9,7 +16,14 @@
 
 namespace Kit
 {
+#ifdef _MSC_VER
     namespace fs = std::filesystem;
+#endif
+
+#ifdef __GNUC__
+    namespace fs = boost::filesystem;
+#endif
+
 
     using std::string;
     using std::vector;

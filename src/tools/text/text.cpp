@@ -206,8 +206,11 @@ void Text::render()
     }
 
 
+
     SDL_SetRenderTarget(renderer, parent->innerTexture());
-    SDL_RenderCopy(renderer, texture, nullptr, &size.toSdlRect());
+
+    const SDL_Rect sdlCopyRect = size.toSdlRect();
+    SDL_RenderCopy(renderer, texture, nullptr, &sdlCopyRect);
 }
 
 void Text::setText(const string& new_text)
