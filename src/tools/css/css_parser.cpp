@@ -4,13 +4,6 @@
 
 CSS::css_parser::css_parser(const string& file_path_, CSS::css* css_parent_)
 {
-    if (css_parent_ == nullptr)
-    {
-        cout << "ERROR: css_parent is nullptr" << endl;
-        return;
-    }
-
-
     this->css_parent = css_parent_;
     this->file_path = file_path_;
 
@@ -19,13 +12,6 @@ CSS::css_parser::css_parser(const string& file_path_, CSS::css* css_parent_)
 
 CSS::css_parser::css_parser(const string& code_, bool is_code, CSS::css* css_parent_)
 {
-    if (css_parent_ == nullptr)
-    {
-        cout << "ERROR: css_parent is nullptr" << endl;
-        return;
-    }
-
-
     this->css_parent = css_parent_;
     this->code = code_;
 

@@ -192,7 +192,7 @@ namespace Kit
 
     public: /** Style Interface */
         Component* style(const string& path);
-        Component* style(const map<string, string>& inlineStyles);
+
 
     public: /** Focus Interface */
         Component* getFocus(Event* e_);

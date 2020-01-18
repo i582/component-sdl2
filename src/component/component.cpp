@@ -1502,40 +1502,6 @@ Kit::Component* Kit::Component::style(const string& path)
     return this;
 }
 
-Kit::Component* Kit::Component::style(const std::map<std::string, std::string>& inlineStyles)
-{
-    enum class styleType
-    {
-        NORMAL,
-        HOVER,
-        ACTIVE,
-        FOCUS
-    };
-
-    //this->_inlineStyles = inlineStyles;
-
-    map<string, CSS::css_variant> temp_styles;
-
-    for (auto&[attribute, value] : inlineStyles)
-    {
-
-        auto split_attr = Utils::split(attribute, ':');
-
-        if (split_attr->size() == 1)
-        {
-
-        }
-        else if (split_attr->size() == 2)
-        {
-
-        }
-
-        delete split_attr;
-    }
-
-    return this;
-}
-
 void Kit::Component::outerWidth(int value)
 {
     _outerSize.w(value);

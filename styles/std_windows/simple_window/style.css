@@ -76,11 +76,10 @@
 }
 
 
-/* Buttons */
-.button-ok {
+.button-ok
+{
     top: 420px;
     left: 20px;
-
 }
 
 .button-cancel {
@@ -130,13 +129,11 @@
     left: 20px;
 }
 
-.header-item-1 {
+.column-0
+{
     width: 30px;
 }
 
-.row-item-0 {
-    width: 30px;
-}
 
 
 .text {

@@ -81,6 +81,11 @@ namespace CSS
         css_parser(const string& file_path_, css* css_parent_);
         css_parser(const string& code_, bool is_code, css* css_parent_);
 
+        /**
+         * @brief Function split the source code into tokens.
+         */
+        void splitByToken();
+
     private:
         /**
          * @brief Opens a file for parsing.
@@ -100,10 +105,10 @@ namespace CSS
          */
         void skipExcessSymbols(size_t& i_);
 
-        /**
-         * @brief Function split the source code into tokens.
-         */
-        void splitByToken();
+//        /**
+//         * @brief Function split the source code into tokens.
+//         */
+//        void splitByToken();
 
         /**
          * @brief Function splits tokens into separate blocks.
