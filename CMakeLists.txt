@@ -15,8 +15,9 @@ set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 
-add_subdirectory(test)
 
+# Google Test
+add_subdirectory(test)
 enable_testing()
 
 include_directories(src)
@@ -55,9 +56,7 @@ include_directories(src/std_components/tabs)
 include_directories(src/std_components/select)
 include_directories(src/std_windows/select_window)
 
-
-
-add_library(component_sdl2_cmake STATIC
+add_executable(${PROJECT_NAME} #STATIC
         src/component/components/components.cpp
         src/component/components/components.h
         src/component/navigator/navigator.cpp
@@ -157,17 +156,45 @@ add_library(component_sdl2_cmake STATIC
         src/tools/text3/text_cursor.cpp)
 
 
-# Set up SDL2
-set(SDL2_PATH "C:\\SDL2")
-set(SDL2_IMAGE_PATH "C:\\SDL2\\SDL2_image-2.0.4")
-set(SDL2_TTF_PATH "C:\\SDL2\\SDL2_ttf-2.0.15")
-set(SDL2_GFX_PATH "C:\\SDL2\\SDL2_gfx")
+
+
+if(MSVC)
+
+    # Set up SDL2
+    set(SDL2_PATH "C:\\SDL2")
+    set(SDL2_IMAGE_PATH "C:\\SDL2\\SDL2_image-2.0.4")
+    set(SDL2_TTF_PATH "C:\\SDL2\\SDL2_ttf-2.0.15")
+    set(SDL2_GFX_PATH "C:\\SDL2\\SDL2_gfx")
+
+
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+
+    set(SDL2_PATH "C:\\SDL2-gcc")
+    set(SDL2_IMAGE_PATH "C:\\SDL2-gcc\\SDL2_image")
+    set(SDL2_TTF_PATH "C:\\SDL2-gcc\\SDL2_ttf")
+    set(SDL2_GFX_PATH "C:\\SDL2\\SDL2_gfx")
+
+
+    # Boost
+    set(Boost_USE_STATIC_LIBS ON)
+    set(BOOST_ROOT C:/Desktop/boost_1_72_0/boost_1_72_0)
+
+    find_package(Boost REQUIRED)
+
+    if(Boost_FOUND)
+        include_directories(${Boost_INCLUDE_DIRS})
+        target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+    endif()
+
+endif()
+
 
 # Find SDL2, SDL2_image and SDL2_gfx libraries
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_gfx REQUIRED)
+
 
 # Link SDL2::Main, SDL2::Image and SDL2::GFX to our project
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF SDL2::GFX)
