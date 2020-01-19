@@ -3,9 +3,7 @@
 
 using namespace Kit;
 
-Size::Size() : Size(0, 0)
-{
-}
+Size::Size() : Size(0, 0) {}
 
 Size::Size(int w, int h)
 {
@@ -107,17 +105,17 @@ Size Size::calc(const Rect& parent)
     /*if (isCalculated)
         return *this;*/
 
-    this->_w = Point::parseExpressionToNumber(width, parent.size._w);
-    this->_h = Point::parseExpressionToNumber(height, parent.size._h);
+    _w = Point::parseExpressionToNumber(width, parent.size._w);
+    _h = Point::parseExpressionToNumber(height, parent.size._h);
 
-    this->isCalculated = true;
+    isCalculated = true;
 
     return *this;
 }
 
 int Size::w() const
 {
-    if (!isCalculated)
+    if (not isCalculated)
     {
         cout << "Error: String were not parsed into values. See Size's 'calc' function." << endl;
         return -1;
@@ -128,7 +126,7 @@ int Size::w() const
 
 int Size::h() const
 {
-    if (!isCalculated)
+    if (not isCalculated)
     {
         cout << "Error: String were not parsed into values. See Size's 'calc' function." << endl;
         return -1;

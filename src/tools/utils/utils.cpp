@@ -38,10 +38,10 @@ vector<string>* Utils::split(const string& str, char symbol)
     return result;
 }
 
-vector<string>* Utils::split(const string& str, const string& pattern, char separator)
+vector<string>* Utils::split(const string& str, const string& pattern, char pattern_separator)
 {
-    vector<string>* separators = Utils::split(pattern, separator);
-    vector<string>* result = new vector<string>;
+    vector<string>* separators = Utils::split(pattern, pattern_separator);
+    auto result = new vector<string>;
     string temp;
     bool is_sep = false;
 

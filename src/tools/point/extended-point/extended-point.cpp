@@ -169,10 +169,10 @@ Point Point::calc(const Rect& parent)
     /*if (isCalculated)
         return *this;*/
 
-    this->_x = Point::parseExpressionToNumber(left, parent.size._w);
-    this->_y = Point::parseExpressionToNumber(top, parent.size._h);
+    _x = Point::parseExpressionToNumber(left, parent.size._w);
+    _y = Point::parseExpressionToNumber(top, parent.size._h);
 
-    this->isCalculated = true;
+    isCalculated = true;
 
     return *this;
 }
@@ -240,7 +240,7 @@ SDL_Point Point::toSDLPoint() const
 
 bool Point::in(const Rect& rect, bool ignorePosition) const
 {
-    SDL_Point p = {_x, _y};
+    const SDL_Point p = {_x, _y};
     SDL_Rect r = rect.toSdlRect();
 
     if (ignorePosition)
@@ -254,12 +254,12 @@ bool Point::in(const Rect& rect, bool ignorePosition) const
 
 bool Point::in(SDL_Rect* r) const
 {
-    SDL_Point p = {_x, _y};
+    const SDL_Point p = {_x, _y};
     return SDL_PointInRect(&p, r);
 }
 
 bool Point::in(const SDL_Rect& r) const
 {
-    SDL_Point p = {_x, _y};
+    const SDL_Point p = {_x, _y};
     return SDL_PointInRect(&p, &r);
 }

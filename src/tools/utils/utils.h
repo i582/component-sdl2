@@ -43,10 +43,10 @@ namespace Kit
          * @brief Splits a string into a substring by any of the delimiters in the pattern string
          * @param str String for split
          * @param pattern String containing a set of separators
-         * @param separator Symbol for splitting a pattern string into separate delimiters
+         * @param pattern_separator Symbol for splitting a pattern string into separate delimiters
          * @return Array of string
          */
-        vector<string>* split(const string& str, const string& pattern, char separator = '\t');
+        vector<string>* split(const string& str, const string& pattern, char pattern_separator = '\t');
 
 
         /**
