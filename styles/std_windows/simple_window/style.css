@@ -1,8 +1,8 @@
 
 .navigator {
-    background-color: #3c3f41;
+    background-color: #ECECEC;
 
-
+    border-color: #686868;
     border-bottom: 1px solid #5E6060;
     border-right: 1px solid #5E6060;
     border-left: 1px solid #5E6060;
@@ -78,12 +78,13 @@
 
 .button-ok
 {
-    top: 420px;
+    top: 90px;
     left: 20px;
 }
 
-.button-cancel {
-    top: 420px;
+.button-cancel
+{
+    top: 90px;
     left: 100px;
 }
 
@@ -94,10 +95,112 @@
 
 
 .first-checkbox {
-    top: 384px;
-    left: 20px;
+    top: 50px;
+    left: 50px;
 }
 
+.circle
+{
+    top: 10px;
+    left: 10px;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 6px;
+
+    background-image: url(../styles/std_components/checkbox/images/circle.png);
+    background-size: 50px;
+}
+
+.input
+{
+    width: 250px;
+    height: 100px;
+
+    top: 150px;
+    left: 20px;
+
+    background-color: #ffffff;
+    outline: #D2D2D2;
+
+    font-size: 13px;
+
+    line-height: 1;
+
+
+    color: #000000;
+    font-weight: 400;
+
+}
+
+.input:focus
+{
+    border-color: #B1CFF0;
+
+
+    border-bottom: 4px solid #5E6060;
+    border-right: 4px solid #5E6060;
+    border-left: 4px solid #5E6060;
+    border-top: 4px solid #5E6060;
+}
+
+.input-one-line
+{
+    width: 250px;
+    height: 25px;
+
+    top: 270px;
+    left: 20px;
+
+    background-color: #ffffff;
+    outline: #D2D2D2;
+
+    font-size: 14px;
+
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+
+    font-weight: 600;
+
+
+
+}
+
+.input-one-line:focus
+{
+    border-color: #B1CFF0;
+
+
+    border-bottom: 4px solid #5E6060;
+    border-right: 4px solid #5E6060;
+    border-left: 4px solid #5E6060;
+    border-top: 4px solid #5E6060;
+}
+
+.header
+{
+    width: 100%;
+    height: 25px;
+
+    top: 5px;
+    left: 0;
+
+
+    font-size: 13px;
+
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+
+    font-weight: 600;
+    color: #423F42;
+
+    background-color: #ECECEC;
+    border-color: #B3B3B3;
+    border-bottom: 1px solid #5E6060;
+}
 
 .scrolls
 {

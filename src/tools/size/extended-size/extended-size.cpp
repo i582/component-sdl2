@@ -115,7 +115,7 @@ Size Size::calc(const Rect& parent)
 
 int Size::w() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Size's 'calc' function." << endl;
         return -1;
@@ -126,7 +126,7 @@ int Size::w() const
 
 int Size::h() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Size's 'calc' function." << endl;
         return -1;

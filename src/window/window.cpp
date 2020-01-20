@@ -1,3 +1,4 @@
+#include <SDL_syswm.h>
 #include "window.h"
 #include "../kit-main.h"
 
@@ -268,7 +269,7 @@ void Kit::window::init()
     _window = SDL_CreateWindow(_title.c_str(),
                                _size.x == -1 ? SDL_WINDOWPOS_CENTERED : _size.x,
                                _size.y == -1 ? SDL_WINDOWPOS_CENTERED : _size.y,
-                               _size.w, _size.h, _noBorder ? SDL_WINDOW_BORDERLESS : 0 | SDL_WINDOW_HIDDEN); //SDL_WINDOW_RESIZABLE
+                               _size.w, _size.h, SDL_WINDOW_BORDERLESS); //SDL_WINDOW_RESIZABLE
 
     if (_window == nullptr)
     {
@@ -327,7 +328,6 @@ void Kit::window::setupEventListeners()
 void Kit::window::finalSetup()
 {
     handleStyles();
-
 
     _navigator->setupComponents();
 }

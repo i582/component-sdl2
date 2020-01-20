@@ -8,14 +8,11 @@
 #include "../tools/font/font.h"
 #include "../tools/text/text.h"
 #include "../tools/css/css.h"
+#include "../tools/draw/draw.h"
 #include "scroll/vertical-scroll/vertical_scroll.h"
 #include "scroll/horizontal-scroll/horizontal_scroll.h"
 
-#include "../tools/text2/text.h"
-
-#include "../tools/text3/text_3.h"
-
-#include "../tools/draw/draw.h"
+#include "../tools/text_extended/text_extended.h"
 
 #include "component-header.h"
 
@@ -191,6 +188,7 @@ namespace Kit
 
     public: /** Text Interface */
         virtual Component* setText(const string& text);
+        Component* oneLineText();
 
 
     public: /** Style Interface */
@@ -301,6 +299,12 @@ namespace Kit
         Text* _text;
         string _text_temp;
 
+        /** Beta Extended Text */
+        text* _text_extended;
+        bool _is_one_line_text;
+        bool _withExtendedText;
+
+
 
         /** Image */
         image* _image;
@@ -309,14 +313,6 @@ namespace Kit
         /** CSS component */
         CSS::css* _css_component;
 
-
-        /** Extended text */
-        Text2* _extended_text;
-        bool _withExtendedText;
-
-
-        /** New Extended Text */
-        text* _text_extended;
 
         /** Ignore Some Event */
         bool _ignoreEvents;

@@ -14,7 +14,7 @@ void simple_window::setup()
     style("../styles/std_windows/simple_window/style.css");
     setDraggableArea({0, 0, _size.w - 135, 25});
 
-
+/*
 
 
     _navigator->append(new Component("#window-header", {0, 0, _size.w - 135, 30}, ".window-header"))
@@ -40,15 +40,28 @@ void simple_window::setup()
 
     add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
 
+*/
+
+    add("#header", ".header")->setText(_title);
+
+    add("#input", ".input")->useExtendedText();
+    auto test = window::getElementById("#input");
+    test->setText("This is just simple text\nThis is just\nAlso Text");
 
 
+    add("#input-one-line", ".input-one-line")->useExtendedText()
+    ->setText("Test")->oneLineText();
 
+    add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
 
-    auto table = (Table*) add(new Table("#table", ".table-test"));
+    add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
+    add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
+
+//    auto table = (Table*) add(new Table("#table", ".table-test"));
 
     // table->style({{"f: background-color", "#ffffff"}});
 
-
+/*
     table->addColumn("#");
     table->addColumn("ФИО");
     table->addColumn("Русский язык");
@@ -57,7 +70,7 @@ void simple_window::setup()
     table->addRow({"1", "Молодой человек", "85", "90"});
     table->addRow({"2", "Старый человек", "75", "100"});
     table->addRow({"3", "Старый человек", "75", "100"});
-
+*/
 
     //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));
 
@@ -67,7 +80,7 @@ void simple_window::setup()
 
 
 
-    add(Button::create("#button-browse", "Browse", ".button-browse"));
+//    add(Button::create("#button-browse", "Browse", ".button-browse"));
 
 //    auto select = (Select*)add(Select::create("#test-select", ".select-test"));
 //

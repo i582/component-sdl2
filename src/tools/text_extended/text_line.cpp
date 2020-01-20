@@ -1,5 +1,5 @@
 #include "text_line.h"
-#include "text_3.h"
+#include "text_extended.h"
 
 Kit::text_line::text_line(Kit::text* parent_, const std::string& text_, size_t number_)
 {
@@ -24,8 +24,31 @@ Kit::text_line::~text_line()
     SDL_DestroyTexture(_texture);
 }
 
+void Kit::text_line::setupSize()
+{
+    TTF_SizeText(_parent->_ttf, _text.c_str(), &_size.w, &_size.h);
+}
+
 void Kit::text_line::setup()
 {
+    setupSize();
+
+    cout << _size.h << endl;
+
+    if (_parent->_horizontal_align == text_horizontal_align::LEFT)
+    {
+        _size.x = 0;
+    }
+    else if (_parent->_horizontal_align == text_horizontal_align::CENTER)
+    {
+        _size.x = _parent->_size.w / 2;
+    }
+    else if (_parent->_horizontal_align == text_horizontal_align::RIGHT)
+    {
+        _size.x = _parent->_size.w;
+    }
+
+
     const int real_line_height = (int) (_size.h * _parent->_line_height);
 
     _size.h = real_line_height;
@@ -64,24 +87,24 @@ void Kit::text_line::render()
     }
     else if (_parent->_horizontal_align == text_horizontal_align::CENTER)
     {
-        shift_by_x = (_size.w - text_surface->w) / 2;
+        shift_by_x = (_parent->_size.w - text_surface->w) / 2;
     }
     else if (_parent->_horizontal_align == text_horizontal_align::RIGHT)
     {
-        shift_by_x = _size.w - text_surface->w;
+        shift_by_x = _parent->_size.w - text_surface->w;
     }
 
 
     const int shift_by_y = (_size.h - text_surface->h) / 2;
 
-
-
+    _size.x = shift_by_x;
+    _size.y = shift_by_y;
 
 
     // render select
     if (_is_select)
     {
-        SDL_SetRenderDrawColor(_parent->_renderer, 0x4b, 0x6e, 0xaf, 0xff);
+        SDL_SetRenderDrawColor(_parent->_renderer, 0xb1, 0xcf, 0xf0, 0xff);
 
         SDL_Rect selected_rect = {0, 0, 0, _size.h};
 
@@ -96,6 +119,8 @@ void Kit::text_line::render()
         TTF_SizeUTF8(_parent->_ttf, text_before_select.c_str(), &selected_rect.x, nullptr);
         TTF_SizeUTF8(_parent->_ttf, selected_text.c_str(), &selected_rect.w, nullptr);
 
+        selected_rect.x += shift_by_x;
+
         SDL_RenderFillRect(_parent->_renderer, &selected_rect);
     }
 
@@ -103,13 +128,13 @@ void Kit::text_line::render()
 
     // render text
     const SDL_Rect copyRect = {
-            shift_by_x,
-            shift_by_y,
-            text_surface->w,
-            text_surface->h
+        shift_by_x,
+        shift_by_y,
+        text_surface->w,
+        text_surface->h
     };
     SDL_RenderCopy(_parent->_renderer, text_texture, nullptr, &copyRect);
-    SDL_RenderCopy(_parent->_renderer, text_texture, nullptr, &copyRect);
+    //SDL_RenderCopy(_parent->_renderer, text_texture, nullptr, &copyRect);
 
     SDL_DestroyTexture(text_texture);
     SDL_FreeSurface(text_surface);
@@ -147,12 +172,6 @@ void Kit::text_line::add_text(const std::string& additional_text_, size_t place_
 
 
     setup();
-    render();
-}
-
-void Kit::text_line::setupSize()
-{
-    TTF_SizeText(_parent->_ttf, _text.c_str(), &_size.w, &_size.h);
 }
 
 void Kit::text_line::delete_selection()
@@ -161,4 +180,47 @@ void Kit::text_line::delete_selection()
     _end_selection = {0, 0};
 
     _is_select = false;
+}
+
+
+bool Kit::text_line::removeSymbol(size_t place)
+{
+    if (_text.length() > 0)
+    {
+        if (place > _text.size())
+            return false;
+
+
+        const string& leftPart = _text.substr(0, place > 0 ? (place - 1) : place);
+        const string& rightPart = _text.substr(place, _text.length() - place);
+
+        _text = leftPart + rightPart;
+
+        setupSize();
+
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool Kit::text_line::removeSymbolAfter(size_t place)
+{
+    if (place < _text.length())
+    {
+        const string& leftPart = _text.substr(0, place);
+        const string& rightPart = _text.substr(place + 1, _text.length() - place);
+
+        _text = leftPart + rightPart;
+
+        setupSize();
+
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }

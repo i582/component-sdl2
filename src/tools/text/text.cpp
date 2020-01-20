@@ -211,6 +211,7 @@ void Text::render()
 
     const SDL_Rect sdlCopyRect = size.toSdlRect();
     SDL_RenderCopy(renderer, texture, nullptr, &sdlCopyRect);
+    SDL_RenderCopy(renderer, texture, nullptr, &sdlCopyRect);
 }
 
 void Text::setText(const string& new_text)

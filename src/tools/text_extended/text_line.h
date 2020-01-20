@@ -58,6 +58,9 @@ namespace Kit
     private:
         void setupSize();
 
+        bool removeSymbol(size_t place);
+        bool removeSymbolAfter(size_t place);
+
     };
 
 }

@@ -31,6 +31,15 @@ namespace Kit
     public:
         void render();
 
+        void withText(const string& text);
+        void useFont(const class font& newFont);
+        void fontSize(const size_t& newFontSize);
+        void useColor(const color& newColor);
+        void lineHeight(const double& lineHeight);
+        void textHorizontalAlign(const string& align);
+        void textVerticalAlign(const string& align);
+        void focus(bool focus);
+
     private: // SDL Part
         SDL_Renderer* _renderer;
         SDL_Texture* _texture;
@@ -56,6 +65,7 @@ namespace Kit
     private:
         vector <text_line> _lines;
 
+        bool _is_one_line_text;
 
     private: // Align Part
         text_horizontal_align _horizontal_align;
@@ -77,6 +87,11 @@ namespace Kit
         bool _is_select;
         bool _is_mouse_pushed;
 
+        cursor_position _start_select;
+        cursor_position _end_select;
+
+        bool _is_focused;
+
     private:
         void setup();
 
@@ -88,10 +103,18 @@ namespace Kit
 
         cursor_position whereIsCursor(const SimplePoint& p);
 
+        void dropSelection();
+        void handleSelection();
+        string copySelection();
         void deleteSelection();
 
         void mouseButtonDown(SDL_Event* e_, const Point& mouse);
         void mouseButtonUp(SDL_Event* e_, const Point& mouse);
+        void mouseMotion(SDL_Event* e_, const Point& mouse);
+        void textInput(SDL_Event* e_);
+        void keyDown(SDL_Event* e_);
+
+
 
     private:
         friend text_line;

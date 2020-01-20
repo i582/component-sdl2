@@ -126,13 +126,10 @@ Kit::Component::Component(const string& id, const Rect& size, const string& clas
     this->_css_component = nullptr;
 
 
-    /** Extended text */
-    this->_extended_text = nullptr;
-    this->_withExtendedText = false;
-
-
-    /** New Extended Text */
+    /** Beta Extended Text */
     this->_text_extended = nullptr;
+    this->_is_one_line_text = false;
+    this->_withExtendedText = false;
 
 
     /** Ignore Some Event */
@@ -270,24 +267,24 @@ void Kit::Component::computeSize()
     auto& activeBlock = _cssBlock.active();
 
     const auto topSize = Utils::max_of(
-            normalBlock.get<int>("border-top-size"),
-            hoverBlock.get<int>("border-top-size"),
-            activeBlock.get<int>("border-top-size")
+        normalBlock.get<int>("border-top-size"),
+        hoverBlock.get<int>("border-top-size"),
+        activeBlock.get<int>("border-top-size")
     );
     const auto bottomSize = Utils::max_of(
-            normalBlock.get<int>("border-bottom-size"),
-            hoverBlock.get<int>("border-bottom-size"),
-            activeBlock.get<int>("border-bottom-size")
+        normalBlock.get<int>("border-bottom-size"),
+        hoverBlock.get<int>("border-bottom-size"),
+        activeBlock.get<int>("border-bottom-size")
     );
     const auto leftSize = Utils::max_of(
-            normalBlock.get<int>("border-left-size"),
-            hoverBlock.get<int>("border-left-size"),
-            activeBlock.get<int>("border-left-size")
+        normalBlock.get<int>("border-left-size"),
+        hoverBlock.get<int>("border-left-size"),
+        activeBlock.get<int>("border-left-size")
     );
     const auto rightSize = Utils::max_of(
-            normalBlock.get<int>("border-right-size"),
-            hoverBlock.get<int>("border-right-size"),
-            activeBlock.get<int>("border-right-size")
+        normalBlock.get<int>("border-right-size"),
+        hoverBlock.get<int>("border-right-size"),
+        activeBlock.get<int>("border-right-size")
     );
 
 
@@ -553,14 +550,10 @@ void Kit::Component::setupExtendedText()
         auto textColor = _cssBlock.normal().get<Color>("color");
         auto lineHeight = _cssBlock.normal().get<double>("line-height");
 
-//        this->_extended_text = new Text2(this, _text_temp,
-//                                         {0, 0, _innerSize.w(), _innerSize.h()},
-//                                         _fontNormal, fontSize, textColor, lineHeight, true);
-
 
         _text_extended = new text(this, _text_temp, {0, 0}, _fontNormal, fontSize, textColor, lineHeight);
 
-
+        _text_extended->_is_one_line_text = _is_one_line_text;
     }
 
     for (auto& children : _childrens)
@@ -789,6 +782,8 @@ void Kit::Component::render()
     Draw::roundedRect(_renderer, _innerRectSize, borderRadius, backgroundColor);
 
 
+
+
     if (this->_image != nullptr)
     {
         const string& pathToImage = blockState->get<string>("background-image");
@@ -828,34 +823,30 @@ void Kit::Component::render()
     }
 
 
-    if (this->_extended_text != nullptr && _withExtendedText)
+    if (_text_extended != nullptr && _withExtendedText)
     {
-        this->_extended_text->setFont(blockFont);
-        this->_extended_text->setColor(blockState->get<Color>("color"));
-        this->_extended_text->setFontSize(blockState->get<int>("font-size"));
-        this->_extended_text->setLineHeight(blockState->get<double>("line-height"));
-        this->_extended_text->setTextAlign(blockState->get<string>("text-align"));
-        this->_extended_text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
+        _text_extended->useFont(blockFont);
+        _text_extended->useColor(blockState->get<Color>("color"));
+        _text_extended->fontSize(blockState->get<int>("font-size"));
+        _text_extended->lineHeight(blockState->get<double>("line-height"));
+        _text_extended->textHorizontalAlign(blockState->get<string>("text-align"));
+        _text_extended->textVerticalAlign(blockState->get<string>("vertical-align"));
 
-        this->_extended_text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
-        this->_extended_text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
-        this->_extended_text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
-        this->_extended_text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+//        _text_extended->setTextBlockMargin("top", blockState->get<int>("margin-top"));
+//        _text_extended->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
+//        _text_extended->setTextBlockMargin("left", blockState->get<int>("margin-left"));
+//        _text_extended->setTextBlockMargin("right", blockState->get<int>("margin-right"));
 
-        this->_extended_text->setFocus(_isFocused);
-
-
-        this->_extended_text->render();
-    }
+        _text_extended->focus(_isFocused);
 
 
-
-
-
-    if (_text_extended != nullptr)
-    {
         _text_extended->render();
+
+
     }
+
+
+
 
 
 
@@ -882,7 +873,7 @@ void Kit::Component::render()
         _innerSize.w() + leftSize + rightSize,
         _innerSize.h() + topSize + bottomSize
     };
-    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius, borderColor);
+    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius + leftSize, borderColor);
 
 
     Rect copy = _innerSize;
@@ -909,6 +900,7 @@ void Kit::Component::render()
     const SDL_Rect innerSize_sdl = _innerSize.toSdlRect();
 
     SDL_RenderCopy(_renderer, _innerTexture, &copy_sdl, &innerSize_sdl);
+
 
 
     if (_verticalScrollable)
@@ -1058,7 +1050,7 @@ void Kit::Component::mouseMotion(Event* e_)
         Point mouseP(e_->motion.x, e_->motion.y);
         adjustMousePoint(mouseP);
 
-        //_extended_text->mouseMotion(e_, mouseP);
+        _text_extended->mouseMotion(e_, mouseP);
     }
 
     _isHovered = true;
@@ -1128,7 +1120,7 @@ void Kit::Component::keyDown(Event* e_)
 {
     if (_withExtendedText)
     {
-        //_extended_text->keyDown(e_);
+        _text_extended->keyDown(e_);
     }
 }
 
@@ -1136,7 +1128,7 @@ void Kit::Component::textInput(Event* e_)
 {
     if (_withExtendedText)
     {
-        //_extended_text->textInput(e_);
+        _text_extended->textInput(e_);
     }
 }
 
@@ -1312,7 +1304,6 @@ Kit::Component* Kit::Component::append(Component* component)
 
 
     setupParentWindow();
-    //handleStyles();
 
     return component;
 }
@@ -1485,14 +1476,20 @@ Kit::Component* Kit::Component::setText(const string& text)
         return this;
     }
 
-    if (_extended_text != nullptr && _withExtendedText)
+    if (_text_extended != nullptr && _withExtendedText)
     {
-        _extended_text->setText(text);
+        _text_extended->withText(text);
         return this;
     }
 
     this->_text_temp = text;
 
+    return this;
+}
+
+Kit::Component* Kit::Component::oneLineText()
+{
+    _is_one_line_text = true;
     return this;
 }
 

@@ -109,10 +109,6 @@ add_executable(${PROJECT_NAME} #STATIC
         src/std_windows/simple_window/simple-window.h
         src/tools/texture/texture.h
         src/tools/texture/texture.cpp
-        src/tools/text2/text.h
-        src/tools/text2/text2.cpp
-        src/tools/text2/text_line.h
-        src/tools/text2/text_line.cpp
         main.cpp
         src/tools/draw/draw.h
         src/tools/draw/draw.cpp
@@ -147,13 +143,13 @@ add_executable(${PROJECT_NAME} #STATIC
         src/std_components/select/select_item.h
         src/tools/css/css_parser.cpp
         src/tools/css/css_parser.h
-        src/tools/text3/text_3.cpp
-        src/tools/text3/text_3.h
-        src/tools/text3/text_align.h
-        src/tools/text3/text_line.cpp
-        src/tools/text3/text_line.h
-        src/tools/text3/text_cursor.h
-        src/tools/text3/text_cursor.cpp)
+        src/tools/text_extended/text_extended.cpp
+        src/tools/text_extended/text_extended.h
+        src/tools/text_extended/text_align.h
+        src/tools/text_extended/text_line.cpp
+        src/tools/text_extended/text_line.h
+        src/tools/text_extended/text_cursor.h
+        src/tools/text_extended/text_cursor.cpp)
 
 
 

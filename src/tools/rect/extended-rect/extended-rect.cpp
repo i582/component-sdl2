@@ -46,7 +46,7 @@ Rect& Kit::Rect::operator=(const Rect& obj)
 
 int Rect::w() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Rect's 'calc' function." << endl;
         return -1;
@@ -57,7 +57,7 @@ int Rect::w() const
 
 int Rect::h() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Rect's 'calc' function." << endl;
         return -1;
@@ -116,7 +116,7 @@ int Rect::dh(int d)
 
 int Rect::y() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Rect's 'calc' function." << endl;
         return -1;
@@ -127,7 +127,7 @@ int Rect::y() const
 
 int Rect::x() const
 {
-    if (not isCalculated)
+    if (!isCalculated)
     {
         cout << "Error: String were not parsed into values. See Rect's 'calc' function." << endl;
         return -1;
@@ -138,12 +138,12 @@ int Rect::x() const
 
 Rect Rect::calc(const Rect& parent)
 {
-    if (not start.isCalculated)
+    if (!start.isCalculated)
     {
         start.calc(parent);
     }
 
-    if (not size.isCalculated)
+    if (!size.isCalculated)
     {
         size.calc(parent);
     }

@@ -87,8 +87,9 @@ void Kit::KitApplication::init()
         return;
     }
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
     SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
+
 }
 
 void Kit::KitApplication::setupWindows()

@@ -2,62 +2,62 @@
     width: 70px;
     height: 24px;
 
-    background-color: rgb(76, 80, 82);
-
-    border-color: #393A3B;
-
-    border-bottom: 2px solid #5E6060;
+    background-color: #F8F8F8;
 
 
-    outline: #585A5A;
+    border-radius: 5px;
 
-    color: #dadacb;
+    outline: #D9D9D9;
 
-    font-size: 13px;
-
-
-    font-style: italic;
-
-    line-height: 1.05;
+    line-height: 0.9;
     text-align: center;
     vertical-align: center;
 
-}
+    color: #0B0B0B;
+    font-weight: 600;
 
-.button:active {
-    outline: #507193;
+    font-size: 12px;
 
     font-style: normal;
-    font-weight: 400;
 
-    border-color: #3D6185;
+    font-family: SFUIDisplay;
 
+    border-color: #e4e4e4;
     border-bottom: 2px solid #5E6060;
-    border-right: 2px solid #5E6060;
-    border-left: 2px solid #5E6060;
-    border-top: 2px solid #5E6060;
+}
+
+.button:active
+{
+    border-color: #B1CFF0;
+
+
+
+    border-bottom: 3px solid #5E6060;
+    border-right: 3px solid #5E6060;
+    border-left: 3px solid #5E6060;
+    border-top: 3px solid #5E6060;
 }
 
 .button:focus {
-    outline: #507193;
+    border-color: #B1CFF0;
 
-    border-color: #3D6185;
 
-    border-bottom: 2px solid #5E6060;
-    border-right: 2px solid #5E6060;
-    border-left: 2px solid #5E6060;
-    border-top: 2px solid #5E6060;
+    border-bottom: 3px solid #5E6060;
+    border-right: 3px solid #5E6060;
+    border-left: 3px solid #5E6060;
+    border-top: 3px solid #5E6060;
 }
 
 .button-blue {
-    background-color: #365880;
-    outline: #456B91;
+    background-color: #1B8AF9;
+    outline: #1e80cd;
+    color: #F8F8F8;
 }
 
 .button-blue:active {
-    outline: #4E6E8F;
+
 }
 
 .button-blue:focus {
-    outline: #4E6E8F;
+
 }

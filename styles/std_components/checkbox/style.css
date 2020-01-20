@@ -1,19 +1,21 @@
 .checkbox {
     width: 100px;
-    height: 16px;
+    height: 18px;
 
-    background-image: url(../styles/std_components/checkbox/images/unchecked.png);
-    background-size: 16px;
+    background-image: url(../styles/std_components/checkbox/images/checkbox-ui-unselect-s.png);
+    background-size: 18px;
 
-    color: #dadacb;
+    color: #000000;
 
     font-size: 13px;
     line-height: 1.3;
+
+    font-weight: 400;
 
     margin-left: 25px;
     vertical-align: center;
 }
 
 .checkbox-checked {
-    background-image: url(../styles/std_components/checkbox/images/checked.png);
+    background-image: url(../styles/std_components/checkbox/images/checkbox-ui-select-s.png);
 }
