@@ -1,33 +1,27 @@
 # component-sdl2
 
-[![Language](https://img.shields.io/badge/language-C++17-blue.svg)](https://isocpp.org/)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://mit-license.org/)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2-brightgreen.svg)](https://www.libsdl.org/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_ttf-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_ttf/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_image-brightgreen.svg)](https://www.libsdl.org/tmp/SDL_image/)
-[![Dependencies](https://img.shields.io/badge/dependencies-SDL2_gfx-brightgreen.svg)](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/)
-
-
+[![Dependencies](https://img.shields.io/badge/dependencies-SDL2%20%7C%20SDL2__ttf%20%7C%20SDL2__image%20%7C%20SDL2__gfx-brightgreen.svg)](https://www.libsdl.org/)
 [![Dependencies](https://img.shields.io/badge/dependency_if_not_MSVC-boost-brightgreen.svg)](https://www.boost.org/)
+ 
+[![Dependencies](https://img.shields.io/badge/docs%20(rus)-passed-brightgreen.svg)](https://i58215.gitbook.io/component-sdl2/)  
 
-[![](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://www.conventionalcommits.org)
-
-
-## Описание
-
-`component-sdl2` это небольшая кроссплатформенная библиотека для создания интефейсов созданная на базе низкоуровневой графической библиотеки `SDL2`. Она поддерживает полную кастомизацию внешнего вида компонентов при помощи `css`, а так же простое создание кастомных компонентов любой сложности. 
+[![Dependencies](https://img.shields.io/badge/docs%20(eng)-in%20progress-inactive.svg)](#)  
 
 
-## Пример интерфейса
+## Description
+
+`component-sdl2` is a small cross-platform library for creating interfaces created on the basis of the low-level graphics library `SDL2`. It supports the complete customization of the appearance of components using `css`, as well as the simple creation of custom components of any complexity.
+
+## Examples
 
 ![example](docs/1.png) ![example](docs/2.png)
 
-## Установка
+## Setup
 
-### Установка boost (Для GCC)
+### Setting boost (Для GCC)
 
-Для поддержки работы с поиском шрифтов используется `std::filesystem`, которая в достаточной форме реализована в `Visual C++`, но не в `GCC 8.2`, поэтому для поддержки `filesystem` используется `boost::filesystem`!
+To support work with font search, `std::filesystem` is used, which is implemented in sufficient form in` Visual C++ `, but not in `GCC 8.2`, so `boost::filesystem` is used to support `filesystem`!
 
 ```bash
 # download boost (https://www.boost.org) and go to the folder 
@@ -38,7 +32,7 @@
 # The compilation of boost is quite long, so be patient.
 ```
 
-### Установка SDL2 & SDL2_image & SDL2_ttf & SDL_gfx
+### Setting SDL2 & SDL2_image & SDL2_ttf & SDL_gfx
 
 ```bash
 # On Linux
@@ -56,7 +50,7 @@ sudo apt install build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf
 # and unzip folders to your convenience.
 ```
 
-### Подготовка в работе
+### Preparation
 
 ```bash
 git clone https://github.com/i582/component-sdl2.git
@@ -69,6 +63,7 @@ git clone https://github.com/google/googletest
 # for Window
 # In CMakeLists.txt, write the paths to the folders with SDL2.
 
+cd ../
 mkdir build
 cd build
 cmake ..
@@ -80,9 +75,10 @@ cmake build .
 
 
 
-## Ссылки 
-[Документация](https://i58215.gitbook.io/component-sdl2/)
+## Links 
+[Documentation (rus)](https://i58215.gitbook.io/component-sdl2/)
 
-## Лицензия
+[(work in progress) Documentation (eng)](#)
+## License
 
-[MIT](https://mit-license.org/)
+[MIT](https://github.com/i582/component-sdl2/blob/master/LICENSE)
