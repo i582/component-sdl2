@@ -1,8 +1,8 @@
 
 .navigator {
-    background-color: #ECECEC;
+    background-color: #F1F0F1;
 
-    border-color: #686868;
+    border-color: #F1F0F1;
     border-bottom: 1px solid #5E6060;
     border-right: 1px solid #5E6060;
     border-left: 1px solid #5E6060;
@@ -24,7 +24,6 @@
     margin-left: 20px;
 
     vertical-align: center;
-
 }
 
 .system-button {
@@ -78,13 +77,13 @@
 
 .button-ok
 {
-    top: 90px;
+    top: 420px;
     left: 20px;
 }
 
 .button-cancel
 {
-    top: 90px;
+    top: 420px;
     left: 100px;
 }
 
@@ -95,8 +94,10 @@
 
 
 .first-checkbox {
-    top: 50px;
-    left: 50px;
+    top: 423px;
+    left: 200px;
+
+    width: 150px;
 }
 
 .circle
@@ -115,16 +116,16 @@
 
 .input
 {
-    width: 250px;
-    height: 100px;
+    width: 350px;
+    height: 150px;
 
-    top: 150px;
+    top: 250px;
     left: 20px;
 
     background-color: #ffffff;
     outline: #D2D2D2;
 
-    font-size: 13px;
+    font-size: 14px;
 
     line-height: 1;
 
@@ -132,6 +133,7 @@
     color: #000000;
     font-weight: 400;
 
+    font-family: Consolas;
 }
 
 .input:focus
@@ -147,11 +149,11 @@
 
 .input-one-line
 {
-    width: 250px;
+    width: 260px;
     height: 25px;
 
-    top: 270px;
-    left: 20px;
+    top: 40px;
+    left: 110px;
 
     background-color: #ffffff;
     outline: #D2D2D2;
@@ -162,10 +164,7 @@
     text-align: center;
     vertical-align: middle;
 
-    font-weight: 600;
-
-
-
+    font-weight: 500;
 }
 
 .input-one-line:focus
@@ -202,6 +201,84 @@
     border-bottom: 1px solid #5E6060;
 }
 
+.button-next
+{
+    width: 31px;
+    height: 25px;
+
+    top: 40px;
+    left: 51px;
+
+    background-image: url(../styles/std_components/other/images/arrow-next.png);
+    background-size: 24px;
+    background-position-y: 2px;
+    background-position-x: 5px;
+
+
+    background-color: #F8F8F8;
+
+    border-radius: 5px;
+
+    outline: #D9D9D9;
+
+    border-color: #e4e4e4;
+    border-bottom: 2px solid #5E6060;
+}
+
+.button-next:active
+{
+    background-color: #fdfdfd;
+
+    border-bottom: 1px solid #5E6060;
+}
+
+
+.button-prev
+{
+    width: 31px;
+    height: 25px;
+
+    top: 40px;
+    left: 20px;
+
+    background-image: url(../styles/std_components/other/images/arrow-prev.png);
+    background-size: 24px;
+    background-position-y: 2px;
+    background-position-x: 3px;
+
+
+    background-color: #F8F8F8;
+
+    border-radius: 5px;
+
+    outline: #D9D9D9;
+
+    border-color: #e4e4e4;
+    border-bottom: 2px solid #5E6060;
+}
+
+.button-prev:active
+{
+    background-color: #fdfdfd;
+
+    border-bottom: 1px solid #5E6060;
+}
+
+
+
+.bar
+{
+    top: 150px;
+    left: 20px;
+}
+
+.bar-item
+{
+    width: 80px;
+}
+
+
+
 .scrolls
 {
     width: 350px;
@@ -226,9 +303,9 @@
 
 .table-test {
     width: 350px;
-    height: 300px;
+    height: 150px;
 
-    top: 40px;
+    top: 85px;
     left: 20px;
 }
 
@@ -237,7 +314,15 @@
     width: 30px;
 }
 
+.column-1
+{
+    width: 100px;
+}
 
+.column-3
+{
+    width: 100px;
+}
 
 .text {
     width: 200px;

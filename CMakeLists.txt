@@ -54,6 +54,7 @@ include_directories(src/tools/draw)
 include_directories(src/std_components/table)
 include_directories(src/std_components/tabs)
 include_directories(src/std_components/select)
+include_directories(src/std_components/line_select)
 include_directories(src/std_windows/select_window)
 
 add_executable(${PROJECT_NAME} #STATIC
@@ -149,7 +150,9 @@ add_executable(${PROJECT_NAME} #STATIC
         src/tools/text_extended/text_line.cpp
         src/tools/text_extended/text_line.h
         src/tools/text_extended/text_cursor.h
-        src/tools/text_extended/text_cursor.cpp)
+        src/tools/text_extended/text_cursor.cpp
+        src/std_components/line_select/line_select.cpp
+        src/std_components/line_select/line_select.h)
 
 
 

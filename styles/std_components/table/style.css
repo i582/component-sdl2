@@ -3,7 +3,8 @@
     height: 300px;
 
 
-    border-color: #323232;
+    background-color: #F0EFF0;
+
 
     border-bottom: 1px solid #5E6060;
     border-right: 1px solid #5E6060;
@@ -20,19 +21,23 @@
     top: 0;
     left: 0;
 
-    background-color: #45484A;
+    background-color: #F0EFF0;
 
-    border-color: #323232;
+    border-color: #C1C1C1;
     border-bottom: 1px solid #5E6060;
+    border-right: 1px solid #5E6060;
+    border-left: 1px solid #5E6060;
+    border-top: 1px solid #5E6060;
+
 
     display: inline-block;
 }
 
 .table-body {
     width: auto;
-    height: auto;
+    height: calc(100% - 45px);
 
-    background-color: #3C3F41;
+    background-color: #FFFFFF;
 
     display: block;
 }
@@ -41,21 +46,21 @@
     width: auto;
     height: 20px;
 
-    background-color: #414547;
+    background-color: #FFFFFF;
 
     display: inline-block;
 }
 
 .light {
-    background-color: #3C3F41;
+    background-color: #f5f5f5;
 }
 
 .light:focus {
-    background-color: #4B6EAF;
+    background-color: #D5D5D5;
 }
 
 .table-row:focus {
-    background-color: #4B6EAF;
+    background-color: #D5D5D5;
 }
 
 .table-header-item {
@@ -63,16 +68,20 @@
     height: 100%;
 
 
-    color: #dadacb;
-    font-size: 13px;
-    font-style: italic;
+    color: #474147;
+    font-size: 12px;
+
+    font-weight: 900;
+
     line-height: 1;
     text-align: center;
     vertical-align: center;
 
-    background-color: #45484A;
-    border-color: #323232;
-    border-right: 1px solid #5E6060;
+    background-color: #F0EFF0;
+    border-color: #F0EFF0;
+    border-right: 1px solid #F0EFF0;
+
+    font-family: SFUIDisplay;
 }
 
 .table-item {
@@ -80,18 +89,14 @@
     height: 100%;
 
 
-    color: #dadacb;
-    font-size: 13px;
-    font-style: italic;
+    color: #545454;
+    font-size: 12px;
+
+    font-weight: 600;
+
     line-height: 1;
     text-align: center;
     vertical-align: center;
-}
 
-.table-item:focus {
-
-    background-color: #4B6EAF;
-
-    outline: #79C0FF;
-
+    font-family: SFUIDisplay;
 }

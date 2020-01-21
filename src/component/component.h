@@ -170,6 +170,7 @@ namespace Kit
 
         map<string, std::any>& userData();
         Component* addUserData(const string& key, const std::any& data);
+        Component* setUserData(const string& key, const std::any& data);
         std::any userData(const string& key);
 
         template<typename T>

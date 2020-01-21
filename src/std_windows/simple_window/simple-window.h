@@ -6,6 +6,7 @@
 #include "checkbox.h"
 #include "table.h"
 #include "select.h"
+#include "line_select.h"
 
 using namespace Kit;
 

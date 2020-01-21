@@ -279,8 +279,15 @@ void CSS::css_parser::syntaxParseOneBlock(std::vector<std::string>& block_)
                 }
                 else if (values.size() == 1)
                 {
-                    const auto value = values[0];
-                    block_css_state.set(attribute, value);
+                    if (attribute == "border-radius")
+                    {
+                        syntaxParseIfComplexValueStatic(attribute, values, &block_css_state);
+                    }
+                    else
+                    {
+                        const auto value = values[0];
+                        block_css_state.set(attribute, value);
+                    }
                 }
 
 
@@ -428,6 +435,44 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
         const string result = values_[2];
 
         block_state_->set(attribute_, result);
+        return;
+    }
+
+    if (attribute_ == "border-radius")
+    {
+        int radius_1 = 0;
+        int radius_2 = 0;
+        int radius_3 = 0;
+        int radius_4 = 0;
+
+        if (values_.size() == 1)
+        {
+            radius_1 = radius_2 = radius_3 = radius_4 = Utils::to_integer(values_[0]);
+        }
+        else if (values_.size() == 2)
+        {
+            radius_1 = radius_2 = Utils::to_integer(values_[0]);
+            radius_3 = radius_4 = Utils::to_integer(values_[1]);
+        }
+        else if (values_.size() == 4)
+        {
+            radius_1 = Utils::to_integer(values_[0]);
+            radius_2 = Utils::to_integer(values_[1]);
+            radius_3 = Utils::to_integer(values_[2]);
+            radius_4 = Utils::to_integer(values_[3]);
+        }
+        else
+        {
+            cout << "Error! The border-radius property value must have 1, 2, or 4 values!" << endl;
+            return;
+        }
+
+
+        block_state_->set(attribute_ + "-top-left", radius_1);
+        block_state_->set(attribute_ + "-top-right", radius_2);
+        block_state_->set(attribute_ + "-bottom-left", radius_3);
+        block_state_->set(attribute_ + "-bottom-right", radius_4);
+
         return;
     }
 }

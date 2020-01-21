@@ -35,6 +35,10 @@ CSS::css_block_state::css_block_state()
     _styles["margin-right"] = 0;
 
     _styles["border-radius"] = 0;
+    _styles["border-radius-top-left"] = 0;
+    _styles["border-radius-top-right"] = 0;
+    _styles["border-radius-bottom-left"] = 0;
+    _styles["border-radius-bottom-right"] = 0;
 
 
     _styles["border-top"] = 0;
@@ -99,7 +103,10 @@ CSS::css_block_state::css_block_state(bool general)
     _styles["margin-right"] = 0;
 
     _styles["border-radius"] = 0;
-
+    _styles["border-radius-top-left"] = 0;
+    _styles["border-radius-top-right"] = 0;
+    _styles["border-radius-bottom-left"] = 0;
+    _styles["border-radius-bottom-right"] = 0;
 
     _styles["border-top"] = 0;
     _styles["border-top-size"] = 0;
@@ -185,8 +192,13 @@ void CSS::css_block_state::set(const string& attribute, const string& value)
 
 
     if (attribute == "font-size" || attribute == "font-weight" || attribute == "margin-top" ||
-        attribute == "margin-bottom"
-        || attribute == "margin-left" || attribute == "margin-right" || attribute == "border-radius"
+        attribute == "margin-bottom" || attribute == "margin-left" || attribute == "margin-right" ||
+
+        attribute == "border-radius" ||
+        attribute == "border-radius-top-left" ||
+        attribute == "border-radius-top-right" ||
+        attribute == "border-radius-bottom-left" ||
+        attribute == "border-radius-bottom-right"
     )
     {
         _styles[attribute] = std::stoi(value);

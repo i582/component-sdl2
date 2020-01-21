@@ -46,30 +46,34 @@ void simple_window::setup()
 
     add("#input", ".input")->useExtendedText();
     auto test = window::getElementById("#input");
-    test->setText("This is just simple text\nThis is just\nAlso Text");
+    test->setText("\n #;Name;Phone;Street\n 1;Sasha;+123456789;number-1\n 2;Egor;+123456789;number-2\n 3;Evgenia;+123456789;number-3");
 
 
     add("#input-one-line", ".input-one-line")->useExtendedText()
-    ->setText("Test")->oneLineText();
+    ->setText("Search")->oneLineText();
 
-    add(Checkbox::create("#checkbox", "select this", ".first-checkbox"));
+    add(Checkbox::create("#checkbox", "Save changes", ".first-checkbox"));
 
     add(Button::create("#button-1", "Ok", ".button-ok .button-blue"));
     add(Button::create("#button-cancel", "Cancel", ".button-cancel"));
 
-//    auto table = (Table*) add(new Table("#table", ".table-test"));
 
-    // table->style({{"f: background-color", "#ffffff"}});
+    add("#button-next", ".button-next");
+    add("#button-prev", ".button-prev");
 
-/*
+
+    add(LineSelect::create("#line-select", {"item 1", "item 2", "item 3", "item 4"}, ".bar"));
+
+    /*auto table = (Table*) add(new Table("#table", ".table-test"));
+
     table->addColumn("#");
-    table->addColumn("ФИО");
-    table->addColumn("Русский язык");
-    table->addColumn("Математика");
+    table->addColumn("Name");
+    table->addColumn("Phone");
+    table->addColumn("Street");
 
-    table->addRow({"1", "Молодой человек", "85", "90"});
-    table->addRow({"2", "Старый человек", "75", "100"});
-    table->addRow({"3", "Старый человек", "75", "100"});
+    table->addRow({"1", "Sasha", "+123456789", "number-1"});
+    table->addRow({"2", "Egor", "+123456789", "number-2"});
+    table->addRow({"3", "Evgenia", "+123456789", "number-3"});
 */
 
     //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));

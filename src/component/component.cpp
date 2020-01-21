@@ -765,7 +765,14 @@ void Kit::Component::render()
 
     const auto& backgroundColor = blockState->get<Color>("background-color");
     const auto& borderColor = blockState->get<Color>("border-color");
-    const auto& borderRadius = blockState->get<int>("border-radius");
+
+
+    const auto& borderRadius_1 = blockState->get<int>("border-radius-top-left");
+    const auto& borderRadius_2 = blockState->get<int>("border-radius-top-right");
+    const auto& borderRadius_3 = blockState->get<int>("border-radius-bottom-left");
+    const auto& borderRadius_4 = blockState->get<int>("border-radius-bottom-right");
+
+
 
 
     const bool outline = blockState->get<Color>("outline") != Color(0);
@@ -775,11 +782,17 @@ void Kit::Component::render()
         const auto outlineColor = blockState->get<Color>("outline");
 
         const SimpleRect _outlineRectSize = {0, 0, _innerSize.w(), _innerSize.h()};
-        Draw::roundedRect(_renderer, _outlineRectSize, borderRadius, outlineColor);
+        Draw::roundedRect(_renderer, _outlineRectSize, borderRadius_1, borderRadius_2, borderRadius_3, borderRadius_4, outlineColor);
     }
 
     const SimpleRect _innerRectSize = {outline, outline, _innerSize.w() - 2 * outline, _innerSize.h() - 2 * outline};
-    Draw::roundedRect(_renderer, _innerRectSize, borderRadius, backgroundColor);
+    Draw::roundedRect(_renderer, _innerRectSize,
+            borderRadius_1,
+            borderRadius_2,
+            borderRadius_3,
+            borderRadius_4,
+            backgroundColor
+    );
 
 
 
@@ -873,7 +886,13 @@ void Kit::Component::render()
         _innerSize.w() + leftSize + rightSize,
         _innerSize.h() + topSize + bottomSize
     };
-    Draw::roundedRect(_renderer, _innerRectBorderSize, borderRadius + leftSize, borderColor);
+    Draw::roundedRect(_renderer, _innerRectBorderSize,
+            borderRadius_1 + leftSize,
+            borderRadius_2 + leftSize,
+            borderRadius_3 + leftSize,
+            borderRadius_4 + leftSize,
+            borderColor
+    );
 
 
     Rect copy = _innerSize;
@@ -1390,6 +1409,18 @@ Kit::map<Kit::string, std::any>& Kit::Component::userData()
 Kit::Component* Kit::Component::addUserData(const string& key, const std::any& data)
 {
     _userData.insert(make_pair(key, data));
+
+    return this;
+}
+
+Kit::Component* Kit::Component::setUserData(const string& key, const std::any& data)
+{
+    if (_userData.find(key) == _userData.end())
+    {
+        throw std::logic_error("User information for " + key + " does not exist.");
+    }
+
+    _userData[key] = data;
 
     return this;
 }

@@ -41,8 +41,9 @@ void Kit::scroll::render() const
     SDL_RenderClear(_renderer);
 
     // draw slider
-    SDL_SetRenderDrawColor(_renderer, 0x59, 0x5b, 0x5d, 0xff);
-    SDL_RenderFillRect(_renderer, &_slider);
+//    SDL_SetRenderDrawColor(_renderer, 0x59, 0x5b, 0x5d, 0xff);
+//    SDL_RenderFillRect(_renderer, &_slider);
+    Draw::roundedRect(_renderer, _slider, 4, Color(0xD3D2D4ff));
 
 
     SDL_SetRenderTarget(_renderer, _parent->outerTexture());
