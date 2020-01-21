@@ -21,7 +21,7 @@
 
 ## Пример интерфейса
 
-![example](docs/1.png)
+![example](docs/1.png) ![example](docs/2.png)
 
 ## Установка
 
@@ -54,10 +54,9 @@ sudo apt install build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf
 # note: SDL2_gfx must be manually assembled.
 
 # and unzip folders to your convenience.
-
 ```
 
-### Далее
+### Подготовка в работе
 
 ```bash
 git clone https://github.com/i582/component-sdl2.git
@@ -68,7 +67,15 @@ cd test
 git clone https://github.com/google/googletest
 
 # for Window
-# In CMakeLists.txt, write the paths to the folders.
+# In CMakeLists.txt, write the paths to the folders with SDL2.
+
+mkdir build
+cd build
+cmake ..
+cmake ..
+cmake ..
+cmake ..
+cmake build .
 ```
 
 
@@ -78,4 +85,4 @@ git clone https://github.com/google/googletest
 
 ## Лицензия
 
-MIT
+[MIT](https://mit-license.org/)
