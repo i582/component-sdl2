@@ -438,6 +438,41 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
         return;
     }
 
+    if (attribute_ == "border")
+    {
+        if (values_.size() != 3)
+        {
+            cout << "Error! The border attribute takes 3 parameters (size type color)" << endl;
+            return;
+        }
+
+        const int border_size = Utils::to_integer(values_[0]);
+        string border_type = values_[1];
+
+        if (border_type != "solid")
+        {
+            cout << "ERROR: border type " << border_type << " not found! Set to solid" << endl;
+            border_type = "solid";
+        }
+
+        const Color border_color(values_[2]);
+
+        vector<string> attrs = { "-top", "-left", "-bottom", "-right" };
+
+        block_state_->set("border-color", border_color);
+
+        for (const auto& item : attrs)
+        {
+            block_state_->set(attribute_ + item + "-size", border_size);
+            block_state_->set(attribute_ + item + "-type", border_type);
+            block_state_->set(attribute_ + item + "-color", border_color);
+        }
+
+
+
+        return;
+    }
+
     if (attribute_ == "border-radius")
     {
         int radius_1 = 0;

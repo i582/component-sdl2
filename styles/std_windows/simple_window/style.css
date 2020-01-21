@@ -204,14 +204,14 @@
 .button-next
 {
     width: 31px;
-    height: 25px;
+    height: 27px;
 
     top: 40px;
     left: 51px;
 
     background-image: url(../styles/std_components/other/images/arrow-next.png);
     background-size: 24px;
-    background-position-y: 2px;
+    background-position-y: 3px;
     background-position-x: 5px;
 
 
@@ -236,14 +236,14 @@
 .button-prev
 {
     width: 31px;
-    height: 25px;
+    height: 27px;
 
     top: 40px;
     left: 20px;
 
     background-image: url(../styles/std_components/other/images/arrow-prev.png);
     background-size: 24px;
-    background-position-y: 2px;
+    background-position-y: 3px;
     background-position-x: 3px;
 
 

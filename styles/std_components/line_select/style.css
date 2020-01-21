@@ -8,15 +8,10 @@
     display: inline-block;
 
 
-    border-color: #D9D9D9;
-
     border-radius: 5px;
-
-    border-bottom: 1px solid #5E6060;
-    border-right: 1px solid #5E6060;
-    border-left: 1px solid #5E6060;
-    border-top: 1px solid #5E6060;
+    border: 1px solid #D9D9D9;
 }
+
 
 .line-select-item
 {
