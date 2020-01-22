@@ -13,7 +13,14 @@
 
 ## Examples
 
-![example](docs/1.png) ![example](docs/2.png)
+1. Windows in Windows :)
+
+![example](docs/1.png) 
+
+2. MacOS X in Windows :)
+
+![mac os on window :)](docs/2.png)
+
 
 ## Setup
 
