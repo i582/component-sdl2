@@ -19,7 +19,7 @@
 
 2. MacOS X in Windows :)
 
-![mac os on window :)](docs/2.png)
+![mac os on window :)](docs/3.png)
 
 
 ## Setup
