@@ -230,21 +230,21 @@ void Kit::window::setDraggableArea(const Kit::SimpleRect& area_)
         auto rects = (vector <SimpleRect>*) callback_data;
 
         SimpleRect rect = rects->at(1);
-//      SimpleRect size = rects->at(0);
+        SimpleRect size = rects->at(0);
 
-//		SimpleRect rect = *(SimpleRect*)callback_data;
-//
-//		SDL_Rect rec = { 0, 0, rect.w, rect.h };
+		//SimpleRect rect = *(SimpleRect*)callback_data;
+
+		SDL_Rect rec = { 0, 0, rect.w, rect.h };
 
 
-//        SimpleRect resizeBottom = {10, size.h - 10, size.w, 10};
+        SimpleRect resizeBottom = {10, size.h - 2, size.w, 10};
 
 
         if (SDL_PointInRect(area, &rect))
             return SDL_HITTEST_DRAGGABLE;
 
-//        if (SDL_PointInRect(area, &resizeBottom))
-//            return SDL_HITTEST_RESIZE_BOTTOM;
+        //if (SDL_PointInRect(area, &resizeBottom))
+        //    return SDL_HITTEST_RESIZE_BOTTOM;
 
         return SDL_HITTEST_NORMAL;
     }, rects);

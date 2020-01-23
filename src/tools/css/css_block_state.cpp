@@ -17,6 +17,10 @@ CSS::css_block_state::css_block_state()
 
     _styles["background-size"] = 0;
 
+    _styles["background"] = 0;
+    _styles["background-linear-gradient-start-color"] = 0;
+    _styles["background-linear-gradient-end-color"] = 0;
+
     _styles["font-family"] = 0;
     _styles["font-weight"] = 0;
     _styles["font-style"] = 0;
@@ -30,7 +34,6 @@ CSS::css_block_state::css_block_state()
 
     _styles["margin-top"] = 0;
     _styles["margin-bottom"] = 0;
-
     _styles["margin-left"] = 0;
     _styles["margin-right"] = 0;
 
@@ -66,6 +69,12 @@ CSS::css_block_state::css_block_state()
     _styles["overflow"] = 0;
 
     _styles["display"] = 0;
+
+
+    _styles["padding-top"] = 0;
+    _styles["padding-bottom"] = 0;
+    _styles["padding-left"] = 0;
+    _styles["padding-right"] = 0;
 }
 
 CSS::css_block_state::css_block_state(bool general)
@@ -85,6 +94,12 @@ CSS::css_block_state::css_block_state(bool general)
 
     _styles["background-size"] = "0px";
 
+    _styles["background"] = "";
+    _styles["background-linear-gradient-start-color"] = Color(0x00000000);
+    _styles["background-linear-gradient-end-color"] = Color(0x00000000);
+
+
+
     _styles["font-family"] = "Segoe UI";
     _styles["font-weight"] = 400;
     _styles["font-style"] = "normal";
@@ -98,7 +113,6 @@ CSS::css_block_state::css_block_state(bool general)
 
     _styles["margin-top"] = 0;
     _styles["margin-bottom"] = 0;
-
     _styles["margin-left"] = 0;
     _styles["margin-right"] = 0;
 
@@ -134,6 +148,11 @@ CSS::css_block_state::css_block_state(bool general)
 
 
     _styles["display"] = "unset";
+
+    _styles["padding-top"] = 0;
+    _styles["padding-bottom"] = 0;
+    _styles["padding-left"] = 0;
+    _styles["padding-right"] = 0;
 }
 
 void CSS::css_block_state::mergeWith(css_block_state& block)
@@ -191,14 +210,16 @@ void CSS::css_block_state::set(const string& attribute, const string& value)
         return;
 
 
-    if (attribute == "font-size" || attribute == "font-weight" || attribute == "margin-top" ||
-        attribute == "margin-bottom" || attribute == "margin-left" || attribute == "margin-right" ||
-
+    if (attribute == "font-size" || attribute == "font-weight" ||
         attribute == "border-radius" ||
         attribute == "border-radius-top-left" ||
         attribute == "border-radius-top-right" ||
         attribute == "border-radius-bottom-left" ||
-        attribute == "border-radius-bottom-right"
+        attribute == "border-radius-bottom-right" ||
+        attribute == "padding-top" ||  attribute == "padding-bottom" ||
+        attribute == "padding-left" || attribute == "padding-right" ||
+        attribute == "margin-left" || attribute == "margin-right" ||
+        attribute == "margin-top" || attribute == "margin-bottom"
     )
     {
         _styles[attribute] = std::stoi(value);

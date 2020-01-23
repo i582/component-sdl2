@@ -48,6 +48,13 @@ void Draw::roundedRect(SDL_Renderer* renderer, const SimpleRect& rect,
         return;
     }
 
+    if ((radius_1 == radius_2) && (radius_1 == radius_3) && (radius_1 == radius_4) && (radius_1 == rect.w/2) && (radius_1 == rect.h/2))
+    {
+        filledEllipseColor(renderer, cx1, cy1, radius_1 - 1, radius_1 - 1, color);
+        aacircleColor(renderer, cx1, cy1, radius_1 - 1, color);
+        return;
+    }
+
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
 
@@ -70,4 +77,56 @@ void Draw::roundedRect(SDL_Renderer* renderer, const SimpleRect& rect,
 
 //    SDL_RenderFillRect(renderer, &r1);
 //    SDL_RenderFillRect(renderer, &r2);
+}
+
+void Draw::gradientRect(SDL_Renderer* renderer, const SimpleRect& rect, const Color& start, const Color& end)
+{
+    const int start_color_r = start.r();
+    const int start_color_g = start.g();
+    const int start_color_b = start.b();
+    const int start_color_a = start.a();
+
+
+    const int end_color_r = end.r();
+    const int end_color_g = end.g();
+    const int end_color_b = end.b();
+    const int end_color_a = end.a();
+
+
+    const int count_step = rect.h;
+
+
+    int step_r = (Utils::max_of(start_color_r, end_color_r) - Utils::min_of(start_color_r, end_color_r)) / count_step;
+    int step_g = (Utils::max_of(start_color_g, end_color_g) - Utils::min_of(start_color_g, end_color_g)) / count_step;
+    int step_b = (Utils::max_of(start_color_b, end_color_b) - Utils::min_of(start_color_b, end_color_b)) / count_step;
+    int step_a = (Utils::max_of(start_color_a, end_color_a) - Utils::min_of(start_color_a, end_color_a)) / count_step;
+
+
+    int temp_color_r = start_color_r;
+    int temp_color_g = start_color_g;
+    int temp_color_b = start_color_b;
+    int temp_color_a = start_color_a;
+
+
+    step_r = start_color_r > end_color_r ? -step_r : step_r;
+    step_g = start_color_g > end_color_g ? -step_g : step_g;
+    step_b = start_color_b > end_color_b ? -step_b : step_b;
+    step_a = start_color_a > end_color_a ? -step_a : step_a;
+
+    for (int i = 0; i < count_step; ++i)
+    {
+
+
+        SDL_SetRenderDrawColor(renderer, temp_color_r, temp_color_g, temp_color_b, temp_color_a);
+        SDL_RenderDrawLine(renderer, rect.x, rect.y + i, rect.x + rect.w, rect.y + i);
+
+
+
+
+        temp_color_r += step_r;
+        temp_color_g += step_g;
+        temp_color_b += step_b;
+        temp_color_a += step_a;
+    }
+
 }

@@ -81,6 +81,12 @@ namespace Kit
         bool _need_update;
 
 
+    private:
+        int marginTop;
+        int marginBottom;
+        int marginLeft;
+        int marginRight;
+
     private: // Cursor
         cursor_position _cursor_position;
 
@@ -114,7 +120,7 @@ namespace Kit
         void textInput(SDL_Event* e_);
         void keyDown(SDL_Event* e_);
 
-
+        void textMargin(const string& side, int value);
 
     private:
         friend text_line;

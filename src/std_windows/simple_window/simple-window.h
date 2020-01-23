@@ -7,6 +7,7 @@
 #include "table.h"
 #include "select.h"
 #include "line_select.h"
+#include "contextual_menu.h"
 
 using namespace Kit;
 

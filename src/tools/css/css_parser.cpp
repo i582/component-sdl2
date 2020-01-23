@@ -62,7 +62,7 @@ void CSS::css_parser::splitByToken()
                 tempToken.clear();
             }
 
-            if (symbol != ' ')
+            if (symbol != ' ' && symbol != ',')
             {
                 const string symbolToken(1, symbol);
 
@@ -87,7 +87,7 @@ bool CSS::css_parser::isSplitSymbol(const char& symbol)
     return  symbol == ' ' || symbol == ':' ||
             symbol == ';' || symbol == '{' ||
             symbol == '}' || symbol == '(' ||
-            symbol == ')';
+            symbol == ')' || symbol == ',';
 }
 
 void CSS::css_parser::splitByBlock()
@@ -510,6 +510,116 @@ void CSS::css_parser::syntaxParseIfComplexValueStatic(const std::string& attribu
 
         return;
     }
+
+
+    if (attribute_ == "background")
+    {
+
+        if (values_[0] == "linear-gradient")
+        {
+            const Color start_color = Color(values_[2]);
+            const Color end_color = Color(values_[3]);
+
+
+            block_state_->set(attribute_, "linear-gradient");
+            block_state_->set(attribute_ + "-linear-gradient-start-color", start_color);
+            block_state_->set(attribute_ + "-linear-gradient-end-color", end_color);
+        }
+
+        return;
+    }
+
+    if (attribute_ == "padding")
+    {
+        int padding_top = 0;
+        int padding_bottom = 0;
+        int padding_left = 0;
+        int padding_right = 0;
+
+        if (values_.size() == 1)
+        {
+            padding_top = padding_bottom = padding_left = padding_right = Utils::to_integer(values_[0]);
+        }
+        else if (values_.size() == 2)
+        {
+            padding_top = padding_bottom = Utils::to_integer(values_[0]);
+            padding_left = padding_right = Utils::to_integer(values_[1]);
+        }
+        else if (values_.size() == 3)
+        {
+            padding_top = Utils::to_integer(values_[0]);
+            padding_bottom = Utils::to_integer(values_[1]);
+            padding_left = Utils::to_integer(values_[2]);
+            padding_right = Utils::to_integer(values_[2]);
+        }
+        else if (values_.size() == 4)
+        {
+            padding_top = Utils::to_integer(values_[0]);
+            padding_bottom = Utils::to_integer(values_[1]);
+            padding_left = Utils::to_integer(values_[2]);
+            padding_right = Utils::to_integer(values_[3]);
+        }
+        else
+        {
+            cout << "Error! The padding property value must have 1-4 values!" << endl;
+            return;
+        }
+
+
+        block_state_->set(attribute_ + "-top", padding_top);
+        block_state_->set(attribute_ + "-bottom", padding_bottom);
+        block_state_->set(attribute_ + "-left", padding_left);
+        block_state_->set(attribute_ + "-right", padding_right);
+
+        return;
+    }
+
+
+    if (attribute_ == "margin")
+    {
+        int margin_top = 0;
+        int margin_bottom = 0;
+        int margin_left = 0;
+        int margin_right = 0;
+
+        if (values_.size() == 1)
+        {
+            margin_top = margin_bottom = margin_left = margin_right = Utils::to_integer(values_[0]);
+        }
+        else if (values_.size() == 2)
+        {
+            margin_top = margin_bottom = Utils::to_integer(values_[0]);
+            margin_left = margin_right = Utils::to_integer(values_[1]);
+        }
+        else if (values_.size() == 3)
+        {
+            margin_top = Utils::to_integer(values_[0]);
+            margin_bottom = Utils::to_integer(values_[1]);
+            margin_left = Utils::to_integer(values_[2]);
+            margin_right = Utils::to_integer(values_[2]);
+        }
+        else if (values_.size() == 4)
+        {
+            margin_top = Utils::to_integer(values_[0]);
+            margin_bottom = Utils::to_integer(values_[1]);
+            margin_left = Utils::to_integer(values_[2]);
+            margin_right = Utils::to_integer(values_[3]);
+        }
+        else
+        {
+            cout << "Error! The margin property value must have 1-4 values!" << endl;
+            return;
+        }
+
+
+        block_state_->set(attribute_ + "-top", margin_top);
+        block_state_->set(attribute_ + "-bottom", margin_bottom);
+        block_state_->set(attribute_ + "-left", margin_left);
+        block_state_->set(attribute_ + "-right", margin_right);
+
+        return;
+    }
+
 }
 
 void CSS::css_parser::mergeStyleComponent()

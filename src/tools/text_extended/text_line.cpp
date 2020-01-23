@@ -33,7 +33,6 @@ void Kit::text_line::setup()
 {
     setupSize();
 
-    cout << _size.h << endl;
 
     if (_parent->_horizontal_align == text_horizontal_align::LEFT)
     {

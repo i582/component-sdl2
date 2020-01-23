@@ -56,6 +56,7 @@ include_directories(src/std_components/tabs)
 include_directories(src/std_components/select)
 include_directories(src/std_components/line_select)
 include_directories(src/std_windows/select_window)
+include_directories(src/std_components/contextual_menu)
 
 add_executable(${PROJECT_NAME} #STATIC
         src/component/components/components.cpp
@@ -152,7 +153,9 @@ add_executable(${PROJECT_NAME} #STATIC
         src/tools/text_extended/text_cursor.h
         src/tools/text_extended/text_cursor.cpp
         src/std_components/line_select/line_select.cpp
-        src/std_components/line_select/line_select.h)
+        src/std_components/line_select/line_select.h
+        src/std_components/contextual_menu/contextual_menu.cpp
+        src/std_components/contextual_menu/contextual_menu.h)
 
 
 

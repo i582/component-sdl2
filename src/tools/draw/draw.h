@@ -16,4 +16,6 @@ namespace Kit::Draw
 
     void roundedRect(SDL_Renderer* renderer, const SimpleRect& rect,
             const int& radius_1, const int& radius_2, const int& radius_3, const int& radius_4, const Color& color);
+
+    void gradientRect(SDL_Renderer* renderer, const SimpleRect& rect, const Color& start, const Color& end);
 }

@@ -324,6 +324,33 @@ void Kit::Component::computeChildrenSize()
 
     SimpleSize childrenSize = {0, 0};
 
+
+    for (int i = 0; i < _childrens.size(); ++i)
+    {
+        auto& children = _childrens[i];
+
+        if (!children->display())
+            continue;
+
+        int width_now_child = children->width() + children->left();
+        int height_now_child = children->height() + children->top();
+
+        if (i == _childrens.size() - 1)
+        {
+            const auto children_margin_right = children->_cssBlock.normal().get<int>("margin-right");
+            width_now_child += children_margin_right;
+
+            const auto children_margin_bottom = children->_cssBlock.normal().get<int>("margin-bottom");
+            height_now_child += children_margin_bottom;
+        }
+
+        if (width_now_child > childrenSize.w)
+            childrenSize.w = width_now_child;
+
+        if (height_now_child > childrenSize.h)
+            childrenSize.h = height_now_child;
+    }
+
     for (auto& children : _childrens)
     {
         if (!children->display())
@@ -415,7 +442,7 @@ void Kit::Component::computeChildrenSize()
         const int scrollBodyWidth = 15;
 
         const int scrollSliderWidth = scrollBodyWidth - 6;
-        const int scrollSliderPositionX = (scrollBodyWidth - scrollSliderWidth) / 2;
+        const int scrollSliderPositionX = (scrollBodyWidth - scrollSliderWidth);
 
         const SimpleRect scrollBody =
         {
@@ -595,8 +622,10 @@ void Kit::Component::setupChildrenPosition()
         {
             auto& first_children = _childrens[0];
 
-            first_children->outerLeft(0);
-            first_children->outerTop(0);
+            const auto margin_top = first_children->_cssBlock.normal().get<int>("margin-top");
+
+
+            first_children->outerTop(0 + margin_top);
 
 
             for (size_t i = 1; i < _childrens.size(); ++i)
@@ -604,9 +633,15 @@ void Kit::Component::setupChildrenPosition()
                 auto& children = _childrens[i];
                 auto& children_prev = _childrens[i - 1];
 
-                const int new_y_position = children_prev->outerSize().h() + children_prev->outerSize().y();
+                const auto children_margin_top = children->_cssBlock.normal().get<int>("margin-top");
+                const auto children_prev_margin_bottom = children_prev->_cssBlock.normal().get<int>("margin-bottom");
 
-                children->outerLeft(0);
+
+
+                const int new_y_position = children_prev->outerSize().h() + children_prev->outerSize().y() +
+                                           children_prev_margin_bottom + children_margin_top;
+
+
                 children->outerTop(new_y_position);
             }
         }
@@ -614,8 +649,10 @@ void Kit::Component::setupChildrenPosition()
         {
             auto& first_children = _childrens[0];
 
-            first_children->outerLeft(0);
-            first_children->outerTop(0);
+            const auto margin_left = first_children->_cssBlock.normal().get<int>("margin-left");
+
+            first_children->outerLeft(0 + margin_left);
+
 
 
             for (size_t i = 1; i < _childrens.size(); ++i)
@@ -623,9 +660,15 @@ void Kit::Component::setupChildrenPosition()
                 auto& children = _childrens[i];
                 auto& children_prev = _childrens[i - 1];
 
-                const int new_x_position = children_prev->outerSize().w() + children_prev->outerSize().x();
 
-                children->outerTop(0);
+                const auto children_margin_left = children->_cssBlock.normal().get<int>("margin-left");
+                const auto children_prev_margin_right = children_prev->_cssBlock.normal().get<int>("margin-right");
+
+
+                const int new_x_position = children_prev->outerSize().w() + children_prev->outerSize().x() +
+                                           children_margin_left + children_prev_margin_right;
+
+
                 children->outerLeft(new_x_position);
             }
         }
@@ -786,13 +829,29 @@ void Kit::Component::render()
     }
 
     const SimpleRect _innerRectSize = {outline, outline, _innerSize.w() - 2 * outline, _innerSize.h() - 2 * outline};
-    Draw::roundedRect(_renderer, _innerRectSize,
+
+    const auto& isLinearGradient = blockState->get<string>("background") == "linear-gradient";
+
+    if (isLinearGradient)
+    {
+        const auto& startGradientColor = blockState->get<Color>("background-linear-gradient-start-color");
+        const auto& endGradientColor = blockState->get<Color>("background-linear-gradient-end-color");
+
+
+        Draw::gradientRect(_renderer, _innerRectSize, startGradientColor, endGradientColor);
+    }
+    else
+    {
+        Draw::roundedRect(_renderer, _innerRectSize,
             borderRadius_1,
             borderRadius_2,
             borderRadius_3,
             borderRadius_4,
             backgroundColor
-    );
+        );
+    }
+
+
 
 
 
@@ -826,10 +885,10 @@ void Kit::Component::render()
         _text->setTextAlign(blockState->get<string>("text-align"));
         _text->setTextBlockVerticalAlign(blockState->get<string>("vertical-align"));
 
-        _text->setTextBlockMargin("top", blockState->get<int>("margin-top"));
-        _text->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
-        _text->setTextBlockMargin("left", blockState->get<int>("margin-left"));
-        _text->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+        _text->setTextBlockMargin("top", blockState->get<int>("padding-top"));
+        _text->setTextBlockMargin("bottom", blockState->get<int>("padding-bottom"));
+        _text->setTextBlockMargin("left", blockState->get<int>("padding-left"));
+        _text->setTextBlockMargin("right", blockState->get<int>("padding-right"));
 
         _text->render();
 
@@ -845,17 +904,15 @@ void Kit::Component::render()
         _text_extended->textHorizontalAlign(blockState->get<string>("text-align"));
         _text_extended->textVerticalAlign(blockState->get<string>("vertical-align"));
 
-//        _text_extended->setTextBlockMargin("top", blockState->get<int>("margin-top"));
-//        _text_extended->setTextBlockMargin("bottom", blockState->get<int>("margin-bottom"));
-//        _text_extended->setTextBlockMargin("left", blockState->get<int>("margin-left"));
-//        _text_extended->setTextBlockMargin("right", blockState->get<int>("margin-right"));
+        _text_extended->textMargin("top", blockState->get<int>("padding-top"));
+        _text_extended->textMargin("bottom", blockState->get<int>("padding-bottom"));
+        _text_extended->textMargin("left", blockState->get<int>("padding-left"));
+        _text_extended->textMargin("right", blockState->get<int>("padding-right"));
 
         _text_extended->focus(_isFocused);
 
 
         _text_extended->render();
-
-
     }
 
 
@@ -887,11 +944,11 @@ void Kit::Component::render()
         _innerSize.h() + topSize + bottomSize
     };
     Draw::roundedRect(_renderer, _innerRectBorderSize,
-            borderRadius_1 + leftSize,
-            borderRadius_2 + leftSize,
-            borderRadius_3 + leftSize,
-            borderRadius_4 + leftSize,
-            borderColor
+        borderRadius_1 + leftSize,
+        borderRadius_2 + leftSize,
+        borderRadius_3 + leftSize,
+        borderRadius_4 + leftSize,
+        borderColor
     );
 
 
@@ -953,7 +1010,7 @@ void Kit::Component::mouseButtonDown(Event* e_)
         return;
 
 
-    cout << _id << " mouseButtonDown" << endl;
+   // cout << _id << " mouseButtonDown" << endl;
 
     Point mouseP(e_->motion.x, e_->motion.y);
 
@@ -962,9 +1019,9 @@ void Kit::Component::mouseButtonDown(Event* e_)
 
     if (_verticalScroll->onSliderHover(mouseP))
     {
-        cout << "_verticalScroll slider" << endl;
+      //  cout << "_verticalScroll slider" << endl;
 
-        cout << "_verticalScroll active TRUE" << endl;
+      //  cout << "_verticalScroll active TRUE" << endl;
         _isVerticalScrollActive = true;
 
         return;
@@ -972,9 +1029,9 @@ void Kit::Component::mouseButtonDown(Event* e_)
 
     if (_horizontalScroll->onSliderHover(mouseP))
     {
-        cout << "_horizontalScroll slider" << endl;
+      //  cout << "_horizontalScroll slider" << endl;
 
-        cout << "_horizontalScroll active TRUE" << endl;
+      //  cout << "_horizontalScroll active TRUE" << endl;
         _isHorizontalScrollActive = true;
 
         return;
@@ -1004,7 +1061,7 @@ void Kit::Component::mouseButtonUp(Event* e_)
     if (!_isDisplay)
         return;
 
-    cout << _id << " mouseButtonUp" << endl;
+   // cout << _id << " mouseButtonUp" << endl;
 
     _eventListeners["onmouseup"](this, e_);
 
@@ -1564,21 +1621,21 @@ void Kit::Component::outerTop(int value)
 
 Kit::Component* Kit::Component::getFocus(SDL_Event* e_)
 {
-    cout << _id << " getFocus" << endl;
+    //cout << _id << " getFocus" << endl;
 
 
     _eventListeners["focus"](this, e_);
-    this->_isFocused = true;
+    _isFocused = true;
 
     return this;
 }
 
 Kit::Component* Kit::Component::loseFocus(SDL_Event* e_)
 {
-    cout << _id << " loseFocus" << endl;
+    // cout << _id << " loseFocus" << endl;
 
     _eventListeners["focusout"](this, e_);
-    this->_isFocused = false;
+    _isFocused = false;
 
     return this;
 }

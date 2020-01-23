@@ -1,0 +1,54 @@
+.contextual-menu
+{
+    width: auto;
+    height: auto;
+
+    background-color: #FAFAFA;
+    border: 1px solid #E8E8E8;
+    border-radius: 6px;
+}
+
+.contextual-menu-body
+{
+    top: 6px;
+    left: 0;
+
+    width: auto;
+    height: auto;
+
+    display: block;
+}
+
+.contextual-menu-body-item
+{
+    width: 200px;
+    height: 20px;
+
+    font-family: SFUIDisplay;
+
+    vertical-align: center;
+
+    line-height: 1;
+
+    padding-left: 20px;
+    padding-bottom: 5px;
+
+}
+
+.contextual-menu-body-item:hover
+{
+    color: #FFFFFF;
+
+    background-color: #3F95FD;
+}
+
+.contextual-menu-body-separator
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    width: 200px;
+    height: 2px;
+
+    background-color: #E8E8E8;
+}

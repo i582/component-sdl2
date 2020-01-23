@@ -23,14 +23,9 @@ int Point::parseStringToNumber(const string& str, int relativeValue)
     {
         return 0xfffffff;
     }
-    else if (str[0] == '0')
-    {
-        return 0;
-    }
     else
     {
-        cout << "ERROR: string '" << str << "' does not contain 'px' or '%'!" << endl;
-        return -1;
+        return stoi(str.substr(0, index));
     }
 }
 
@@ -38,7 +33,7 @@ int Point::parseExpressionToNumber(const string& str, int relativeValue)
 {
     int result = -1;
 
-    int findPlus = -1, findMinus = -1;
+    int findPlus = -1, findMinus = -1, findDivision = -1;
     vector<string>* expression = nullptr;
 
 
@@ -49,6 +44,10 @@ int Point::parseExpressionToNumber(const string& str, int relativeValue)
     else if ((findPlus = str.find('+')) != -1)
     {
         expression = Utils::split(str, '+');
+    }
+    else if ((findDivision = str.find('/')) != -1)
+    {
+        expression = Utils::split(str, '/');
     }
     else
     {
@@ -72,6 +71,10 @@ int Point::parseExpressionToNumber(const string& str, int relativeValue)
     else if (findMinus != -1)
     {
         result = first - second;
+    }
+    else if (findDivision != -1)
+    {
+        result = first / second;
     }
 
     delete expression;

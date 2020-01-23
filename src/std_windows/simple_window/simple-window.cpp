@@ -12,7 +12,7 @@ simple_window::simple_window(const string& title_, SimpleRect size_, bool noBord
 void simple_window::setup()
 {
     style("../styles/std_windows/simple_window/style.css");
-    setDraggableArea({0, 0, _size.w - 135, 25});
+    setDraggableArea({70, 0, _size.w - 70, 25});
 
 /*
 
@@ -42,11 +42,17 @@ void simple_window::setup()
 
 */
 
+
+
     add("#header", ".header")->setText(_title);
+
+    add("#button-exit", ".button-exit-mac");
+    add("#button-minimize", ".button-minimize-mac");
+    add("#button-zoom", ".button-zoom-mac");
 
     add("#input", ".input")->useExtendedText();
     auto test = window::getElementById("#input");
-    test->setText("\n #;Name;Phone;Street\n 1;Sasha;+123456789;number-1\n 2;Egor;+123456789;number-2\n 3;Evgenia;+123456789;number-3");
+    test->setText("#;Name;Phone;Street\n1;Sasha;+123456789;number-1\n2;Egor;+123456789;number-2\n3;Evgenia;+123456789;number-3");
 
 
     add("#input-one-line", ".input-one-line")->useExtendedText()
@@ -62,9 +68,14 @@ void simple_window::setup()
     add("#button-prev", ".button-prev");
 
 
+    add("#tab-body", ".tab-body");
+
     add(LineSelect::create("#line-select", {"item 1", "item 2", "item 3", "item 4"}, ".bar"));
 
-    /*auto table = (Table*) add(new Table("#table", ".table-test"));
+
+
+
+    auto table = (Table*) add(new Table("#table", ".table-test"));
 
     table->addColumn("#");
     table->addColumn("Name");
@@ -74,7 +85,26 @@ void simple_window::setup()
     table->addRow({"1", "Sasha", "+123456789", "number-1"});
     table->addRow({"2", "Egor", "+123456789", "number-2"});
     table->addRow({"3", "Evgenia", "+123456789", "number-3"});
-*/
+    table->addRow({"4", "Maxim", "+123456789", "number-4"});
+    table->addRow({"5", "Grigoriy", "+123456789", "number-5"});
+    table->addRow({"6", "Kostya", "+123456789", "number-6"});
+    table->addRow({"7", "Ivan", "+123456789", "number-7"});
+
+
+    const vector<string> items_menu = {
+        "Open",
+        "Open With",
+        "----",
+        "Move to Trash",
+        "Rename",
+        "----",
+        "Copy",
+        "Paste"
+    };
+
+
+    auto menu = ContextualMenu::create("#menu", items_menu, ".menu");
+    add(menu);
 
     //add("#test-scroll", ".scrolls")->append(Component::create("#inner-scroll", ".inner-scroll"));
 

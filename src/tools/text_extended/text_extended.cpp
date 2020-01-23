@@ -33,6 +33,13 @@ Kit::text::text(Kit::Component* parent_, const std::string& text_, Kit::SimplePo
     this->_is_mouse_pushed = false;
     this->_is_focused = false;
 
+
+    this->marginTop = 0;
+    this->marginBottom = 0;
+    this->marginLeft = 0;
+    this->marginRight = 0;
+
+
     this->setup();
 }
 
@@ -90,6 +97,9 @@ void Kit::text::setupSize()
 
     _text_size.w = max_width;
     _text_size.h = text_block_height;
+
+    _size.x = marginLeft;
+    _size.y = marginTop;
 
     _size.w = _parent->innerSize().w();
     _size.h = _parent->innerSize().h();
@@ -209,6 +219,8 @@ void Kit::text::mouseButtonDown(SDL_Event* e_, const Kit::Point& mouse_)
 
     SimplePoint mouse = {mouse_.x(), mouse_.y()};
 
+    mouse.x -= marginLeft;
+    mouse.y -= marginTop;
 
     _cursor_position = whereIsCursor(mouse);
 
@@ -231,7 +243,8 @@ void Kit::text::mouseMotion(SDL_Event* e_, const Point& _mouse)
         return;
 
     SimplePoint mouse = {_mouse.x(), _mouse.y()};
-
+    mouse.x -= marginLeft;
+    mouse.y -= marginTop;
 
     if (!_is_select)
     {
@@ -1017,5 +1030,44 @@ void Kit::text::focus(bool focus)
 {
     _is_focused = focus;
 
+    _need_update = true;
+}
+
+void Kit::text::textMargin(const std::string& side, int value)
+{
+    if (side == "top")
+    {
+        if (marginTop == value)
+            return;
+
+        marginTop = value;
+    }
+    else if (side == "bottom")
+    {
+        if (marginBottom == value)
+            return;
+
+        marginBottom = value;
+    }
+    else if (side == "left")
+    {
+        if (marginLeft == value)
+            return;
+
+        marginLeft = value;
+    }
+    else if (side == "right")
+    {
+        if (marginRight == value)
+            return;
+
+        marginRight = value;
+    }
+    else
+    {
+        return;
+    }
+
+    setupSize();
     _need_update = true;
 }

@@ -2,11 +2,9 @@
 .navigator {
     background-color: #F1F0F1;
 
-    border-color: #F1F0F1;
-    border-bottom: 1px solid #5E6060;
-    border-right: 1px solid #5E6060;
-    border-left: 1px solid #5E6060;
-    border-top: 1px solid #5E6060;
+    border: 1px solid #BEBDBF;
+
+
 }
 
 .window-header {
@@ -102,16 +100,17 @@
 
 .circle
 {
-    top: 10px;
+    top: 90px;
     left: 10px;
 
-    width: 50px;
-    height: 50px;
+    width: 18px;
+    height: 18px;
 
-    border-radius: 6px;
+    border-radius: 9px;
 
-    background-image: url(../styles/std_components/checkbox/images/circle.png);
-    background-size: 50px;
+    background-color: #ce4848;
+
+    border: 1px solid #46bb41;
 }
 
 .input
@@ -127,13 +126,16 @@
 
     font-size: 14px;
 
-    line-height: 1;
+    line-height: 1.2;
 
 
     color: #000000;
     font-weight: 400;
 
     font-family: Consolas;
+
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .input:focus
@@ -149,8 +151,8 @@
 
 .input-one-line
 {
-    width: 260px;
-    height: 25px;
+    width: 660px;
+    height: 27px;
 
     top: 40px;
     left: 110px;
@@ -165,6 +167,11 @@
     vertical-align: middle;
 
     font-weight: 500;
+
+    border-radius: 5px;
+
+    border-color: #e4e4e4;
+    border-bottom: 2px solid #5E6060;
 }
 
 .input-one-line:focus
@@ -183,23 +190,70 @@
     width: 100%;
     height: 25px;
 
-    top: 5px;
+    top: 0;
     left: 0;
 
 
     font-size: 13px;
 
-    line-height: 1;
+
     text-align: center;
-    vertical-align: middle;
+    vertical-align: center;
 
     font-weight: 600;
     color: #423F42;
 
-    background-color: #ECECEC;
-    border-color: #B3B3B3;
-    border-bottom: 1px solid #5E6060;
+
+    border-color: #BEBDBF;
+    border-bottom: 1px solid #BEBDBF;
+
+    font-family: SFUIDisplay;
+
+    background: linear-gradient(#E9E8EA, #D0CED1);
+
 }
+
+.button-exit-mac
+{
+    width: 14px;
+    height: 14px;
+
+    top: 6px;
+    left: 10px;
+
+
+    background-image: url(../styles/std_components/other/images/button-exit-s.png);
+    background-size: 14px;
+
+
+}
+
+.button-minimize-mac
+{
+    width: 14px;
+    height: 14px;
+
+    top: 6px;
+    left: 32px;
+
+
+    background-image: url(../styles/std_components/other/images/button-minimize-s.png);
+    background-size: 14px;
+}
+
+.button-zoom-mac
+{
+    width: 14px;
+    height: 14px;
+
+    top: 6px;
+    left: 54px;
+
+
+    background-image: url(../styles/std_components/other/images/button-zoom-s.png);
+    background-size: 14px;
+}
+
 
 .button-next
 {
@@ -268,38 +322,34 @@
 
 .bar
 {
-    top: 150px;
-    left: 20px;
+    top: 80px;
+    left: 460px;
+
+    width: 270px;
 }
 
 .bar-item
 {
-    width: 80px;
+    width: calc(100% / 4);
 }
 
 
-
-.scrolls
+.tab-body
 {
+    top: 93px;
+    left: 420px;
+
     width: 350px;
-    height: 300px;
+    height: 130px;
 
-    top: 40px;
-    left: 20px;
+    background-color: #E3E3E4;
 
-    background-color: #ce4848;
+    border: 1px solid #D5D4D5;
+    outline: #DEDEE0;
+
+    border-radius: 4px;
 }
 
-.inner-scroll
-{
-    width: 200%;
-    height: 200%;
-
-    top: 50px;
-    left: 50px;
-
-    background-color: #4A88C7;
-}
 
 .table-test {
     width: 350px;
@@ -321,7 +371,7 @@
 
 .column-3
 {
-    width: 100px;
+    width: 96px;
 }
 
 .text {
@@ -344,53 +394,8 @@
     left: 50px;
 }
 
-.test-text {
-    width: 260px;
-    height: 24px;
-
-    top: 350px;
-    left: 20px;
-
-
-    color: #dadacb;
-
-    text-align: left;
-
-    font-size: 13px;
-
-    line-height: 1.1;
-
-    background-color: rgb(76, 80, 82);
-    outline: #646464;
-
-    vertical-align: middle;
-
-    margin-left: 10px;
-
-    font-style: italic;
-}
-
-.test-text:focus {
-    border-color: #3D6185;
-    outline: #466D94;
-
-    border-bottom: 2px solid #5E6060;
-    border-right: 2px solid #5E6060;
-    border-left: 2px solid #5E6060;
-    border-top: 2px solid #5E6060;
-}
-
-
-.test-tabs {
-    left: 450px;
-    top: 100px;
-}
-
-
-
-
-.select-test
+.menu
 {
-    top: 50px;
-    left: 20px;
+    left: 420px;
+    top: 250px;
 }
