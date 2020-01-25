@@ -50,9 +50,9 @@ sudo apt install build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf
 # 3. https://www.libsdl.org/tmp/SDL_image/
 # 4. http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/
 
-# note: SDL2_gfx must be manually assembled.
-
 # and unzip folders to your convenience.
+
+# note: SDL2_gfx must be manually assembled.
 ```
 
 ### Preparation
@@ -79,11 +79,18 @@ cmake build .
 ```
 
 
+## Documentation
+Russian language documentation is available [here](https://i58215.gitbook.io/component-sdl2/).
 
-## Links 
-[Documentation (rus)](https://i58215.gitbook.io/component-sdl2/)
+English documentation is under development.
 
-[(work in progress) Documentation (eng)](#)
+## Contact
+Name: Petr Makhnev
+
+E-Mail: mr.makhneff@gmail.com
+
+Telegram: @petr_makhnev
+
 ## License
 
-[MIT](https://github.com/i582/component-sdl2/blob/master/LICENSE)
+This library is released under the [MIT](https://github.com/i582/component-sdl2/blob/master/LICENSE) license. For more information refer to the [LICENSE](https://github.com/i582/component-sdl2/blob/master/LICENSE) file provided with this project.
