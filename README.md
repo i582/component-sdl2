@@ -82,7 +82,9 @@ cmake build .
 ## Documentation
 Russian language documentation is available [here](https://i58215.gitbook.io/component-sdl2/).
 
-English documentation is under development.
+
+English language documentation is available [here](https://i58215.gitbook.io/component-sdl2-en/).
+
 
 ## Contact
 Name: Petr Makhnev
