@@ -4,7 +4,7 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-SDL2%20%7C%20SDL2__ttf%20%7C%20SDL2__image%20%7C%20SDL2__gfx-brightgreen.svg)](https://www.libsdl.org/)
 [![Dependencies](https://img.shields.io/badge/dependency_if_not_MSVC-boost-brightgreen.svg)](https://www.boost.org/)
 
-[![Dependencies](https://img.shields.io/badge/docs%20(rus)-passed-brightgreen.svg)](https://i58215.gitbook.io/component-sdl2/)  [![Dependencies](https://img.shields.io/badge/docs%20(eng)-in%20progress-inactive.svg)](#)  
+[![Dependencies](https://img.shields.io/badge/docs%20(rus)-passed-brightgreen.svg)](https://i58215.gitbook.io/component-sdl2/)  [![Dependencies](https://img.shields.io/badge/docs%20(eng)-passed-brightgreen.svg)](https://i58215.gitbook.io/component-sdl2-en/)  
 
 
 ## Description
